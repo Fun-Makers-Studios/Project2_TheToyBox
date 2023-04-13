@@ -37,7 +37,6 @@ bool EntityManager::Awake(pugi::xml_node& config)
 	}
 
 	return ret;
-
 }
 
 bool EntityManager::Start() {
@@ -119,7 +118,11 @@ void EntityManager::DestroyEntity(Entity* entity)
 
 void EntityManager::AddEntity(Entity* entity)
 {
-	if ( entity != nullptr) entities.Add(entity);
+	if (entity != nullptr)
+	{
+		entities.Add(entity);
+		entity->Awake();
+	}		
 }
 
 bool EntityManager::Update(float dt)
