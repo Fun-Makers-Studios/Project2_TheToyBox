@@ -3,6 +3,8 @@
 
 #include "Module.h"
 #include "NPC.h"
+#include "Item.h"
+#include "List.h"
 
 class Scene
 {
@@ -43,7 +45,7 @@ public:
 	// Sets the scene's ID
 	virtual void SetID(SString id) { this->id = id; }
 
-private:
+public:
 
 	SString id;
 	List<NPC*>npcs;

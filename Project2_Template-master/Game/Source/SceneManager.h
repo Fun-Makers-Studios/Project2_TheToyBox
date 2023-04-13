@@ -34,6 +34,8 @@ public:
 
 	ListItem<Scene*>* FindSceneByID(SString id);
 
+	Scene* GetCurrentScene() { return currentScene; };
+
 private:
 	// Stores all of the scenes associated with this scene manager
 	List<Scene*> scenes;

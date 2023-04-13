@@ -34,7 +34,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	physics			=	new Physics(false);
 	pathfinding		=	new PathFinding(true);
 	sceneManager	=	new SceneManager(true);
-	entityManager	=	new EntityManager(false);
+	entityManager	=	new EntityManager(true);
 	questManager	=	new QuestManager(true);
 	map				=	new Map(true);
 	render			=	new Render(true);

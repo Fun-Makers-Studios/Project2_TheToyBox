@@ -1,5 +1,6 @@
 #include "TalkQuest.h"
 #include "EntityManager.h"
+#include "SceneManager.h"
 #include "App.h"
 #include "Audio.h"
 #include "Input.h"
@@ -24,7 +25,7 @@ bool TalkQuest::Update()
 	bool ret = true;
 
 	//Check completion event
-	ListItem<NPC*>* nitem = app->scene->npcs.start;
+	ListItem<NPC*>* nitem = app->sceneManager->GetCurrentScene()->npcs.start;
 	NPC* npc = nitem->data;
 
 	while (nitem != nullptr)
@@ -52,7 +53,7 @@ bool TalkQuest::Update()
 		(app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)) {
 		ret = false;
 
-		app->scene->points += this->reward;
+		//app->scene->points += this->reward;
 	}
 
 	return ret;

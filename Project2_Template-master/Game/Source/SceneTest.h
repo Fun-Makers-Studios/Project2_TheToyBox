@@ -45,8 +45,6 @@ public:
 
 	bool questMenu;
 
-	List<NPC*>npcs;
-	List<Item*>items;
 
 	int points;
 

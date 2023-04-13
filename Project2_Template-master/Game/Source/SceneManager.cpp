@@ -14,6 +14,10 @@ bool SceneManager::Awake(pugi::xml_node& config)
     Scene* sceneTest = new SceneTest();
     AddScene(sceneTest, config);
 
+    currentScene = sceneTest;
+
+    currentScene->OnActivate();
+
     return true;
 }
 
@@ -108,4 +112,3 @@ ListItem<Scene*>* SceneManager::FindSceneByID(SString id)
         if (scene->data->GetID() == id) { return scene; }
     }
 }
-
