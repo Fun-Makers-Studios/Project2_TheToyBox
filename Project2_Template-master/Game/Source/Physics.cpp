@@ -1,6 +1,6 @@
 #include "Physics.h"
 #include "Input.h"
-#include "app.h"
+#include "App.h"
 #include "Log.h"
 #include "math.h"
 #include "SDL/include/SDL_keycode.h"
@@ -21,6 +21,7 @@
 Physics::Physics(bool startEnabled) : Module(startEnabled)
 {
 	// Initialise all the internal class variables, at least to NULL pointer
+	name.Create("physics");
 	world = NULL;
 	debug = true;
 }

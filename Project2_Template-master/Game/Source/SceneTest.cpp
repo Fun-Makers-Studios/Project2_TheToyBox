@@ -77,7 +77,7 @@ void SceneTest::OnActivate()
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 	player->parameters = config.child("player");
 
-	//IMPORTANT, ENTITY MANAGER IS DISABLED BY DEFAULT
+	//IMPORTANT, ENTITY MANAGER IS DISABLED BY DEFAULT (NOT)
 	if (app->entityManager->active == false) { app->entityManager->Enable(); }
 
 	app->render->camera.x = 0;
@@ -107,6 +107,32 @@ void SceneTest::PreUpdate()
 
 // Called each loop iteration
 void SceneTest::Update(float dt)
+{
+	// Draw map
+	app->map->Draw();
+
+	if (debug) {
+		//Draw NPC boundaries
+		ListItem<NPC*>* npcitem = npcs.start;
+
+		while (npcitem != NULL) {
+			app->render->DrawRectangle(npcitem->data->boundaries, 0, 0, 255);
+
+			npcitem = npcitem->next;
+		}
+
+		// Draw player boundaries
+		app->render->DrawRectangle({ player->position.x * 32, player->position.y * 32, 32, 32 }, 0, 255, 0);
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN) {
+		if (questMenu) { questMenu = false; }
+		else if (!questMenu) { questMenu = true; }
+	}
+}
+
+// Called each loop iteration
+void SceneTest::PostUpdate()
 {
 	if (questMenu)
 	{
@@ -144,17 +170,13 @@ void SceneTest::Update(float dt)
 		}
 	}
 
+	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;*/
+
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		if (debug) { debug = false; }
 		else if (!debug) { debug = true; }
 	}
-}
-
-// Called each loop iteration
-void SceneTest::PostUpdate()
-{
-	//if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	//flag for esc exit
 }
 
 // Called before quitting

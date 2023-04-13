@@ -8,23 +8,23 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "SceneManager.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
+
+	// idle player
+	idleanim.PushBack({ 0, 0, 32, 32 });
+	idleanim.loop = false;
+	idleanim.speed = 0.0f;
 }
 
-Player::~Player() {
+Player::~Player() {}
 
-}
-
-bool Player::Awake() {
-
-	//L02: DONE 1: Initialize Player parameters
-	//pos = position;
-	//texturePath = "Assets/Textures/player/idle1.png";
-
-	//L02: DONE 5: Get Player parameters from XML
+bool Player::Awake()
+{
+	// Get Player parameters from XML
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
@@ -32,55 +32,51 @@ bool Player::Awake() {
 	return true;
 }
 
-bool Player::Start() {
-
+bool Player::Start()
+{
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
-	// L07 DONE 5: Add physics to the player - initialize physics body
-	pbody = app->physics->CreateCircle(position.x+16, position.y+16, 16, bodyType::DYNAMIC);
+	//// L07 DONE 5: Add physics to the player - initialize physics body
+	//pbody = app->physics->CreateCircle(position.x+16, position.y+16, 16, bodyType::DYNAMIC);
 
-	// L07 DONE 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
-	pbody->listener = this; 
+	//// L07 DONE 6: Assign player class (using "this") to the listener of the pbody. This makes the Physics module to call the OnCollision method
+	//pbody->listener = this; 
 
-	// L07 DONE 7: Assign collider type
-	pbody->ctype = ColliderType::PLAYER;
+	//// L07 DONE 7: Assign collider type
+	//pbody->ctype = ColliderType::PLAYER;
 
 	return true;
 }
 
 bool Player::Update()
 {
-
-	// L07 DONE 5: Add physics to the player - updated player position using physics
-
-	int speed = 10; 
-	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y); 
-
-	//L02: DONE 4: modify the position of the player using arrow keys and render the texture
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-		//
+	//PLAYER MOVEMENT
+	
+	if ((app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)) && position.y > 0)
+	{
+		position.y--;
 	}
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		//
+	else if ((app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)) && position.y < 21)
+	{
+		position.y++;
 	}
-		
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		vel = b2Vec2(-speed, -GRAVITY_Y);
+	else if ((app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)) && position.x > 0)
+	{
+		position.x--;
 	}
-
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		vel = b2Vec2(speed, -GRAVITY_Y);
+	else if ((app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN || (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)) && position.x < 37)
+	{
+		position.x++;
 	}
 
-	//Set the velocity of the pbody of the player
-	pbody->body->SetLinearVelocity(vel);
+	//WINNING SEQUENCE
 
-	//Update player position in pixels
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+	//ANIMATION STATE MACHINE
 
-	app->render->DrawTexture(texture, position.x , position.y);
+	SDL_Rect rect = currentAnim->GetCurrentFrame();
+	app->render->DrawTexture(texture, position.x * 32, position.y * 32, &rect);
+	currentAnim->Update();
 
 	return true;
 }

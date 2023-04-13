@@ -46,7 +46,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fonts);
 	AddModule(tex);
 	AddModule(audio);
-	AddModule(physics);
+	//AddModule(physics);
 	AddModule(pathfinding);
 	AddModule(entityManager);
 	AddModule(sceneManager);
@@ -131,7 +131,7 @@ bool App::Start()
 
 	while (item != NULL && ret == true)
 	{
-		ret = item->data->Start();
+		if (item->data->IsEnabled()) { ret = item->data->Start(); }
 		item = item->next;
 	}
 
@@ -249,9 +249,7 @@ bool App::PreUpdate()
 	{
 		pModule = item->data;
 
-		if (pModule->active == false) {
-			continue;
-		}
+		if (pModule->active == false) { continue; }
 
 		ret = item->data->PreUpdate();
 	}
@@ -271,9 +269,7 @@ bool App::DoUpdate()
 	{
 		pModule = item->data;
 
-		if (pModule->active == false) {
-			continue;
-		}
+		if (pModule->active == false) { continue; }
 
 		ret = item->data->Update(dt);
 	}
@@ -292,9 +288,7 @@ bool App::PostUpdate()
 	{
 		pModule = item->data;
 
-		if (pModule->active == false) {
-			continue;
-		}
+		if (pModule->active == false) { continue; }
 
 		ret = item->data->PostUpdate();
 	}
