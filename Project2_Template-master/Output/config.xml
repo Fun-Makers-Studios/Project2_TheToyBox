@@ -1,6 +1,6 @@
 <config>
 	<app>
-		<title>Awesome Epic Template</title>
+		<title>The Toy Box</title>
 		<organization>UPC</organization>
 	</app>
 
@@ -9,7 +9,7 @@
 	</renderer>
 
 	<window>
-		<resolution width="1216" height="704" scale="1"/>
+		<resolution width="1280" height="720" scale="1"/>
 		<fullscreen value="false"/>
 		<borderless value="false"/>
 		<resizable value="false"/>
@@ -21,14 +21,14 @@
 		<fx volume="64"/>
 	</audio>
 
-	<sceneLogo>
-		<music path="Assets/Audio/Music/1_Astrub.ogg"/>
-		<textures logo="Assets/Textures/logo.png"/>
+	<scenelogo>
+		<music path="Assets/Audio/Music/music_spy.ogg"/>
+		<textures logo="Assets/Textures/SceneLogo/logo.png"/>
 		<texturepaths font="Assets/Fonts/fontx2.png"/>
-	</sceneLogo>
+	</scenelogo>
 
 	<sceneTest>
-		<music path="Assets/Audio/Music/1_Astrub.ogg"/>
+		<music path="Assets/Audio/Music/music_spy.ogg"/>
 		<textures victory_defeat="Assets/Textures/victory_death.png"/>
 		<texturepaths font="Assets/Fonts/fontx2.png"/>
 		<player x="33" y="3" texturepath="Assets/Textures/NPCs.png"/>
