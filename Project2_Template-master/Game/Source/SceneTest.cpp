@@ -78,7 +78,7 @@ void SceneTest::OnActivate()
 	player->parameters = config.child("player");
 
 	//IMPORTANT, ENTITY MANAGER IS DISABLED BY DEFAULT (NOT)
-	if (app->entityManager->active == false) { app->entityManager->Enable(); }
+	//if (app->entityManager->active == false) { app->entityManager->Enable(); }
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;

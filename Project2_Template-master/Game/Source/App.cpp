@@ -43,13 +43,13 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	// Reverse order of CleanUp
 	AddModule(win);
 	AddModule(input);
-	AddModule(fonts);
 	AddModule(tex);
+	AddModule(fonts);
 	AddModule(audio);
 	//AddModule(physics);
 	AddModule(pathfinding);
-	AddModule(entityManager);
 	AddModule(sceneManager);
+	AddModule(entityManager);
 	AddModule(questManager);
 	AddModule(map);
 

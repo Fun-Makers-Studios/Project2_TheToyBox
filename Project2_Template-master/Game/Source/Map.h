@@ -138,23 +138,6 @@ public:
 	// L08: DONE 3: Add method WorldToMap to obtain  
 	iPoint Map::WorldToMap(int x, int y);
 
-	// BFS/Dijkstra methods not required any more: Using PathFinding class
-    /*
-	// L09: BFS Pathfinding methods
-	void ResetPath();
-	void DrawPath();
-	bool IsWalkable(int x, int y) const;
-
-	// L10: Methods for BFS + Pathfinding and cost function for Dijkstra
-	int MovementCost(int x, int y) const;
-	void ComputePath(int x, int y);
-
-	// Propagation methods
-	void PropagateBFS(); //L09
-	void PropagateDijkstra(); //L10
-	void PropagateAStar(int heuristic); //L11
-	*/
-
 	// L12: Create walkability map for pathfinding
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
@@ -186,22 +169,6 @@ private:
 	SString mapFolder;
     bool mapLoaded;
 
-	// BFS/Dijkstra methods not required any more: Using PathFinding class
-	/*
-	// L09: BFS Pathfinding variables
-	PQueue<iPoint> frontier;
-	List<iPoint> visited;
-
-	// L09 DONE 4: Define destionation point 
-	iPoint destination; 
-
-	// L10: Additional variables
-	List<iPoint> breadcrumbs;
-	uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];
-	DynArray<iPoint> path;
-
-	SDL_Texture* tileX = nullptr;
-	*/
 };
 
 #endif // __MAP_H__

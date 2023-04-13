@@ -14,16 +14,15 @@ bool SceneManager::Awake(pugi::xml_node& config)
     Scene* sceneTest = new SceneTest();
     AddScene(sceneTest, config);
 
-    currentScene = sceneTest;
-
-    currentScene->OnActivate();
+    currentScene = sceneTest;  
 
     return true;
 }
 
 bool SceneManager::Start()
 {
-    currentScene = FindSceneByID("sceneTest")->data;
+    //currentScene = FindSceneByID("sceneTest")->data;
+    currentScene->OnActivate();
 
     return true;
 }

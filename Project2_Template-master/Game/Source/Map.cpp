@@ -93,12 +93,12 @@ void Map::Draw()
     ListItem<TileSet*>* tileset;
     tileset = mapData.tilesets.start;
 
-    /*
+    
     while (tileset != NULL) {
         app->render->DrawTexture(tileset->data->texture,0,0);
         tileset = tileset->next;
     }
-    */
+    
 
     // Prepare the loop to draw all tiles in a layer + DrawTexture()
 
