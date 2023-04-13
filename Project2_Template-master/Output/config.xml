@@ -1,0 +1,52 @@
+<config>
+	<app>
+		<title>Awesome Epic Template</title>
+		<organization>UPC</organization>
+	</app>
+
+	<renderer>
+		<vsync value="false"/>
+	</renderer>
+
+	<window>
+		<resolution width="1216" height="704" scale="1"/>
+		<fullscreen value="false"/>
+		<borderless value="false"/>
+		<resizable value="false"/>
+		<fullscreen_window value="false"/>
+	</window>
+	
+	<audio>
+		<music volume="64"/>
+		<fx volume="64"/>
+	</audio>
+	
+	<sceneTest>
+		<music path="Assets/Audio/Music/1_Astrub.ogg"/>
+		<textures victory_defeat="Assets/Textures/victory_death.png"/>
+		<texturepaths font="Assets/Fonts/fontx2.png"/>
+		<player x="33" y="3" texturepath="Assets/Textures/NPCs.png"/>
+		<npc x="32" y="15" texturepath="Assets/Textures/NPCs.png" id="1" character="3"/>
+		<npc x="26" y="9" texturepath="Assets/Textures/NPCs.png" id="2" character="2"/>
+		<npc x="9" y="6" texturepath="Assets/Textures/NPCs.png" id="3" character="4"/>
+		<npc x="10" y="6" texturepath="Assets/Textures/NPCs.png" id="4" character="5"/>
+		<map>
+			<mapfolder path="Assets/Maps/"/>
+			<mapfile path="Assets/Maps/LostChests.tmx"/>
+		</map>
+	</sceneTest>
+	
+	<questmanager>
+		<activequests>
+			<quest id="1"></quest>
+		</activequests>
+		<quest type="0" id="1" name="TALK WITH GRANDPA KIKO" description="Search for your grandfather hwo needs your help." nextQuestId="2" npcId="2" reward="700"></quest>
+		<quest type="1" id="2" name="FIND GRANDPA S LOST CHESTS" description="Grandpa's chests disappeared long ago. They have to be somewhere!" nextQuestId="0" itemId="1" reward="0"></quest>
+	</questmanager>
+
+	<map>
+		<mapfolder path="Assets/Maps/"/>
+		<mapfile path="Assets/Maps/LostChests.tmx"/>
+	</map>
+	
+</config>
