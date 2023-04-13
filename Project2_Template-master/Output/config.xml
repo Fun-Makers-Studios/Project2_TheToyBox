@@ -20,7 +20,13 @@
 		<music volume="64"/>
 		<fx volume="64"/>
 	</audio>
-	
+
+	<sceneLogo>
+		<music path="Assets/Audio/Music/1_Astrub.ogg"/>
+		<textures logo="Assets/Textures/logo.png"/>
+		<texturepaths font="Assets/Fonts/fontx2.png"/>
+	</sceneLogo>
+
 	<sceneTest>
 		<music path="Assets/Audio/Music/1_Astrub.ogg"/>
 		<textures victory_defeat="Assets/Textures/victory_death.png"/>
