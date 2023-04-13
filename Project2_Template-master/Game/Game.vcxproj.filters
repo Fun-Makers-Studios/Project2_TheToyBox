@@ -73,6 +73,9 @@
     <ClCompile Include="Source\Player.cpp">
       <Filter>Game\Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SceneLogo.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -183,6 +186,9 @@
     <ClInclude Include="Source\Player.h">
       <Filter>Game\Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SceneLogo.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -212,5 +218,10 @@
     <Filter Include="Game\Quests">
       <UniqueIdentifier>{03471e2d-955a-4b83-af80-5f014ae21edf}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Output\config.xml">
+      <Filter>Core</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
