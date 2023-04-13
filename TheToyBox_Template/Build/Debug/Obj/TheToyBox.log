@@ -1,0 +1,54 @@
+﻿C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  CollectQuest.cpp
+  EntityManager.cpp
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(56,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(58,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(63,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  QuestManager.cpp
+  Chest.cpp
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(56,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(58,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(63,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  NPC.cpp
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(56,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(58,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(63,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Main.cpp
+  App.cpp
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(56,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(58,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(63,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Audio.cpp
+  Input.cpp
+  Fonts.cpp
+  Map.cpp
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Map.cpp(103,35): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Map.cpp(110,35): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Map.cpp(117,35): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Map.cpp(124,35): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Map.cpp(131,35): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Map.cpp(485,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Map.cpp(541,53): warning C4244: '-=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Map.cpp(545,53): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Map.cpp(558,41): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Map.cpp(498,11): warning C4101: 'temp': unreferenced local variable
+  Player.cpp
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(56,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(58,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(63,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Scene.cpp
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(56,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(58,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(63,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Render.cpp
+  TalkQuest.cpp
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(56,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(58,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Game\Source\Animation.h(63,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Textures.cpp
+  Window.cpp
+  Log.cpp
+  pugixml.cpp
+  Generating Code...
+  TheToyBox.vcxproj -> C:\Users\Hekbas\CITM\2B\Proj2\Project2_TheToyBox\TheToyBox_Template\Build\Debug\TheToyBox.exe
+          1 file(s) copied.

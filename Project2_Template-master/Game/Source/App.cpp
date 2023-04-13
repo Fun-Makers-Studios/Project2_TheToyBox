@@ -33,8 +33,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio			=	new Audio(true);
 	physics			=	new Physics(false);
 	pathfinding		=	new PathFinding(true);
-	sceneManager	=	new SceneManager(true);
 	entityManager	=	new EntityManager(true);
+	sceneManager	=	new SceneManager(true);
 	questManager	=	new QuestManager(true);
 	map				=	new Map(true);
 	render			=	new Render(true);
@@ -48,8 +48,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(physics);
 	AddModule(pathfinding);
-	AddModule(sceneManager);
 	AddModule(entityManager);
+	AddModule(sceneManager);
 	AddModule(questManager);
 	AddModule(map);
 
