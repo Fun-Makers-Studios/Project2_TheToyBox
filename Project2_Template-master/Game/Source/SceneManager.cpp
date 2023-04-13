@@ -1,6 +1,7 @@
 #include "App.h"
 #include "SceneManager.h"
 #include "SceneTest.h"
+#include "SceneLogo.h"
 
 SceneManager::SceneManager(bool startEnabled) : Module(startEnabled)
 {
@@ -13,8 +14,11 @@ bool SceneManager::Awake(pugi::xml_node& config)
 {
     Scene* sceneTest = new SceneTest();
     AddScene(sceneTest, config);
+    
+    Scene* sceneLogo = new SceneLogo();
+    AddScene(sceneLogo, config);
 
-    currentScene = sceneTest;  
+    currentScene = sceneTest;
 
     return true;
 }
