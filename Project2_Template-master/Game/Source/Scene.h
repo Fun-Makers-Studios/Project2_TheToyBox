@@ -49,7 +49,7 @@ public:
 
 	SString id;
 	List<NPC*>npcs;
-	List<Item*>items;
+	List<Item*> items;
 };
 
 #endif // __SCENE_H__
