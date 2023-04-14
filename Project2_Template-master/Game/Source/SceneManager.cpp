@@ -2,23 +2,27 @@
 #include "SceneManager.h"
 #include "SceneTest.h"
 #include "SceneLogo.h"
+#include "LOG.h"
 
 SceneManager::SceneManager(bool startEnabled) : Module(startEnabled)
 {
-    name.Create("scenemanager");
+    name.Create("sceneManager");
 }
 
 SceneManager::~SceneManager(){}
 
 bool SceneManager::Awake(pugi::xml_node& config)
 {
-    Scene* sceneTest = new SceneTest();
-    AddScene(sceneTest, config);
-    
     Scene* sceneLogo = new SceneLogo();
-    AddScene(sceneLogo, config);
+    AddScene(sceneLogo, config.child("sceneLogo"));
 
-    currentScene = sceneTest;
+    Scene* sceneTest = new SceneTest();  
+    AddScene(sceneTest, config.child("sceneTest"));
+    
+    currentScene = sceneLogo;
+
+    //LOG(sceneTest->id.GetString());
+    //LOG(sceneTest->GetNPCList()->start->data->name.GetString());
 
     return true;
 }

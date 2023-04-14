@@ -24,6 +24,14 @@ void SceneLogo::OnCreate(pugi::xml_node& config)
 	LOG("Loading SceneLogo");
 	bool ret = true;
 
+	// Load music
+	musicPath = config.child("music").attribute("path").as_string();
+	app->audio->PlayMusic(musicPath);
+
+	font_text = app->fonts->Load(config.child("texturepaths").attribute("font").as_string(), "ABCDEFGHIJKLMNOPQRSTUWYZ0123456789-= ", 1);
+
+	debug = false;
+
 }
 
 void SceneLogo::OnDestroy() {}
@@ -37,13 +45,7 @@ void SceneLogo::OnActivate()
 	pugi::xml_node configNode = app->GetNode();
 	pugi::xml_node config = configNode.child(id.GetString());
 
-	// Load music
-	musicPath = config.child("music").attribute("path").as_string();
-	app->audio->PlayMusic(musicPath);
-
-	font_text = app->fonts->Load(config.child("texturepaths").attribute("font").as_string(), "ABCDEFGHIJKLMNOPQRSTUWYZ0123456789-= ", 1);
-
-	debug = false;
+	
 }
 
 void SceneLogo::OnDeactivate() {}

@@ -39,11 +39,22 @@ void SceneTest::OnCreate(pugi::xml_node& config)
 		item->parameters = itemNode;
 	}
 
-	//L02: DONE 3: Instantiate the player using the entity manager
+	// Instantiate the player using the entity manager
 	if (config.child("player")) {
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 		player->parameters = config.child("player");
 	}
+
+	List<NPC*>* npcList = new List<NPC*>;
+	// Iterate all NPC in the scene
+	for (pugi::xml_node npcNode = config.child("npc"); npcNode; npcNode = npcNode.next_sibling("npc"))
+	{
+		NPC* npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
+		npc->parameters = npcNode;
+		npcList->Add(npc);
+	}
+	SetNPCList(npcList);
+	npcList->Clear();
 }
 
 void SceneTest::OnDestroy() {}
@@ -58,24 +69,12 @@ void SceneTest::OnActivate()
 	pugi::xml_node configNode = app->GetNode();
 	pugi::xml_node config = configNode.child(id.GetString());
 
-	// iterate all NPC in the scene
-	for (pugi::xml_node npcNode = config.child("npc"); npcNode; npcNode = npcNode.next_sibling("npc"))
-	{
-		NPC* npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
-		npc->parameters = npcNode;
-		npcs.Add(npc);
-	}
-
 	// iterate all objects in the scene
 	for (pugi::xml_node ringNode = config.child("ring"); ringNode; ringNode = ringNode.next_sibling("ring"))
 	{
 		//Item* item = Chest(ringNode.attribute("x").as_int(), ringNode.attribute("y").as_int(), ringNode.attribute("texturepath").as_string());
 		//items.Add(item);
 	}
-
-	// Instantiate the player using the entity manager
-	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
-	player->parameters = config.child("player");
 
 	//IMPORTANT, ENTITY MANAGER IS DISABLED BY DEFAULT (NOT)
 	//if (app->entityManager->active == false) { app->entityManager->Enable(); }
@@ -113,7 +112,7 @@ void SceneTest::Update(float dt)
 
 	if (debug) {
 		//Draw NPC boundaries
-		ListItem<NPC*>* npcitem = npcs.start;
+		ListItem<NPC*>* npcitem = npcs->start;
 
 		while (npcitem != NULL) {
 			app->render->DrawRectangle(npcitem->data->boundaries, 0, 0, 255);

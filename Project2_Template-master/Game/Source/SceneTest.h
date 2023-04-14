@@ -32,6 +32,9 @@ public:
 	virtual SString GetID() { return id; }
 	virtual void SetID(SString id) { this->id = id; }
 
+	virtual List<NPC*>* GetNPCList() { return npcs; }
+	virtual void SetNPCList(List<NPC*>* npcs) { this->npcs = npcs; }
+
 public:
 
 	Player* player;
@@ -45,11 +48,10 @@ public:
 
 	bool questMenu;
 
-
 	int points;
 
-private:
 	SString id;
+	List<NPC*>* npcs;
 	SDL_Texture* img;
 
 	int font_text;

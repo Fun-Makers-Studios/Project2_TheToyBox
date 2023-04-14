@@ -24,16 +24,29 @@ bool TalkQuest::Update()
 {
 	bool ret = true;
 
-	//Check completion event
-	ListItem<NPC*>* nitem = app->sceneManager->GetCurrentScene()->npcs.start;
-	NPC* npc = nitem->data;
+	List<NPC*>* npcList = app->sceneManager->GetCurrentScene()->GetNPCList();
+	SString id = app->sceneManager->GetCurrentScene()->id;
+	ListItem<NPC*>* npcItem = npcList->start;
+	NPC* npc = npcItem->data;
 
+	while (npcItem != nullptr)
+	{
+		if (npc->npcid == this->npcId) { break; }
+		npcItem = npcItem->next;
+		npc = npcItem->data;
+	}
+
+
+	//Check completion event
+	/*ListItem<NPC*>* nitem = app->sceneManager->GetCurrentScene()->GetNPCList()->start;
+	NPC* npc = nitem->data;
+	
 	while (nitem != nullptr)
 	{
 		if (npc->npcid == this->npcId) { break; }
 		nitem = nitem->next;
 		npc = nitem->data;
-	}
+	}*/
 
 	//Completion event: player is in npc boundaries and talks to him (G key)
 	Entity* player = nullptr;

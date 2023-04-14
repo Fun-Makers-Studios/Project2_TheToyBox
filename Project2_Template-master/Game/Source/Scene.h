@@ -45,10 +45,15 @@ public:
 	// Sets the scene's ID
 	virtual void SetID(SString id) { this->id = id; }
 
+	virtual List<NPC*>* GetNPCList() { return npcs; }
+
+	virtual void SetNPCList(List<NPC*>* npcs) { this->npcs = npcs; }
+
+
 public:
 
 	SString id;
-	List<NPC*>npcs;
+	List<NPC*>* npcs;
 	List<Item*> items;
 };
 
