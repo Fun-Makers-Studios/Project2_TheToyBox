@@ -28,10 +28,15 @@ void SceneLogo::OnCreate(pugi::xml_node& config)
 	musicPath = config.child("music").attribute("path").as_string();
 	app->audio->PlayMusic(musicPath);
 
+	logoPath = config.child("textures").attribute("logo").as_string();
+	logoImg = app->tex->Load(logoPath);
+
 	font_text = app->fonts->Load(config.child("texturepaths").attribute("font").as_string(), "ABCDEFGHIJKLMNOPQRSTUWYZ0123456789-= ", 1);
 
-	debug = false;
+	app->render->camera.x = 0;
+	app->render->camera.y = 0;
 
+	debug = false;
 }
 
 void SceneLogo::OnDestroy() {}
@@ -45,17 +50,7 @@ void SceneLogo::OnActivate()
 	pugi::xml_node configNode = app->GetNode();
 	pugi::xml_node config = configNode.child(id.GetString());
 
-	// Load music
-	musicPath = configNode.child("scenelogo").child("music").attribute("path").as_string();
-	app->audio->PlayMusic(musicPath);
-
-	logoPath = configNode.child("scenelogo").child("textures").attribute("logo").as_string();
-	logoImg = app->tex->Load(logoPath);
-
-	font_text = app->fonts->Load(config.child("texturepaths").attribute("font").as_string(), "ABCDEFGHIJKLMNOPQRSTUWYZ0123456789-= ", 1);
-
-	app->render->camera.x = 0;
-	app->render->camera.y = 0;
+	
 
 	debug = false;
 }

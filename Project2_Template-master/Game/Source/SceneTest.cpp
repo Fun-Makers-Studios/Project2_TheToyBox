@@ -45,16 +45,7 @@ void SceneTest::OnCreate(pugi::xml_node& config)
 		player->parameters = config.child("player");
 	}
 
-	List<NPC*>* npcList = new List<NPC*>;
-	// Iterate all NPC in the scene
-	for (pugi::xml_node npcNode = config.child("npc"); npcNode; npcNode = npcNode.next_sibling("npc"))
-	{
-		NPC* npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
-		npc->parameters = npcNode;
-		npcList->Add(npc);
-	}
-	SetNPCList(npcList);
-	npcList->Clear();
+	
 }
 
 void SceneTest::OnDestroy() {}
@@ -68,6 +59,17 @@ void SceneTest::OnActivate()
 	
 	pugi::xml_node configNode = app->GetNode();
 	pugi::xml_node config = configNode.child(id.GetString());
+
+	List<NPC*>* npcList = new List<NPC*>;
+	// Iterate all NPC in the scene
+	for (pugi::xml_node npcNode = config.child("npc"); npcNode; npcNode = npcNode.next_sibling("npc"))
+	{
+		NPC* npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
+		npc->parameters = npcNode;
+		npcList->Add(npc);
+	}
+	SetNPCList(npcList);
+	npcList->Clear();
 
 	// iterate all objects in the scene
 	for (pugi::xml_node ringNode = config.child("ring"); ringNode; ringNode = ringNode.next_sibling("ring"))
@@ -88,7 +90,7 @@ void SceneTest::OnActivate()
 
 	// Load map
 	if (app->map->active == false) { app->map->Enable(); }
-	bool retLoad = app->map->Load(id.GetString());
+	bool retLoad = app->map->Load("sceneTest");
 
 	font_text = app->fonts->Load(config.child("texturepaths").attribute("font").as_string(), "ABCDEFGHIJKLMNOPQRSTUWYZ0123456789-= ", 1);
 

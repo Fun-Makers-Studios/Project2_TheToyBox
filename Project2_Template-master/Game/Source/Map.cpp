@@ -254,7 +254,7 @@ bool Map::Load(const char* scene)
     bool ret = true;
 
     pugi::xml_node configNode = app->GetNode();
-    pugi::xml_node config = configNode.child(scene).child(name.GetString());
+    pugi::xml_node config = configNode.child("sceneManager").child(scene).child(name.GetString());
 
     mapFileName = config.child("mapfile").attribute("path").as_string();
     mapFolder = config.child("mapfolder").attribute("path").as_string();
