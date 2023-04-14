@@ -49,6 +49,12 @@ bool SceneManager::Update(float dt)
 {
     if (currentScene)
     {
+        //Enable7Disable VSync
+        if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+        {
+            app->render->limitFPS = !app->render->limitFPS;
+        }
+
         currentScene->Update(dt);
         return true;
     }

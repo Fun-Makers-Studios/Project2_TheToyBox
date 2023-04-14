@@ -86,5 +86,5 @@ void SceneLogo::PostUpdate()
 void SceneLogo::CleanUp()
 {
 	LOG("Freeing scene");
-
+	app->tex->Unload(logoImg);
 }

@@ -26,13 +26,9 @@ bool Render::Awake(pugi::xml_node& config)
 	LOG("Create SDL rendering context");
 	bool ret = true;
 
-	Uint32 flags = SDL_RENDERER_ACCELERATED;
+	Uint32 flags = SDL_RENDERER_PRESENTVSYNC;
 
-	if (config.child("vsync").attribute("value").as_bool(true) == true)
-	{
-		flags |= SDL_RENDERER_PRESENTVSYNC;
-		LOG("Using vsync");
-	}
+	limitFPS = config.child("vsync").attribute("value").as_bool(true) == true;
 
 	renderer = SDL_CreateRenderer(app->win->window, -1, flags);
 
