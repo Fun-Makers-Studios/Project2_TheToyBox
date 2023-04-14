@@ -19,7 +19,7 @@ bool SceneManager::Awake(pugi::xml_node& config)
     Scene* sceneTest = new SceneTest();  
     AddScene(sceneTest, config.child("sceneTest"));
     
-    currentScene = sceneTest;
+    currentScene = sceneLogo;
 
     //LOG(sceneTest->id.GetString());
     //LOG(sceneTest->GetNPCList()->start->data->name.GetString());

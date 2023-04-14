@@ -26,11 +26,7 @@ void SceneLogo::OnCreate(pugi::xml_node& config)
 
 	// Load music
 	musicPath = config.child("music").attribute("path").as_string();
-	app->audio->PlayMusic(musicPath);
-
 	logoPath = config.child("textures").attribute("logo").as_string();
-	logoImg = app->tex->Load(logoPath);
-
 	font_text = app->fonts->Load(config.child("texturepaths").attribute("font").as_string(), "ABCDEFGHIJKLMNOPQRSTUWYZ0123456789-= ", 1);
 
 	app->render->camera.x = 0;
@@ -50,7 +46,8 @@ void SceneLogo::OnActivate()
 	pugi::xml_node configNode = app->GetNode();
 	pugi::xml_node config = configNode.child(id.GetString());
 
-	
+	app->audio->PlayMusic(musicPath);
+	logoImg = app->tex->Load("Assets/Textures/SceneLogo/logo.png");
 
 	debug = false;
 }
@@ -68,6 +65,11 @@ void SceneLogo::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		if (debug) { debug = false; }
 		else if (!debug) { debug = true; }
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		app->sceneManager->SwitchTo("sceneTest");
 	}
 
 	app->render->DrawTexture(logoImg, 0, 0, NULL);

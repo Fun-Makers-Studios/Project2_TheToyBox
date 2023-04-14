@@ -32,16 +32,14 @@ public:
 	virtual SString GetID() { return id; }
 	virtual void SetID(SString id) { this->id = id; }
 
-public:
+private:
 
+	SString id;
 	bool debug;
 
 	const char* musicPath;
-
 	const char* logoPath;
 
-private:
-	SString id;
 	SDL_Texture* logoImg;
 
 	int font_text;
