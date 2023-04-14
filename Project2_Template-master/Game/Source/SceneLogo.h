@@ -38,9 +38,11 @@ public:
 
 	const char* musicPath;
 
+	const char* logoPath;
+
 private:
 	SString id;
-	SDL_Texture* img;
+	SDL_Texture* logoImg;
 
 	int font_text;
 	char pointsText[6] = { "\0" };
