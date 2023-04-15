@@ -34,7 +34,7 @@
 	</logo>
 
 	<title>
-		<backgroundimage texturepath="Assets/Textures/TitleScreen.png"/>
+		<backgroundimage texturepath="Assets/Textures/SceneTitle/title.png"/>
 		<popImage settingtexturepath="Assets/Textures/PopScreen_settings.png" creditstexturepath="Assets/Textures/PopScreen_credits.png"/>
 		<music musicPath="Assets/Audio/Music/title_screen.ogg"/>
 		<startsfx startSFXPath="Assets/Audio/Fx/start_game.wav"/>
