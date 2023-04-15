@@ -76,6 +76,9 @@
     <ClCompile Include="Source\SceneLogo.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SceneBattle.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -187,6 +190,9 @@
       <Filter>Game\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneLogo.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneBattle.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
   </ItemGroup>

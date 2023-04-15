@@ -68,7 +68,7 @@ void SceneTest::OnActivate()
 		npc->parameters = npcNode;
 		npcList->Add(npc);
 	}
-	SetNPCList(npcList);
+	//SetNPCList(npcList.);
 	npcList->Clear();
 
 	// iterate all objects in the scene
@@ -114,7 +114,7 @@ void SceneTest::Update(float dt)
 
 	if (debug) {
 		//Draw NPC boundaries
-		ListItem<NPC*>* npcitem = npcs->start;
+		ListItem<NPC*>* npcitem = npcs.start;
 
 		while (npcitem != NULL) {
 			app->render->DrawRectangle(npcitem->data->boundaries, 0, 0, 255);
