@@ -19,6 +19,7 @@
 #include "GuiManager.h"
 #include "GuiButton.h"
 #include "GuiControl.h"
+#include "Debug.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -34,14 +35,13 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	input = new Input();
 	win = new Window();
-	render = new Render();
 	tex = new Textures();
 	audio = new Audio();
 	controller = new ModuleController();
+
 	fade = new ModuleFadeToBlack();
 	logoscreen = new LogoScreen();
 	titlescreen = new TitleScreen();
-	//L07 TODO 2: Add Physics module
 	physics = new Physics();
 	pathfinding = new PathFinding();
 	scene = new Scene();
@@ -51,6 +51,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map();
 	endingscreen = new EndingScreen();
 	guiManager = new GuiManager();
+	debug = new Debug();
+
+	render = new Render();
+
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -60,9 +64,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio, true);
 	AddModule(controller, true);
 	AddModule(fade, true);
+
 	AddModule(logoscreen, true);
 	AddModule(titlescreen, false);
-	//L07 TODO 2: Add Physics module
 	AddModule(physics, false);
 	AddModule(pathfinding, false);
 	AddModule(scene, false);
@@ -72,6 +76,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map, false);
 	AddModule(endingscreen, false);
 	AddModule(guiManager, true);
+	AddModule(debug, false);
 
 	// Render last to swap buffer
 	AddModule(render, true);

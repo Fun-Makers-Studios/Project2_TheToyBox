@@ -91,6 +91,9 @@
     <ClCompile Include="Source\PerfTimer.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Debug.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -212,6 +215,9 @@
     </ClInclude>
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Debug.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

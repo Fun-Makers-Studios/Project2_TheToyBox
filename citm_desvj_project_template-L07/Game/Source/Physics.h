@@ -73,6 +73,8 @@ public:
 	Physics();
 	~Physics();
 
+	b2World* GetWorld();
+
 	bool Awake(){ return true; }
 	bool Start();
 	bool PreUpdate();

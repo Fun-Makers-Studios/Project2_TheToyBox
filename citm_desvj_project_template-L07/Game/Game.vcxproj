@@ -97,6 +97,7 @@
   <ItemGroup>
     <ClCompile Include="Source\BatEnemy.cpp" />
     <ClCompile Include="Source\Coin.cpp" />
+    <ClCompile Include="Source\Debug.cpp" />
     <ClCompile Include="Source\EndingScreen.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\Fonts.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\BatEnemy.h" />
     <ClInclude Include="Source\Coin.h" />
+    <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\EndingScreen.h" />
     <ClInclude Include="Source\Fonts.h" />
     <ClInclude Include="Source\GuiButton.h" />

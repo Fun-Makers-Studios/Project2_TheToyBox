@@ -31,7 +31,10 @@ Physics::~Physics()
 {
 }
 
-
+b2World* Physics::GetWorld()
+{
+	return world;
+}
 
 bool Physics::Start()
 {
