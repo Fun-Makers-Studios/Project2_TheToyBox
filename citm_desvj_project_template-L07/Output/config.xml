@@ -1,0 +1,90 @@
+<config>
+	<app>
+		<title>The Toy Box by Fun Makers Studio</title>
+		<organization>UPC</organization>
+		<frcap value ="16" value2 ="33"/>
+	</app>
+
+	<renderer>
+		<vsync value ="false"/>
+	</renderer>
+
+	<window>
+		<resolution width="1280" height="720" scale="1"/>
+		<fullscreen value="false"/>
+		<borderless value="false"/>
+		<resizable value="false"/>
+		<fullscreen_window value="false"/>
+	</window>
+
+	<audio>
+		<music volume="40"/>
+		<fx volume="50"/>
+	</audio>
+
+	<ui>
+		<font1 texturepath="Assets/Textures/font1.png"/>
+		<font2 texturepath="Assets/Textures/font2.png"/>
+		<font2Red texturepath="Assets/Textures/font2_red.png"/>
+	</ui>
+
+	<logo>
+		<backgroundimage texturepath="Assets/Textures/SceneLogo/logo.png"/>
+		<music musicPath="Assets/Audio/Music/logoedit.ogg"/>
+	</logo>
+
+	<title>
+		<backgroundimage texturepath="Assets/Textures/TitleScreen.png"/>
+		<popImage settingtexturepath="Assets/Textures/PopScreen_settings.png" creditstexturepath="Assets/Textures/PopScreen_credits.png"/>
+		<music musicPath="Assets/Audio/Music/title_screen.ogg"/>
+		<startsfx startSFXPath="Assets/Audio/Fx/start_game.wav"/>
+		<selectsfx selectSFXPath="Assets/Audio/FX/menu_selection.wav"/>
+	</title>
+
+	<!-- L02: DONE: Add an element for the entity manager and add the player parameters -->
+	<scene>
+		<!-->player x="150" y="672" texturepath="Assets/Textures/player1.png"/-->
+		<originTexture origintexturePath = "Assets/Maps/x.png" />
+		<checkpoint checkpointPath = "Assets/Maps/Tileset_CheckPoints.png" />
+		<pathfinding  slimePathTile="Assets/Textures/Slime/path.png" />
+		<music musicPath="Assets/Audio/Music/song1.ogg" />
+		<imgPause imgPausePath="Assets/Textures/PopScreen_pause.png"/>
+		<scenesfx selectSFXPath="Assets/Audio/Fx/select.wav" />
+		<slimesfx stompSFXPath="Assets/Audio/Fx/stomp.wav" powerUpSFXPath="Assets/Audio/Fx/powerUp.wav" slimeHitSFXPath="Assets/Audio/Fx/slime_hit.wav" />
+		<batsfx batHitSFXPath="Assets/Audio/Fx/bat_hit.wav"/>
+		<player x="224" y="530" texturepath="Assets/Textures/PlayerJones.png"/>
+		<coin x="704" y="300" texturepath="Assets/Textures/bitcoin.png"/>
+		<coin x="1312" y="250" texturepath="Assets/Textures/bitcoin.png"/>
+		<coin x="2192" y="430" texturepath="Assets/Textures/bitcoin.png"/>
+		<coin x="2928" y="150" texturepath="Assets/Textures/bitcoin.png"/>
+		<life x="230" y="400" iType ="life" texturepath="Assets/Textures/GUI/life.png"/>
+		<life x="1550" y="250" iType ="life" texturepath="Assets/Textures/GUI/life.png"/>
+		<life x="3000" y="170" iType ="life" texturepath="Assets/Textures/GUI/life.png"/>
+		<slime x="719" y="339" texturepath="Assets/Textures/Slime/Slime_Spiked_Full.png"/>
+		<slime x="2576" y="145" texturepath="Assets/Textures/Slime/Slime_Spiked_Full.png"/>
+		<bat x="1504" y="266" texturepath="Assets/Textures/Bat/Bat_Full.png"/>
+	</scene>
+
+	<player>
+		<SFXset jumpSFXPath="Assets/Audio/Fx/jump.wav" dieSFXPath="Assets/Audio/Fx/death.wav" hurtSFXPath="Assets/Audio/Fx/hurt.wav"
+				pickCoinSFXPath="Assets/Audio/Fx/pick_coin.wav" levelCompletedSFXPath="Assets/Audio/Fx/level_completed.wav" selectSFXPath="Assets/Audio/Fx/select.wav"
+				shortRangeAttackSFXPath="Assets/Audio/Fx/whip_attack.wav" pickLifeSFXPath="Assets/Audio/Fx/life_up.wav"/>
+	</player>
+
+	<ending>
+		<backgroundimage texturepath="Assets/Textures/EndingScreen.png"/>
+		<music musicPath="Assets/Audio/Music/gameOver.ogg"/>
+		<endingsfx startSFXPath="Assets/Audio/Fx/start_game.wav"/>
+	</ending>
+
+	<map>
+		<mapfolder path="Assets/Maps/"/>
+		<mapfile path="Assets/Maps/Town.tmx"/>
+	</map>
+
+	<gui>
+		<guiButtons buttonsTexPath="Assets/Textures/GUI/gui_button_tex.png"/>
+		
+	</gui>
+
+</config>
