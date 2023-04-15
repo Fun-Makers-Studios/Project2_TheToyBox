@@ -4,8 +4,14 @@
 #include "Audio.h"
 #include "Input.h"
 #include "Render.h"
+#include "Window.h"
+#include "Scene.h"
 #include "Log.h"
 #include "Point.h"
+#include "Map.h"
+#include "PathFinding.h"
+#include "ModuleFadeToBlack.h"
+#include "EntityManager.h"
 
 NPC::NPC() : Entity(EntityType::NPC)
 {
@@ -30,20 +36,23 @@ bool NPC::Start() {
 	width = 32;
 	height = 32;
 
-	idleAnim.PushBack({ (1 + character) * 32,0 * 32,32,32 });
-	idleAnim.loop = false;
-	idleAnim.speed = 0.0f;
-
-	boundaries = { (position.x * 32) - 32,(position.y * 32) - 32,96,96 };
+	idleAnim.PushBack({64, 0, 32, 32 });
+	idleAnim.loop = true;
+	idleAnim.speed = 0.1f;
 
 	// initilize textures
 	texture = app->tex->Load(texturePath);
 
 	currentAnim = &idleAnim;
 
-	pbody = app->physics->CreateCircle(position.x, position.y, width / 3, bodyType::STATIC, ColliderType::NPC);
+	pbody = app->physics->CreateCircle(startPos.x+60, startPos.y, width / 3, bodyType::STATIC, ColliderType::NPC);
 
 	pbody->listener = this;
+
+	return true;
+}
+
+bool NPC::PreUpdate() {
 
 	return true;
 }
@@ -52,12 +61,18 @@ bool NPC::Update()
 {
 	currentAnim = &idleAnim;
 
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width));
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 1.5));
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 2));
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 2));
 
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
-	app->render->DrawTexture(texture, position.x * 32, position.y * 32, &rect);
+	app->render->DrawTexture(texture, position.x, position.y, &rect);
 	currentAnim->Update();
+
+	return true;
+}
+
+bool NPC::PostUpdate() {
+
 
 	return true;
 }
