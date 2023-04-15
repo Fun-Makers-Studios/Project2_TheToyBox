@@ -216,9 +216,6 @@ bool Scene::Update(float dt)
 		
 	SaveUI();
 
-	// Draw GUI
-	app->guiManager->Draw();
-
 	//Blit UI
 	app->ui->BlitCoins();
 	app->ui->BlitTimer();
@@ -236,6 +233,11 @@ bool Scene::Update(float dt)
 		app->ui->BlitFrameCount();
 	}
 
+	if (gamePaused == true || partyMenu == true)
+		app->render->DrawTexture(img_pause, player->position.x - pauseRect.w / 2, player->position.y - pauseRect.h / 2, &pauseRect);
+
+	// Draw GUI
+	app->guiManager->Draw();
 
 	resumeButton14->state = GuiControlState::DISABLED;
 	backToTitleButton15->state = GuiControlState::DISABLED;
@@ -244,9 +246,7 @@ bool Scene::Update(float dt)
 
 	if (gamePaused == true)
 	{
-		// Display pause menu
-		app->render->DrawTexture(img_pause, player->position.x - pauseRect.w/2, player->position.y - pauseRect.h/2, &pauseRect);
-
+	
 		if (resumeButton14->state == GuiControlState::DISABLED) {
 			resumeButton14->state = GuiControlState::NORMAL;
 		}
@@ -264,9 +264,7 @@ bool Scene::Update(float dt)
 	
 	if (partyMenu == true)
 	{
-		// Display pause menu
-		app->render->DrawTexture(img_pause, player->position.x - pauseRect.w / 2, player->position.y - pauseRect.h / 2, &pauseRect);
-
+	
 		if (resumeButton14->state == GuiControlState::DISABLED) {
 			resumeButton14->state = GuiControlState::NORMAL;
 		}
@@ -282,6 +280,7 @@ bool Scene::Update(float dt)
 
 	}
 
+	
 
 	return true;
 }
