@@ -90,8 +90,6 @@ bool BatEnemy::Start() {
 
 	pbody->listener = this;
 
-	hitbox = app->physics->CreateRectangle(METERS_TO_PIXELS(pbody->body->GetTransform().p.x), METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 15, 13, 4, bodyType::DYNAMIC, ColliderType::BAT_HITBOX);
-
 	refreshPathTime = 0;
 
 	return true;
@@ -106,7 +104,7 @@ bool BatEnemy::Update()
 {
 	
 	currentAnim = &flyingEnemy;
-	//velocity = { 0, 0 };
+	
 	pbody->body->SetGravityScale(0);
 
 	if (app->scene->gamePaused != true)
@@ -154,10 +152,6 @@ bool BatEnemy::Update()
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 3));
 	}
 
-	//hitbox->body->SetGravityScale(0);
-	hitboxPos.x = pbody->body->GetTransform().p.x;
-	hitboxPos.y = pbody->body->GetTransform().p.y - PIXEL_TO_METERS(10);
-	hitbox->body->SetTransform({ hitboxPos.x, hitboxPos.y }, 0);
 
 	if(app->scene->gamePaused == true)
 		pbody->body->SetLinearVelocity({ 0,0 });
@@ -169,7 +163,6 @@ bool BatEnemy::Update()
 		//Destroy entity
 		app->entityManager->DestroyEntity(this);
 		app->physics->world->DestroyBody(pbody->body);
-		app->physics->world->DestroyBody(hitbox->body);
 		app->audio->PlayFx(powerUpSFX);
 		dead = false;
 	}
@@ -250,31 +243,7 @@ void BatEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	switch (physB->cType)
 	{
-	case ColliderType::PLATFORM:
-		LOG("Collision PLATFORM");
-		break;
-	case ColliderType::WATER:
-		LOG("Collision WATER");
-		dead = true;
-		break;
-	case ColliderType::ENEMY:
-		LOG("Collision ENEMY");
-		break;
-	case ColliderType::FLYING_ENEMY:
-		LOG("Collision FLYING ENEMY");
-		break;
-	case ColliderType::PLAYER_ATTACK_HITBOX:
-		LOG("Collision PLAYER ATTACK HITBOX");
-		lives--;
-		if (lives <= 0) {
-			dead = true;
-		}
-		onCollision = true;
-		app->audio->PlayFx(batHitSFX);
-		break;
-	case ColliderType::WALL:
-		LOG("Collision WALL");
-		break;
+	
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;

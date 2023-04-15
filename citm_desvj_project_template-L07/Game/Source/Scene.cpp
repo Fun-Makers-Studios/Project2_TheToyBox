@@ -122,6 +122,7 @@ bool Scene::Start()
 	checkPointTex = app->tex->Load(checkPointTexPath);
 
 	img_pause = app->tex->Load(imgPausePath);
+	pauseRect = {35, 69, 310, 555};
 	
 	// L15: TODO 2: Declare a GUI Button and create it using the GuiManager
 	uint w, h;
@@ -191,27 +192,20 @@ bool Scene::Update(float dt)
 	}
 	
 	// Camera movement related to player's movement
-	if (cameraFix2 == true)
-	{
-		if (cameraFix == true)
-			app->render->camera.x = (-player->position.x) + (app->win->screenSurface->w) / 2;
-		else
-			app->render->camera.x = 0;
-	}
-
-	if (cameraFix == true) 
-	{
-		if (cameraFix2 == true)
-			app->render->camera.x = -2336;  // 2236 = map width - window width 
-		else
-			app->render->camera.x = (-player->position.x-23) + (app->win->screenSurface->w) / 2;
-	}
+	app->render->camera.x = (-player->position.x) + (app->win->screenSurface->w) / 2;
+	app->render->camera.y = (-player->position.y) + (app->win->screenSurface->h) / 2;
 
 
 	// Cap FPS to 60
 	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
 	{
 		app->render->limitFPS = !app->render->limitFPS;
+		app->audio->PlayFx(selectSFX);
+	}
+	
+	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	{
+		partyMenu = !partyMenu;
 		app->audio->PlayFx(selectSFX);
 	}
 
@@ -251,11 +245,27 @@ bool Scene::Update(float dt)
 	if (gamePaused == true)
 	{
 		// Display pause menu
+		app->render->DrawTexture(img_pause, player->position.x - pauseRect.w/2, player->position.y - pauseRect.h/2, &pauseRect);
 
-		if (cameraFix == false)
-			app->render->DrawTexture(img_pause, 0, 0, NULL);
-		else
-			app->render->DrawTexture(img_pause, player->position.x-490, 0, NULL);
+		if (resumeButton14->state == GuiControlState::DISABLED) {
+			resumeButton14->state = GuiControlState::NORMAL;
+		}
+		if (backToTitleButton15->state == GuiControlState::DISABLED) {
+			backToTitleButton15->state = GuiControlState::NORMAL;
+		}
+		if (exitButton16->state == GuiControlState::DISABLED) {
+			exitButton16->state = GuiControlState::NORMAL;
+		}
+		if (closeButton17->state == GuiControlState::DISABLED) {
+			closeButton17->state = GuiControlState::NORMAL;
+		}
+
+	}
+	
+	if (partyMenu == true)
+	{
+		// Display pause menu
+		app->render->DrawTexture(img_pause, player->position.x - pauseRect.w / 2, player->position.y - pauseRect.h / 2, &pauseRect);
 
 		if (resumeButton14->state == GuiControlState::DISABLED) {
 			resumeButton14->state = GuiControlState::NORMAL;
@@ -330,7 +340,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		break;
 
 	case 15:
-		app->fade->FadeToBlack(this, (Module*)app->titlescreen, 90);
+		app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
 		app->audio->PlayFx(app->titlescreen->startSFX);
 		break;
 

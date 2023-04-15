@@ -60,9 +60,6 @@ public:
 
 	PhysBody* pbody;
 
-	PhysBody* hitbox;
-	b2Vec2 hitboxPos;
-
 	int lives = 2;
 
 private:
@@ -83,6 +80,7 @@ private:
 	iPoint origin;
 	bool originSelected = false;
 	uint refreshPathTime;
+
 };
 #endif // __ENEMY_H__
 

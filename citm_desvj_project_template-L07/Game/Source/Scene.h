@@ -96,6 +96,8 @@ public:
 
 private:
 	SDL_Texture* img_pause;
+	SDL_Rect pauseRect;
+
 	iPoint startPosition;
 	
 	// L12: Debug pathfing
@@ -111,6 +113,8 @@ private:
 	GuiButton* backToTitleButton15;
 	GuiButton* exitButton16;
 	GuiButton* closeButton17;
+
+	bool partyMenu = false;
 
 	bool exitGame = false;
 };
