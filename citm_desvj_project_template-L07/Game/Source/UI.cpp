@@ -126,7 +126,7 @@ void UI::BlitLives()
 
 void UI::BlitTimer()
 {
-	if (app->scene->player->gameTimer < 50) 
+	/*if (app->scene->player->gameTimer < 50) 
 	{
 		char time[20];
 		sprintf_s(time, 20, "time: %.f", app->scene->player->gameTimer);
@@ -137,7 +137,7 @@ void UI::BlitTimer()
 		char time[20];
 		sprintf_s(time, 20, "time: %.f", app->scene->player->gameTimer);
 		app->fonts->BlitText(425, 15, font2_id, time);
-	}
+	}*/
 	
 }
 
