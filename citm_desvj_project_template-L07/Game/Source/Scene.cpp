@@ -70,12 +70,7 @@ bool Scene::Start()
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 	player->parameters = app->configNode.child("scene").child("player");
 
-	for (pugi::xml_node itemNode = app->configNode.child("scene").child("slime"); itemNode; itemNode = itemNode.next_sibling("slime"))
-	{
-		slime = (SlimeEnemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		slime->parameters = itemNode;
-		//slime->lives = 2;
-	}
+	
 
 	for (pugi::xml_node itemNode = app->configNode.child("scene").child("bat"); itemNode; itemNode = itemNode.next_sibling("bat"))
 	{
@@ -443,14 +438,6 @@ bool Scene::LoadState(pugi::xml_node& data)
 	//Load previous saved player number of lives
 	checkpointEnabled = data.child("checkpointEnabled").attribute("checkpointEnabled").as_bool();
 
-	// Load previous saved slime position
-	b2Vec2 slimePos = { data.child("slimePosition").attribute("x").as_float(), data.child("slimePosition").attribute("y").as_float() };
-	app->scene->slime->pbody->body->SetTransform(slimePos, 0);
-
-	//Load previous saved slime number of lives
-	app->scene->slime->lives = data.child("slimeLives").attribute("slimeLives").as_int();
-
-
 	// Load previous saved bat position
 	b2Vec2 batPos = { data.child("batPosition").attribute("x").as_float(), data.child("batPosition").attribute("y").as_float() };
 	app->scene->bat->pbody->body->SetTransform(batPos, 0);
@@ -491,16 +478,6 @@ bool Scene::SaveState(pugi::xml_node& data)
 	// Save current player number of coins
 	pugi::xml_node checkpointEnabled = data.append_child("checkpointEnabled");
 	checkpointEnabled.append_attribute("checkpointEnabled") = checkpointEnabled;
-
-	// Save current slime position
-	pugi::xml_node slimePos = data.append_child("slimePosition");
-	slimePos.append_attribute("x") = app->scene->slime->pbody->body->GetTransform().p.x;
-	slimePos.append_attribute("y") = app->scene->slime->pbody->body->GetTransform().p.y;
-
-	// Save current slime number of lives
-	pugi::xml_node slimeLives = data.append_child("slimeLives");
-	slimeLives.append_attribute("slimeLives") = app->scene->slime->lives;
-
 
 	// Save current bat position
 	pugi::xml_node batPos = data.append_child("batPosition");

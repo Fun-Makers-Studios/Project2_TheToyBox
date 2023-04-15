@@ -60,8 +60,9 @@
 		<life x="230" y="400" iType ="life" texturepath="Assets/Textures/GUI/life.png"/>
 		<life x="1550" y="250" iType ="life" texturepath="Assets/Textures/GUI/life.png"/>
 		<life x="3000" y="170" iType ="life" texturepath="Assets/Textures/GUI/life.png"/>
-		<slime x="719" y="339" texturepath="Assets/Textures/Slime/Slime_Spiked_Full.png"/>
-		<slime x="2576" y="145" texturepath="Assets/Textures/Slime/Slime_Spiked_Full.png"/>
+		<npc x="719" y="339" texturepath="Assets/Textures/Slime/Slime_Spiked_Full.png"/>
+		<npc x="200" y="150" texturepath="Assets/Textures/Slime/Slime_Spiked_Full.png"/>
+		<npc x="450" y="400" texturepath="Assets/Textures/Slime/Slime_Spiked_Full.png"/>
 		<bat x="1504" y="266" texturepath="Assets/Textures/Bat/Bat_Full.png"/>
 	</scene>
 

@@ -174,11 +174,6 @@ bool App::Update()
 	bool ret = true;
 	PrepareUpdate();
 
-	if (app->scene->capTo30fps == false)
-		maxFrameDuration = configNode.child("app").child("frcap").attribute("value").as_int();
-	else if (app->scene->capTo30fps == true)
-		maxFrameDuration = configNode.child("app").child("frcap").attribute("value2").as_int();
-
 	if (input->GetWindowEvent(WE_QUIT) == true)
 		ret = false;
 

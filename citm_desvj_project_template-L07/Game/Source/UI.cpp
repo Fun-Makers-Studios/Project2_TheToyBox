@@ -185,9 +185,9 @@ void UI::BlitPlayerYPos()
 
 void UI::BlitSlimeLives()
 {
-	char slimeLives[25];
+	/*char slimeLives[25];
 	sprintf_s(slimeLives, 20, "slime lives: %d", app->scene->slime->lives);
-	app->fonts->BlitText(20, 105, font2_id, slimeLives);
+	app->fonts->BlitText(20, 105, font2_id, slimeLives);*/
 }
 
 void UI::BlitBatLives()

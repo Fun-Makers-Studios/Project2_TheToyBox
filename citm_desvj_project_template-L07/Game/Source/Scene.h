@@ -54,8 +54,6 @@ public:
 	//L02: DONE 3: Declare a Player attribute 
 	Player* player;
 
-	SlimeEnemy* slime;
-
 	BatEnemy* bat;
 
 	Item* item;
@@ -69,8 +67,6 @@ public:
 	bool cameraFix2 = false;
 
 	bool playing = false;
-
-	bool capTo30fps = false;
 
 	SDL_Texture* originTex = nullptr;
 	const char* origintexturePath;
