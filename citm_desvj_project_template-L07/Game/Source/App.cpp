@@ -76,7 +76,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map, false);
 	AddModule(endingscreen, false);
 	AddModule(guiManager, true);
-	AddModule(debug, false);
+	AddModule(debug, true);
 
 	// Render last to swap buffer
 	AddModule(render, true);

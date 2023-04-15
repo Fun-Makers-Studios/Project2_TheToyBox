@@ -18,6 +18,7 @@
 #include "GuiControl.h"
 #include "Defs.h"
 #include "Log.h"
+#include "Color.h"
 
 #include <string>
 
@@ -49,6 +50,9 @@ bool Debug::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 			freeCam = !freeCam;
+
+		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+			drawEntities = !drawEntities;
 
 	}
 
@@ -107,10 +111,16 @@ bool Debug::Update(float dt)
 bool Debug::PostUpdate()
 {
 	if (debug)
+	{
 		DrawDebug();
 
-	if (drawColliders && app->physics->active)
-		DrawColliders();
+		if (drawColliders && app->physics->active)
+			DrawColliders();
+
+		if (drawEntities)
+			DrawEntities();
+	}
+		
 
 	return true;
 }
@@ -273,5 +283,32 @@ void Debug::DrawColliders()
 			// app->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN
 			// test if the current body contains mouse position
 		}
+	}
+}
+
+void Debug::DrawEntities()
+{
+	ListItem<Entity*>* item;
+	Entity* pEntity = NULL;
+
+	for (item = app->entityManager->entities.start; item != NULL; item = item->next)
+	{
+		Color color;
+
+		pEntity = item->data;
+
+		switch (pEntity->type)
+		{
+		case EntityType::PLAYER:color = Magenta;break;
+		case EntityType::NPC:	color = Blue;	break;
+		case EntityType::ENEMY: color = Red;	break;
+		case EntityType::ITEM:	color = Green;	break;
+		case EntityType::COIN:	color = Yellow; break;
+		default: color = White; break;
+		}
+
+		SDL_Rect rect = { pEntity->position.x, pEntity->position.y, 32, 32};
+		app->render->DrawRectangle(rect, color.r, color.g, color.b, 255, false);
+		app->render->DrawRectangle(rect, color.r, color.g, color.b, 64, true);
 	}
 }

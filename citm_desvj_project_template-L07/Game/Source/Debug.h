@@ -19,6 +19,7 @@ public:
 
 	void DrawDebug();
 	void DrawColliders();
+	void DrawEntities();
 
 public:
 	//flags
@@ -30,6 +31,7 @@ public:
 	bool teleport = false;
 	bool moveRight = false;
 	bool drawColliders = false;
+	bool drawEntities = false;
 	bool controlFPS = false;
 	bool colourblind = false;
 
