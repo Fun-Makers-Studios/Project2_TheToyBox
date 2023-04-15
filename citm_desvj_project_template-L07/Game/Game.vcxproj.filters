@@ -94,6 +94,9 @@
     <ClCompile Include="Source\Debug.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Source\NPC.cpp">
+      <Filter>Game\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -218,6 +221,9 @@
     </ClInclude>
     <ClInclude Include="Source\Debug.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\NPC.h">
+      <Filter>Game\Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

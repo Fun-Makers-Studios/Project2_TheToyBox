@@ -70,8 +70,14 @@ bool Scene::Start()
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 	player->parameters = app->configNode.child("scene").child("player");
 
-	
 
+	for (pugi::xml_node itemNode = app->configNode.child("scene").child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
+	{
+		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
+		npc->parameters = itemNode;
+		npcList.Add(npc);
+	}
+	
 	for (pugi::xml_node itemNode = app->configNode.child("scene").child("bat"); itemNode; itemNode = itemNode.next_sibling("bat"))
 	{
 		bat = (BatEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);

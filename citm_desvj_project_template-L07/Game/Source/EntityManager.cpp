@@ -91,6 +91,10 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		entity = new Player();
 		break;
 	
+	case EntityType::NPC:
+		entity = new NPC();
+		break;
+	
 	case EntityType::ENEMY:
 		entity = new SlimeEnemy();
 		break;

@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Player.h"
+#include "NPC.h"
 #include "Item.h"
 #include "Coin.h"
 #include "SlimeEnemy.h"
@@ -53,6 +54,9 @@ public:
 
 	//L02: DONE 3: Declare a Player attribute 
 	Player* player;
+	
+	NPC* npc;
+	List<NPC*> npcList;
 
 	BatEnemy* bat;
 
