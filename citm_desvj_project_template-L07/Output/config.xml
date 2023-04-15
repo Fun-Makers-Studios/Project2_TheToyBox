@@ -43,7 +43,6 @@
 
 	<!-- L02: DONE: Add an element for the entity manager and add the player parameters -->
 	<scene>
-		<!-->player x="150" y="672" texturepath="Assets/Textures/player1.png"/-->
 		<originTexture origintexturePath = "Assets/Maps/x.png" />
 		<checkpoint checkpointPath = "Assets/Maps/Tileset_CheckPoints.png" />
 		<pathfinding  slimePathTile="Assets/Textures/Slime/path.png" />
@@ -60,10 +59,11 @@
 		<life x="230" y="400" iType ="life" texturepath="Assets/Textures/GUI/life.png"/>
 		<life x="1550" y="250" iType ="life" texturepath="Assets/Textures/GUI/life.png"/>
 		<life x="3000" y="170" iType ="life" texturepath="Assets/Textures/GUI/life.png"/>
-		<npc x="719" y="339" texturepath="Assets/Textures/SceneGame/NPCs.png"/>
-		<npc x="200" y="150" texturepath="Assets/Textures/SceneGame/NPCs.png"/>
-		<npc x="450" y="400" texturepath="Assets/Textures/SceneGame/NPCs.png"/>
-		<bat x="1504" y="266" texturepath="Assets/Textures/Bat/Bat_Full.png"/>
+		<npc x="300" y="339" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3"/>
+		<npc x="200" y="150" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2"/>
+		<npc x="450" y="400" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4"/>
+		<npc x="350" y="200" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5"/>
+		<bat x="200" y="266" texturepath="Assets/Textures/Bat/Bat_Full.png"/>
 	</scene>
 
 	<player>

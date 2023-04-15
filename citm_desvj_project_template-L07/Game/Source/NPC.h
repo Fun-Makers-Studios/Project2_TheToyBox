@@ -20,7 +20,11 @@ public:
 
 	bool Start();
 
+	bool PreUpdate();
+
 	bool Update();
+
+	bool PostUpdate();
 
 	bool CleanUp();
 
@@ -37,6 +41,7 @@ private:
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 
 	b2Vec2 startPos;
+	b2Vec2 velocity;
 
 	int width;
 	int height;
@@ -46,8 +51,6 @@ private:
 public:
 
 	PhysBody* pbody;
-
-	SDL_Rect boundaries;
 
 	int npcid;
 };
