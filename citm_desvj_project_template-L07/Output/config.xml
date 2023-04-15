@@ -84,7 +84,7 @@
 	</map>
 
 	<gui>
-		<guiButtons buttonsTexPath="Assets/Textures/GUI/gui_button_tex.png"/>
+		<guiButtons buttonsTexPath="Assets/UI/ButtonsSprites/Buttons.png"/>
 		
 	</gui>
 

@@ -111,7 +111,7 @@ bool GuiButton::Draw(Render* render)
 	{
 		if (app->render->viewGUIbounds == true)
 			render->DrawRectangle(bounds, 255, 255, 0, 255);
-		SDL_Rect rect = { 0,29,93,29 };
+		SDL_Rect rect = { 0,0,252,76 };
 		render->DrawTexture(buttonTex, bounds.x, bounds.y, &rect);
 
 	} break;
@@ -121,7 +121,7 @@ bool GuiButton::Draw(Render* render)
 	{
 		if (app->render->viewGUIbounds == true)
 			render->DrawRectangle(bounds, 255, 255, 255, 160);
-		SDL_Rect rect = { 0,57,93,29 };
+		SDL_Rect rect = { 0,75,252,76 };
 		render->DrawTexture(buttonTex, bounds.x, bounds.y, &rect);
 
 	} break;
@@ -129,7 +129,7 @@ bool GuiButton::Draw(Render* render)
 	{
 		if (app->render->viewGUIbounds == true)
 			render->DrawRectangle(bounds, 255, 255, 255, 0);
-		SDL_Rect rect = { 0,0,93,29 };
+		SDL_Rect rect = { 0,150,252,76 };
 		render->DrawTexture(buttonTex, bounds.x, bounds.y, &rect);
 
 	} break;
