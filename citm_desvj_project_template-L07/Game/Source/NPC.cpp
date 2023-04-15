@@ -36,7 +36,7 @@ bool NPC::Start() {
 	width = 32;
 	height = 32;
 
-	idleAnim.PushBack({64, 0, 32, 32 });
+	idleAnim.PushBack({character * 32, 0, 32, 32 });
 	idleAnim.loop = true;
 	idleAnim.speed = 0.1f;
 

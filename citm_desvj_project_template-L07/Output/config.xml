@@ -80,7 +80,7 @@
 
 	<map>
 		<mapfolder path="Assets/Maps/"/>
-		<mapfile path="Assets/Maps/Town.tmx"/>
+		<mapfile path="Assets/Maps/map_town.tmx"/>
 	</map>
 
 	<gui>
