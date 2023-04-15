@@ -138,6 +138,7 @@ bool Player::Update()
 
 		if (godMode == true) {
 
+			velocity = { 0, 0 };
 			pbody->body->SetGravityScale(0);
 
 			// Fly around the map
@@ -164,8 +165,9 @@ bool Player::Update()
 			pbody->body->SetLinearVelocity(velocity);
 
 		}
-		else if (godMode == false)
+		else if (godMode == false && dead == false)
 		{
+			velocity = { 0, 0 };
 			pbody->body->SetGravityScale(0);
 
 			// Fly around the map
@@ -189,10 +191,7 @@ bool Player::Update()
 					fliped = SDL_FLIP_NONE;
 				}
 			}
-			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE
-				&& app->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE) {
-				velocity = { 0, 0 };
-			}
+			
 			pbody->body->SetLinearVelocity(velocity);
 			
 			//Reset player position input
@@ -204,6 +203,9 @@ bool Player::Update()
 			}
 
 		}
+
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width));
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 1.5));
 
 	}
 	else {
