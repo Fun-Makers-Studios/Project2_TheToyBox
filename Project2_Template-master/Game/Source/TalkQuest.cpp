@@ -24,9 +24,9 @@ bool TalkQuest::Update()
 {
 	bool ret = true;
 
-	List<NPC*>* npcList = app->sceneManager->GetCurrentScene()->GetNPCList();
+	List<NPC*> npcList = app->sceneManager->GetCurrentScene()->GetNPCList();
 	SString id = app->sceneManager->GetCurrentScene()->id;
-	ListItem<NPC*>* npcItem = npcList->start;
+	ListItem<NPC*>* npcItem = npcList.start;
 	NPC* npc = npcItem->data;
 
 	while (npcItem != nullptr)

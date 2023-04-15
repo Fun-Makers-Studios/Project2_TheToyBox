@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 #include "SceneTest.h"
 #include "SceneLogo.h"
+#include "SceneBattle.h"
 #include "LOG.h"
 
 SceneManager::SceneManager(bool startEnabled) : Module(startEnabled)
@@ -17,9 +18,12 @@ bool SceneManager::Awake(pugi::xml_node& config)
     AddScene(sceneLogo, config.child("sceneLogo"));
 
     Scene* sceneTest = new SceneTest();  
-    AddScene(sceneTest, config.child("sceneTest"));
+    AddScene(sceneTest, config.child("sceneTest"));  
     
-    currentScene = sceneLogo;
+    Scene* sceneBattle = new SceneBattle();  
+    AddScene(sceneBattle, config.child("sceneBattle"));
+    
+    currentScene = scenes.start->data;
 
     //LOG(sceneTest->id.GetString());
     //LOG(sceneTest->GetNPCList()->start->data->name.GetString());

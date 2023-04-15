@@ -1,5 +1,5 @@
-#ifndef __SCENETEST_H__
-#define __SCENETEST_H__
+#ifndef __SCENEBATTLE_H__
+#define __SCENEBATTLE_H__
 
 #include "Animation.h"
 #include "Scene.h"
@@ -10,12 +10,12 @@
 
 struct SDL_Texture;
 
-class SceneTest : public Scene
+class SceneBattle : public Scene
 {
 public:
 
-	SceneTest();
-	virtual ~SceneTest();
+	SceneBattle();
+	virtual ~SceneBattle();
 
 	void OnCreate(pugi::xml_node&) override;
 	void OnDestroy() override;
@@ -32,29 +32,18 @@ public:
 	virtual SString GetID() { return id; }
 	virtual void SetID(SString id) { this->id = id; }
 
-	virtual List<NPC*> GetNPCList() { return npcs; }
-	virtual void SetNPCList(List<NPC*> npcs) { this->npcs = npcs; }
+private:
 
-public:
-
-	Player* player;
-	//List<Chest*> rings;
-
-	const char* musicPath;
-
-	Animation animation;
-
+	SString id;
 	bool debug;
 
-	bool questMenu;
+	const char* musicPath;
+	const char* logoPath;
 
-	int points;
-
-	List<NPC*> npcs;
-	SDL_Texture* img;
+	SDL_Texture* logoImg;
 
 	int font_text;
 	char pointsText[6] = { "\0" };
 };
 
-#endif // __SCENETEST_H__
+#endif // __SCENEBATTLE_H__
