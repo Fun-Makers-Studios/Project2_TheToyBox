@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\Log.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -9,33 +8,21 @@
       <Filter>External\PugiXml</Filter>
     </ClCompile>
     <ClCompile Include="Source\EndingScreen.cpp">
-      <Filter>Scenes</Filter>
+      <Filter>Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\LogoScreen.cpp">
-      <Filter>Scenes</Filter>
+      <Filter>Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene.cpp">
-      <Filter>Scenes</Filter>
+      <Filter>Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\TitleScreen.cpp">
-      <Filter>Scenes</Filter>
+      <Filter>Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BatEnemy.cpp">
-      <Filter>Gameplay</Filter>
+    <ClCompile Include="Source\EntityManager.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Coin.cpp">
-      <Filter>Gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Item.cpp">
-      <Filter>Gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Player.cpp">
-      <Filter>Gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SlimeEnemy.cpp">
-      <Filter>Gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\App.cpp">
+    <ClCompile Include="Source\Map.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\Audio.cpp">
@@ -56,9 +43,6 @@
     <ClCompile Include="Source\Pathfinding.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\PerfTimer.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Physics.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -68,26 +52,44 @@
     <ClCompile Include="Source\Textures.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Timer.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Window.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UI.cpp">
-      <Filter>Core</Filter>
+    <ClCompile Include="Source\App.cpp">
+      <Filter>App</Filter>
     </ClCompile>
-    <ClCompile Include="Source\EntityManager.cpp">
-      <Filter>Gameplay</Filter>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>App</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Map.cpp">
-      <Filter>Gameplay</Filter>
+    <ClCompile Include="Source\BatEnemy.cpp">
+      <Filter>Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Player.cpp">
+      <Filter>Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SlimeEnemy.cpp">
+      <Filter>Game\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Coin.cpp">
+      <Filter>Game\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Item.cpp">
+      <Filter>Game\Items</Filter>
     </ClCompile>
     <ClCompile Include="Source\GuiButton.cpp">
-      <Filter>Core</Filter>
+      <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="Source\GuiManager.cpp">
-      <Filter>Core</Filter>
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\UI.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Timer.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PerfTimer.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,39 +121,24 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\EndingScreen.h">
-      <Filter>Scenes</Filter>
+      <Filter>Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\LogoScreen.h">
-      <Filter>Scenes</Filter>
+      <Filter>Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\Scene.h">
-      <Filter>Scenes</Filter>
+      <Filter>Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\TitleScreen.h">
-      <Filter>Scenes</Filter>
+      <Filter>Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BatEnemy.h">
-      <Filter>Gameplay</Filter>
+    <ClInclude Include="Source\EntityManager.h">
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Coin.h">
-      <Filter>Gameplay</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Item.h">
-      <Filter>Gameplay</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Player.h">
-      <Filter>Gameplay</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SlimeEnemy.h">
-      <Filter>Gameplay</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\App.h">
+    <ClInclude Include="Source\Map.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\Audio.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Entity.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\Fonts.h">
@@ -172,9 +159,6 @@
     <ClInclude Include="Source\Pathfinding.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PerfTimer.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Physics.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -184,52 +168,82 @@
     <ClInclude Include="Source\Textures.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Timer.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Window.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\UI.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Source\App.h">
+      <Filter>App</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Animation.h">
-      <Filter>Core</Filter>
+    <ClInclude Include="Source\BatEnemy.h">
+      <Filter>Game\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Source\EntityManager.h">
-      <Filter>Gameplay</Filter>
+    <ClInclude Include="Source\Entity.h">
+      <Filter>Game\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Map.h">
-      <Filter>Gameplay</Filter>
+    <ClInclude Include="Source\Player.h">
+      <Filter>Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SlimeEnemy.h">
+      <Filter>Game\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Coin.h">
+      <Filter>Game\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Item.h">
+      <Filter>Game\Items</Filter>
     </ClInclude>
     <ClInclude Include="Source\GuiButton.h">
-      <Filter>Core</Filter>
+      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\GuiControl.h">
-      <Filter>Core</Filter>
+      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\GuiManager.h">
-      <Filter>Core</Filter>
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\UI.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PerfTimer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="External">
-      <UniqueIdentifier>{83a966c7-b4bb-4eff-9c2c-3ff3c7b55a60}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{2cad778a-d356-48b0-9fee-587f1bbb187e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="External">
+      <UniqueIdentifier>{0fb48b10-3f11-492d-bce8-bf6daec22b31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="App">
+      <UniqueIdentifier>{83a966c7-b4bb-4eff-9c2c-3ff3c7b55a60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{2f7b7a31-bbb1-4fae-a3cf-1a3ed66871c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{a742f1b2-382d-4ea0-b6b3-cd818ad938ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{2ba57282-60c1-44a0-981d-17714153fdf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scenes">
+      <UniqueIdentifier>{96b12bd1-ca7f-4710-bd2d-38acaaccdd0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Entities">
+      <UniqueIdentifier>{62dc0c20-367f-46c0-8bce-5196053555fb}</UniqueIdentifier>
     </Filter>
     <Filter Include="External\PugiXml">
       <UniqueIdentifier>{2855ff7f-53a1-413d-a75b-18b4ade921dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scenes">
-      <UniqueIdentifier>{96b12bd1-ca7f-4710-bd2d-38acaaccdd0a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Gameplay">
-      <UniqueIdentifier>{2f7b7a31-bbb1-4fae-a3cf-1a3ed66871c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core">
-      <UniqueIdentifier>{0fb48b10-3f11-492d-bce8-bf6daec22b31}</UniqueIdentifier>
+    <Filter Include="Game\Items">
+      <UniqueIdentifier>{77c128c4-9f6e-4255-871e-9098623335dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
