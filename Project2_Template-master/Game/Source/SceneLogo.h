@@ -17,8 +17,8 @@ public:
 	SceneLogo();
 	virtual ~SceneLogo();
 
-	void OnCreate(pugi::xml_node&) override;
-	void OnDestroy() override;
+	void OnCreate(pugi::xml_node&);
+	void OnDestroy();
 
 	void OnActivate();
 	void OnDeactivate();

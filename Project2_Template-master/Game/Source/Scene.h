@@ -13,11 +13,11 @@ public:
 	Scene() {}
 
 	// Called when scene initially created. Called once.
-	virtual void OnCreate(pugi::xml_node& config) = 0;
+	virtual void OnCreate(pugi::xml_node& config) {};
 
 	// Called when scene destroyed. Called at most once (if a scene 
 	// is not removed from the game, this will never be called).
-	virtual void OnDestroy() = 0;
+	virtual void OnDestroy() {};
 
 	// Called whenever a scene is transitioned into. Can be 
 	// called many times in a typical game cycle.

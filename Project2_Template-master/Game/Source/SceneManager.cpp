@@ -75,9 +75,9 @@ bool SceneManager::AddScene(Scene* scene, pugi::xml_node& config)
 {
     if (scene == nullptr) return false;
 
-    scenes.Add(scene);
-    numScenes++;
     scene->OnCreate(config);
+    scenes.Add(scene);
+    numScenes++;  
 
     return true;
 }
