@@ -66,12 +66,12 @@ bool LogoScreen::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
 		LOG("PASA A SCENE DIRECTAMENTE");
-		app->fade->FadeToBlack(this, (Module*)app->scene, 90);
+		app->fade->FadeToBlack(this, (Module*)app->scene, 0);
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 		LOG("PASA A TITLE SCENE");
-		app->fade->FadeToBlack(this, (Module*)app->titlescreen, 90);
+		app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
 	}
 
 	fadeRatio = (float)frameCount / (float)maxFadeFrames;
@@ -81,7 +81,7 @@ bool LogoScreen::Update(float dt)
 
 	if (time >= 480) {
 		LOG("PASA A TITLE SCENE");
-		app->fade->FadeToBlack(this, (Module*)app->titlescreen, 90);
+		app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
 	}
 
 	app->render->DrawTexture(img, 0, 0, NULL);
@@ -97,7 +97,7 @@ bool LogoScreen::PostUpdate()
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
 
-	SDL_SetRenderDrawColor(app->render->renderer, 0, 0, 0, (Uint8)(fadeRatio * 255.0f));
+	SDL_SetRenderDrawColor(app->render->renderer, 0, 0, 0, 0);
 	SDL_RenderFillRect(app->render->renderer, NULL);
 
 	return ret;
