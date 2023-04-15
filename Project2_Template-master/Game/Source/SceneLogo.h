@@ -34,7 +34,6 @@ public:
 
 private:
 
-	SString id;
 	bool debug;
 
 	const char* musicPath;
