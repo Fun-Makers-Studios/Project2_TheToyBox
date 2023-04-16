@@ -70,14 +70,8 @@ bool LogoScreen::Update(float dt)
 		app->fade->FadeToBlack(this, (Module*)app->scene, 0);
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-		LOG("PASA A TITLE SCENE");
-		app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
-	}
-
 	fadeRatio = (float)frameCount / (float)maxFadeFrames;
 
-	
 	SDL_RenderFillRect(app->render->renderer, NULL);
 
 	if (time >= 150) {

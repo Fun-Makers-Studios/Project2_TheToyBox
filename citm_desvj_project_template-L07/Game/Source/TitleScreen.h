@@ -42,6 +42,7 @@ public:
 	uint startSFX = 0;
 	uint menuSelectionSFX = 0;
 	uint selectSFX = 0;
+	uint closemenuSFX = 0;
 
 	// Declare a GUI Button and create it using the GuiManager
 	GuiButton* playButton1;

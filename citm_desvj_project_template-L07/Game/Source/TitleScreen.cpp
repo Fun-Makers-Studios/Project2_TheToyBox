@@ -64,7 +64,8 @@ bool TitleScreen::Start()
 	startSFX = app->audio->LoadFx(startSFXPath);
 	menuSelectionSFX = app->audio->LoadFx(selectSFXPath);
 	selectSFX = app->audio->LoadFx(select2SFXPath);
-	titleSFX = app->audio->LoadFx("Assets/Audio/FX/TitleScreen/title_screen.wav");
+	titleSFX = app->audio->LoadFx("Assets/Audio/Fx/TitleScreen/title_screen.wav");
+	closemenuSFX = app->audio->LoadFx("Assets/Audio/Fx/TitleScreen/close_menu.wav");
 
 	app->physics->debug = false;
 	settingMenu = false;
@@ -99,7 +100,6 @@ bool TitleScreen::Start()
 	// AUDIO
 	app->audio->PlayFx(titleSFX);
 	app->audio->PlayMusic(musicPath);
-
 
 
 	return true;
@@ -201,10 +201,13 @@ bool TitleScreen::Update(float dt)
 		sprintf_s(vsync, 10, "%s", app->render->limitFPS ? "on" : "off");
 		app->fonts->BlitText(632, 565, app->ui->font1_id, vsync);
 
-
-		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		//Close settings menu
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) 
+		{
 			settingMenu = !settingMenu;
-		
+			app->audio->PlayFx(closemenuSFX);
+		}
+					
 	}
 
 	// Credits Menu
@@ -221,7 +224,10 @@ bool TitleScreen::Update(float dt)
 		app->render->DrawTexture(popImg_credits, 0, 0, NULL);
 
 		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		{ 
 			creditsMenu = !creditsMenu;
+			app->audio->PlayFx(closemenuSFX);
+		}
 	}
 
 	return true;
