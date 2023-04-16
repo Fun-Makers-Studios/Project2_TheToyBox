@@ -21,6 +21,7 @@
 #include "GuiButton.h"
 #include "GuiControl.h"
 #include "Debug.h"
+#include "PartyManager.h"
 
 #include "Defs.h"
 #include "Log.h"

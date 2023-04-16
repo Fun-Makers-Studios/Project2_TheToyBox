@@ -2,6 +2,7 @@
 
 #include "SString.h"
 #include "List.h"
+#include "App.h"
 
 struct SDL_Texture;
 
@@ -30,8 +31,25 @@ struct Gear
 
 };
 
-struct PartyMember
+class PartyMember
 {
+public:
+	PartyMember(SString name, uint maxHp, uint maxMana, uint attack, uint defense, uint speed, uint crit, SDL_Texture* texture)
+	{
+		this->name = name;
+		this->maxHp = maxHp;
+		this->currentHp = maxHp;
+		this->maxMana = maxMana;
+		this->currentMana = maxMana;
+		this->attack = attack;
+		this->defense = defense;
+		this->speed = speed;
+		this->critRate = critRate;
+		this->texture = texture;
+	};
+
+	~PartyMember() {};
+
 	SString name;
 
 	uint maxHp;
@@ -41,7 +59,6 @@ struct PartyMember
 	uint attack;
 	uint defense;
 	uint speed;
-	uint crit;
 	uint critRate;
 
 	SDL_Texture* texture;
@@ -54,7 +71,7 @@ public:
 
 	~PartyManager();
 
-	void AddMemberToParty(PartyMember*);
+	void AddMemberToParty(PartyMember* member);
 
 private:
 	List<PartyMember*> party;

@@ -43,8 +43,21 @@ bool SceneFight::Start()
 	//Create party
 	for (pugi::xml_node itemNode = app->configNode.child("sceneFight").child("partymember"); itemNode; itemNode = itemNode.next_sibling("partymember"))
 	{
-		PartyMember member;
+		const char* path = itemNode.attribute("texturepath").as_string();
+		SDL_Texture* tex = app->tex->Load(path);
+
+		PartyMember* member = new PartyMember(
+			itemNode.attribute("name").as_string(),
+			itemNode.attribute("maxHp").as_uint(),
+			itemNode.attribute("maxMana").as_uint(),
+			itemNode.attribute("attack").as_uint(),
+			itemNode.attribute("defense").as_uint(),
+			itemNode.attribute("speed").as_uint(),
+			itemNode.attribute("critRate").as_uint(),
+			tex);
+
 		
+		partyManager->AddMemberToParty(member);
 	}
 
 

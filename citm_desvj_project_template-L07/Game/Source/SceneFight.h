@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Module.h"
+#include "PartyManager.h"
 #include "SDL/include/SDL.h"
 
 
@@ -32,6 +33,7 @@ public:
 
 public:
 	uint startSFX = 0;
+	PartyManager* partyManager;
 
 private:
 	SDL_Texture* img = nullptr;

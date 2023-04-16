@@ -32,6 +32,7 @@ class Map;
 class Physics;
 class PathFinding;
 class Animation;
+class PartyManager;
 class GuiManager;
 class Debug;
 
