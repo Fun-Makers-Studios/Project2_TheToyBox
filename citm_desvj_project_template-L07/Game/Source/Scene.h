@@ -45,6 +45,8 @@ public:
 	void ResetScene();
 	void FixCamera();
 
+	void LoadNPC(SString mapName_);
+
 	void SaveUI();
 	void Checkpoint();
 

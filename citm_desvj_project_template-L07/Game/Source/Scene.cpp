@@ -445,6 +445,35 @@ void Scene::ResetScene() {
 	}
 }
 
+void Scene::LoadNPC(SString mapName_)
+{
+	
+	/*if (mapName_ == "house.tmx")
+	{
+		iPoint position = { 200,250 };
+		entityManager->CreateEntity(EntityType::TOWN, position, anims, 0);
+
+		position = { 700,1060 };
+		entityManager->CreateEntity(EntityType::RAY, position, anims, 3);
+
+		position = { 700,810 };
+		entityManager->CreateEntity(EntityType::TABERN, position, anims, 2);
+
+		position = { 500,350 };
+		entityManager->CreateEntity(EntityType::NPC_WIZARD, position, anims, 1);
+	}
+	else if (mapName_ == "pub.tmx")
+	{
+		iPoint position = { 638,280 };
+		Npc* npc = (Npc*)entityManager->CreateEntity(EntityType::TOWN, position, anims, 4);
+		npc->NpcMove(false);
+
+		position = { 670,360 };
+		entityManager->CreateEntity(EntityType::NPC_WIZARD, position, anims, 1);
+	}*/
+	
+}
+
 void Scene::FixCamera() {
 
 	app->render->camera.x = (player->position.x) - (app->win->screenSurface->w) / 2;
