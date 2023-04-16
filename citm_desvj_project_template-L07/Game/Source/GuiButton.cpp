@@ -42,30 +42,13 @@ bool GuiButton::Update(float dt)
 		{
 			state = GuiControlState::FOCUSED;
 
-			if (app->titlescreen->settingMenu == false && app->titlescreen->creditsMenu == false && app->scene->gamePaused == false)
-			{
-				if (textSize <= 5)
-					app->fonts->BlitText(this->bounds.x + (this->bounds.w / 3) + 22, (this->bounds.y + 2) + (this->bounds.h / 3) + 10, app->ui->font1_id, this->text);
-				else if (textSize > 5 && textSize <= 8)
-					app->fonts->BlitText(this->bounds.x + (this->bounds.w / 4.5) + 38, (this->bounds.y + 2) + (this->bounds.h / 3) + 10, app->ui->font1_id, this->text);
-				else if (textSize > 8 && textSize <= 12)
-					app->fonts->BlitText(this->bounds.x + (this->bounds.w / 5), (this->bounds.y + 2) + (this->bounds.h / 3), app->ui->font1_id, this->text);
-			
-			}
+			app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->ui->font1_id, this->text);
 
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
 			{
 				state = GuiControlState::PRESSED;
 			
-				if (app->titlescreen->settingMenu == false && app->titlescreen->creditsMenu == false && app->scene->gamePaused == false)
-				{
-					if (textSize <= 5)
-						app->fonts->BlitText(this->bounds.x + (this->bounds.w / 3) + 22, (this->bounds.y + 2) + (this->bounds.h / 3) + 10, app->ui->font1_id, this->text);
-					else if (textSize > 5 && textSize <= 8)
-						app->fonts->BlitText(this->bounds.x + (this->bounds.w / 4.5) + 38, (this->bounds.y + 2) + (this->bounds.h / 3) + 10, app->ui->font1_id, this->text);
-					else if (textSize > 8 && textSize <= 12)
-						app->fonts->BlitText(this->bounds.x + (this->bounds.w / 5), (this->bounds.y + 2) + (this->bounds.h / 3), app->ui->font1_id, this->text);
-				}
+				app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->ui->font1_id, this->text);
 
 			}
 
@@ -78,16 +61,9 @@ bool GuiButton::Update(float dt)
 		}
 		else {
 			state = GuiControlState::NORMAL;
-			
-			if (app->titlescreen->settingMenu == false && app->titlescreen->creditsMenu == false && app->scene->gamePaused == false)
-			{
-				if (textSize <= 5)
-					app->fonts->BlitText(this->bounds.x + (this->bounds.w / 3) + 22, (this->bounds.y) + (this->bounds.h / 3) + 8, app->ui->font1_id, this->text);
-				else if (textSize > 5 && textSize <= 8)
-					app->fonts->BlitText(this->bounds.x + (this->bounds.w / 4.5) + 38, (this->bounds.y) + (this->bounds.h / 3) + 8, app->ui->font1_id, this->text);
-				else if (textSize > 8 && textSize <= 12)
-					app->fonts->BlitText(this->bounds.x + (this->bounds.w / 5), (this->bounds.y) + (this->bounds.h / 3), app->ui->font1_id, this->text);
-			}
+
+			app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2) - 4, app->ui->font1_id, this->text);
+
 		}
 	}
 

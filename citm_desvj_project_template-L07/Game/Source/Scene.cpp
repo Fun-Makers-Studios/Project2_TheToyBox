@@ -165,9 +165,9 @@ bool Scene::Start()
 	uint w, h;
 	app->win->GetWindowSize(w, h);
 	resumeButton14 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "resume", 7, { 515, 125, 252, 76 }, this);
-	backToTitleButton15 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 15, "back to title", 14, { 515, (125 * 2), 252, 76 }, this);
-	settingsButton16 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 16, "settings", 5, { 515, (125 * 3), 252, 76 }, this);
-	closeButton17 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 17, "exit", 6, { 515, (125 * 4), 252, 76 }, this);
+	backToTitleButton15 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 15, "back to title", 13, { 515, (125 * 2), 252, 76 }, this);
+	settingsButton16 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 16, "settings", 9, { 515, (125 * 3), 252, 76 }, this);
+	closeButton17 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 17, "exit", 5, { 515, (125 * 4), 252, 76 }, this);
 
 
 	ResetScene();
@@ -403,6 +403,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		break;
 	
 	case 17:
+		app->SaveGameRequest();
 		exitGame = !exitGame;
 		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
 		break;
