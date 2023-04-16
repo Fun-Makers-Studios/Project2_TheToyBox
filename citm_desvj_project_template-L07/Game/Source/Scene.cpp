@@ -201,10 +201,12 @@ bool Scene::Update(float dt)
 		app->render->camera.x = 0;
 	if (app->render->camera.y < 0)
 		app->render->camera.y = 0;
-	if (app->render->camera.x + app->render->camera.w > METERS_TO_PIXELS(app->map->mapData.width))
-		app->render->camera.x = app->render->camera.x;
-	if (app->render->camera.y + app->render->camera.h > METERS_TO_PIXELS(app->map->mapData.height))
-		app->render->camera.y = app->render->camera.y;
+	if (app->render->camera.x + app->render->camera.w >= METERS_TO_PIXELS(app->map->mapData.width)) {
+		app->render->camera.x = 480;
+	}
+	if (app->render->camera.y + app->render->camera.h >= METERS_TO_PIXELS(app->map->mapData.height)) {
+		app->render->camera.y = 432;
+	}
 
 
 	// Cap FPS to 60
