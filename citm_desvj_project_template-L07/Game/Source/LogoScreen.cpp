@@ -80,7 +80,7 @@ bool LogoScreen::Update(float dt)
 	
 	SDL_RenderFillRect(app->render->renderer, NULL);
 
-	if (time >= 480) {
+	if (time >= 150) {
 		LOG("PASA A TITLE SCENE");
 		app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
 	}

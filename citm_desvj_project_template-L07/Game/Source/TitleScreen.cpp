@@ -61,10 +61,10 @@ bool TitleScreen::Start()
 	img = app->tex->Load(imgPath);
 	popImg_settings = app->tex->Load(popImgSettingsPath);
 	popImg_credits = app->tex->Load(popImgCreditsPath);
-	app->audio->PlayMusic(musicPath);
 	startSFX = app->audio->LoadFx(startSFXPath);
 	menuSelectionSFX = app->audio->LoadFx(selectSFXPath);
 	selectSFX = app->audio->LoadFx(select2SFXPath);
+	titleSFX = app->audio->LoadFx("Assets/Audio/FX/TitleScreen/title_screen.wav");
 
 	app->physics->debug = false;
 	settingMenu = false;
@@ -96,7 +96,12 @@ bool TitleScreen::Start()
 
 	vsyncButton13 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 13, "vsync", 6, { 520, 532, 252, 76 }, this);
 
-	
+	// AUDIO
+	app->audio->PlayFx(titleSFX);
+	app->audio->PlayMusic(musicPath);
+
+
+
 	return true;
 }
 

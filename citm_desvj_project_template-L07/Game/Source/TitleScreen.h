@@ -38,6 +38,7 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 public:
+	uint titleSFX = 0;
 	uint startSFX = 0;
 	uint menuSelectionSFX = 0;
 	uint selectSFX = 0;
