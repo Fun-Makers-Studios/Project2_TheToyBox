@@ -96,7 +96,7 @@ public:
 	List<Item*> livesCollectedList;
 	int itemLivesCount = 0;
 
-	const char* actualMap;
+	bool isTeleporting = false;
 
 private:
 	SDL_Texture* img_pause;

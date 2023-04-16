@@ -277,6 +277,26 @@ bool Scene::Update(float dt)
 
 	}
 
+
+	//Teleports to a house --> Change to ChangeMap() function
+	//if (isTeleporting == true) {
+
+	//	ListItem<MapLayer*>* mapLayerItem;
+	//	mapLayerItem = mapData.maplayers.start;
+
+	//	while (mapLayerItem != NULL)
+	//	{
+	//		if (mapLayerItem->data->name.GetString() == "Collisions" && mapLayerItem->data->data == "Collisions")
+	//		{
+
+	//		}
+	//		mapLayerItem = mapLayerItem->next;
+	//	}
+
+	//	app->map->ChangeMap(app->map->mapData.maplayers.start->data->properties.GetProperty("Teleport")->value);
+	//	//pbody->body->SetTransform(PIXEL_TO_METERS(housePos), 0);
+	//	isTeleporting = false;
+	//}
 	
 
 	return true;

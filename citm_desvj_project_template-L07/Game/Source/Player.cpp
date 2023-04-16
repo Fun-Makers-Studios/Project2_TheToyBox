@@ -205,14 +205,14 @@ bool Player::Update()
 		}
 
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width));
-		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height));
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height/1.5));
 
 		//Teleports to a house --> Change to ChangeMap() function
-		if (house == true) {
-			housePos = { 200, 400 };
-			pbody->body->SetTransform(PIXEL_TO_METERS(housePos), 0);
+		if (app->scene->isTeleporting == true) {
+
 			app->map->ChangeMap("house");
-			house = false;
+			//pbody->body->SetTransform(PIXEL_TO_METERS(housePos), 0);
+			app->scene->isTeleporting = false;
 		}
 	}
 	else {
@@ -262,8 +262,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("COINS: %d", coins);
 		break;
 	case ColliderType::TELEPORT:
-		LOG("Collision PLATFORM");
-		house = true;
+		LOG("Collision TELEPORT");
+		app->scene->isTeleporting = true;
 		break;
 	
 	case ColliderType::CHECKPOINT:

@@ -223,6 +223,7 @@ bool Map::CleanUp()
 
 	while (item != NULL)
 	{
+        app->tex->UnLoad(item->data->texture);
 		RELEASE(item->data);
 		item = item->next;
 	}
@@ -235,6 +236,7 @@ bool Map::CleanUp()
 
     while (layerItem != NULL)
     {
+        layerItem->data->properties.list.Clear();
         RELEASE(layerItem->data);
         layerItem = layerItem->next;
     }
@@ -260,16 +262,6 @@ bool Map::CleanUp()
     }
     mapData.mapObjectGroups.Clear();
 
-    /*ListItem<PhysBody*>* collisionsItem;
-    collisionsItem = mapColliders.start;
-
-    while (collisionsItem != NULL)
-    {
-        collisionsItem->data->body->DestroyFixture(collisionsItem->data->body->GetFixtureList());
-        RELEASE(collisionsItem->data);
-        collisionsItem = collisionsItem->next;
-    }
-    mapColliders.Clear();*/
 
     return true;
 }
@@ -671,7 +663,7 @@ bool Map::CreateColliders()
                         PhysBody* c1 = app->physics->CreateRectangle(pos.x + halfTileHeight, pos.y + halfTileWidth, mapData.tileWidth, mapData.tileHeight, STATIC, ColliderType::UNKNOWN);
                         
                         switch (mapLayerItem->data->Get(x, y)) {
-                        case 16:
+                        case 16: case 897:
                             c1->body->GetFixtureList()->SetSensor(true);
                             c1->cType = ColliderType::TELEPORT;
                             break;
