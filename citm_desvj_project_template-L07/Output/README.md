@@ -32,11 +32,11 @@ In Toy Box, players will travel through the four zones of the world, each of the
 
 - [Ariadna Sevcik](https://github.com/AriSevcik) - DESIGN 
 
-- [Júlia Serra] (https://github.com/softdrawss) - DESIGN & AUDIO
+- [Júlia Serra](https://github.com/softdrawss) - DESIGN & AUDIO
 
-- [Rylan Graham] (https://github.com/RylanJGraham) - UI
+- [Rylan Graham](https://github.com/RylanJGraham) - UI
 
-- [Xavier Alcañiz] (https://github.com/StarvinXarvin) - ART
+- [Xavier Alcañiz](https://github.com/StarvinXarvin) - ART
 
 ## License
 
