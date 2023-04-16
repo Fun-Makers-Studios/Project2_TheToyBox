@@ -48,8 +48,7 @@ public:
 	GuiButton* creditsButton3;
 	GuiButton* exitButton4;
 	GuiButton* continueButton5; // Show only if there is a saved game in "save_game.xml"
-	GuiButton* closeSettingMenuButton6; // Show only if bool "settingMenu" is true
-	GuiButton* closeCreditsMenuButton7; // Show only if bool "creditsMenu" is true
+	
 
 	GuiButton* decreaseMusicButton8;
 	GuiButton* increaseMusicButton9;
