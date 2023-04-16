@@ -26,7 +26,7 @@
 ## Controls
 
  - {WASD} - Player's movement
- - {K} - Player's short range attack
+ - {T} - Player's Team Party Menu
  - {SPACEBAR} - Player's jump
  - {SPACEBAR + SPACEBAR} - Player's DOUBLE jump 
  - {ENTER} - Pass to the next screen  

@@ -322,8 +322,8 @@ void Player::ResetPlayerPos() {
 	pbody->body->SetAwake(true);
 	velocity = { 0, 0 };
 	pbody->body->SetTransform(PIXEL_TO_METERS(startPos), 0.0f);
-	app->scene->cameraFix2 = false;
-	app->scene->cameraFix = false;
+	app->scene->cameraFixY = false;
+	app->scene->cameraFixX = false;
 	app->render->camera.x = 0;
 	dead = false;
 	
