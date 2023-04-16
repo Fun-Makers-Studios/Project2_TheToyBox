@@ -171,6 +171,8 @@ public:
 	// L12: Create walkability map for pathfinding
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
+	bool ChangeMap(const char* mapFileName_);
+
 private:
 
 	bool LoadMap(pugi::xml_node mapFile);

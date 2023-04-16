@@ -96,6 +96,8 @@ public:
 	List<Item*> livesCollectedList;
 	int itemLivesCount = 0;
 
+	const char* actualMap;
+
 private:
 	SDL_Texture* img_pause;
 	SDL_Rect pauseRect;

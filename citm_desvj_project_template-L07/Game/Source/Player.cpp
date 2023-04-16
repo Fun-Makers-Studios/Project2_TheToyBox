@@ -207,6 +207,13 @@ bool Player::Update()
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width));
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height));
 
+		//Teleports to a house --> Change to ChangeMap() function
+		if (house == true) {
+			housePos = { 200, 400 };
+			pbody->body->SetTransform(PIXEL_TO_METERS(housePos), 0);
+			app->map->ChangeMap("house");
+			house = false;
+		}
 	}
 	else {
 		pbody->body->SetAwake(false);
@@ -254,14 +261,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		app->audio->PlayFx(pickCoinSFX);*/
 		LOG("COINS: %d", coins);
 		break;
-	case ColliderType::PLATFORM:
+	case ColliderType::TELEPORT:
 		LOG("Collision PLATFORM");
-		
+		house = true;
 		break;
-	case ColliderType::WATER:
-		LOG("Collision WATER");
-		
-		break;
+	
 	case ColliderType::CHECKPOINT:
 		LOG("Collision CHECKPOINT");
 		/*if (app->scene->checkpointEnabled == false) {
@@ -271,44 +275,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}*/
 		//app->fade->FadeToBlack((Module*)app->scene, (Module*)app->titlescreen, 90);
 		break;
-	case ColliderType::WIN_ZONE:
-		LOG("Collision WIN ZONE");
-		break;
-	case ColliderType::ENEMY:
-		LOG("Collision ENEMY SLIME");
-		
-		break;
-	case ColliderType::FLYING_ENEMY:
-		LOG("Collision FLYING ENEMY BAT");
-		
-		break;
-	case ColliderType::SLIME_HITBOX:
-		LOG("Collison SLIME HEAD HITBOX");
-		
-		break;
-	case ColliderType::BAT_HITBOX:
-		LOG("Collison BAT HEAD HITBOX");
-		
-		break;
-	case ColliderType::WALL:
-		LOG("Collision WALL");
-		break;
-	case ColliderType::CAMERAFIX:
-		LOG("Collision CameraFix");
-		
-		break;
-	case ColliderType::NONCAMERAFIX:
-		LOG("Collision NONCameraFix");
-		
-		break;
-	case ColliderType::CAMERAFIX_2:
-		LOG("Collision CameraFix 2");
-		
-		break;
-	case ColliderType::NONCAMERAFIX_2:
-		LOG("Collision NONCameraFix 2");
-		
-		break;
+	
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;

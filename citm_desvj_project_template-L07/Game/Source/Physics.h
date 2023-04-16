@@ -45,6 +45,7 @@ enum class ColliderType {
 	NONCAMERAFIX_2,
 	WIN_ZONE,
 	CHECKPOINT,
+	TELEPORT,
 	UNKNOWN
 };
 
@@ -97,6 +98,8 @@ public:
 
 	b2World* world;
 	bool debug = true;
+
+	void DestroyMapColliders();
 
 private:
 

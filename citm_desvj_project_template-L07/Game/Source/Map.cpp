@@ -3,6 +3,7 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Map.h"
+#include "Pathfinding.h"
 #include "Physics.h"
 #include "Player.h"
 
@@ -259,6 +260,16 @@ bool Map::CleanUp()
     }
     mapData.mapObjectGroups.Clear();
 
+    /*ListItem<PhysBody*>* collisionsItem;
+    collisionsItem = mapColliders.start;
+
+    while (collisionsItem != NULL)
+    {
+        collisionsItem->data->body->DestroyFixture(collisionsItem->data->body->GetFixtureList());
+        RELEASE(collisionsItem->data);
+        collisionsItem = collisionsItem->next;
+    }
+    mapColliders.Clear();*/
 
     return true;
 }
@@ -660,10 +671,11 @@ bool Map::CreateColliders()
                         PhysBody* c1 = app->physics->CreateRectangle(pos.x + halfTileHeight, pos.y + halfTileWidth, mapData.tileWidth, mapData.tileHeight, STATIC, ColliderType::UNKNOWN);
                         
                         switch (mapLayerItem->data->Get(x, y)) {
-                        case 695:
-                            c1->cType = ColliderType::PLATFORM;
+                        case 16:
+                            c1->body->GetFixtureList()->SetSensor(true);
+                            c1->cType = ColliderType::TELEPORT;
                             break;
-                        case 696:
+                        case 17:
                             c1->cType = ColliderType::WALL;
                             break;
                         case 693:
@@ -785,5 +797,28 @@ bool Map::CreateColliders()
     }
 
     return ret;
+}
+
+bool Map::ChangeMap(const char* mapFileName_) {
+    
+    bool ret = true;
+
+    mapFileName = app->configNode.child("map").child(mapFileName_).attribute("path").as_string();
+
+    CleanUp();
+    app->physics->DestroyMapColliders();
+
+    if (Load()) {
+        int w, h;
+        uchar* data = NULL;
+
+        bool retWalkMap = app->map->CreateWalkabilityMap(w, h, &data);
+        if (retWalkMap) app->pathfinding->SetMap(w, h, data);
+
+        RELEASE_ARRAY(data);
+    }
+    
+    return ret;
+
 }
 

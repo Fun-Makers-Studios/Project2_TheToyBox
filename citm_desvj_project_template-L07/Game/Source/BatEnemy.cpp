@@ -126,25 +126,26 @@ bool BatEnemy::Update()
 		//Calculates distance between bat and player for detection range
 		float distance = playerTile.x - origin.x;
 
-		//Test compute path function
-		if (originSelected == true && distance <= 15 && distance >= -15)
-		{
-			app->pathfinding->CreatePath(origin, playerTile);
-			refreshPathTime++;
-			originSelected = false;
-			/*if (refreshPathTime >= 150)
-				originSelected = false;*/
-			MovementDirection(origin, playerTile);
-		}
-		else
-		{
-			velocity = { 0, 0 };
-			origin.x = pbody->body->GetPosition().x;
-			origin.y = pbody->body->GetPosition().y;
-			originSelected = true;
-			app->pathfinding->ClearLastPath();
-			refreshPathTime = 0;
-		}
+		//Pathfinding doesn't work with ChangeMap Func for now
+		////Test compute path function
+		//if (originSelected == true && distance <= 15 && distance >= -15)
+		//{
+		//	app->pathfinding->CreatePath(origin, playerTile);
+		//	refreshPathTime++;
+		//	originSelected = false;
+		//	/*if (refreshPathTime >= 150)
+		//		originSelected = false;*/
+		//	MovementDirection(origin, playerTile);
+		//}
+		//else
+		//{
+		//	velocity = { 0, 0 };
+		//	origin.x = pbody->body->GetPosition().x;
+		//	origin.y = pbody->body->GetPosition().y;
+		//	originSelected = true;
+		//	app->pathfinding->ClearLastPath();
+		//	refreshPathTime = 0;
+		//}
 
 		pbody->body->SetLinearVelocity(velocity);
 
@@ -167,24 +168,25 @@ bool BatEnemy::Update()
 		dead = false;
 	}
 
-	if (app->scene->gamePaused != true)
-	{
-		if (app->physics->debug)
-		{
-			// L12: Get the latest calculated path and draw
-			const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-			//LOG("Path Count: %d", path->Count());
-			for (uint i = 0; i < path->Count(); ++i)
-			{
-				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-				app->render->DrawTexture(app->scene->slimeTilePathTex, pos.x, pos.y);
-			}
+	//Pathfinding doesn't work with ChangeMap Func for now
+	//if (app->scene->gamePaused != true)
+	//{
+	//	if (app->physics->debug)
+	//	{
+	//		// L12: Get the latest calculated path and draw
+	//		const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+	//		//LOG("Path Count: %d", path->Count());
+	//		for (uint i = 0; i < path->Count(); ++i)
+	//		{
+	//			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+	//			app->render->DrawTexture(app->scene->slimeTilePathTex, pos.x, pos.y);
+	//		}
 
-			// L12: Debug pathfinding
-			iPoint originScreen = app->map->MapToWorld(origin.x, origin.y);
-			app->render->DrawTexture(app->scene->originTex, originScreen.x - 16, originScreen.y - 19);
-		}
-	}
+	//		// L12: Debug pathfinding
+	//		iPoint originScreen = app->map->MapToWorld(origin.x, origin.y);
+	//		app->render->DrawTexture(app->scene->originTex, originScreen.x - 16, originScreen.y - 19);
+	//	}
+	//}
 
 	if (app->scene->gamePaused != true)
 	{
@@ -210,31 +212,32 @@ bool BatEnemy::CleanUp()
 
 void BatEnemy::MovementDirection(const iPoint& origin, const iPoint& destination) {
 
-	float resX = destination.x - origin.x;
-	float resY = destination.y - origin.y;
+	//Pathfinding doesn't work with ChangeMap Func for now
+	//float resX = destination.x - origin.x;
+	//float resY = destination.y - origin.y;
 
-	iPoint playerTile = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
-	if (app->pathfinding->IsWalkable(playerTile) != 0) {
-		//Check if player is to the right or the left of the origin
-		if (resX < 0 || app->scene->player->position.x+32 < position.x) {
-			velocity.x = -5;
-			fliped = SDL_FLIP_HORIZONTAL;
-		}
-		if (resX > 0 || app->scene->player->position.x > position.x) {
-			velocity.x = +5;
-			fliped = SDL_FLIP_NONE;
-		}
-		if (resY < 0 || app->scene->player->position.y+32 < position.y) {
-			velocity.y = -5;
-		}
-		if (resY > 0 || app->scene->player->position.y > position.y) {
-			velocity.y = +5;
-		}
-	}
-	else {
-		velocity.x = 0;
-		velocity.y = 0;
-	}
+	//iPoint playerTile = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
+	//if (app->pathfinding->IsWalkable(playerTile) != 0) {
+	//	//Check if player is to the right or the left of the origin
+	//	if (resX < 0 || app->scene->player->position.x+32 < position.x) {
+	//		velocity.x = -5;
+	//		fliped = SDL_FLIP_HORIZONTAL;
+	//	}
+	//	if (resX > 0 || app->scene->player->position.x > position.x) {
+	//		velocity.x = +5;
+	//		fliped = SDL_FLIP_NONE;
+	//	}
+	//	if (resY < 0 || app->scene->player->position.y+32 < position.y) {
+	//		velocity.y = -5;
+	//	}
+	//	if (resY > 0 || app->scene->player->position.y > position.y) {
+	//		velocity.y = +5;
+	//	}
+	//}
+	//else {
+	//	velocity.x = 0;
+	//	velocity.y = 0;
+	//}
 }
 
 void BatEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {

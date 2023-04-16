@@ -93,6 +93,9 @@ private:
 
 	bool isFliped = false;
 
+	bool house = false;
+	b2Vec2 housePos;
+
 };
 
 #endif // __PLAYER_H__
