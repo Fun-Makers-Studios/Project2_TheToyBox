@@ -43,11 +43,12 @@ bool LogoScreen::Start()
 
 	/*Initialize*/
 	imgPath = app->configNode.child("logo").child("backgroundimage").attribute("texturepath").as_string();
-	musicPath = app->configNode.child("logo").child("music").attribute("musicPath").as_string();
+	logoFX = app->audio->LoadFx("Assets/Audio/Fx/LogoScreen/logo_screen.wav");
 
 	/*Load*/
 	img = app->tex->Load(imgPath);
-	app->audio->PlayMusic(musicPath);
+	
+	app->audio->PlayFx(logoFX);
 
 	return true;
 }

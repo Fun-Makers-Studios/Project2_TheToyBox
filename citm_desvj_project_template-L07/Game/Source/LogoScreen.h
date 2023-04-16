@@ -42,6 +42,9 @@ private:
 	const char* imgPath;
 	const char* musicPath;
 
+	//FX
+	uint logoFX;
+
 	// A frame count system to handle the fade time and ratio
 	Uint32 frameCount = 250;
 	Uint32 maxFadeFrames = 250;
