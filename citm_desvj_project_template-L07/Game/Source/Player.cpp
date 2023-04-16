@@ -205,7 +205,7 @@ bool Player::Update()
 		}
 
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width));
-		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 1.5));
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height));
 
 	}
 	else {

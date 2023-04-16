@@ -96,6 +96,8 @@ public:
 
 private:
 	SDL_Texture* img_pause;
+	SDL_Rect pauseRect;
+
 	iPoint startPosition;
 	
 	// L12: Debug pathfing
@@ -109,8 +111,10 @@ private:
 	// Declare a GUI Button and create it using the GuiManager
 	GuiButton* resumeButton14;
 	GuiButton* backToTitleButton15;
-	GuiButton* exitButton16;
+	GuiButton* settingsButton16;
 	GuiButton* closeButton17;
+
+	bool partyMenu = false;
 
 	bool exitGame = false;
 };
