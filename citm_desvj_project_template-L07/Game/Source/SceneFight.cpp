@@ -6,6 +6,9 @@
 #include "Audio.h"
 #include "Log.h"
 #include "PartyManager.h"
+#include "TitleScreen.h"
+#include "UI.h"
+#include "GuiManager.h"
 #include "List.h"
 
 
@@ -93,6 +96,9 @@ bool SceneFight::Start()
 		turnList.Add(member);
 	}
 
+	attackButton18 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 18, "attack", 7, { 100, 600, 252, 76 }, this);
+	defenseButton19 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 19, "defense", 8, { 510, 600, 252, 76 }, this);
+	turnJumpButton20 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "jump turn", 10, { 915, 600, 252, 76 }, this);
 
 	return true;
 }
@@ -113,6 +119,22 @@ bool SceneFight::Update(float dt)
 		app->render->DrawTexture(turnList.At(i)->data->texture, turnList.At(i)->data->fightPosition.x, turnList.At(i)->data->fightPosition.y, NULL);
 	}
 
+	// Draw GUI
+	app->guiManager->Draw();
+
+	attackButton18->state = GuiControlState::DISABLED;
+	defenseButton19->state = GuiControlState::DISABLED;
+	turnJumpButton20->state = GuiControlState::DISABLED;
+
+	if (attackButton18->state == GuiControlState::DISABLED) {
+		attackButton18->state = GuiControlState::NORMAL;
+	}
+	if (defenseButton19->state == GuiControlState::DISABLED) {
+		defenseButton19->state = GuiControlState::NORMAL;
+	}
+	if (turnJumpButton20->state == GuiControlState::DISABLED) {
+		turnJumpButton20->state = GuiControlState::NORMAL;
+	}
 	//TODO: Sort by speed
 
 	//Turn start
@@ -142,8 +164,42 @@ bool SceneFight::CleanUp()
 {
 	LOG("Freeing LOGO SCENE");
 
+	if (attackButton18 != nullptr)
+		attackButton18->state = GuiControlState::DISABLED;
+	if (defenseButton19 != nullptr)
+		defenseButton19->state = GuiControlState::DISABLED;
+	if (turnJumpButton20 != nullptr)
+		turnJumpButton20->state = GuiControlState::DISABLED;
+
 	if (img != nullptr) {
 		app->tex->UnLoad(img);
+	}
+
+	return true;
+}
+
+bool SceneFight::OnGuiMouseClickEvent(GuiControl* control)
+{
+	// L15: TODO 5: Implement the OnGuiMouseClickEvent method
+	switch (control->id)
+	{
+	case 18:
+		
+		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		break;
+
+	case 19:
+		
+		app->audio->PlayFx(app->titlescreen->startSFX);
+		break;
+
+	case 20:
+		
+		app->audio->PlayFx(app->titlescreen->startSFX);
+		break;
+
+	default:
+		break;
 	}
 
 	return true;

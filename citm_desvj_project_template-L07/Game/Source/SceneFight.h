@@ -2,6 +2,7 @@
 
 #include "Module.h"
 #include "PartyManager.h"
+#include "GuiButton.h"
 #include "SDL/include/SDL.h"
 
 
@@ -31,6 +32,9 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	// Define multiple Gui Event methods
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 public:
 	uint startSFX = 0;
 	uint turn = 0;
@@ -44,4 +48,9 @@ private:
 	const char* imgPath;
 	const char* musicPath;
 	const char* startSFXPath;
+
+	// Declare a GUI Button and create it using the GuiManager
+	GuiButton* attackButton18;
+	GuiButton* defenseButton19;
+	GuiButton* turnJumpButton20;
 };
