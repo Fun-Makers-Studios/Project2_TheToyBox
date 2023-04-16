@@ -127,10 +127,10 @@ bool Scene::Start()
 	// L15: TODO 2: Declare a GUI Button and create it using the GuiManager
 	uint w, h;
 	app->win->GetWindowSize(w, h);
-	resumeButton14 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "resume", 7, { (player->position.x - pauseRect.w / 2) + 30, (player->position.y - pauseRect.h / 2) + 40, 93, 29 }, this);
-	backToTitleButton15 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 15, "back to title", 14, {469, 344, 93, 29 }, this);
-	exitButton16 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 16, "exit", 5, { 469, 385, 93, 29 }, this);
-	closeButton17 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 17, "close", 6, { 767, 114, 93, 29 }, this);
+	resumeButton14 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "resume", 7, { 515, 125, 252, 76 }, this);
+	backToTitleButton15 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 15, "back to title", 14, { 515, (125 * 2), 252, 76 }, this);
+	settingsButton16 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 16, "settings", 5, { 515, (125 * 3), 252, 76 }, this);
+	closeButton17 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 17, "exit", 6, { 515, (125 * 4), 252, 76 }, this);
 
 
 	ResetScene();
@@ -192,8 +192,19 @@ bool Scene::Update(float dt)
 	}
 	
 	// Camera movement related to player's movement
-	app->render->camera.x = (-player->position.x) + (app->win->screenSurface->w) / 2;
-	app->render->camera.y = (-player->position.y) + (app->win->screenSurface->h) / 2;
+	
+
+	app->render->camera.x = (player->position.x) - (app->win->screenSurface->w) / 2;
+	app->render->camera.y = (player->position.y) - (app->win->screenSurface->h) / 2;
+
+	if (app->render->camera.x < 0)
+		app->render->camera.x = 0;
+	if (app->render->camera.y < 0)
+		app->render->camera.y = 0;
+	if (app->render->camera.x + app->render->camera.w > METERS_TO_PIXELS(app->map->mapData.width))
+		app->render->camera.x = app->render->camera.x;
+	if (app->render->camera.y + app->render->camera.h > METERS_TO_PIXELS(app->map->mapData.height))
+		app->render->camera.y = app->render->camera.y;
 
 
 	// Cap FPS to 60
@@ -234,14 +245,14 @@ bool Scene::Update(float dt)
 	}
 
 	if (gamePaused == true || partyMenu == true)
-		app->render->DrawTexture(img_pause, player->position.x - pauseRect.w / 2, player->position.y - pauseRect.h / 2, &pauseRect);
+		app->render->DrawTexture(img_pause, app->render->camera.x + app->render->camera.w/2 - pauseRect.w/2, app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
 
 	// Draw GUI
 	app->guiManager->Draw();
 
 	resumeButton14->state = GuiControlState::DISABLED;
 	backToTitleButton15->state = GuiControlState::DISABLED;
-	exitButton16->state = GuiControlState::DISABLED;
+	settingsButton16->state = GuiControlState::DISABLED;
 	closeButton17->state = GuiControlState::DISABLED;
 
 	if (gamePaused == true)
@@ -253,8 +264,8 @@ bool Scene::Update(float dt)
 		if (backToTitleButton15->state == GuiControlState::DISABLED) {
 			backToTitleButton15->state = GuiControlState::NORMAL;
 		}
-		if (exitButton16->state == GuiControlState::DISABLED) {
-			exitButton16->state = GuiControlState::NORMAL;
+		if (settingsButton16->state == GuiControlState::DISABLED) {
+			settingsButton16->state = GuiControlState::NORMAL;
 		}
 		if (closeButton17->state == GuiControlState::DISABLED) {
 			closeButton17->state = GuiControlState::NORMAL;
@@ -271,8 +282,8 @@ bool Scene::Update(float dt)
 		if (backToTitleButton15->state == GuiControlState::DISABLED) {
 			backToTitleButton15->state = GuiControlState::NORMAL;
 		}
-		if (exitButton16->state == GuiControlState::DISABLED) {
-			exitButton16->state = GuiControlState::NORMAL;
+		if (settingsButton16->state == GuiControlState::DISABLED) {
+			settingsButton16->state = GuiControlState::NORMAL;
 		}
 		if (closeButton17->state == GuiControlState::DISABLED) {
 			closeButton17->state = GuiControlState::NORMAL;
@@ -318,8 +329,8 @@ bool Scene::CleanUp()
 		resumeButton14->state = GuiControlState::DISABLED;
 	if(backToTitleButton15 != nullptr)
 		backToTitleButton15->state = GuiControlState::DISABLED;
-	if(exitButton16 != nullptr)
-		exitButton16->state = GuiControlState::DISABLED;
+	if(settingsButton16 != nullptr)
+		settingsButton16->state = GuiControlState::DISABLED;
 	if(closeButton17 != nullptr)
 		closeButton17->state = GuiControlState::DISABLED;
 
@@ -332,7 +343,6 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	// L15: TODO 5: Implement the OnGuiMouseClickEvent method
 	switch (control->id)
 	{
-	case 17:
 	case 14:
 		gamePaused = !gamePaused;
 		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
@@ -344,6 +354,10 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		break;
 
 	case 16:
+		//Here goes settings menu
+		break;
+	
+	case 17:
 		exitGame = !exitGame;
 		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
 		break;

@@ -111,7 +111,7 @@ private:
 	// Declare a GUI Button and create it using the GuiManager
 	GuiButton* resumeButton14;
 	GuiButton* backToTitleButton15;
-	GuiButton* exitButton16;
+	GuiButton* settingsButton16;
 	GuiButton* closeButton17;
 
 	bool partyMenu = false;

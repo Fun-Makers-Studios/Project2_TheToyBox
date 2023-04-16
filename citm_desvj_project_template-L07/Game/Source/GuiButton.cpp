@@ -96,6 +96,7 @@ bool GuiButton::Update(float dt)
 
 bool GuiButton::Draw(Render* render)
 {
+	SDL_Rect rec = { bounds.x + app->render->camera.x,  bounds.y + app->render->camera.y, bounds.w, bounds.h };
 
 	// Draw the right button depending on state
 	switch (state)
@@ -104,18 +105,15 @@ bool GuiButton::Draw(Render* render)
 	case GuiControlState::DISABLED: 
 	{
 		if(app->render->viewGUIbounds == true)
-			render->DrawRectangle(bounds, 0, 0, 0, 0);
+			render->DrawRectangle(rec, 0, 0, 0, 0);
 	} break;
 
 	case GuiControlState::NORMAL:
 	{
 		if (app->render->viewGUIbounds == true)
-			render->DrawRectangle(bounds, 255, 255, 0, 255);
+			render->DrawRectangle(rec, 255, 255, 0, 255);
 		SDL_Rect rect = { 0,0,252,76 };
-		if(app->scene->active == true)
-			render->DrawTexture(buttonTex, app->scene->player->position.x + bounds.x, app->scene->player->position.y + bounds.y, &rect);
-		else
-			render->DrawTexture(buttonTex, bounds.x, bounds.y, &rect);
+		render->DrawTexture(buttonTex, rec.x, rec.y, &rect);
 
 	} break;
 
@@ -123,28 +121,22 @@ bool GuiButton::Draw(Render* render)
 	case GuiControlState::FOCUSED:
 	{
 		if (app->render->viewGUIbounds == true)
-			render->DrawRectangle(bounds, 255, 255, 255, 160);
+			render->DrawRectangle(rec, 255, 255, 255, 160);
 		SDL_Rect rect = { 0,75,252,76 };
-		if (app->scene->active == true)
-			render->DrawTexture(buttonTex, app->scene->player->position.x + bounds.x, app->scene->player->position.y + bounds.y, &rect);
-		else
-			render->DrawTexture(buttonTex, bounds.x, bounds.y, &rect);
+		render->DrawTexture(buttonTex, rec.x, rec.y, &rect);
 
 	} break;
 	case GuiControlState::PRESSED:
 	{
 		if (app->render->viewGUIbounds == true)
-			render->DrawRectangle(bounds, 255, 255, 255, 0);
+			render->DrawRectangle(rec, 255, 255, 255, 0);
 		SDL_Rect rect = { 0,150,252,76 };
-		if (app->scene->active == true)
-			render->DrawTexture(buttonTex, app->scene->player->position.x + bounds.x, app->scene->player->position.y + bounds.y, &rect);
-		else
-			render->DrawTexture(buttonTex, bounds.x, bounds.y, &rect);
+		render->DrawTexture(buttonTex, rec.x, rec.y, &rect);
 
 	} break;
 
 	case GuiControlState::SELECTED: 
-		render->DrawRectangle(bounds, 0, 255, 0, 255);
+		render->DrawRectangle(rec, 0, 255, 0, 255);
 		
 		break;
 

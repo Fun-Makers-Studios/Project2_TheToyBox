@@ -117,8 +117,8 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 	uint scale = app->win->GetScale();
 
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * scale;
-	rect.y = (int)(camera.y * speed) + y * scale;
+	rect.x = (int)(-camera.x * speed) + x * scale;
+	rect.y = (int)(-camera.y * speed) + y * scale;
 
 	if(section != NULL)
 	{
@@ -164,8 +164,8 @@ bool Render::DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint
 	SDL_Rect rec(rect);
 	if(use_camera)
 	{
-		rec.x = (int)(camera.x + rect.x * scale);
-		rec.y = (int)(camera.y + rect.y * scale);
+		rec.x = (int)(-camera.x + rect.x * scale);
+		rec.y = (int)(-camera.y + rect.y * scale);
 		rec.w *= scale;
 		rec.h *= scale;
 	}
@@ -221,12 +221,12 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 	for(uint i = 0; i < 360; ++i)
 	{
 		if (app->titlescreen->active == true || app->logoscreen->active == true) {
-			points[i].x = (int)(camera.x + radius * cos(i * factor));
-			points[i].y = (int)(camera.y + radius * sin(i * factor));
+			points[i].x = (int)(-camera.x + radius * cos(i * factor));
+			points[i].y = (int)(-camera.y + radius * sin(i * factor));
 		}
 		else {
-			points[i].x = (int)(camera.x + x + radius * cos(i * factor));
-			points[i].y = (int)(camera.y + y + radius * sin(i * factor));
+			points[i].x = (int)(-camera.x + x + radius * cos(i * factor));
+			points[i].y = (int)(-camera.y + y + radius * sin(i * factor));
 		}
 		// TO HIDE THE CIRCLES DRAWED LINKED TO THE BODIES, DELETE THE "x" and "y" from the lines below.
 		/*points[i].x = (int)(camera.x + x + radius * cos(i * factor));
