@@ -94,7 +94,10 @@ bool SceneFight::Start()
 			position);
 
 		turnList.Add(member);
+		enemyList.Add(member);
 	}
+
+	enemySelected = 0;
 
 	attackButton18 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 18, "attack", 7, { 100, 600, 252, 76 }, this);
 	defenseButton19 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 19, "defense", 8, { 510, 600, 252, 76 }, this);
@@ -119,6 +122,30 @@ bool SceneFight::Update(float dt)
 		app->render->DrawTexture(turnList.At(i)->data->texture, turnList.At(i)->data->fightPosition.x, turnList.At(i)->data->fightPosition.y, NULL);
 	}
 
+	//TODO: Sort by speed
+
+	//Turn start
+	uint id = turn % turnList.Count();
+	PartyMember* member = turnList.At(id)->data;
+
+	//	check player turn
+	if (member->type == ALLY)
+	{
+		//	choose option/enemy
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+		{
+			enemySelected--;
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		{
+			enemySelected++;
+		}
+	}
+
+	
+	//	draw stats
+	
+
 	// Draw GUI
 	app->guiManager->Draw();
 
@@ -135,15 +162,7 @@ bool SceneFight::Update(float dt)
 	if (turnJumpButton20->state == GuiControlState::DISABLED) {
 		turnJumpButton20->state = GuiControlState::NORMAL;
 	}
-	//TODO: Sort by speed
-
-	//Turn start
-	uint id = turn % turnList.Count();
-	PartyMember* member = turnList.At(id)->data;
-
-	//	choose target
-	//	choose option
-	//	draw stats
+	
 
 	return true;
 }
@@ -183,17 +202,17 @@ bool SceneFight::OnGuiMouseClickEvent(GuiControl* control)
 	// L15: TODO 5: Implement the OnGuiMouseClickEvent method
 	switch (control->id)
 	{
-	case 18:
-		
-		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+	case 18: //Attack
+		Attack(); //alnau tonto
+		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);	
 		break;
 
-	case 19:
+	case 19: //Defense
 		
 		app->audio->PlayFx(app->titlescreen->startSFX);
 		break;
 
-	case 20:
+	case 20: //Skip turn
 		
 		app->audio->PlayFx(app->titlescreen->startSFX);
 		break;
@@ -203,4 +222,11 @@ bool SceneFight::OnGuiMouseClickEvent(GuiControl* control)
 	}
 
 	return true;
+}
+
+
+void SceneFight::Attack(PartyMember* ally)
+{
+	//TODO: Calculate crit, def
+	enemyList.At(enemySelected)->data->currentHp -= ally->attack;
 }

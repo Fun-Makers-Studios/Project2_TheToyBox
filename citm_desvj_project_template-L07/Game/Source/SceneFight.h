@@ -35,11 +35,16 @@ public:
 	// Define multiple Gui Event methods
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
+	void Attack(PartyMember* ally, PartyMember* enemy);
+
 public:
 	uint startSFX = 0;
 	uint turn = 0;
 	List<PartyMember*> turnList;
+	List<PartyMember*> enemyList;
 	List<iPoint*> positions;
+
+	uint enemySelected;
 
 
 private:
