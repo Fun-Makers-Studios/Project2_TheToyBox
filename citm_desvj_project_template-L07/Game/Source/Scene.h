@@ -43,6 +43,7 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	void ResetScene();
+	void FixCamera();
 
 	void SaveUI();
 	void Checkpoint();
@@ -67,8 +68,9 @@ public:
 	// Set of SFX
 	uint selectSFX = 0;
 
-	bool cameraFix = false;
-	bool cameraFix2 = false;
+	bool cameraFixX = false;
+	bool cameraFixY = false;
+	iPoint cameraPos;
 
 	bool playing = false;
 
@@ -93,6 +95,8 @@ public:
 
 	List<Item*> livesCollectedList;
 	int itemLivesCount = 0;
+
+	bool isTeleporting = false;
 
 private:
 	SDL_Texture* img_pause;

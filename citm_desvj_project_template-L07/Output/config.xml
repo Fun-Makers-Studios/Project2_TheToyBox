@@ -35,7 +35,7 @@
 
 	<title>
 		<backgroundimage texturepath="Assets/Textures/SceneTitle/title.png"/>
-		<popImage settingtexturepath="Assets/Textures/PopScreen_settings.png" creditstexturepath="Assets/Textures/PopScreen_credits.png"/>
+		<popImage settingtexturepath="Assets/Textures/SceneTitle/Settings/SettingsMenu.png" creditstexturepath="Assets/Textures/SceneTitle/Credits/CreditsMenu.png"/>
 		<music musicPath="Assets/Audio/Music/title_screen.ogg"/>
 		<startsfx startSFXPath="Assets/Audio/Fx/start_game.wav"/>
 		<selectsfx selectSFXPath="Assets/Audio/FX/menu_selection.wav"/>
@@ -90,6 +90,7 @@
 	<map>
 		<mapfolder path="Assets/Maps/"/>
 		<mapfile path="Assets/Maps/map_town.tmx"/>
+		<house path="Assets/Maps/Town.tmx"/>
 	</map>
 
 	<gui>

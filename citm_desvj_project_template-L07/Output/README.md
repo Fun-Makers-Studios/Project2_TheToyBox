@@ -1,50 +1,48 @@
-# Misco Jones Adventures - ADVENTURES JOKES STUDIO
+# The Toy Box - FUN MAKERS STUDIOS
 
 ## Description
 
- Misco Jones Adventures is a retro 2D platformer game in which the protagonist, Misco Jones, has to navigate through diffent environments where he will have to have to face enemies, parkour and plenty of other things! Will Jones be enough skilled to reach the end?
+The Toy Box is a role playing game in which a group of friends go into a gigantic toy store that has recently settled in town at the request of the main character’s little sister, when the group goes in they find themselves surrounded by shelves filled with toys and games for all ages and some incredible displays but there is no one inside; the group goes to explore the store separately.
+
+In Toy Box, players will travel through the four zones of the world, each of these zones will have a different theme. While exploring the world, players will find many different characters, some friendly and some not, while trying to get all of their group back together and get back to the real world.
 
 ## Key Features
 
- - {F1/F2} - Start from the first/second level
- - {F3} - Start from the beginning of the current level
- - {F5} - Save current game state (player & enemies)
+ - {F5} - Save current game state
  - {F6} - Load the previous game state (player & enemies)
- - {F7} - Move between checkpoints
  - {F9} - View colliders/logic/paths
  - {F8} - View GUI bounds rectangles and state
  - {F10} - God Mode
- - {F11} - Enable/Disable FPS cap to 30
- 
-## Optional Features
-
-- {Audio Feedback} - Music and SFX for player interactions.
-- {Short range attack Cooldown} - Basic player attack has 1 second cooldown time.
-- {UI} - Display of player's lives, player's coins, current FPS, etc.
-- {DEBUG KEYS} - If key 'P' is pressed during Logo Screen, Map Screen will be loaded directly. 
 
 ## Controls
 
  - {WASD} - Player's movement
- - {K} - Player's short range attack
- - {SPACEBAR} - Player's jump
- - {SPACEBAR + SPACEBAR} - Player's DOUBLE jump 
- - {ENTER} - Pass to the next screen  
+ - {T} - Player's Team Party Menu
  - {ESCAPE} - Pause the game
 
 ## Developers
 
-![](https://raw.githubusercontent.com/Historn/GameDev-Platformer/main/TeamPhotos/arnaujimenez.png)
- - [Arnau Jiménez Gallego](https://github.com/Historn) - CODE 
+- [Francisco Ferrerós](https://github.com/kikofp02) - TEAM LEADER
 
-![](https://raw.githubusercontent.com/Historn/GameDev-Platformer/main/TeamPhotos/adriapons.jpg)
- - [Adrià Pons Mensa](https://github.com/AdriaPm) - ART & CODE
- 
+- [Adrià Pons](https://github.com/AdriaPm) - MANAGEMENT
+
+- [Arnau Jiménez](https://github.com/Historn) - CODING
+
+- [Héctor Báscones](https://github.com/Hekbas) - QA 
+
+- [Ariadna Sevcik](https://github.com/AriSevcik) - DESIGN 
+
+- [Júlia Serra](https://github.com/softdrawss) - DESIGN & AUDIO
+
+- [Rylan Graham](https://github.com/RylanJGraham) - UI
+
+- [Xavier Alcañiz](https://github.com/StarvinXarvin) - ART
+
 ## License
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](https://mit-license.org/) for further details.
 
 ## Latest release
 
- Click [here](https://github.com/Historn/GameDev-Platformer/releases) to check our latest game release.
+ Click [here](https://github.com/Fun-Makers-Studios/Project2_TheToyBox/releases) to check our latest game release.
 

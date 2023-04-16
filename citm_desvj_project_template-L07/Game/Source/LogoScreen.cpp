@@ -43,11 +43,12 @@ bool LogoScreen::Start()
 
 	/*Initialize*/
 	imgPath = app->configNode.child("logo").child("backgroundimage").attribute("texturepath").as_string();
-	musicPath = app->configNode.child("logo").child("music").attribute("musicPath").as_string();
+	logoFX = app->audio->LoadFx("Assets/Audio/Fx/LogoScreen/logo_screen.wav");
 
 	/*Load*/
 	img = app->tex->Load(imgPath);
-	app->audio->PlayMusic(musicPath);
+	
+	app->audio->PlayFx(logoFX);
 
 	return true;
 }
@@ -69,17 +70,11 @@ bool LogoScreen::Update(float dt)
 		app->fade->FadeToBlack(this, (Module*)app->scene, 0);
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-		LOG("PASA A TITLE SCENE");
-		app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
-	}
-
 	fadeRatio = (float)frameCount / (float)maxFadeFrames;
 
-	
 	SDL_RenderFillRect(app->render->renderer, NULL);
 
-	if (time >= 480) {
+	if (time >= 150) {
 		LOG("PASA A TITLE SCENE");
 		app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
 	}

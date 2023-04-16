@@ -373,6 +373,16 @@ bool Physics::CleanUp()
 {
 	LOG("Destroying physics world");
 
+	DestroyMapColliders();
+
+	// Delete the whole physics world!
+	delete world;
+	world = nullptr;
+
+	return true;
+}
+
+void Physics::DestroyMapColliders() {
 	ListItem<PhysBody*>* collisionsItem;
 	collisionsItem = app->map->mapColliders.start;
 
@@ -383,12 +393,6 @@ bool Physics::CleanUp()
 		collisionsItem = collisionsItem->next;
 	}
 	app->map->mapColliders.Clear();
-
-	// Delete the whole physics world!
-	delete world;
-	world = nullptr;
-
-	return true;
 }
 
 void PhysBody::GetPosition(int& x, int& y) const

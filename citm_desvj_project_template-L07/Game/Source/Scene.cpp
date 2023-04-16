@@ -236,29 +236,8 @@ bool Scene::Update(float dt)
 	}
 	
 	// Camera movement related to player's movement
-	
+	FixCamera();
 
-	app->render->camera.x = (player->position.x) - (app->win->screenSurface->w) / 2;
-	app->render->camera.y = (player->position.y) - (app->win->screenSurface->h) / 2;
-
-	if (app->render->camera.x < 0)
-		app->render->camera.x = 0;
-	if (app->render->camera.y < 0)
-		app->render->camera.y = 0;
-	if (app->render->camera.x + app->render->camera.w >= METERS_TO_PIXELS(app->map->mapData.width)) {
-		app->render->camera.x = 480;
-	}
-	if (app->render->camera.y + app->render->camera.h >= METERS_TO_PIXELS(app->map->mapData.height)) {
-		app->render->camera.y = 432;
-	}
-
-
-	// Cap FPS to 60
-	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
-	{
-		app->render->limitFPS = !app->render->limitFPS;
-		app->audio->PlayFx(selectSFX);
-	}
 	
 	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 	{
@@ -337,6 +316,26 @@ bool Scene::Update(float dt)
 
 	}
 
+
+	//Teleports to a house --> Change to ChangeMap() function
+	//if (isTeleporting == true) {
+
+	//	ListItem<MapLayer*>* mapLayerItem;
+	//	mapLayerItem = mapData.maplayers.start;
+
+	//	while (mapLayerItem != NULL)
+	//	{
+	//		if (mapLayerItem->data->name.GetString() == "Collisions" && mapLayerItem->data->data == "Collisions")
+	//		{
+
+	//		}
+	//		mapLayerItem = mapLayerItem->next;
+	//	}
+
+	//	app->map->ChangeMap(app->map->mapData.maplayers.start->data->properties.GetProperty("Teleport")->value);
+	//	//pbody->body->SetTransform(PIXEL_TO_METERS(housePos), 0);
+	//	isTeleporting = false;
+	//}
 	
 
 	return true;
@@ -467,6 +466,47 @@ void Scene::ResetScene() {
 	}
 }
 
+void Scene::FixCamera() {
+
+	app->render->camera.x = (player->position.x) - (app->win->screenSurface->w) / 2;
+	app->render->camera.y = (player->position.y) - (app->win->screenSurface->h) / 2;
+	if (app->render->camera.x < 0)
+		app->render->camera.x = 0;
+	if (app->render->camera.y < 0)
+		app->render->camera.y = 0;
+	if (app->render->camera.x + app->render->camera.w > METERS_TO_PIXELS(app->map->mapData.width)) {
+		if (cameraFixX == false)
+		{
+			cameraFixX = true;
+			cameraPos.x = app->render->camera.x;
+		}
+		app->render->camera.x = cameraPos.x;
+	}
+	else
+	{
+		if (cameraFixX == true)
+		{
+			cameraFixX = false;
+		}
+	}
+	if (app->render->camera.y + app->render->camera.h > METERS_TO_PIXELS(app->map->mapData.height)) {
+		if (cameraFixY == false)
+		{
+			cameraFixY = true;
+			LOG("CAMERA Y FIX: %d", cameraFixY);
+			cameraPos.y = app->render->camera.y;
+		}
+		app->render->camera.y = cameraPos.y;
+	}
+	else
+	{
+		if (cameraFixY == true)
+		{
+			cameraFixY = false;
+		}
+	}
+}
+
 bool Scene::LoadState(pugi::xml_node& data)
 {
 	// Load previous saved player position
@@ -474,8 +514,8 @@ bool Scene::LoadState(pugi::xml_node& data)
 	app->scene->player->pbody->body->SetTransform(playerPos, 0);
 	
 	// Load previous saved cameraFix & cameraFix2 parameters
-	app->scene->cameraFix = data.child("cameraIsFix").attribute("value").as_bool();
-	app->scene->cameraFix2 = data.child("cameraIsFix2").attribute("value").as_bool();
+	app->scene->cameraFixX = data.child("cameraIsFix").attribute("value").as_bool();
+	app->scene->cameraFixY = data.child("cameraIsFix2").attribute("value").as_bool();
 
 	//Load previous saved player number of lives
 	app->scene->player->lives = data.child("playerLives").attribute("playerLives").as_float();
@@ -532,11 +572,11 @@ bool Scene::SaveState(pugi::xml_node& data)
 
 	// Save cameraFix parameter
 	pugi::xml_node cameraIsFix = data.append_child("cameraIsFix");
-	cameraIsFix.append_attribute("value") = app->scene->cameraFix;
+	cameraIsFix.append_attribute("value") = app->scene->cameraFixX;
 
 	// Save cameraFix2 parameter
 	pugi::xml_node cameraIsFix2 = data.append_child("cameraIsFix2");
-	cameraIsFix2.append_attribute("value") = app->scene->cameraFix2;
+	cameraIsFix2.append_attribute("value") = app->scene->cameraFixY;
 
 	// Save current player number of lives
 	pugi::xml_node playerLives = data.append_child("playerLives");

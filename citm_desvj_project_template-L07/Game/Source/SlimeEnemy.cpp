@@ -147,25 +147,26 @@ bool SlimeEnemy::Update()
 		//Calculates distance between slime and player for detection range
 		float distance = playerTile.x - origin.x;
 
-		//Test compute path function
-		if (originSelected == true && distance <= 10 && distance >= -10)
-		{
-			app->pathfinding->CreatePath(origin, playerTile);
-			refreshPathTime++;
-			originSelected = false;
+		//Pathfinding doesn't work with ChangeMap Func for now
+		////Test compute path function
+		//if (originSelected == true && distance <= 10 && distance >= -10)
+		//{
+		//	app->pathfinding->CreatePath(origin, playerTile);
+		//	refreshPathTime++;
+		//	originSelected = false;
 
-			MovementDirection(origin, playerTile);
-			Attack(origin, playerTile);
-		}
-		else
-		{
-			velocity = { 0, 0 };
-			origin.x = pbody->body->GetPosition().x;
-			origin.y = pbody->body->GetPosition().y;
-			originSelected = true;
-			app->pathfinding->ClearLastPath();
-			refreshPathTime = 0;
-		}
+		//	MovementDirection(origin, playerTile);
+		//	Attack(origin, playerTile);
+		//}
+		//else
+		//{
+		//	velocity = { 0, 0 };
+		//	origin.x = pbody->body->GetPosition().x;
+		//	origin.y = pbody->body->GetPosition().y;
+		//	originSelected = true;
+		//	app->pathfinding->ClearLastPath();
+		//	refreshPathTime = 0;
+		//}
 
 		if (jump == false)
 			pbody->body->SetLinearVelocity(velocity);
@@ -204,24 +205,24 @@ bool SlimeEnemy::Update()
 		dead = false;
 	}
 
-	if (app->scene->gamePaused != true)
-	{
-		if (app->physics->debug)
-		{
-			// L12: Get the latest calculated path and draw
-			const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
-			//LOG("Path Count: %d", path->Count());
-			for (uint i = 0; i < path->Count(); ++i)
-			{
-				iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
-				app->render->DrawTexture(app->scene->slimeTilePathTex, pos.x, pos.y);
-			}
+	//if (app->scene->gamePaused != true)
+	//{
+	//	if (app->physics->debug)
+	//	{
+	//		// L12: Get the latest calculated path and draw
+	//		const DynArray<iPoint>* path = app->pathfinding->GetLastPath();
+	//		//LOG("Path Count: %d", path->Count());
+	//		for (uint i = 0; i < path->Count(); ++i)
+	//		{
+	//			iPoint pos = app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+	//			app->render->DrawTexture(app->scene->slimeTilePathTex, pos.x, pos.y);
+	//		}
 
-			// L12: Debug pathfinding
-			iPoint originScreen = app->map->MapToWorld(origin.x, origin.y);
-			app->render->DrawTexture(app->scene->originTex, originScreen.x - 16, originScreen.y - 19);
-		}
-	}
+	//		// L12: Debug pathfinding
+	//		iPoint originScreen = app->map->MapToWorld(origin.x, origin.y);
+	//		app->render->DrawTexture(app->scene->originTex, originScreen.x - 16, originScreen.y - 19);
+	//	}
+	//}
 
 	if (app->scene->gamePaused != true)
 	{
@@ -250,35 +251,36 @@ void SlimeEnemy::MovementDirection(const iPoint& origin, const iPoint& destinati
 	float resX = destination.x - origin.x;
 	float resY = destination.y - origin.y;
 
-	if (app->pathfinding->IsWalkable(destination) != 0) {
+	//Pathfinding doesn't work with ChangeMap Func for now
+	//if (app->pathfinding->IsWalkable(destination) != 0) {
 
-		//Check if player is to the right or the left of the origin
-		if (resX < 0 || app->scene->player->position.x + 32 < position.x) {
-			velocity.x = -3;
-			fliped = SDL_FLIP_NONE;
-		}
-		if (resX > 0 || app->scene->player->position.x > position.x) {
-			velocity.x = +3;
-			fliped = SDL_FLIP_HORIZONTAL;
-		}
+	//	//Check if player is to the right or the left of the origin
+	//	if (resX < 0 || app->scene->player->position.x + 32 < position.x) {
+	//		velocity.x = -3;
+	//		fliped = SDL_FLIP_NONE;
+	//	}
+	//	if (resX > 0 || app->scene->player->position.x > position.x) {
+	//		velocity.x = +3;
+	//		fliped = SDL_FLIP_HORIZONTAL;
+	//	}
 
-		/*ENEMY JUMP FOR 2 TILES HEIGHT, 15 iS The Lowest Platform Tile Height*/
-		if (resY < 0 && jump == false && app->pathfinding->GetNextTileY(2) < 15 && app->pathfinding->GetNextTileY(2) > 13) {
-			jumpEnemy.Reset();
-			jump = true;
-			pbody->body->ApplyLinearImpulse({ 0, -1.2 }, pbody->body->GetWorldCenter(), true);
-		}
-		/*ENEMY JUMP FOR 4 TILES HEIGHT, 15 iS The Lowest Platform Tile Height*/
-		if (resY < 0 && jump == false && app->pathfinding->GetNextTileY(2) < 14 && app->pathfinding->GetNextTileY(2) > 12) {
-			jumpEnemy.Reset();
-			jump = true;
-			pbody->body->ApplyLinearImpulse({ 0, -1.5 }, pbody->body->GetWorldCenter(), true);
-		}
-		
-	}
-	else {
-		velocity.x = 0;
-	}
+	//	/*ENEMY JUMP FOR 2 TILES HEIGHT, 15 iS The Lowest Platform Tile Height*/
+	//	if (resY < 0 && jump == false && app->pathfinding->GetNextTileY(2) < 15 && app->pathfinding->GetNextTileY(2) > 13) {
+	//		jumpEnemy.Reset();
+	//		jump = true;
+	//		pbody->body->ApplyLinearImpulse({ 0, -1.2 }, pbody->body->GetWorldCenter(), true);
+	//	}
+	//	/*ENEMY JUMP FOR 4 TILES HEIGHT, 15 iS The Lowest Platform Tile Height*/
+	//	if (resY < 0 && jump == false && app->pathfinding->GetNextTileY(2) < 14 && app->pathfinding->GetNextTileY(2) > 12) {
+	//		jumpEnemy.Reset();
+	//		jump = true;
+	//		pbody->body->ApplyLinearImpulse({ 0, -1.5 }, pbody->body->GetWorldCenter(), true);
+	//	}
+	//	
+	//}
+	//else {
+	//	velocity.x = 0;
+	//}
 	
 		
 }

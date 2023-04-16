@@ -38,9 +38,11 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 public:
+	uint titleSFX = 0;
 	uint startSFX = 0;
 	uint menuSelectionSFX = 0;
 	uint selectSFX = 0;
+	uint closemenuSFX = 0;
 
 	// Declare a GUI Button and create it using the GuiManager
 	GuiButton* playButton1;
@@ -48,8 +50,7 @@ public:
 	GuiButton* creditsButton3;
 	GuiButton* exitButton4;
 	GuiButton* continueButton5; // Show only if there is a saved game in "save_game.xml"
-	GuiButton* closeSettingMenuButton6; // Show only if bool "settingMenu" is true
-	GuiButton* closeCreditsMenuButton7; // Show only if bool "creditsMenu" is true
+	
 
 	GuiButton* decreaseMusicButton8;
 	GuiButton* increaseMusicButton9;

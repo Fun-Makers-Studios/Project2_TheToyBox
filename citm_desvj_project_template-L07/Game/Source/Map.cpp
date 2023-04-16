@@ -3,6 +3,7 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Map.h"
+#include "Pathfinding.h"
 #include "Physics.h"
 #include "Player.h"
 
@@ -103,19 +104,6 @@ void Map::Draw()
     OPTICK_CATEGORY("Draw Map", Optick::Category::GameLogic);
     if(mapLoaded == false)
         return;
-
-    /*
-    // L04: DONE 6: Iterate all tilesets and draw all their 
-    // images in 0,0 (you should have only one tileset for now)
-
-    ListItem<TileSet*>* tileset;
-    tileset = mapData.tilesets.start;
-
-    while (tileset != NULL) {
-        app->render->DrawTexture(tileset->data->texture,0,0);
-        tileset = tileset->next;
-    }
-    */
 
     // L05: DONE 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
 
@@ -235,6 +223,7 @@ bool Map::CleanUp()
 
 	while (item != NULL)
 	{
+        app->tex->UnLoad(item->data->texture);
 		RELEASE(item->data);
 		item = item->next;
 	}
@@ -247,22 +236,11 @@ bool Map::CleanUp()
 
     while (layerItem != NULL)
     {
+        layerItem->data->properties.list.Clear();
         RELEASE(layerItem->data);
         layerItem = layerItem->next;
     }
     mapData.maplayers.Clear();
-
-    /*This goes to Physics.cpp*/
-   /* ListItem<PhysBody*>* collisionsItem;
-    collisionsItem = mapColliders.start;
-
-    while (collisionsItem != NULL)
-    {
-        collisionsItem->data->body->DestroyFixture(collisionsItem->data->body->GetFixtureList());
-        RELEASE(collisionsItem->data);
-        collisionsItem = collisionsItem->next;
-    }
-    mapColliders.Clear();*/
 
     //Chain Collider Points clean up
     ListItem<ObjectGroup*>* ObjectGroupItem;
@@ -278,8 +256,7 @@ bool Map::CleanUp()
             RELEASE(ObjectGroupItem->data);
             ObjectItem = ObjectItem->next;
         }
-        //ObjectGroupItem->data->objects.Clear();
-
+ 
         RELEASE(ObjectGroupItem->data);
         ObjectGroupItem = ObjectGroupItem->next;
     }
@@ -686,10 +663,11 @@ bool Map::CreateColliders()
                         PhysBody* c1 = app->physics->CreateRectangle(pos.x + halfTileHeight, pos.y + halfTileWidth, mapData.tileWidth, mapData.tileHeight, STATIC, ColliderType::UNKNOWN);
                         
                         switch (mapLayerItem->data->Get(x, y)) {
-                        case 695:
-                            c1->cType = ColliderType::PLATFORM;
+                        case 16: case 897:
+                            c1->body->GetFixtureList()->SetSensor(true);
+                            c1->cType = ColliderType::TELEPORT;
                             break;
-                        case 696:
+                        case 17:
                             c1->cType = ColliderType::WALL;
                             break;
                         case 693:
@@ -811,5 +789,28 @@ bool Map::CreateColliders()
     }
 
     return ret;
+}
+
+bool Map::ChangeMap(const char* mapFileName_) {
+    
+    bool ret = true;
+
+    mapFileName = app->configNode.child("map").child(mapFileName_).attribute("path").as_string();
+
+    CleanUp();
+    app->physics->DestroyMapColliders();
+
+    if (Load()) {
+        int w, h;
+        uchar* data = NULL;
+
+        bool retWalkMap = app->map->CreateWalkabilityMap(w, h, &data);
+        if (retWalkMap) app->pathfinding->SetMap(w, h, data);
+
+        RELEASE_ARRAY(data);
+    }
+    
+    return ret;
+
 }
 
