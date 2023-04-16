@@ -41,7 +41,6 @@
 		<selectsfx selectSFXPath="Assets/Audio/FX/menu_selection.wav"/>
 	</title>
 
-	<!-- L02: DONE: Add an element for the entity manager and add the player parameters -->
 	<scene>
 		<originTexture origintexturePath = "Assets/Maps/x.png" />
 		<checkpoint checkpointPath = "Assets/Maps/Tileset_CheckPoints.png" />
@@ -65,6 +64,13 @@
 		<npc x="350" y="200" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5"/>
 		<bat x="200" y="266" texturepath="Assets/Textures/Bat/Bat_Full.png"/>
 	</scene>
+
+	<sceneFight>
+		<backgroundimage texturepath="Assets/Textures/SceneCombat/combat.png"/>
+		<partymember name="mage" maxHp="15" maxMana="30" attack="12" defense="10" speed="50" texturepath="Assets/Textures/SceneGame/NPCs.png"/>
+		<partymember name="warrior" maxHp="25" maxMana="20" attack="8" defense="30" speed="40" texturepath="Assets/Textures/SceneGame/NPCs.png"/>
+		<partymember name="assassin" maxHp="20" maxMana="25" attack="10" defense="10" speed="60" texturepath="Assets/Textures/SceneGame/NPCs.png"/>
+	</sceneFight>
 
 	<player>
 		<SFXset jumpSFXPath="Assets/Audio/Fx/jump.wav" dieSFXPath="Assets/Audio/Fx/death.wav" hurtSFXPath="Assets/Audio/Fx/hurt.wav"

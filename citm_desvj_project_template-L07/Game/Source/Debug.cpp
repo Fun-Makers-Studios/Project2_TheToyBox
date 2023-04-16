@@ -302,6 +302,7 @@ void Debug::DrawEntities()
 		case EntityType::PLAYER:color = Magenta;break;
 		case EntityType::NPC:	color = Blue;	break;
 		case EntityType::ENEMY: color = Red;	break;
+		case EntityType::FLYING_ENEMY: color = Red;	break;
 		case EntityType::ITEM:	color = Green;	break;
 		case EntityType::COIN:	color = Yellow; break;
 		default: color = White; break;
@@ -312,3 +313,5 @@ void Debug::DrawEntities()
 		app->render->DrawRectangle(rect, color.r, color.g, color.b, 64, true);
 	}
 }
+
+

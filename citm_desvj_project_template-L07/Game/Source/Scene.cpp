@@ -153,6 +153,11 @@ bool Scene::Update(float dt)
 		continueGame = false;
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
+		LOG("SWITCHING TO SCENEFIGHT");
+		app->fade->FadeToBlack(this, (Module*)app->sceneFight, 0);
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{
 		app->render->viewGUIbounds = !app->render->viewGUIbounds;

@@ -114,12 +114,14 @@
     <ClCompile Include="Source\ModuleController.cpp" />
     <ClCompile Include="Source\ModuleFadeToBlack.cpp" />
     <ClCompile Include="Source\NPC.cpp" />
+    <ClCompile Include="Source\PartyManager.cpp" />
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\PerfTimer.cpp" />
     <ClCompile Include="Source\Physics.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\Render.cpp" />
+    <ClCompile Include="Source\SceneFight.cpp" />
     <ClCompile Include="Source\SlimeEnemy.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
@@ -138,7 +140,9 @@
     <ClInclude Include="Source\GuiManager.h" />
     <ClInclude Include="Source\ModuleController.h" />
     <ClInclude Include="Source\NPC.h" />
+    <ClInclude Include="Source\PartyManager.h" />
     <ClInclude Include="Source\PerfTimer.h" />
+    <ClInclude Include="Source\SceneFight.h" />
     <ClInclude Include="Source\SlimeEnemy.h" />
     <ClInclude Include="Source\Entity.h" />
     <ClInclude Include="Source\EntityManager.h" />

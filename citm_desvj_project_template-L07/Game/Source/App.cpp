@@ -13,6 +13,7 @@
 #include "LogoScreen.h"
 #include "TitleScreen.h"
 #include "EndingScreen.h"
+#include "SceneFight.h"
 #include "UI.h"
 #include "Fonts.h"
 #include "ModuleController.h"
@@ -42,14 +43,16 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	fade = new ModuleFadeToBlack();
 	logoscreen = new LogoScreen();
 	titlescreen = new TitleScreen();
+	scene = new Scene();
+	sceneFight = new SceneFight();
+	endingscreen = new EndingScreen();
+
 	physics = new Physics();
 	pathfinding = new PathFinding();
-	scene = new Scene();
 	fonts = new Fonts();
 	ui = new UI();
 	entityManager = new EntityManager();
 	map = new Map();
-	endingscreen = new EndingScreen();
 	guiManager = new GuiManager();
 	debug = new Debug();
 
@@ -67,14 +70,16 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	AddModule(logoscreen, true);
 	AddModule(titlescreen, false);
+	AddModule(endingscreen, false);
+	AddModule(scene, false);
+	AddModule(sceneFight, false);
+
 	AddModule(physics, false);
 	AddModule(pathfinding, false);
-	AddModule(scene, false);
 	AddModule(fonts, true);
 	AddModule(ui, true);
 	AddModule(entityManager, false);
 	AddModule(map, false);
-	AddModule(endingscreen, false);
 	AddModule(guiManager, true);
 	AddModule(debug, true);
 
