@@ -44,7 +44,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures();
 	fonts = new Fonts();
 	audio = new Audio();
-	controller = new ModuleController();
+	//controller = new ModuleController();
 
 	fade = new ModuleFadeToBlack();
 	logoscreen = new LogoScreen();
@@ -72,7 +72,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex, true);
 	AddModule(fonts, true);
 	AddModule(audio, true);
-	AddModule(controller, true);
+	//AddModule(controller, true);
 	AddModule(fade, true);
 
 	AddModule(logoscreen, true);

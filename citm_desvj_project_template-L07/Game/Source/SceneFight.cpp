@@ -10,6 +10,7 @@
 #include "UI.h"
 #include "GuiManager.h"
 #include "List.h"
+#include <time.h>
 
 
 SceneFight::SceneFight() : Module()
@@ -103,6 +104,8 @@ bool SceneFight::Start()
 	defenseButton19 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 19, "defense", 8, { 510, 600, 252, 76 }, this);
 	turnJumpButton20 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "jump turn", 10, { 915, 600, 252, 76 }, this);
 
+	srand(time(NULL));
+
 	return true;
 }
 
@@ -115,31 +118,41 @@ bool SceneFight::PreUpdate()
 // Called each loop iteration
 bool SceneFight::Update(float dt)
 {
-	app->render->DrawTexture(img, 0, 0, NULL);
-
-	for (size_t i = 0; i < turnList.Count(); i++)
-	{
-		app->render->DrawTexture(turnList.At(i)->data->texture, turnList.At(i)->data->fightPosition.x, turnList.At(i)->data->fightPosition.y, NULL);
-	}
+	//app->render->DrawTexture(img, 0, 0, NULL);
 
 	//TODO: Sort by speed
 
 	//Turn start
 	uint id = turn % turnList.Count();
-	PartyMember* member = turnList.At(id)->data;
+	turnMember = turnList.At(id)->data;
 
 	//	check player turn
-	if (member->type == ALLY)
+	if (turnMember->type == ALLY)
 	{
 		//	choose option/enemy
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 		{
 			enemySelected--;
+			if (enemySelected < 0)
+				enemySelected = enemyList.Count();
 		}
 		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		{
 			enemySelected++;
+			if (enemySelected > enemyList.Count())
+				enemySelected = 0;
 		}
+
+	}
+	else if (turnMember->type == ENEMY)
+	{
+		//int randomNum = rand() % 4;
+		int randomNum = 1;
+		int randomMember = rand() % 3;
+
+		if (randomNum == 1)
+			Attack(turnMember, app->partyManager->party.At(randomMember)->data);
+
 	}
 
 	
@@ -163,6 +176,14 @@ bool SceneFight::Update(float dt)
 		turnJumpButton20->state = GuiControlState::NORMAL;
 	}
 	
+
+	for (size_t i = 0; i < turnList.Count(); i++)
+	{
+		if (turnList.At(i)->data->currentHp <= 0)
+			turnList.Del(turnList.At(i));
+		else
+			app->render->DrawTexture(turnList.At(i)->data->texture, turnList.At(i)->data->fightPosition.x, turnList.At(i)->data->fightPosition.y, NULL);
+	}
 
 	return true;
 }
@@ -203,7 +224,7 @@ bool SceneFight::OnGuiMouseClickEvent(GuiControl* control)
 	switch (control->id)
 	{
 	case 18: //Attack
-		Attack(); //alnau tonto
+		Attack(turnMember, enemyList.At(enemySelected)->data);
 		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);	
 		break;
 
@@ -213,7 +234,7 @@ bool SceneFight::OnGuiMouseClickEvent(GuiControl* control)
 		break;
 
 	case 20: //Skip turn
-		
+		SkipTurn();
 		app->audio->PlayFx(app->titlescreen->startSFX);
 		break;
 
@@ -225,8 +246,21 @@ bool SceneFight::OnGuiMouseClickEvent(GuiControl* control)
 }
 
 
-void SceneFight::Attack(PartyMember* ally)
+void SceneFight::Attack(PartyMember* turnMember_, PartyMember* receiverMember_)
 {
 	//TODO: Calculate crit, def
-	enemyList.At(enemySelected)->data->currentHp -= ally->attack;
+	LOG("%c HP BEFORE: %u", receiverMember_->name,receiverMember_->currentHp);
+	if (turnMember->attack > receiverMember_->currentHp)
+	{
+		receiverMember_->currentHp = 0;
+	}
+	else {
+		receiverMember_->currentHp -= turnMember->attack;
+	}
+	LOG("%c HP AFTER: %d", receiverMember_->name,receiverMember_->currentHp);
+	turn++;
+}
+
+void SceneFight::SkipTurn() {
+	turn++;
 }

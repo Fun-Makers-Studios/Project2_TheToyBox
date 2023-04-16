@@ -13,6 +13,7 @@
 #include "LogoScreen.h"
 #include "TitleScreen.h"
 #include "Scene.h"
+#include "SceneFight.h"
 #include "EndingScreen.h"
 #include "GuiManager.h"
 #include "GuiControl.h"
@@ -174,6 +175,15 @@ void Debug::DrawDebug()
 			app->fonts->BlitText(debugX, debugY + 105, 0, "player.alive = true");
 		else
 			app->fonts->BlitText(debugX, debugY + 105, 0, "player.alive = false");
+
+		for (size_t i = 0; i < app->sceneFight->turnList.Count(); i++)
+		{
+			app->fonts->BlitText(debugX, debugY + 125 + i*10, 0, "enemy hp =");
+			app->fonts->BlitText(debugX + 88, debugY + 125 + i*10, 0, std::to_string(app->sceneFight->turnList.At(i)->data->currentHp).c_str());
+		}
+
+		app->fonts->BlitText(debugX - 250, debugY, 0, app->sceneFight->turnMember->name.GetString());
+		
 	}
 
 	//Camera limits

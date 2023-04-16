@@ -35,7 +35,9 @@ public:
 	// Define multiple Gui Event methods
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
-	void Attack(PartyMember* ally, PartyMember* enemy);
+	void Attack(PartyMember* turnMember_, PartyMember* receiverMember_);
+
+	void SkipTurn();
 
 public:
 	uint startSFX = 0;
@@ -46,6 +48,7 @@ public:
 
 	uint enemySelected;
 
+	PartyMember* turnMember = nullptr;
 
 private:
 	SDL_Texture* img = nullptr;
