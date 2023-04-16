@@ -199,13 +199,6 @@ bool Scene::Update(float dt)
 	// Camera movement related to player's movement
 	FixCamera();
 
-
-	// Cap FPS to 60
-	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
-	{
-		app->render->limitFPS = !app->render->limitFPS;
-		app->audio->PlayFx(selectSFX);
-	}
 	
 	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 	{
