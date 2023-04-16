@@ -33,7 +33,9 @@ public:
 
 public:
 	uint startSFX = 0;
-	PartyManager* partyManager;
+	List<PartyMember*> turnList;
+	List<iPoint*> positions;
+
 
 private:
 	SDL_Texture* img = nullptr;

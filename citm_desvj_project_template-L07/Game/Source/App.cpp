@@ -1,27 +1,31 @@
 #include "App.h"
-#include "Window.h"
 #include "Input.h"
-#include "Render.h"
+#include "Window.h"
 #include "Textures.h"
+#include "Fonts.h"
 #include "Audio.h"
+#include "ModuleController.h"
+
+#include "LogoScreen.h"
+#include "TitleScreen.h"
+#include "EndingScreen.h"
 #include "Scene.h"
+#include "SceneFight.h"
+
 #include "EntityManager.h"
 #include "Map.h"
 #include "Physics.h"
 #include "Pathfinding.h"
 #include "ModuleFadeToBlack.h"
-#include "LogoScreen.h"
-#include "TitleScreen.h"
-#include "EndingScreen.h"
-#include "SceneFight.h"
+
 #include "UI.h"
-#include "Fonts.h"
-#include "ModuleController.h"
 #include "GuiManager.h"
 #include "GuiButton.h"
 #include "GuiControl.h"
 #include "Debug.h"
 #include "PartyManager.h"
+
+#include "Render.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -38,6 +42,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	input = new Input();
 	win = new Window();
 	tex = new Textures();
+	fonts = new Fonts();
 	audio = new Audio();
 	controller = new ModuleController();
 
@@ -50,9 +55,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	physics = new Physics();
 	pathfinding = new PathFinding();
-	fonts = new Fonts();
 	ui = new UI();
 	entityManager = new EntityManager();
+	partyManager = new PartyManager();
 	map = new Map();
 	guiManager = new GuiManager();
 	debug = new Debug();
@@ -65,6 +70,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input, true);
 	AddModule(win, true);
 	AddModule(tex, true);
+	AddModule(fonts, true);
 	AddModule(audio, true);
 	AddModule(controller, true);
 	AddModule(fade, true);
@@ -77,9 +83,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	AddModule(physics, false);
 	AddModule(pathfinding, false);
-	AddModule(fonts, true);
 	AddModule(ui, true);
 	AddModule(entityManager, false);
+	AddModule(partyManager, true);
 	AddModule(map, false);
 	AddModule(guiManager, true);
 	AddModule(debug, true);

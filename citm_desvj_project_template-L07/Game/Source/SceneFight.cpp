@@ -6,6 +6,7 @@
 #include "Audio.h"
 #include "Log.h"
 #include "PartyManager.h"
+#include "List.h"
 
 
 SceneFight::SceneFight() : Module()
@@ -32,7 +33,7 @@ bool SceneFight::Start()
 	LOG("--FORMING PARTY--");
 
 	/*Initialize*/
-	imgPath = app->configNode.child("sceneFIght").child("backgroundimage").attribute("texturepath").as_string();
+	imgPath = app->configNode.child("sceneFight").child("backgroundimage").attribute("texturepath").as_string();
 	//musicPath = app->configNode.child("logo").child("music").attribute("musicPath").as_string();
 
 	/*Load*/
@@ -40,13 +41,45 @@ bool SceneFight::Start()
 	//app->audio->PlayMusic(musicPath);
 
 
-	//Create party
-	for (pugi::xml_node itemNode = app->configNode.child("sceneFight").child("partymember"); itemNode; itemNode = itemNode.next_sibling("partymember"))
+	// ======== CREATE TURN LIST ========
+
+	//Add party memebers
+	ListItem<PartyMember*>* member = app->partyManager->party.start;
+	while (member != NULL)
 	{
+		turnList.Add(member->data);
+		member = member->next;
+	}
+	
+	//Add enemies
+	const char* enemy = app->partyManager->enemyToFight;
+	uchar amount;
+	if (enemy == "enemykid") { amount = 3; }
+	else if (enemy == "enemyshopkeeper") { amount = 1; }
+	else if (enemy == "enemyclown") { amount = 2; }
+
+	for (size_t i = 0; i < amount; i++)
+	{
+		pugi::xml_node itemNode = app->configNode.child("sceneFight").child(app->partyManager->enemyToFight);
+
+		//type
+		SString typeStr = itemNode.attribute("type").as_string();
+		MemberType type = typeStr == "ally" ? MemberType::ALLY : MemberType::ENEMY;
+
+		//texture
 		const char* path = itemNode.attribute("texturepath").as_string();
 		SDL_Texture* tex = app->tex->Load(path);
 
+		//battle position
+		int offsetX = 800;
+		int offsetY = 300;
+
+		iPoint position;
+		position.x = offsetX;
+		position.y = offsetY + 96 * i;
+
 		PartyMember* member = new PartyMember(
+			type,
 			itemNode.attribute("name").as_string(),
 			itemNode.attribute("maxHp").as_uint(),
 			itemNode.attribute("maxMana").as_uint(),
@@ -54,10 +87,10 @@ bool SceneFight::Start()
 			itemNode.attribute("defense").as_uint(),
 			itemNode.attribute("speed").as_uint(),
 			itemNode.attribute("critRate").as_uint(),
-			tex);
+			tex,
+			position);
 
-		
-		partyManager->AddMemberToParty(member);
+		turnList.Add(member);
 	}
 
 
@@ -73,9 +106,14 @@ bool SceneFight::PreUpdate()
 // Called each loop iteration
 bool SceneFight::Update(float dt)
 {
-	
-
 	app->render->DrawTexture(img, 0, 0, NULL);
+
+	for (size_t i = 0; i < turnList.Count(); i++)
+	{
+		app->render->DrawTexture(turnList.At(i)->data->texture, turnList.At(i)->data->fightPosition.x, turnList.At(i)->data->fightPosition.y, NULL);
+	}
+
+	
 
 	return true;
 }

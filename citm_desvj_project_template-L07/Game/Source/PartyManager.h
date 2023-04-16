@@ -3,6 +3,7 @@
 #include "SString.h"
 #include "List.h"
 #include "App.h"
+#include "Point.h"
 
 struct SDL_Texture;
 
@@ -31,11 +32,18 @@ struct Gear
 
 };
 
+enum MemberType
+{
+	ALLY,
+	ENEMY
+};
+
 class PartyMember
 {
 public:
-	PartyMember(SString name, uint maxHp, uint maxMana, uint attack, uint defense, uint speed, uint crit, SDL_Texture* texture)
+	PartyMember(MemberType type, SString name, uint maxHp, uint maxMana, uint attack, uint defense, uint speed, uint critRate, SDL_Texture* texture, iPoint fightPosition)
 	{
+		this->type = type;
 		this->name = name;
 		this->maxHp = maxHp;
 		this->currentHp = maxHp;
@@ -46,10 +54,12 @@ public:
 		this->speed = speed;
 		this->critRate = critRate;
 		this->texture = texture;
+		this->fightPosition = fightPosition;
 	};
 
 	~PartyMember() {};
 
+	MemberType type;
 	SString name;
 
 	uint maxHp;
@@ -62,9 +72,11 @@ public:
 	uint critRate;
 
 	SDL_Texture* texture;
+
+	iPoint fightPosition;
 };
 
-class PartyManager
+class PartyManager: public Module
 {
 public:
 	PartyManager();
@@ -73,7 +85,8 @@ public:
 
 	void AddMemberToParty(PartyMember* member);
 
-private:
+public:
 	List<PartyMember*> party;
+	const char* enemyToFight;
 
 };

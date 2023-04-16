@@ -14,6 +14,7 @@
 #include "UI.h"
 #include "GuiManager.h"
 #include "TitleScreen.h"
+#include "PartyManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -85,6 +86,42 @@ bool Scene::Start()
 		//bat->lives = 2;
 	}
 
+	//Create party
+	uchar partyCount = 0;
+	for (pugi::xml_node itemNode = app->configNode.child("sceneFight").child("partymember"); itemNode; itemNode = itemNode.next_sibling("partymember"))
+	{
+		//type
+		SString typeStr = itemNode.attribute("type").as_string();
+		MemberType type = typeStr == "ally" ? MemberType::ALLY : MemberType::ENEMY;
+
+		//texture
+		const char* path = itemNode.attribute("texturepath").as_string();
+		SDL_Texture* tex = app->tex->Load(path);
+
+		//battle position
+		int offsetX = 200;
+		int offsetY = 300;
+
+		iPoint position;
+		position.x = offsetX;
+		position.y = offsetY + 96 * partyCount;
+		partyCount++;
+
+		PartyMember* member = new PartyMember(
+			type,
+			itemNode.attribute("name").as_string(),
+			itemNode.attribute("maxHp").as_uint(),
+			itemNode.attribute("maxMana").as_uint(),
+			itemNode.attribute("attack").as_uint(),
+			itemNode.attribute("defense").as_uint(),
+			itemNode.attribute("speed").as_uint(),
+			itemNode.attribute("critRate").as_uint(),
+			tex,
+			position);
+
+		app->partyManager->AddMemberToParty(member);
+	}
+
 	/*INITIALIZE NECESSARY MODULES*/
 	app->physics->Enable();
 	app->pathfinding->Enable();
@@ -154,8 +191,10 @@ bool Scene::Update(float dt)
 		continueGame = false;
 	}
 
+	//TEST FIGHT SCENE
 	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
 		LOG("SWITCHING TO SCENEFIGHT");
+		app->partyManager->enemyToFight = "enemykid";
 		app->fade->FadeToBlack(this, (Module*)app->sceneFight, 0);
 	}
 

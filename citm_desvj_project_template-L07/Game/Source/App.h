@@ -116,6 +116,7 @@ public:
 	Fonts* fonts;
 	UI* ui;
 	EntityManager* entityManager;
+	PartyManager* partyManager;
 	Map* map;
 	EndingScreen* endingscreen;
 	Physics* physics;
