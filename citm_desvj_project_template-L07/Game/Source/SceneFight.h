@@ -33,6 +33,7 @@ public:
 
 public:
 	uint startSFX = 0;
+	uint turn = 0;
 	List<PartyMember*> turnList;
 	List<iPoint*> positions;
 

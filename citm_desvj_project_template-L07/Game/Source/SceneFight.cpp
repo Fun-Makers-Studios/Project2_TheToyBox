@@ -113,7 +113,15 @@ bool SceneFight::Update(float dt)
 		app->render->DrawTexture(turnList.At(i)->data->texture, turnList.At(i)->data->fightPosition.x, turnList.At(i)->data->fightPosition.y, NULL);
 	}
 
-	
+	//TODO: Sort by speed
+
+	//Turn start
+	uint id = turn % turnList.Count();
+	PartyMember* member = turnList.At(id)->data;
+
+	//	choose target
+	//	choose option
+	//	draw stats
 
 	return true;
 }
