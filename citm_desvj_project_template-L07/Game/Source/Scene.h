@@ -97,6 +97,7 @@ public:
 
 	bool partyMenu = false;
 	bool pauseMenu = false;
+	bool settingSceneMenu = false;
 
 	bool continueGame = false;
 
@@ -113,6 +114,7 @@ public:
 private:
 	SDL_Texture* img_pause;
 	SDL_Rect pauseRect;
+	SDL_Texture* popImg_settings = nullptr;
 
 	iPoint startPosition;
 	
@@ -129,6 +131,17 @@ private:
 	GuiButton* backToTitleButton15;
 	GuiButton* settingsButton16;
 	GuiButton* closeButton17;
+	
+	// Settings menu on scene game
+	GuiButton* decreaseMusicButton21;
+	GuiButton* increaseMusicButton22;
+
+	GuiButton* decreaseSFXButton23;
+	GuiButton* increaseSFXButton24;
+
+	GuiButton* fullscreenButton25;
+	GuiButton* vsyncButton26;
+
 
 	bool exitGame = false;
 };

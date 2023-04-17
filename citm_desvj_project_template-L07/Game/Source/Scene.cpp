@@ -169,7 +169,9 @@ bool Scene::Start()
 
 	img_pause = app->tex->Load(imgPausePath);
 	pauseRect = {35, 69, 310, 555};
-	
+	popImg_settings = app->tex->Load("Assets/Textures/SceneTitle/Settings/SettingsMenu.png");
+
+
 	// L15: TODO 2: Declare a GUI Button and create it using the GuiManager
 	uint w, h;
 	app->win->GetWindowSize(w, h);
@@ -177,6 +179,16 @@ bool Scene::Start()
 	backToTitleButton15 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 15, "back to title", 13, { 515, 375, 252, 76 }, this);
 	settingsButton16 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 16, "settings", 8, { 515, 455, 252, 76 }, this);
 	closeButton17 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 17, "save and exit", 12, { 515, 535, 252, 76 }, this);
+
+	decreaseMusicButton21 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 21, "decrease", 9, { 325, 200, 252, 76 }, this);
+	increaseMusicButton22 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 22, "increase", 9, { 700, 200, 252, 76 }, this);
+
+	decreaseSFXButton23 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 23, "decrease", 9, { 325, 315, 252, 76 }, this);
+	increaseSFXButton24 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 24, "increase", 9, { 700, 315, 252, 76 }, this);
+
+	fullscreenButton25 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 25, "", 1, { 520, 424, 252, 76 }, this);
+
+	vsyncButton26 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 26, "", 1, { 520, 532, 252, 76 }, this);
 
 
 	ResetScene();
@@ -216,9 +228,11 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		if (!dialogueManager->dialogueLoaded) { gamePaused = !gamePaused; }
-		pauseMenu = !pauseMenu;
+		if (!dialogueManager->dialogueLoaded && settingSceneMenu == false) { gamePaused = !gamePaused; }
 		
+		if(settingSceneMenu == false)
+			pauseMenu = !pauseMenu;
+	
 		Mix_PauseMusic();
 	}
 
@@ -290,6 +304,10 @@ bool Scene::PostUpdate()
 	if (gamePaused == true && (pauseMenu == true || partyMenu == true))
 		app->render->DrawTexture(img_pause, app->render->camera.x + app->render->camera.w / 2 - pauseRect.w / 2, app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
 
+	if(gamePaused == true && pauseMenu == true && settingSceneMenu == true)
+		app->render->DrawTexture(popImg_settings, app->render->camera.x , app->render->camera.y - 3, NULL);
+
+
 	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) {
 		dialogueManager->Update();
 	}
@@ -301,6 +319,14 @@ bool Scene::PostUpdate()
 	backToTitleButton15->state = GuiControlState::DISABLED;
 	settingsButton16->state = GuiControlState::DISABLED;
 	closeButton17->state = GuiControlState::DISABLED;
+
+	// Setting Menu
+	decreaseMusicButton21->state = GuiControlState::DISABLED;
+	increaseMusicButton22->state = GuiControlState::DISABLED;
+	decreaseSFXButton23->state = GuiControlState::DISABLED;
+	increaseSFXButton24->state = GuiControlState::DISABLED;
+	fullscreenButton25->state = GuiControlState::DISABLED;
+	vsyncButton26->state = GuiControlState::DISABLED;
 
 	if (pauseMenu == true)
 	{
@@ -317,6 +343,46 @@ bool Scene::PostUpdate()
 		if (closeButton17->state == GuiControlState::DISABLED) {
 			closeButton17->state = GuiControlState::NORMAL;
 		}
+
+		if (settingSceneMenu == true)
+		{
+			resumeButton14->state = GuiControlState::DISABLED;
+			backToTitleButton15->state = GuiControlState::DISABLED;
+			settingsButton16->state = GuiControlState::DISABLED;
+			closeButton17->state = GuiControlState::DISABLED;
+
+		
+			decreaseMusicButton21->state = GuiControlState::NORMAL;
+			increaseMusicButton22->state = GuiControlState::NORMAL;
+			decreaseSFXButton23->state = GuiControlState::NORMAL;
+			increaseSFXButton24->state = GuiControlState::NORMAL;
+			fullscreenButton25->state = GuiControlState::NORMAL;
+			vsyncButton26->state = GuiControlState::NORMAL;
+
+			char music[10];
+			sprintf_s(music, 10, "%d", app->musicValue);
+			app->fonts->BlitText(630, 245, app->ui->font1_id, music);
+
+			char sfx[10];
+			sprintf_s(sfx, 10, "%d", app->sfxValue);
+			app->fonts->BlitText(630, 362, app->ui->font1_id, sfx);
+
+			char fullscreen[10];
+			sprintf_s(fullscreen, 10, "%s", app->win->fullscreenMode ? "on" : "off");
+			app->fonts->BlitText(632, 458, app->ui->font1_id, fullscreen);
+
+			char vsync[10];
+			sprintf_s(vsync, 10, "%s", app->render->limitFPS ? "on" : "off");
+			app->fonts->BlitText(632, 565, app->ui->font1_id, vsync);
+
+
+			if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+			{
+				settingSceneMenu = !settingSceneMenu;
+				app->audio->PlayFx(app->titlescreen->closemenuSFX);
+			}
+		}
+
 
 	}
 
@@ -365,6 +431,7 @@ bool Scene::CleanUp()
 	Mix_ResumeMusic();
 
 	app->tex->UnLoad(img_pause);
+	app->tex->UnLoad(popImg_settings);
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -377,6 +444,19 @@ bool Scene::CleanUp()
 		settingsButton16->state = GuiControlState::DISABLED;
 	if(closeButton17 != nullptr)
 		closeButton17->state = GuiControlState::DISABLED;
+
+	if (decreaseMusicButton21 != nullptr)
+		decreaseMusicButton21->state = GuiControlState::DISABLED;
+	if (increaseMusicButton22 != nullptr)
+		increaseMusicButton22->state = GuiControlState::DISABLED;
+	if (decreaseSFXButton23 != nullptr)
+		decreaseSFXButton23->state = GuiControlState::DISABLED;
+	if (increaseSFXButton24 != nullptr)
+		increaseSFXButton24->state = GuiControlState::DISABLED;
+	if (fullscreenButton25 != nullptr)
+		fullscreenButton25->state = GuiControlState::DISABLED;
+	if (vsyncButton26 != nullptr)
+		vsyncButton26->state = GuiControlState::DISABLED;
 
 	return true;
 }
@@ -400,11 +480,77 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 
 	case 16:
 		//Here goes settings menu
+		settingSceneMenu = !settingSceneMenu;
+		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
 		break;
 	
 	case 17:
 		app->SaveGameRequest();
 		exitGame = !exitGame;
+		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		break;
+	
+	case 21:
+		// Decrease music volume
+		app->musicValue = app->musicValue - 1;
+		if (app->musicValue <= 0)
+			app->musicValue = 0;
+		if (app->musicValue >= 100)
+			app->musicValue = 100;
+		Mix_VolumeMusic(app->musicValue);
+		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		break;
+
+	case 22:
+		// Increase music volume
+		app->musicValue = app->musicValue + 1;
+		if (app->musicValue <= 0)
+			app->musicValue = 0;
+		if (app->musicValue >= 100)
+			app->musicValue = 100;
+		Mix_VolumeMusic(app->musicValue);
+		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		break;
+
+	case 23:
+		// Decrease SFX volume
+		app->sfxValue = app->sfxValue - 1;
+		if (app->sfxValue <= 0)
+			app->sfxValue = 0;
+		if (app->sfxValue >= 100)
+			app->sfxValue = 100;
+		Mix_Volume(-1, app->sfxValue);
+		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		break;
+
+	case 24:
+		// Increase SFX volume
+		app->sfxValue = app->sfxValue + 1;
+		if (app->sfxValue <= 0)
+			app->sfxValue = 0;
+		if (app->sfxValue >= 100)
+			app->sfxValue = 100;
+		Mix_Volume(-1, app->sfxValue);
+		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		break;
+
+	case 25:
+		// Fullscreen button
+		app->win->fullscreenMode = !app->win->fullscreenMode;
+		if (app->win->fullscreenMode == true)
+		{
+			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
+		}
+		else if (app->win->fullscreenMode == false)
+		{
+			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_SHOWN);
+		}
+		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		break;
+
+	case 26:
+		// V-Sync button
+		app->render->limitFPS = !app->render->limitFPS;
 		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
 		break;
 
