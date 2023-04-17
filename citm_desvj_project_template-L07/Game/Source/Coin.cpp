@@ -93,6 +93,14 @@ bool Coin::PostUpdate()
 
 bool Coin::CleanUp()
 {
+
+	app->tex->UnLoad(texture);
+	texture = nullptr;
+
+	pbody->body->DestroyFixture(pbody->body->GetFixtureList());
+	delete pbody;
+	pbody = nullptr;
+
 	return true;
 }
 
