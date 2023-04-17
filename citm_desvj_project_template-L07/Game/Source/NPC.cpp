@@ -31,6 +31,7 @@ bool NPC::Start() {
 	startPos.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
 	npcid = parameters.attribute("id").as_int();
+	dialogueid = parameters.attribute("dialogueid").as_int();
 	int character = parameters.attribute("character").as_int();
 
 	width = 32;
@@ -49,6 +50,8 @@ bool NPC::Start() {
 
 	pbody->listener = this;
 
+	boundaries = { (int)startPos.x, (int)startPos.y,96,96 };
+
 	return true;
 }
 
@@ -64,15 +67,22 @@ bool NPC::Update()
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 2));
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 2));
 
+	boundaries.x = position.x - ((boundaries.w / 2)-(width/2));
+	boundaries.y = position.y - ((boundaries.h / 2) - (height/2));
+
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 	app->render->DrawTexture(texture, position.x, position.y, &rect);
 	currentAnim->Update();
+
+	this->DialogTriggerCheck();
 
 	return true;
 }
 
 bool NPC::PostUpdate() {
-
+	if (app->physics->debug) {
+		app->render->DrawRectangle(boundaries, 255, 0, 0, 255U, false);
+	}
 
 	return true;
 }
@@ -98,4 +108,16 @@ void NPC::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	}
 
+}
+
+void NPC::DialogTriggerCheck() {
+	if ((app->scene->player->position.x + (65 / 2) >= boundaries.x) &&
+		(app->scene->player->position.x + (65 / 2) < boundaries.x + boundaries.w) &&
+		(app->scene->player->position.y + (33 / 2) >= boundaries.y) &&
+		(app->scene->player->position.y + (33 / 2) < boundaries.y + boundaries.h) &&
+		(app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)) {
+		if (this->dialogueid != -1) {
+			app->scene->dialogueManager->Load(this->dialogueid);
+		}
+	}
 }

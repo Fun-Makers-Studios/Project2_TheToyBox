@@ -106,6 +106,12 @@
     <ClCompile Include="Source\Color.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Source\DIalogue.cpp">
+      <Filter>Game\Dialogue</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DialogueManager.cpp">
+      <Filter>Game\Dialogue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -243,6 +249,12 @@
     <ClInclude Include="Source\Color.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Dialogue.h">
+      <Filter>Game\Dialogue</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DialogueManager.h">
+      <Filter>Game\Dialogue</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -274,6 +286,9 @@
     </Filter>
     <Filter Include="Game\Items">
       <UniqueIdentifier>{77c128c4-9f6e-4255-871e-9098623335dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Dialogue">
+      <UniqueIdentifier>{47e95652-630f-4f43-846c-0fdde62538f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
