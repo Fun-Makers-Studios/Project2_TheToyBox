@@ -89,9 +89,14 @@ bool NPC::PostUpdate() {
 
 bool NPC::CleanUp()
 {
+	app->tex->UnLoad(texture);
+	texture = nullptr;
 
 	delete pbody;
 	pbody = nullptr;
+
+	/*delete currentAnim;
+	currentAnim = nullptr;*/
 
 	return true;
 }

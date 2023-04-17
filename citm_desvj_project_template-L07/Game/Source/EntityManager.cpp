@@ -158,19 +158,19 @@ bool EntityManager::Update(float dt)
 	{
 		pEntity = item->data;
 
-		if (pEntity->needToDestroy == false) continue;
-		
-		item->data->CleanUp();
-		
-		DestroyEntity(pEntity);
+		if (pEntity->needToDestroy)
+		{
+			item->data->CleanUp();
+			DestroyEntity(pEntity);
+		}
 	}
 
 	for (item = entities.start; item != NULL && ret == true; item = item->next)
 	{
 		pEntity = item->data;
 
-		if (pEntity->active == false) continue;
-		ret = item->data->Update();
+		if (pEntity->active)
+			ret = item->data->Update();
 	}
 
 	return ret;
