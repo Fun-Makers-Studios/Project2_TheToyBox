@@ -131,7 +131,9 @@ void Map::Draw()
                     app->render->DrawTexture(tileset->texture,
                         pos.x,
                         pos.y,
-                        &r);
+                        &r,
+                        SDL_FLIP_NONE,
+                        ScaleType::WORLD);
                 }
             }
         }
@@ -633,7 +635,9 @@ bool Map::Parallax(TileSet* tileset_, iPoint pos, SDL_Rect r, float x) {
     app->render->DrawTexture(tileset_->texture,
         pos.x - app->render->camera.x * x,
         pos.y,
-        &r);
+        &r,
+        SDL_FLIP_NONE,
+        ScaleType::WORLD);
 
     return ret;
 }

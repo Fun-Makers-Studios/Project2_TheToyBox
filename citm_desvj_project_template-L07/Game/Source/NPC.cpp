@@ -71,7 +71,7 @@ bool NPC::Update()
 	boundaries.y = position.y - ((boundaries.h / 2) - (height/2));
 
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
-	app->render->DrawTexture(texture, position.x, position.y, &rect);
+	app->render->DrawTexture(texture, position.x, position.y, &rect, SDL_FLIP_NONE, ScaleType::WORLD);
 	currentAnim->Update();
 
 	this->DialogTriggerCheck();

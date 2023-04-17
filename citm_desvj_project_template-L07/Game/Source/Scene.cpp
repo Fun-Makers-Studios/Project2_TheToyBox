@@ -223,9 +223,6 @@ bool Scene::Update(float dt)
 	SaveUI();
 
 	//Blit UI
-	app->ui->BlitCoins();
-	app->ui->BlitTimer();
-	app->ui->BlitLives();
 	app->ui->BlitFPS();
 
 	if (app->physics->debug) {
@@ -516,7 +513,7 @@ void Scene::SaveUI() {
 			uint w, h;
 			SDL_Rect rect_2 = { 64, 0, 32, 32 };
 			app->win->GetWindowSize(w, h);
-			app->render->DrawTexture(checkPointTex, w - 100, h - 100, &rect_2, SDL_FLIP_HORIZONTAL, 0);
+			app->render->DrawTexture(checkPointTex, w - 100, h - 100, &rect_2, SDL_FLIP_HORIZONTAL, ScaleType::NORMAL, 0);
 			saveTime++;
 			LOG("SAVETIME: %d", saveTime);
 		}
@@ -528,8 +525,8 @@ void Scene::SaveUI() {
 	}
 }
 
-void Scene::Checkpoint() {
-	
+void Scene::Checkpoint()
+{
 	//Checkpoint
 	if (checkpointEnabled == false) {
 		SDL_Rect rect_1 = { 32, 0, 32, 32 };
@@ -592,8 +589,8 @@ void Scene::LoadNPC(SString mapName_)
 	
 }
 
-void Scene::FixCamera() {
-
+void Scene::FixCamera()
+{
 	app->render->camera.x = (player->position.x) - (app->win->screenSurface->w) / 2;
 	app->render->camera.y = (player->position.y) - (app->win->screenSurface->h) / 2;
 	if (app->render->camera.x < 0)

@@ -6,6 +6,7 @@
 
 #include "Defs.h"
 #include "Log.h"
+#include "Scale.h"
 #include "Optick/include/optick.h"
 
 #define VSYNC true
@@ -111,10 +112,11 @@ void Render::ResetViewPort()
 }
 
 // Blit to screen
-bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip_, float speed, double angle, int pivotX, int pivotY) const
+bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip_, ScaleType scaleType, float speed, double angle, int pivotX, int pivotY) const
 {
 	bool ret = true;
-	uint scale = app->win->GetScale();
+	// app->win->GetScale();
+	uint scale = scaleObj->ScaleTypeToInt(scaleType);
 
 	SDL_Rect rect;
 	rect.x = (int)(-camera.x * speed) + x * scale;

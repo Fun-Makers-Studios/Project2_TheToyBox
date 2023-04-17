@@ -215,7 +215,7 @@ bool SceneFight::Update(float dt)
 		else 
 		{
 
-			app->render->DrawTexture(turnList.At(i)->data->texture, turnList.At(i)->data->fightPosition.x, turnList.At(i)->data->fightPosition.y, &turnList.At(i)->data->textureRect);
+			app->render->DrawTexture(turnList.At(i)->data->texture, turnList.At(i)->data->fightPosition.x, turnList.At(i)->data->fightPosition.y, &turnList.At(i)->data->textureRect, SDL_FLIP_NONE, ScaleType::FIGHT);
 			
 		}
 			

@@ -38,9 +38,6 @@ public:
 	/* Blit UI graphics funtions */
 	void BlitPlayerXPos();
 	void BlitPlayerYPos();
-	void BlitCoins();
-	void BlitTimer();
-	void BlitLives();
 	void BlitFPS();
 	void BlitAverageFPS();
 	void BlitDT();
