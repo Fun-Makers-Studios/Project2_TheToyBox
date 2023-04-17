@@ -134,6 +134,9 @@ bool Scene::Start()
 
 	vsyncButton26 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 26, "", 1, { 520, 532, 252, 76 }, this);
 
+	firstPMemberButton27 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 27, "1", 2, { 520, 532, 252, 76 }, this, ButtonType::SMALL);
+	secondPMemberButton28 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 28, "2", 2, { 520, 532, 252, 76 }, this, ButtonType::SMALL);
+
 
 	ResetScene();
 
@@ -278,6 +281,9 @@ bool Scene::PostUpdate()
 	fullscreenButton25->state = GuiControlState::DISABLED;
 	vsyncButton26->state = GuiControlState::DISABLED;
 
+	firstPMemberButton27->state = GuiControlState::DISABLED;
+	secondPMemberButton28->state = GuiControlState::DISABLED;
+
 	if (pauseMenu == true)
 	{
 
@@ -339,20 +345,12 @@ bool Scene::PostUpdate()
 	if (partyMenu == true)
 	{
 
-		/*if (resumeButton14->state == GuiControlState::DISABLED) {
-			resumeButton14->state = GuiControlState::NORMAL;
+		if (firstPMemberButton27->state == GuiControlState::DISABLED) {
+			firstPMemberButton27->state = GuiControlState::NORMAL;
 		}
-		if (backToTitleButton15->state == GuiControlState::DISABLED) {
-			backToTitleButton15->state = GuiControlState::NORMAL;
+		if (secondPMemberButton28->state == GuiControlState::DISABLED) {
+			secondPMemberButton28->state = GuiControlState::NORMAL;
 		}
-		if (settingsButton16->state == GuiControlState::DISABLED) {
-			settingsButton16->state = GuiControlState::NORMAL;
-		}
-		if (closeButton17->state == GuiControlState::DISABLED) {
-			closeButton17->state = GuiControlState::NORMAL;
-		}*/
-
-
 
 		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		{
@@ -416,6 +414,11 @@ bool Scene::CleanUp()
 		fullscreenButton25->state = GuiControlState::DISABLED;
 	if (vsyncButton26 != nullptr)
 		vsyncButton26->state = GuiControlState::DISABLED;
+
+	if (firstPMemberButton27 != nullptr)
+		firstPMemberButton27->state = GuiControlState::DISABLED;
+	if (secondPMemberButton28 != nullptr)
+		secondPMemberButton28->state = GuiControlState::DISABLED;
 
 	return true;
 }

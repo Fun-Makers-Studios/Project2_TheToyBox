@@ -92,7 +92,7 @@
 
 	<gui>
 		<guiButtons buttonsTexPath="Assets/UI/ButtonsSprites/Buttons.png"/>
-		
+		<guiButtons smallButtonTexPath="Assets/UI/ButtonsSprites/Buttons.png"/>
 	</gui>
 
 	<dialoguemanager dialoguetext="Assets/UI/Dialog/Dialog.png" font="Assets/Fonts/DialogFont.png" lookuptable="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz:         " rows="6">

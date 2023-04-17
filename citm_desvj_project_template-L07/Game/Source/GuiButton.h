@@ -10,7 +10,7 @@ class GuiButton : public GuiControl
 {
 public:
 
-	GuiButton(uint32 id, SDL_Rect bounds, const char* text, int textSize);
+	GuiButton(uint32 id, SDL_Rect bounds, const char* text, int textSize, ButtonType buttonType_ = ButtonType::BIG);
 	virtual ~GuiButton();
 
 	bool Update(float dt);
@@ -24,6 +24,9 @@ public:
 
 	SDL_Texture* buttonTex;
 	const char* buttonTexPath;
+
+	ButtonType buttonType;
+
 };
 
 #endif // __GUIBUTTON_H__

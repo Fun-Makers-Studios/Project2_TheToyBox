@@ -140,6 +140,9 @@ private:
 	GuiButton* fullscreenButton25;
 	GuiButton* vsyncButton26;
 
+	GuiButton* firstPMemberButton27;
+	GuiButton* secondPMemberButton28;
+
 
 	bool exitGame = false;
 };
