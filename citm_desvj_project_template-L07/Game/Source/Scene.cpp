@@ -264,12 +264,12 @@ bool Scene::Update(float dt)
 	FixCamera();
 
 	
-	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && !dialogueManager->dialogueLoaded)
+	/*if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && !dialogueManager->dialogueLoaded)
 	{
 		gamePaused = !gamePaused;
 		partyMenu = !partyMenu;
 		app->audio->PlayFx(selectSFX);
-	}
+	}*/
 
 	// Draw map
 	app->map->Draw();
