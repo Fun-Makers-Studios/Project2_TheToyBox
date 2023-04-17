@@ -108,10 +108,10 @@
 
 	<dialoguemanager dialoguetext="Assets/UI/Dialog/Dialog.png" font="Assets/Fonts/DialogFont.png" lookuptable="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz:         " rows="6">
 		<dialogue id ="0">
-			<node id="0" text="Greating traveler">
+			<node id="0" text="Greetings traveler">
 				<option id="0" nextNodeId="1" text=""/>
 			</node>
-			<node id="1" text="Are you lost">
+			<node id="1" text="Are you lost?">
 				<option id="0" nextNodeId="3" text="What is this place?"/>
 				<option id="1" nextNodeId="2" text="No thanks"/>
 			</node>
