@@ -68,7 +68,7 @@ bool SceneFight::Start()
 	else if (enemy == "enemyshopkeeper") { amount = 1; }
 	else if (enemy == "enemyclown") { amount = 2; }
 
-	for (size_t i = 0; i < amount; i++)
+	for (int i = 0; i < amount; i++)
 	{
 		pugi::xml_node itemNode = app->configNode.child("sceneFight").child(app->partyManager->enemyToFight);
 
@@ -83,11 +83,11 @@ bool SceneFight::Start()
 		SDL_Rect textureRect;
 		SString nameStr = itemNode.attribute("name").as_string();
 		if (nameStr == "enemykid")
-			textureRect = { 112, 28, 31, 47 };
+			textureRect = { 195 + i * 32, 0, 32, 64 };
 		else if (nameStr == "enemyshopkeeper")
-			textureRect = { 277, 0, 31, 47 };
+			textureRect = { 0, 64, 64, 96 };
 		else if (nameStr == "enemyclown")
-			textureRect = { 222, 15, 55, 60 };
+			textureRect = { 128, 64, 64, 96 };
 
 		//battle position
 		int offsetX = 800;

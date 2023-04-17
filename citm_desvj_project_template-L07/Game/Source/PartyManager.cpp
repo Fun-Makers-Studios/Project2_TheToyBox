@@ -5,8 +5,8 @@ PartyManager::PartyManager(){}
 
 PartyManager::~PartyManager(){}
 
-bool PartyManager::Start() {
-
+bool PartyManager::Start()
+{
 	//Create party
 	uchar partyCount = 0;
 	for (pugi::xml_node itemNode = app->configNode.child("sceneFight").child("partymember"); itemNode; itemNode = itemNode.next_sibling("partymember"))
@@ -21,12 +21,11 @@ bool PartyManager::Start() {
 
 		SDL_Rect textureRect;
 		SString nameStr = itemNode.attribute("name").as_string();
-		if (nameStr == "mage")
-			textureRect = { 4, 16, 26, 59 };
-		else if (nameStr == "warrior")
-			textureRect = { 58, 24, 27, 51 };
-		else if (nameStr == "assassin")
-			textureRect = { 0, 89, 42, 61 };
+		if (nameStr == "zero")
+			textureRect = { 32, 0, 32, 64 };
+		else if (nameStr == "sophie")
+			textureRect = { 128, 0, 32, 64 };
+		
 
 
 		//battle position
