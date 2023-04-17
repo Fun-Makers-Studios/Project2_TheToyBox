@@ -138,7 +138,7 @@ bool SceneFight::PreUpdate()
 // Called each loop iteration
 bool SceneFight::Update(float dt)
 {
-	app->render->DrawTexture(tex_bg, 0, 0, NULL);
+	app->render->DrawTexture(tex_bg, 0, 0, NULL, SDL_FLIP_NONE, ScaleType::XAVIDATECUENTA);
 
 	//TODO: Sort by speed
 

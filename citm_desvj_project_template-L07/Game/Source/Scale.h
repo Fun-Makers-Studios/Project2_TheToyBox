@@ -11,7 +11,8 @@ enum class ScaleType
 	HOUSE,
 	FIGHT,
 	UI_50,
-	UI_100
+	UI_100,
+	XAVIDATECUENTA
 };
 
 
@@ -29,6 +30,7 @@ public:
 		case ScaleType::FIGHT:	return 1; //3
 		case ScaleType::UI_50:	return 1;
 		case ScaleType::UI_100: return 1;
+		case ScaleType::XAVIDATECUENTA: return 4;
 		default: return 1;
 		}
 	}
