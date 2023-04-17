@@ -60,5 +60,5 @@ private:
 	// Declare a GUI Button and create it using the GuiManager
 	GuiButton* attackButton18;
 	GuiButton* defenseButton19;
-	GuiButton* turnJumpButton20;
+	GuiButton* skipTurnButton20;
 };

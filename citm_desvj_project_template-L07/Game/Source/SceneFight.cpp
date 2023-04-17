@@ -77,6 +77,15 @@ bool SceneFight::Start()
 		const char* path = itemNode.attribute("texturepath").as_string();
 		SDL_Texture* tex = app->tex->Load(path);
 
+		SDL_Rect textureRect;
+		SString nameStr = itemNode.attribute("name").as_string();
+		if (nameStr == "enemykid")
+			textureRect = { 112, 28, 31, 47 };
+		else if (nameStr == "enemyshopkeeper")
+			textureRect = { 277, 0, 31, 47 };
+		else if (nameStr == "enemyclown")
+			textureRect = { 222, 15, 55, 60 };
+
 		//battle position
 		int offsetX = 800;
 		int offsetY = 300;
@@ -96,17 +105,18 @@ bool SceneFight::Start()
 			itemNode.attribute("speed").as_uint(),
 			itemNode.attribute("critRate").as_uint(),
 			tex,
-			position);
+			position,
+			textureRect);
 
 		turnList.Add(member);
 		enemyList.Add(member);
 	}
-
+	
 	enemySelected = 0;
 
 	attackButton18 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 18, "attack", 7, { 100, 600, 252, 76 }, this);
 	defenseButton19 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 19, "defend", 8, { 510, 600, 252, 76 }, this);
-	turnJumpButton20 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "skip turn", 10, { 915, 600, 252, 76 }, this);
+	skipTurnButton20 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "skip turn", 10, { 915, 600, 252, 76 }, this);
 
 	srand(time(NULL));
 
@@ -170,7 +180,7 @@ bool SceneFight::Update(float dt)
 
 	attackButton18->state = GuiControlState::DISABLED;
 	defenseButton19->state = GuiControlState::DISABLED;
-	turnJumpButton20->state = GuiControlState::DISABLED;
+	skipTurnButton20->state = GuiControlState::DISABLED;
 
 	if (attackButton18->state == GuiControlState::DISABLED) {
 		attackButton18->state = GuiControlState::NORMAL;
@@ -178,8 +188,8 @@ bool SceneFight::Update(float dt)
 	if (defenseButton19->state == GuiControlState::DISABLED) {
 		defenseButton19->state = GuiControlState::NORMAL;
 	}
-	if (turnJumpButton20->state == GuiControlState::DISABLED) {
-		turnJumpButton20->state = GuiControlState::NORMAL;
+	if (skipTurnButton20->state == GuiControlState::DISABLED) {
+		skipTurnButton20->state = GuiControlState::NORMAL;
 	}
 	
 
@@ -187,8 +197,12 @@ bool SceneFight::Update(float dt)
 	{
 		if (turnList.At(i)->data->currentHp <= 0){}
 			//turnList.Del(turnList.At(i));
-		else
-			app->render->DrawTexture(turnList.At(i)->data->texture, turnList.At(i)->data->fightPosition.x, turnList.At(i)->data->fightPosition.y, NULL);
+		else {
+
+			app->render->DrawTexture(turnList.At(i)->data->texture, turnList.At(i)->data->fightPosition.x, turnList.At(i)->data->fightPosition.y, &turnList.At(i)->data->textureRect);
+			
+		}
+			
 	}
 
 	return true;
@@ -212,7 +226,7 @@ bool SceneFight::CleanUp()
 
 	if (attackButton18 != nullptr) attackButton18->state = GuiControlState::DISABLED;
 	if (defenseButton19 != nullptr) defenseButton19->state = GuiControlState::DISABLED;
-	if (turnJumpButton20 != nullptr) turnJumpButton20->state = GuiControlState::DISABLED;
+	if (skipTurnButton20 != nullptr) skipTurnButton20->state = GuiControlState::DISABLED;
 
 	if (tex_bg != nullptr) { app->tex->UnLoad(tex_bg); }
 	if (tex_arrow != nullptr) { app->tex->UnLoad(tex_arrow); }

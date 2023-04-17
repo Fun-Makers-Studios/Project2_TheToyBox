@@ -4,6 +4,7 @@
 #include "List.h"
 #include "App.h"
 #include "Point.h"
+#include "SDL/include/SDL.h"
 
 struct SDL_Texture;
 
@@ -49,7 +50,7 @@ enum class MemberStatus
 class PartyMember
 {
 public:
-	PartyMember(MemberType type, MemberStatus status, SString name, uint maxHp, uint maxMana, uint attack, uint defense, uint speed, uint critRate, SDL_Texture* texture, iPoint fightPosition)
+	PartyMember(MemberType type, MemberStatus status, SString name, uint maxHp, uint maxMana, uint attack, uint defense, uint speed, uint critRate, SDL_Texture* texture, iPoint fightPosition, SDL_Rect textureRect)
 	{
 		this->type = type;
 		this->status = status;
@@ -64,6 +65,7 @@ public:
 		this->critRate = critRate;
 		this->texture = texture;
 		this->fightPosition = fightPosition;
+		this->textureRect = textureRect;
 	};
 
 	~PartyMember() {};
@@ -82,6 +84,7 @@ public:
 	uint critRate;
 
 	SDL_Texture* texture;
+	SDL_Rect textureRect;
 
 	iPoint fightPosition;
 };

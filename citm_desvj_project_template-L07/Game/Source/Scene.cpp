@@ -94,6 +94,16 @@ bool Scene::Start()
 		//texture
 		const char* path = itemNode.attribute("texturepath").as_string();
 		SDL_Texture* tex = app->tex->Load(path);
+		
+		SDL_Rect textureRect;
+		SString nameStr = itemNode.attribute("name").as_string();
+		if(nameStr == "mage")
+			textureRect = {4, 16, 26, 59};
+		else if(nameStr == "warrior")
+			textureRect = {58, 24, 27, 51};
+		else if(nameStr == "assassin")
+			textureRect = {0, 89, 42, 61};
+		
 
 		//battle position
 		int offsetX = 200;
@@ -115,7 +125,8 @@ bool Scene::Start()
 			itemNode.attribute("speed").as_uint(),
 			itemNode.attribute("critRate").as_uint(),
 			tex,
-			position);
+			position,
+			textureRect);
 
 		app->partyManager->AddMemberToParty(member);
 	}
