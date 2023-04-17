@@ -114,7 +114,7 @@ bool Scene::Start()
 	img_pause = app->tex->Load(imgPausePath);
 	pauseRect = {35, 69, 310, 555};
 	popImg_settings = app->tex->Load(popImg_settingsPath);
-
+	partyMenuImg = app->tex->Load("Assets/Textures/SceneGame/PartyMenu/PartyMenu.png");
 
 	// L15: TODO 2: Declare a GUI Button and create it using the GuiManager
 	uint w, h;
@@ -172,7 +172,7 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		if (!dialogueManager->dialogueLoaded && settingSceneMenu == false) { gamePaused = !gamePaused; }
+		if (!dialogueManager->dialogueLoaded && settingSceneMenu == false && partyMenu == false) { gamePaused = !gamePaused; }
 		
 		if(settingSceneMenu == false)
 			pauseMenu = !pauseMenu;
@@ -204,16 +204,19 @@ bool Scene::Update(float dt)
 		}
 	}
 	
+	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && !dialogueManager->dialogueLoaded)
+	{
+		
+			gamePaused = !gamePaused;
+			partyMenu = !partyMenu;
+			app->audio->PlayFx(selectSFX);
+		
+	}
+
+
+
 	// Camera movement related to player's movement
 	FixCamera();
-
-	
-	/*if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && !dialogueManager->dialogueLoaded)
-	{
-		gamePaused = !gamePaused;
-		partyMenu = !partyMenu;
-		app->audio->PlayFx(selectSFX);
-	}*/
 
 	// Draw map
 	app->map->Draw();
@@ -245,8 +248,11 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if (gamePaused == true && (pauseMenu == true || partyMenu == true))
+	if (gamePaused == true && pauseMenu == true)
 		app->render->DrawTexture(img_pause, app->render->camera.x + app->render->camera.w / 2 - pauseRect.w / 2, app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
+
+	if(gamePaused == true && partyMenu == true)
+		app->render->DrawTexture(partyMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
 
 	if(gamePaused == true && pauseMenu == true && settingSceneMenu == true)
 		app->render->DrawTexture(popImg_settings, app->render->camera.x , app->render->camera.y - 3, NULL);
@@ -333,7 +339,7 @@ bool Scene::PostUpdate()
 	if (partyMenu == true)
 	{
 
-		if (resumeButton14->state == GuiControlState::DISABLED) {
+		/*if (resumeButton14->state == GuiControlState::DISABLED) {
 			resumeButton14->state = GuiControlState::NORMAL;
 		}
 		if (backToTitleButton15->state == GuiControlState::DISABLED) {
@@ -344,8 +350,15 @@ bool Scene::PostUpdate()
 		}
 		if (closeButton17->state == GuiControlState::DISABLED) {
 			closeButton17->state = GuiControlState::NORMAL;
-		}
+		}*/
 
+
+
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		{
+			partyMenu = !partyMenu;
+			app->audio->PlayFx(app->titlescreen->closemenuSFX);
+		}
 	}
 
 	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) {

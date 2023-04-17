@@ -89,8 +89,8 @@ bool LogoScreen::PostUpdate()
 {
 	bool ret = true;
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;*/
 
 	SDL_SetRenderDrawColor(app->render->renderer, 0, 0, 0, 0);
 	SDL_RenderFillRect(app->render->renderer, NULL);
