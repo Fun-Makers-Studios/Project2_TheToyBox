@@ -115,6 +115,9 @@ bool Scene::Start()
 	pauseRect = {35, 69, 310, 555};
 	popImg_settings = app->tex->Load(popImg_settingsPath);
 	partyMenuImg = app->tex->Load("Assets/Textures/SceneGame/PartyMenu/PartyMenu.png");
+	zeroImg = app->tex->Load("Assets/Textures/SceneGame/PartyMenu/Characters/ZeroPic.png");
+	sophieImg = app->tex->Load("Assets/Textures/SceneGame/PartyMenu/Characters/SophiePic.png");
+
 
 	// L15: TODO 2: Declare a GUI Button and create it using the GuiManager
 	uint w, h;
@@ -357,11 +360,16 @@ bool Scene::PostUpdate()
 		switch (partyMemberSelected)
 		{
 		case 0:
-
-			//app->render->DrawTexture(partyMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
+			// Zero
+			app->render->DrawTexture(zeroImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
 
 			break;
 
+		case 1:
+			// Sophie
+			app->render->DrawTexture(sophieImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
+
+			break;
 		default:
 			break;
 		}
@@ -398,6 +406,9 @@ bool Scene::CleanUp()
 
 	app->tex->UnLoad(img_pause);
 	app->tex->UnLoad(popImg_settings);
+	app->tex->UnLoad(partyMenuImg);
+	app->tex->UnLoad(zeroImg);
+	app->tex->UnLoad(sophieImg);
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;

@@ -114,6 +114,9 @@ private:
 
 	SDL_Texture* partyMenuImg = nullptr;
 
+	SDL_Texture* zeroImg = nullptr;
+	SDL_Texture* sophieImg = nullptr;
+
 	iPoint startPosition;
 	
 	// L12: Debug pathfing
