@@ -61,7 +61,7 @@
     <ClCompile Include="Source\Main.cpp">
       <Filter>App</Filter>
     </ClCompile>
-    <ClCompile Include="Source\BatEnemy.cpp">
+    <ClCompile Include="Source\KidEnemy.cpp">
       <Filter>Game\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Source\Player.cpp">
@@ -195,7 +195,7 @@
     <ClInclude Include="Source\App.h">
       <Filter>App</Filter>
     </ClInclude>
-    <ClInclude Include="Source\BatEnemy.h">
+    <ClInclude Include="Source\KidEnemy.h">
       <Filter>Game\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Source\Entity.h">

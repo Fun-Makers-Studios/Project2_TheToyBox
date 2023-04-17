@@ -107,10 +107,6 @@ bool SlimeEnemy::Start() {
 
 	pbody->listener = this;
 
-	hitbox = app->physics->CreateRectangle(METERS_TO_PIXELS(pbody->body->GetTransform().p.x), METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 13, 13, 4, bodyType::DYNAMIC, ColliderType::SLIME_HITBOX);
-
-	hitbox->listener = this;
-
 	refreshPathTime = 0;
 
 	jump = false;
@@ -224,12 +220,12 @@ bool SlimeEnemy::Update()
 	//	}
 	//}
 
-	if (app->scene->gamePaused != true)
+	/*if (app->scene->gamePaused != true)
 	{
 		SDL_Rect rect = currentAnim->GetCurrentFrame();
 		app->render->DrawTexture(texture, position.x, position.y, &rect, fliped);
 		currentAnim->Update();
-	}
+	}*/
 
 	return true;
 }
@@ -325,45 +321,11 @@ void SlimeEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 		case ColliderType::ENEMY:
 			LOG("Collision ENEMY");
 			break;
-		case ColliderType::PLAYER_ATTACK_HITBOX:
-			LOG("Collision PLAYER ATTACK HITBOX");
-			lives--;
-			if (lives <= 0) {
-				dead = true;
-			}
-			onCollision = true;
-			app->audio->PlayFx(slimeHitSFX);
-			break;
 		case ColliderType::WALL:
 			LOG("Collision WALL");
 			break;
 		case ColliderType::UNKNOWN:
 			LOG("Collision UNKNOWN");
-			break;
-		}
-	}
-	
-	if (physA->cType == ColliderType::SLIME_HITBOX) {
-		switch (physB->cType)
-		{
-		case ColliderType::PLAYER_ATTACK_HITBOX:
-			LOG("Collision PLAYER ATTACK HITBOX");
-			lives--;
-			if (lives <= 0) {
-				dead = true;
-			}
-			onCollision = true;
-			app->audio->PlayFx(slimeHitSFX);
-			break;
-		case ColliderType::PLAYER:
-			LOG("Collision WALL");
-			lives--;
-			if (lives <= 0) {
-				dead = true;
-			}
-			onCollision = true;
-			app->audio->PlayFx(slimeHitSFX);
-			//dead = true;
 			break;
 		}
 	}

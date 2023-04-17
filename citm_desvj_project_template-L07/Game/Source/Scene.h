@@ -7,7 +7,7 @@
 #include "Item.h"
 #include "Coin.h"
 #include "SlimeEnemy.h"
-#include "BatEnemy.h"
+#include "KidEnemy.h"
 #include "GuiButton.h"
 #include "DialogueManager.h"
 
@@ -55,6 +55,8 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
 
+	void FightKid();
+
 public:
 
 	//L02: DONE 3: Declare a Player attribute 
@@ -63,7 +65,7 @@ public:
 	NPC* npc;
 	List<NPC*> npcList;
 
-	BatEnemy* bat;
+	KidEnemy* kid;
 
 	Item* item;
 

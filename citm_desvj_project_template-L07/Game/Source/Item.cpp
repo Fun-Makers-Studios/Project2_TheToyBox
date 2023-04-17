@@ -37,6 +37,9 @@ bool Item::Start() {
 	
 	if (iType == "life")
 		lifeRect = {0, 0, 32, 32};
+	
+	if (iType == "potionhp")
+		lifeRect = {0, 0, 16, 16};
 
 	// L07 TODO 4: Add a physics to an item - initialize the physics body
 	pbody = app->physics->CreateCircleSensor(position.x, position.y, width/3, bodyType::KINEMATIC, ColliderType::ITEM);
@@ -52,33 +55,13 @@ bool Item::Update()
 
 	if (app->scene->gamePaused != true)
 	{
-		if (timeMov <= 50)
-			velocity.y = .5f;
-		else if (timeMov <= 100) {
-			velocity.y = -.5f;
-		}
-		else
-			timeMov = 0;
-
-
-		timeMov++;
-
-		pbody->body->SetLinearVelocity(velocity);
-
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 2));
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 2));
-	}
 
-	if (app->scene->gamePaused == true)
-		pbody->body->SetLinearVelocity({ 0,0 });
-
-	if (app->scene->gamePaused != true)
-	{
 		if (isPicked == false) {
-			if (iType == "life")
-				app->render->DrawTexture(texture, position.x, position.y, &lifeRect);
-			else
-				app->render->DrawTexture(texture, position.x, position.y);
+				
+			app->render->DrawTexture(texture, position.x, position.y, &lifeRect);
+			
 		}
 	}
 
@@ -108,16 +91,10 @@ void Item::OnCollision(PhysBody* physA, PhysBody* physB) {
 	{
 	case ColliderType::PLAYER:
 		LOG("Collision PLAYER");
-
-
-		if (iType == "life" && app->scene->player->lives < 3) {
-			app->scene->itemLivesCount++;
-			pbody->body->SetActive(false);
-			this->Disable();
-		}
-
 		
-		
+		pbody->body->SetActive(false);
+		this->Disable();
+
 		break;
 	}
 

@@ -1,5 +1,5 @@
-#ifndef __BATENEMY_H__
-#define __BATENEMY_H__
+#ifndef __KIDENEMY_H__
+#define __KIDENEMY_H__
 
 #include "Entity.h"
 #include "Point.h"
@@ -9,13 +9,13 @@
 
 struct SDL_Texture;
 
-class BatEnemy : public Entity
+class KidEnemy : public Entity
 {
 public:
 
-	BatEnemy();
+	KidEnemy();
 
-	virtual ~BatEnemy();
+	virtual ~KidEnemy();
 
 	bool Awake();
 
@@ -42,10 +42,8 @@ public:
 	Animation* currentAnim;
 
 	//Set of animations
-	Animation flyingEnemy;
-	Animation dieEnemy;
-	Animation hitEnemy;
-
+	Animation idleAnim;
+	
 	//Set of SFX
 	uint stompSFX = 0;
 	const char* stompSFXPath;
@@ -60,8 +58,6 @@ public:
 
 	PhysBody* pbody;
 
-	int lives = 2;
-
 private:
 
 	//L02: DONE 1: Declare player parameters
@@ -75,11 +71,6 @@ private:
 
 	int width;
 	int height;
-
-	// L12: Debug pathfing
-	iPoint origin;
-	bool originSelected = false;
-	uint refreshPathTime;
 
 };
 #endif // __ENEMY_H__

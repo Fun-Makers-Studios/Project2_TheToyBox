@@ -55,14 +55,15 @@
 		<coin x="1312" y="250" texturepath="Assets/Textures/bitcoin.png"/>
 		<coin x="2192" y="430" texturepath="Assets/Textures/bitcoin.png"/>
 		<coin x="2928" y="150" texturepath="Assets/Textures/bitcoin.png"/>
-		<life x="230" y="400" iType ="life" texturepath="Assets/Textures/GUI/life.png"/>
-		<life x="1550" y="250" iType ="life" texturepath="Assets/Textures/GUI/life.png"/>
-		<life x="3000" y="170" iType ="life" texturepath="Assets/Textures/GUI/life.png"/>
+		<potionhp x="230" y="400" iType ="potionhp" texturepath="Assets/Textures/Items/potion_hp.png"/>
+		<potionhp x="1550" y="250" iType ="potionhp" texturepath="Assets/Textures/Items/potion_hp.png"/>
+		<potionmana x="3000" y="170" iType ="potionmana" texturepath="Assets/Textures/Items/potion_mana.png"/>
+		<potionmana x="3000" y="170" iType ="potionmana" texturepath="Assets/Textures/Items/potion_mana.png"/>
 		<npc x="300" y="339" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3" dialogueid="0"/>
 		<npc x="200" y="150" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="-1"/>
 		<npc x="450" y="400" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4" dialogueid="-1"/>
 		<npc x="350" y="200" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5" dialogueid="-1"/>
-		<bat x="200" y="266" texturepath="Assets/Textures/Bat/Bat_Full.png"/>
+		<enemykid x="175" y="350" texturepath="Assets/Textures/characters.png"/>
 	</scene>
 
 	<sceneFight>

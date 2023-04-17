@@ -263,6 +263,12 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	
 	switch (physB->cType)
 	{
+
+	case ColliderType::ENEMY:
+		LOG("Collision ENEMY");
+		app->scene->FightKid();
+		break;
+
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
 		/*if (app->scene->item->iType == "life" && lives < 3)
@@ -271,6 +277,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 			lives += 0.5f;
 		}*/
 		break;
+
 	case ColliderType::COIN:
 		LOG("Collision COIN");
 		/*coins++;

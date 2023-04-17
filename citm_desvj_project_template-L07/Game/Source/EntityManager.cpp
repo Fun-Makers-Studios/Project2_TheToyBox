@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "Item.h"
 #include "Coin.h"
-#include "BatEnemy.h"
+#include "KidEnemy.h"
 #include "App.h"
 #include "Textures.h"
 #include "Scene.h"
@@ -96,11 +96,7 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 	
 	case EntityType::ENEMY:
-		entity = new SlimeEnemy();
-		break;
-
-	case EntityType::FLYING_ENEMY:
-		entity = new BatEnemy();
+		entity = new KidEnemy();
 		break;
 
 	case EntityType::ITEM:

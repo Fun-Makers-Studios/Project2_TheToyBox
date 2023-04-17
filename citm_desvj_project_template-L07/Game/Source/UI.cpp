@@ -83,7 +83,9 @@ bool UI::CleanUp()
 	LOG("Freeing UI_Module");
 
 	app->fonts->UnLoad(font1_id);
-	//app->fonts->UnLoad(font2_id);
+	app->fonts->UnLoad(font2_id);
+	app->tex->UnLoad(livesTex);
+	app->tex->UnLoad(coinsTex);
 
 	return true;
 }
@@ -183,19 +185,6 @@ void UI::BlitPlayerYPos()
 	app->fonts->BlitText(20, 85, font2_id, playerYPos);
 }
 
-void UI::BlitSlimeLives()
-{
-	/*char slimeLives[25];
-	sprintf_s(slimeLives, 20, "slime lives: %d", app->scene->slime->lives);
-	app->fonts->BlitText(20, 105, font2_id, slimeLives);*/
-}
-
-void UI::BlitBatLives()
-{
-	char batLives[25];
-	sprintf_s(batLives, 20, "bat lives: %d", app->scene->bat->lives);
-	app->fonts->BlitText(20, 125, font2_id, batLives);
-}
 
 void UI::BlitFPS()
 {

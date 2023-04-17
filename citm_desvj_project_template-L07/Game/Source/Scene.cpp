@@ -62,25 +62,25 @@ bool Scene::Start()
 		coinsList.Add(coin);
 	}
 	
-	for (pugi::xml_node itemNode = app->configNode.child("scene").child("life"); itemNode; itemNode = itemNode.next_sibling("life"))
+	for (pugi::xml_node itemNode = app->configNode.child("scene").child("potionhp"); itemNode; itemNode = itemNode.next_sibling("potionhp"))
 	{
 		item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		item->parameters = itemNode;
 		livesCollectedList.Add(item);
 	}
 
-	//L02: DONE 3: Instantiate the player using the entity manager
+	//Instantiate the player using the entity manager
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 	player->parameters = app->configNode.child("scene").child("player");
 
+	//Load First Map NPCs
 	mapName = "mapfile";
 	LoadNPC(mapName);
 	
-	for (pugi::xml_node itemNode = app->configNode.child("scene").child("bat"); itemNode; itemNode = itemNode.next_sibling("bat"))
+	for (pugi::xml_node itemNode = app->configNode.child("scene").child("enemykid"); itemNode; itemNode = itemNode.next_sibling("enemykid"))
 	{
-		bat = (BatEnemy*)app->entityManager->CreateEntity(EntityType::FLYING_ENEMY);
-		bat->parameters = itemNode;
-		//bat->lives = 2;
+		kid = (KidEnemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
+		kid->parameters = itemNode;
 	}
 
 	//Create party
@@ -194,8 +194,7 @@ bool Scene::Update(float dt)
 	//TEST FIGHT SCENE
 	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
 		LOG("SWITCHING TO SCENEFIGHT");
-		app->partyManager->enemyToFight = "enemykid";
-		app->fade->FadeToBlack(this, (Module*)app->sceneFight, 0);
+		FightKid();
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
@@ -263,8 +262,6 @@ bool Scene::Update(float dt)
 	if (app->physics->debug) {
 		app->ui->BlitPlayerXPos();
 		app->ui->BlitPlayerYPos();
-		app->ui->BlitSlimeLives();
-		app->ui->BlitBatLives();
 		app->ui->BlitAverageFPS();
 		app->ui->BlitDT();
 		app->ui->BlitTimeSinceStart();
@@ -533,6 +530,13 @@ void Scene::FixCamera() {
 	}
 }
 
+void Scene::FightKid() {
+
+	app->partyManager->enemyToFight = "enemykid";
+	app->fade->FadeToBlack(this, (Module*)app->sceneFight, 0);
+
+}
+
 bool Scene::LoadState(pugi::xml_node& data)
 {
 	// Load previous saved player position
@@ -580,11 +584,8 @@ bool Scene::LoadState(pugi::xml_node& data)
 	checkpointEnabled = data.child("checkpointEnabled").attribute("checkpointEnabled").as_bool();
 
 	// Load previous saved bat position
-	b2Vec2 batPos = { data.child("batPosition").attribute("x").as_float(), data.child("batPosition").attribute("y").as_float() };
-	app->scene->bat->pbody->body->SetTransform(batPos, 0);
-
-	//Load previous saved bat number of lives
-	app->scene->bat->lives = data.child("batLives").attribute("batLives").as_int();
+	b2Vec2 kidPos = { data.child("kidPosition").attribute("x").as_float(), data.child("kidPosition").attribute("y").as_float() };
+	app->scene->kid->pbody->body->SetTransform(kidPos, 0);
 
 	return true;
 }
@@ -621,13 +622,9 @@ bool Scene::SaveState(pugi::xml_node& data)
 	checkpointEnabled.append_attribute("checkpointEnabled") = checkpointEnabled;
 
 	// Save current bat position
-	pugi::xml_node batPos = data.append_child("batPosition");
-	batPos.append_attribute("x") = app->scene->bat->pbody->body->GetTransform().p.x;
-	batPos.append_attribute("y") = app->scene->bat->pbody->body->GetTransform().p.y;
-
-	// Save current bat number of lives
-	pugi::xml_node batLives = data.append_child("batLives");
-	batLives.append_attribute("batLives") = app->scene->bat->lives;
+	pugi::xml_node kidPos = data.append_child("batPosition");
+	kidPos.append_attribute("x") = app->scene->kid->pbody->body->GetTransform().p.x;
+	kidPos.append_attribute("y") = app->scene->kid->pbody->body->GetTransform().p.y;
 	
 	pugi::xml_node checkPoint = data.append_child("checkPoint");
 	checkPoint.append_attribute("checkPoint") = app->scene->checkpointEnabled;

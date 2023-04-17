@@ -41,8 +41,6 @@ public:
 	void BlitCoins();
 	void BlitTimer();
 	void BlitLives();
-	void BlitSlimeLives();
-	void BlitBatLives();
 	void BlitFPS();
 	void BlitAverageFPS();
 	void BlitDT();
