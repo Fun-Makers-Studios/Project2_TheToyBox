@@ -114,7 +114,7 @@ bool Scene::Start()
 	img_pause = app->tex->Load(imgPausePath);
 	pauseRect = {35, 69, 310, 555};
 	popImg_settings = app->tex->Load(popImg_settingsPath);
-
+	partyMenuImg = app->tex->Load("Assets/Textures/SceneGame/PartyMenu/PartyMenu.png");
 
 	// L15: TODO 2: Declare a GUI Button and create it using the GuiManager
 	uint w, h;
@@ -133,6 +133,9 @@ bool Scene::Start()
 	fullscreenButton25 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 25, "", 1, { 520, 424, 252, 76 }, this);
 
 	vsyncButton26 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 26, "", 1, { 520, 532, 252, 76 }, this);
+
+	firstPMemberButton27 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 27, "1", 2, { 520, 532, 252, 76 }, this, ButtonType::SMALL);
+	secondPMemberButton28 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 28, "2", 2, { 520, 532, 252, 76 }, this, ButtonType::SMALL);
 
 
 	ResetScene();
@@ -172,7 +175,7 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		if (!dialogueManager->dialogueLoaded && settingSceneMenu == false) { gamePaused = !gamePaused; }
+		if (!dialogueManager->dialogueLoaded && settingSceneMenu == false && partyMenu == false) { gamePaused = !gamePaused; }
 		
 		if(settingSceneMenu == false)
 			pauseMenu = !pauseMenu;
@@ -204,16 +207,19 @@ bool Scene::Update(float dt)
 		}
 	}
 	
+	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && !dialogueManager->dialogueLoaded)
+	{
+		
+			gamePaused = !gamePaused;
+			partyMenu = !partyMenu;
+			app->audio->PlayFx(selectSFX);
+		
+	}
+
+
+
 	// Camera movement related to player's movement
 	FixCamera();
-
-	
-	/*if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && !dialogueManager->dialogueLoaded)
-	{
-		gamePaused = !gamePaused;
-		partyMenu = !partyMenu;
-		app->audio->PlayFx(selectSFX);
-	}*/
 
 	// Draw map
 	app->map->Draw();
@@ -242,8 +248,11 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if (gamePaused == true && (pauseMenu == true || partyMenu == true))
+	if (gamePaused == true && pauseMenu == true)
 		app->render->DrawTexture(img_pause, app->render->camera.x + app->render->camera.w / 2 - pauseRect.w / 2, app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
+
+	if(gamePaused == true && partyMenu == true)
+		app->render->DrawTexture(partyMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
 
 	if(gamePaused == true && pauseMenu == true && settingSceneMenu == true)
 		app->render->DrawTexture(popImg_settings, app->render->camera.x , app->render->camera.y - 3, NULL);
@@ -268,6 +277,9 @@ bool Scene::PostUpdate()
 	increaseSFXButton24->state = GuiControlState::DISABLED;
 	fullscreenButton25->state = GuiControlState::DISABLED;
 	vsyncButton26->state = GuiControlState::DISABLED;
+
+	firstPMemberButton27->state = GuiControlState::DISABLED;
+	secondPMemberButton28->state = GuiControlState::DISABLED;
 
 	if (pauseMenu == true)
 	{
@@ -330,19 +342,18 @@ bool Scene::PostUpdate()
 	if (partyMenu == true)
 	{
 
-		if (resumeButton14->state == GuiControlState::DISABLED) {
-			resumeButton14->state = GuiControlState::NORMAL;
+		if (firstPMemberButton27->state == GuiControlState::DISABLED) {
+			firstPMemberButton27->state = GuiControlState::NORMAL;
 		}
-		if (backToTitleButton15->state == GuiControlState::DISABLED) {
-			backToTitleButton15->state = GuiControlState::NORMAL;
-		}
-		if (settingsButton16->state == GuiControlState::DISABLED) {
-			settingsButton16->state = GuiControlState::NORMAL;
-		}
-		if (closeButton17->state == GuiControlState::DISABLED) {
-			closeButton17->state = GuiControlState::NORMAL;
+		if (secondPMemberButton28->state == GuiControlState::DISABLED) {
+			secondPMemberButton28->state = GuiControlState::NORMAL;
 		}
 
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		{
+			partyMenu = !partyMenu;
+			app->audio->PlayFx(app->titlescreen->closemenuSFX);
+		}
 	}
 
 	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) {
@@ -369,7 +380,7 @@ bool Scene::CleanUp()
 	pauseMenu = false;
 	partyMenu = false;
 
-	dialogueManager->~DialogueManager();
+	dialogueManager->CleanUp();
 
 	Mix_ResumeMusic();
 
@@ -400,6 +411,11 @@ bool Scene::CleanUp()
 		fullscreenButton25->state = GuiControlState::DISABLED;
 	if (vsyncButton26 != nullptr)
 		vsyncButton26->state = GuiControlState::DISABLED;
+
+	if (firstPMemberButton27 != nullptr)
+		firstPMemberButton27->state = GuiControlState::DISABLED;
+	if (secondPMemberButton28 != nullptr)
+		secondPMemberButton28->state = GuiControlState::DISABLED;
 
 	return true;
 }
@@ -579,7 +595,7 @@ void Scene::LoadNPC(SString mapName_)
 		npcItem->data->needToDestroy = true;
 	}
 	
-	for (pugi::xml_node itemNode = app->configNode.child("scene").child(mapName_.GetString()).child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
+	for (pugi::xml_node itemNode = app->configNode.child("npcs").child(mapName_.GetString()).child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
 	{
 		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
 		npc->parameters = itemNode;
@@ -589,44 +605,24 @@ void Scene::LoadNPC(SString mapName_)
 	
 }
 
-void Scene::FixCamera()
-{
-	app->render->camera.x = (player->position.x) - (app->win->screenSurface->w) / 2;
-	app->render->camera.y = (player->position.y) - (app->win->screenSurface->h) / 2;
-	if (app->render->camera.x < 0)
+void Scene::FixCamera() {
+
+	if (METERS_TO_PIXELS(app->map->mapData.width) > 1280 && METERS_TO_PIXELS(app->map->mapData.height) > 704) { //SMALL MAP SIZE 1280x704
+
+		app->render->camera.x = (player->position.x + 16) - ((app->win->screenSurface->w) / 2);
+		app->render->camera.y = (player->position.y + 16) - ((app->win->screenSurface->h) / 2);
+		if (app->render->camera.x < 0)
+			app->render->camera.x = 0;
+		if (app->render->camera.y < 0)
+			app->render->camera.y = 0;
+		if (app->render->camera.x > METERS_TO_PIXELS(app->map->mapData.width) - app->render->camera.w)
+			app->render->camera.x = METERS_TO_PIXELS(app->map->mapData.width) - app->render->camera.w;
+		if (app->render->camera.y > METERS_TO_PIXELS(app->map->mapData.height) - app->render->camera.h)
+			app->render->camera.y = METERS_TO_PIXELS(app->map->mapData.height) - app->render->camera.h;
+	}
+	else {
 		app->render->camera.x = 0;
-	if (app->render->camera.y < 0)
 		app->render->camera.y = 0;
-	if (app->render->camera.x + app->render->camera.w > METERS_TO_PIXELS(app->map->mapData.width)) {
-		if (cameraFixX == false)
-		{
-			cameraFixX = true;
-			cameraPos.x = app->render->camera.x;
-		}
-		app->render->camera.x = cameraPos.x;
-	}
-	else
-	{
-		if (cameraFixX == true)
-		{
-			cameraFixX = false;
-		}
-	}
-	if (app->render->camera.y + app->render->camera.h > METERS_TO_PIXELS(app->map->mapData.height)) {
-		if (cameraFixY == false)
-		{
-			cameraFixY = true;
-			LOG("CAMERA Y FIX: %d", cameraFixY);
-			cameraPos.y = app->render->camera.y;
-		}
-		app->render->camera.y = cameraPos.y;
-	}
-	else
-	{
-		if (cameraFixY == true)
-		{
-			cameraFixY = false;
-		}
 	}
 }
 

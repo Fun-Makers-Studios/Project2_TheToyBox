@@ -68,11 +68,8 @@ bool Coin::Update()
 	if(app->scene->gamePaused==true)
 		pbody->body->SetLinearVelocity({0,0});
 
-	if (app->scene->gamePaused != true)
-	{
-		if (isPicked == false)
-			app->render->DrawTexture(texture, position.x, position.y);
-	}
+	if (isPicked == false)
+		app->render->DrawTexture(texture, position.x, position.y);
 
 	if (isPicked == true) 
 	{
@@ -93,6 +90,14 @@ bool Coin::PostUpdate()
 
 bool Coin::CleanUp()
 {
+
+	app->tex->UnLoad(texture);
+	texture = nullptr;
+
+	pbody->body->DestroyFixture(pbody->body->GetFixtureList());
+	delete pbody;
+	pbody = nullptr;
+
 	return true;
 }
 

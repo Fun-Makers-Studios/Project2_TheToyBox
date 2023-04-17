@@ -214,12 +214,10 @@ bool Player::Update()
 		pbody->body->SetAwake(false);
 	}
 
-	if (app->scene->gamePaused != true) 
-	{
-		SDL_Rect rect = currentAnim->GetCurrentFrame();
-		app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, ScaleType::WORLD);
-		currentAnim->Update();
-	}
+	SDL_Rect rect = currentAnim->GetCurrentFrame();
+	app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, ScaleType::WORLD);
+	currentAnim->Update();
+
 
 	return true;
 }
@@ -232,6 +230,12 @@ bool Player::PostUpdate() {
 
 bool Player::CleanUp()
 {
+	app->tex->UnLoad(texture);
+	texture = nullptr;
+
+	pbody->body->DestroyFixture(pbody->body->GetFixtureList());
+	delete pbody;
+	pbody = nullptr;
 
 	return true;
 }
@@ -245,14 +249,28 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case MapZone::HOUSE1_TO_TOWN:
 		LOG("GO TO TOWN");
 		app->scene->mapName = "town";
-		newPos = {180, 245};
+		newPos = {192, 256};
 		app->scene->isMapChanging = true;
 		break;
 
 	case MapZone::TOWN_TO_HOUSE1:
-		LOG("GO TO HOUSE");
-		app->scene->mapName = "house";
-		newPos = { 480, 500 };
+		LOG("GO TO HOUSE BASEMENT");
+		app->scene->mapName = "housebasement";
+		newPos = { 640, 480 };
+		app->scene->isMapChanging = true;
+		break;
+	
+	case MapZone::HOUSEBASE_TO_HOUSEFLOOR:
+		LOG("GO TO HOUSE FLOOR");
+		app->scene->mapName = "housefloor";
+		newPos = { 960, 256 };
+		app->scene->isMapChanging = true;
+		break;
+
+	case MapZone::HOUSEFLOOR_TO_HOUSEFBASE:
+		LOG("GO TO HOUSE BASEMENT");
+		app->scene->mapName = "housebasement";
+		newPos = { 672, 176 };
 		app->scene->isMapChanging = true;
 		break;
 
@@ -267,6 +285,20 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("GO TO TOWN");
 		app->scene->mapName = "town";
 		newPos = { 800, 352 };
+		app->scene->isMapChanging = true;
+		break;
+	
+	case MapZone::TOWN_TO_INN:
+		LOG("GO TO INN");
+		app->scene->mapName = "inn";
+		newPos = { 960, 544 };
+		app->scene->isMapChanging = true;
+		break;
+
+	case MapZone::INN_TO_TOWN:
+		LOG("GO TO TOWN");
+		app->scene->mapName = "town";
+		newPos = { 1184, 448 };
 		app->scene->isMapChanging = true;
 		break;
 	

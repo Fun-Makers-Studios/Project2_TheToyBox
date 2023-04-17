@@ -83,7 +83,7 @@ bool SceneFight::Start()
 		SDL_Rect textureRect;
 		SString nameStr = itemNode.attribute("name").as_string();
 		if (nameStr == "enemykid")
-			textureRect = { 195 + i * 32, 0, 32, 64 };
+			textureRect = { 192 + i * 32, 0, 32, 64 };
 		else if (nameStr == "enemyshopkeeper")
 			textureRect = { 0, 64, 64, 96 };
 		else if (nameStr == "enemyclown")
@@ -137,7 +137,7 @@ bool SceneFight::PreUpdate()
 // Called each loop iteration
 bool SceneFight::Update(float dt)
 {
-	//app->render->DrawTexture(img, 0, 0, NULL);
+	app->render->DrawTexture(tex_bg, 0, 0, NULL);
 
 	//TODO: Sort by speed
 

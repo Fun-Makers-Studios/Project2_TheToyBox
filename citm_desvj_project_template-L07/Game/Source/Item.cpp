@@ -53,22 +53,24 @@ bool Item::Update()
 {
 	// Link item's texture with pbody when moving
 
+	if (isPicked == true)
+	{
+		app->physics->world->DestroyBody(pbody->body);
+		app->entityManager->DestroyEntity(this);
+		
+		//CleanUp();
+	}
+
 	if (app->scene->gamePaused != true)
 	{
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 4));
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 4));
-
-		if (isPicked == false) {
-				
-			app->render->DrawTexture(texture, position.x, position.y, &lifeRect);
-			
-		}
 	}
 
-	if (isPicked == true)
-	{
-		app->entityManager->DestroyEntity(this);
-		app->physics->world->DestroyBody(pbody->body);
+	if (isPicked == false) {
+
+		app->render->DrawTexture(texture, position.x, position.y, &lifeRect);
+
 	}
 
 	return true;
@@ -82,6 +84,15 @@ bool Item::PostUpdate()
 
 bool Item::CleanUp()
 {
+
+	app->tex->UnLoad(texture);
+	texture = nullptr;
+
+	app->physics->world->DestroyBody(pbody->body);
+	delete pbody;
+	pbody = nullptr;
+	app->entityManager->DestroyEntity(this);
+
 	return true;
 }
 
@@ -92,9 +103,9 @@ void Item::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::PLAYER:
 		LOG("Collision PLAYER");
 		
-		pbody->body->SetActive(false);
-		this->Disable();
-
+		/*pbody->body->SetActive(false);
+		this->Disable();*/
+		isPicked = true;
 		break;
 	}
 

@@ -112,6 +112,8 @@ private:
 	const char* popImg_settingsPath;
 	SDL_Texture* popImg_settings = nullptr;
 
+	SDL_Texture* partyMenuImg = nullptr;
+
 	iPoint startPosition;
 	
 	// L12: Debug pathfing
@@ -137,6 +139,9 @@ private:
 
 	GuiButton* fullscreenButton25;
 	GuiButton* vsyncButton26;
+
+	GuiButton* firstPMemberButton27;
+	GuiButton* secondPMemberButton28;
 
 
 	bool exitGame = false;

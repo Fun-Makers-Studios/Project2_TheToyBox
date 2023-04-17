@@ -704,10 +704,18 @@ bool Map::CreateColliders()
                             c1->mapZone = MapZone::TOWN_TO_HOUSE1;
                             break;
                         
-                        case 2:
+                        case 3:
                             c1->mapZone = MapZone::HOUSE1_TO_TOWN;
                             break;
                         
+                        case 4:
+                            c1->mapZone = MapZone::HOUSEBASE_TO_HOUSEFLOOR;
+                            break;
+
+                        case 5:
+                            c1->mapZone = MapZone::HOUSEFLOOR_TO_HOUSEFBASE;
+                            break;
+
                         case 17:
                             c1->mapZone = MapZone::TOWN_TO_TAVERN;
                             break;
@@ -715,6 +723,15 @@ bool Map::CreateColliders()
                         case 1:
                             c1->mapZone = MapZone::TAVERN_TO_TOWN;
                             break;
+                        
+                        case 21:
+                            c1->mapZone = MapZone::TOWN_TO_INN;
+                            break;
+                        
+                        case 2:
+                            c1->mapZone = MapZone::INN_TO_TOWN;
+                            break;
+                       
 
                         default: break;
                         }

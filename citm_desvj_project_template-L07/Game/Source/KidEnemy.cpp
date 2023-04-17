@@ -40,7 +40,7 @@ bool KidEnemy::Start() {
 	width = 32;
 	height = 32;
 
-	idleAnim.PushBack({ 112, 28, 31, 47});
+	idleAnim.PushBack({ 192, 0, 32, 64 });
 	idleAnim.loop = true;
 	idleAnim.speed = 0.1f;
 
@@ -95,6 +95,7 @@ bool KidEnemy::Update()
 	{
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width/2));
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height));
+	}
 
 		SDL_Rect rect = currentAnim->GetCurrentFrame();
 		app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, ScaleType::WORLD);
@@ -112,6 +113,15 @@ bool KidEnemy::PostUpdate() {
 
 bool KidEnemy::CleanUp()
 {
+
+	app->tex->UnLoad(texture);
+	texture = nullptr;
+
+	app->physics->world->DestroyBody(pbody->body);
+	delete pbody;
+	pbody = nullptr;
+	app->entityManager->DestroyEntity(this);
+
 
 	return true;
 }

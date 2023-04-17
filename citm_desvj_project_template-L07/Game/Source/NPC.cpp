@@ -92,11 +92,10 @@ bool NPC::CleanUp()
 	app->tex->UnLoad(texture);
 	texture = nullptr;
 
+	app->physics->world->DestroyBody(pbody->body);
 	delete pbody;
 	pbody = nullptr;
-
-	/*delete currentAnim;
-	currentAnim = nullptr;*/
+	app->entityManager->DestroyEntity(this);
 
 	return true;
 }
