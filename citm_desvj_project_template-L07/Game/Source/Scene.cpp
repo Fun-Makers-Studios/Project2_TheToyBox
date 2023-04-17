@@ -71,9 +71,7 @@ bool Scene::Start()
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 	player->parameters = app->configNode.child("scene").child("player");
 
-	//Load First Map NPCs
-	mapName = "mapfile";
-	LoadNPC(mapName);
+	
 	
 	for (pugi::xml_node itemNode = app->configNode.child("scene").child("enemykid"); itemNode; itemNode = itemNode.next_sibling("enemykid"))
 	{
@@ -89,6 +87,10 @@ bool Scene::Start()
 	LOG("--STARTS GAME SCENE--");
 	app->physics->debug = false;
 	exitGame = false;
+
+	//Load First Map NPCs
+	mapName = "mapfile";
+	LoadNPC(mapName);
 
 	// L03: DONE: Load map
 	app->map->Load();
@@ -563,7 +565,7 @@ void Scene::SceneMap() {
 		
 		app->map->ChangeMap(mapName.GetString());
 		player->pbody->body->SetTransform(PIXEL_TO_METERS(player->newPos), 0.0f);
-		//LoadNPC(mapName.GetString());
+		LoadNPC(mapName.GetString());
 
 		isMapChanging = false;
 	}
@@ -572,9 +574,7 @@ void Scene::SceneMap() {
 
 void Scene::LoadNPC(SString mapName_)
 {
-	
-	if(npcList.start != NULL)
-		npcList.Clear();
+	app->entityManager->DeleteNPCActive();
 
 	if (mapName_ == "house")
 	{
@@ -587,6 +587,7 @@ void Scene::LoadNPC(SString mapName_)
 			npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
 			npc->parameters = itemNode;
 			npcList.Add(npc);
+			npc->Start();
 		}
 	}
 	

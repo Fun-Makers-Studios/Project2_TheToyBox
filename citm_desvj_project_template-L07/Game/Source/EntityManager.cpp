@@ -185,10 +185,39 @@ bool EntityManager::PostUpdate()
 void EntityManager::DeleteNPCActive() 
 {
 
+	ListItem<Entity*>* item;
+
+	for (item = entities.start; item != NULL; item = item->next)
+	{
+		if (item->data->type == EntityType::NPC) {
+		
+			RELEASE(item->data);
+			entities.Del(item);
+
+		} 
+	}
+
 	/*ListItem<Entity*>* npc;
 	npc = entities.start;
 
-	while (npc != NULL) {
+	for (npc; npc != entities.end; npc++)
+	{
+		Entity* entity = npc->data;
+		if (entity->type == EntityType::NPC)
+		{
+			entity->CleanUp();
+			RELEASE(npc->data);
+			entities.Del(npc);
+		}
+
+	}*/
+
+	/*while (npc != NULL) {
+
+		if (npc->data->type == EntityType::NPC) 
+		{
+			RELEASE(npc->data);
+		}
 		
 		npc = npc->next;
 	}*/
