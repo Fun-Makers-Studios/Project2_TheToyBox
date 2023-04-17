@@ -46,8 +46,13 @@ enum class ColliderType {
 
 enum class MapZone {
 	PLAYER,
+
 	HOUSE1_TO_TOWN,
 	TOWN_TO_HOUSE1,
+	
+	TAVERN_TO_TOWN,
+	TOWN_TO_TAVERN,
+
 	UNKNOWN
 };
 

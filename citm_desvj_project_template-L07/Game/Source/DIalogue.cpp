@@ -48,12 +48,12 @@ Dialogue::~Dialogue() {
 }
 
 Node* Dialogue::SetCurrentNode(int id) {
-	ListItem<Node*>* n = nodes.start;
-
-	while (n->data->id != id)
+	for (ListItem<Node*>* n = nodes.start; n != nullptr; n = n->next)
 	{
-		n = n->next;
+		if (n->data->id == id) {
+			return n->data;
+		}
 	}
 
-	return n->data;
+	return nullptr;
 }

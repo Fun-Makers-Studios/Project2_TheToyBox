@@ -71,9 +71,6 @@ bool Scene::Start()
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 	player->parameters = app->configNode.child("scene").child("player");
 
-	//Load First Map NPCs
-	mapName = "mapfile";
-	LoadNPC(mapName);
 	
 	for (pugi::xml_node itemNode = app->configNode.child("scene").child("enemykid"); itemNode; itemNode = itemNode.next_sibling("enemykid"))
 	{
@@ -89,6 +86,10 @@ bool Scene::Start()
 	LOG("--STARTS GAME SCENE--");
 	app->physics->debug = false;
 	exitGame = false;
+
+	//Load First Map NPCs
+	mapName = "town";
+	LoadNPC(mapName);
 
 	// L03: DONE: Load map
 	app->map->Load();
@@ -371,6 +372,8 @@ bool Scene::CleanUp()
 	pauseMenu = false;
 	partyMenu = false;
 
+	dialogueManager->~DialogueManager();
+
 	Mix_ResumeMusic();
 
 	app->tex->UnLoad(img_pause);
@@ -411,7 +414,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	switch (control->id)
 	{
 	case 14:
-		gamePaused = !gamePaused;
+		if (!dialogueManager->dialogueLoaded) { gamePaused = !gamePaused; }
 		pauseMenu = !pauseMenu;
 		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
 		break;
@@ -563,7 +566,7 @@ void Scene::SceneMap() {
 		
 		app->map->ChangeMap(mapName.GetString());
 		player->pbody->body->SetTransform(PIXEL_TO_METERS(player->newPos), 0.0f);
-		//LoadNPC(mapName.GetString());
+		LoadNPC(mapName.GetString());
 
 		isMapChanging = false;
 	}
@@ -572,22 +575,19 @@ void Scene::SceneMap() {
 
 void Scene::LoadNPC(SString mapName_)
 {
-	
-	if(npcList.start != NULL)
-		npcList.Clear();
+	ListItem<NPC*>* npcItem;
 
-	if (mapName_ == "house")
+	for (npcItem = npcList.start; npcItem != NULL; npcItem = npcItem->next)
 	{
-		
+		npcItem->data->needToDestroy = true;
 	}
-	else if (mapName_ == "mapfile")
+	
+	for (pugi::xml_node itemNode = app->configNode.child("scene").child(mapName_.GetString()).child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
 	{
-		for (pugi::xml_node itemNode = app->configNode.child("scene").child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
-		{
-			npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
-			npc->parameters = itemNode;
-			npcList.Add(npc);
-		}
+		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
+		npc->parameters = itemNode;
+		//npcList.Add(npc);
+		npc->Start();
 	}
 	
 }

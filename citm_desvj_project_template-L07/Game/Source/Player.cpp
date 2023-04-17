@@ -241,17 +241,30 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	// L07 DONE 7: Detect the type of collision
 	switch (physB->mapZone)
 	{
+
 	case MapZone::HOUSE1_TO_TOWN:
 		LOG("GO TO TOWN");
-		app->scene->mapName = "mapfile";
+		app->scene->mapName = "town";
 		newPos = {180, 245};
 		app->scene->isMapChanging = true;
 		break;
-	
 	case MapZone::TOWN_TO_HOUSE1:
 		LOG("GO TO HOUSE");
 		app->scene->mapName = "house";
 		newPos = { 480, 500 };
+		app->scene->isMapChanging = true;
+		break;
+
+	case MapZone::TOWN_TO_TAVERN:
+		LOG("GO TO TAVERN");
+		app->scene->mapName = "tavern";
+		newPos = { 480, 500 };
+		app->scene->isMapChanging = true;
+		break;
+	case MapZone::TAVERN_TO_TOWN:
+		LOG("GO TO TOWN");
+		app->scene->mapName = "town";
+		newPos = { 800, 352 };
 		app->scene->isMapChanging = true;
 		break;
 	

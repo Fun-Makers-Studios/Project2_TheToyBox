@@ -158,6 +158,17 @@ bool EntityManager::Update(float dt)
 	{
 		pEntity = item->data;
 
+		if (pEntity->needToDestroy == false) continue;
+		
+		item->data->CleanUp();
+		
+		DestroyEntity(pEntity);
+	}
+
+	for (item = entities.start; item != NULL && ret == true; item = item->next)
+	{
+		pEntity = item->data;
+
 		if (pEntity->active == false) continue;
 		ret = item->data->Update();
 	}
@@ -182,15 +193,3 @@ bool EntityManager::PostUpdate()
 	return ret;
 }
 
-void EntityManager::DeleteNPCActive() 
-{
-
-	/*ListItem<Entity*>* npc;
-	npc = entities.start;
-
-	while (npc != NULL) {
-		
-		npc = npc->next;
-	}*/
-
-}

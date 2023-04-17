@@ -56,11 +56,15 @@
 		<potionhp x="1550" y="250" iType ="potionhp" texturepath="Assets/Textures/Items/potion_hp.png"/>
 		<potionmana x="3000" y="170" iType ="potionmana" texturepath="Assets/Textures/Items/potion_mana.png"/>
 		<potionmana x="3000" y="170" iType ="potionmana" texturepath="Assets/Textures/Items/potion_mana.png"/>
-		<npc x="300" y="339" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3" dialogueid="0"/>
-		<npc x="200" y="150" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="-1"/>
-		<npc x="450" y="400" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4" dialogueid="-1"/>
-		<npc x="350" y="200" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5" dialogueid="-1"/>
 		<enemykid x="175" y="350" texturepath="Assets/Textures/characters.png"/>
+		<town>
+			<npc x="300" y="339" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3" dialogueid="0"/>
+			<npc x="200" y="150" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="-1"/>
+			<npc x="450" y="400" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4" dialogueid="-1"/>
+			<npc x="350" y="200" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5" dialogueid="-1"/>
+		</town>
+		<house>
+		</house>
 	</scene>
 
 	<sceneFight>
@@ -87,8 +91,8 @@
 
 	<map>
 		<mapfolder path="Assets/Maps/"/>
-		<mapfile path="Assets/Maps/map_town.tmx"/>
-		<house path="Assets/Maps/house.tmx"/>
+		<town path="Assets/Maps/map_town.tmx"/>
+		<tavern path="Assets/Maps/tavern.tmx"/>
 		<house2 path="Assets/Maps/Town.tmx"/>
 	</map>
 
@@ -97,9 +101,9 @@
 		
 	</gui>
 
-	<dialoguemanager dialogtext="Assets/UI/Dialog/Dialog.png">
+	<dialoguemanager dialoguetext="Assets/UI/Dialog/Dialog.png" font="Assets/Fonts/DialogFont.png" lookuptable="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz:         " rows="6">
 		<dialogue id ="0">
-			<node id="0" text="BOOBA">
+			<node id="0" text="El hector es un mamahuevo y no se ha comprado el  Tribes of Midgard porque es una rata que nunca se gasta dinero aunque tenga mas pasta que nadie porque trabaja en verano">
 				<option id="0" nextNodeId="1" text="NICE"/>
 				<option id="1" nextNodeId="-1" text="WTF"/>
 			</node>

@@ -2369,30 +2369,8 @@
    <tile/>
    <tile/>
    <tile gid="19"/>
-   <tile gid="19"/>
-   <tile gid="19"/>
-   <tile gid="19"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="19"/>
-   <tile gid="19"/>
-   <tile gid="19"/>
-   <tile gid="19"/>
-   <tile gid="19"/>
-   <tile gid="19"/>
-   <tile gid="19"/>
+   <tile gid="16"/>
+   <tile gid="16"/>
    <tile gid="19"/>
    <tile/>
    <tile/>
@@ -2406,39 +2384,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="19"/>
-   <tile gid="19"/>
-   <tile gid="19"/>
-   <tile gid="19"/>
    <tile/>
    <tile/>
    <tile gid="19"/>
@@ -2467,10 +2412,10 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="19"/>
-   <tile gid="19"/>
-   <tile gid="19"/>
-   <tile gid="19"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -2505,10 +2450,10 @@
    <tile gid="19"/>
    <tile gid="19"/>
    <tile/>
-   <tile gid="19"/>
-   <tile gid="19"/>
-   <tile gid="19"/>
-   <tile gid="19"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -2555,6 +2500,61 @@
    <tile gid="19"/>
    <tile gid="19"/>
    <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile/>
+   <tile/>
+   <tile gid="19"/>
+   <tile gid="19"/>
+   <tile gid="17"/>
+   <tile gid="17"/>
    <tile gid="19"/>
    <tile gid="19"/>
    <tile gid="19"/>
@@ -7992,7 +7992,7 @@
    <tile gid="17"/>
   </data>
  </layer>
- <layer id="5" name="Teleport" width="55" height="36">
+ <layer id="5" name="Teleport" width="55" height="36" visible="0">
   <properties>
    <property name="Draw" type="bool" value="false"/>
    <property name="Navigation" type="bool" value="false"/>
@@ -8517,8 +8517,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="17"/>
+   <tile gid="17"/>
    <tile/>
    <tile/>
    <tile/>

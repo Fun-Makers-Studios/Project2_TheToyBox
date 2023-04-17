@@ -27,7 +27,9 @@ private:
 	pugi::xml_node file;
 
 	Dialogue* currentDialogue;
-	SDL_Texture* dialogtext;
+	SDL_Texture* dialoguetext;
+
+	uint dialogueFontId;
 };
 
 #endif // __DIALOGUEMANAGER_H__
