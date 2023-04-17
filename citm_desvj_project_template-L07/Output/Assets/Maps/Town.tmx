@@ -3394,7 +3394,7 @@
    <tile gid="898"/>
   </data>
  </layer>
- <layer id="6" name="Collisions" width="38" height="22">
+ <layer id="6" name="Teleport" width="38" height="22">
   <properties>
    <property name="Draw" type="bool" value="false"/>
    <property name="Navigation" type="bool" value="false"/>

@@ -146,12 +146,9 @@ bool SceneFight::Update(float dt)
 	}
 	else if (turnMember->type == ENEMY)
 	{
-		//int randomNum = rand() % 4;
-		int randomNum = 1;
 		int randomMember = rand() % 3;
 
-		if (randomNum == 1)
-			Attack(turnMember, app->partyManager->party.At(randomMember)->data);
+		Attack(turnMember, app->partyManager->party.At(randomMember)->data);
 
 	}
 

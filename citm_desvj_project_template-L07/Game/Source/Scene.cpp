@@ -73,13 +73,8 @@ bool Scene::Start()
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 	player->parameters = app->configNode.child("scene").child("player");
 
-
-	for (pugi::xml_node itemNode = app->configNode.child("scene").child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
-	{
-		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
-		npc->parameters = itemNode;
-		npcList.Add(npc);
-	}
+	mapName = "mapfile";
+	LoadNPC(mapName);
 	
 	for (pugi::xml_node itemNode = app->configNode.child("scene").child("bat"); itemNode; itemNode = itemNode.next_sibling("bat"))
 	{
@@ -166,10 +161,10 @@ bool Scene::Start()
 	// L15: TODO 2: Declare a GUI Button and create it using the GuiManager
 	uint w, h;
 	app->win->GetWindowSize(w, h);
-	resumeButton14 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "resume", 7, { 515, 125, 252, 76 }, this);
-	backToTitleButton15 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 15, "back to title", 13, { 515, (125 * 2), 252, 76 }, this);
-	settingsButton16 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 16, "settings", 9, { 515, (125 * 3), 252, 76 }, this);
-	closeButton17 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 17, "exit", 5, { 515, (125 * 4), 252, 76 }, this);
+	resumeButton14 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "resume", 7, { 515, 295, 252, 76 }, this);
+	backToTitleButton15 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 15, "back to title", 13, { 515, 375, 252, 76 }, this);
+	settingsButton16 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 16, "settings", 8, { 515, 455, 252, 76 }, this);
+	closeButton17 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 17, "save and exit", 12, { 515, 535, 252, 76 }, this);
 
 
 	ResetScene();
@@ -186,6 +181,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	SceneMap();
+
 	if (continueGame == true)
 	{
 		app->LoadGameRequest();
@@ -459,6 +456,39 @@ void Scene::ResetScene() {
 	else if (checkpointEnabled == true && result != NULL) {
 		app->LoadGameRequest();
 	}
+}
+
+void Scene::SceneMap() {
+
+	if (isMapChanging == true)
+	{
+		
+		app->map->ChangeMap(mapName.GetString());
+		player->pbody->body->SetTransform(PIXEL_TO_METERS(player->newPos), 0.0f);
+		//LoadNPC(mapName.GetString());
+
+		isMapChanging = false;
+	}
+
+}
+
+void Scene::LoadNPC(SString mapName_)
+{
+	
+	if (mapName_ == "house")
+	{
+		
+	}
+	else if (mapName_ == "mapfile")
+	{
+		for (pugi::xml_node itemNode = app->configNode.child("scene").child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
+		{
+			npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
+			npc->parameters = itemNode;
+			npcList.Add(npc);
+		}
+	}
+	
 }
 
 void Scene::FixCamera() {

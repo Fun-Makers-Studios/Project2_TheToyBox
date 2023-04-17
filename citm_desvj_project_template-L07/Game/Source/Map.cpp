@@ -663,10 +663,7 @@ bool Map::CreateColliders()
                         PhysBody* c1 = app->physics->CreateRectangle(pos.x + halfTileHeight, pos.y + halfTileWidth, mapData.tileWidth, mapData.tileHeight, STATIC, ColliderType::UNKNOWN);
                         
                         switch (mapLayerItem->data->Get(x, y)) {
-                        case 16: case 897:
-                            c1->body->GetFixtureList()->SetSensor(true);
-                            c1->cType = ColliderType::TELEPORT;
-                            break;
+                        
                         case 17:
                             c1->cType = ColliderType::WALL;
                             break;
@@ -684,7 +681,7 @@ bool Map::CreateColliders()
             
         }
 
-        if (mapLayerItem->data->name == "WinZone")
+        if (mapLayerItem->data->name == "Teleport")
         {
             int halfTileHeight = mapData.tileHeight / 2;
             int halfTileWidth = mapData.tileWidth / 2;
@@ -699,8 +696,12 @@ bool Map::CreateColliders()
                         PhysBody* c1 = app->physics->CreateRectangleSensor(pos.x + halfTileHeight, pos.y + halfTileWidth, mapData.tileWidth, mapData.tileHeight, STATIC, ColliderType::UNKNOWN);
 
                         switch (mapLayerItem->data->Get(x, y)) {
-                        case 694:
-                            c1->cType = ColliderType::WIN_ZONE;
+                        case 16:
+                            c1->mapZone = MapZone::TOWN_TO_HOUSE1;
+                            break;
+                        
+                        case 897:
+                            c1->mapZone = MapZone::HOUSE1_TO_TOWN;
                             break;
 
                         default: break;

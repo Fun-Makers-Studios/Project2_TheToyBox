@@ -45,7 +45,13 @@ enum class ColliderType {
 	NONCAMERAFIX_2,
 	WIN_ZONE,
 	CHECKPOINT,
-	TELEPORT,
+	UNKNOWN
+};
+
+enum class MapZone {
+	PLAYER,
+	HOUSE1_TO_TOWN,
+	TOWN_TO_HOUSE1,
 	UNKNOWN
 };
 
@@ -66,6 +72,7 @@ public:
 	b2Body* body;
 	Entity* listener;
 	ColliderType cType;
+	MapZone mapZone;
 };
 
 // Module --------------------------------------
