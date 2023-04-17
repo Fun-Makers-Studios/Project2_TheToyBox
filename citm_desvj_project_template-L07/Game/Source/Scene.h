@@ -57,6 +57,8 @@ public:
 
 	void FightKid();
 
+	void ShowPartyStats();
+
 public:
 
 	//L02: DONE 3: Declare a Player attribute 
@@ -103,6 +105,8 @@ public:
 	SString mapName;
 	bool isMapChanging = false;
 
+	uint partyMemberSelected = 0;
+
 	DialogueManager* dialogueManager;
 
 private:
@@ -113,6 +117,9 @@ private:
 	SDL_Texture* popImg_settings = nullptr;
 
 	SDL_Texture* partyMenuImg = nullptr;
+
+	SDL_Texture* zeroImg = nullptr;
+	SDL_Texture* sophieImg = nullptr;
 
 	iPoint startPosition;
 	
@@ -140,6 +147,8 @@ private:
 	GuiButton* fullscreenButton25;
 	GuiButton* vsyncButton26;
 
+	GuiButton* firstPMemberButton27;
+	GuiButton* secondPMemberButton28;
 
 	bool exitGame = false;
 };

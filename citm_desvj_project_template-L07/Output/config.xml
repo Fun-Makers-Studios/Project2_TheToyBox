@@ -62,8 +62,8 @@
 	<sceneFight>
 		<backgroundimage texturepath="Assets/Textures/SceneCombat/combat.png"/>
 		<arrowimage texturepath="Assets/Textures/SceneCombat/cursedArrow.png"/>
-		<partymember type="ally" name="sophie" maxHp="15" maxMana="30" attack="12" defense="10" speed="50" critRate="15" texturepath="Assets/Textures/characters.png"/>
-		<partymember type="ally" name="zero" maxHp="25" maxMana="20" attack="8" defense="30" speed="40" critRate="10" texturepath="Assets/Textures/characters.png"/>
+		<partymember type="ally" name="zero" maxHp="25" maxMana="20" level ="23" attack="8" defense="30" speed="40" critRate="10" texturepath="Assets/Textures/characters.png"/>
+		<partymember type="ally" name="sophie" maxHp="15" maxMana="30" level ="15" attack="12" defense="10" speed="50" critRate="15" texturepath="Assets/Textures/characters.png"/>
 		<enemykid type="enemy" name="enemykid" maxHp="20" maxMana="25" attack="10" defense="10" speed="20" critRate="30" texturepath="Assets/Textures/characters.png"/>
 		<enemyshopkeeper type="enemy" name="enemyshopkeeper" maxHp="20" maxMana="25" attack="10" defense="10" speed="20" critRate="30" texturepath="Assets/Textures/characters.png"/>
 		<enemyclown type="enemy" name="enemyclown" maxHp="20" maxMana="25" attack="10" defense="10" speed="20" critRate="30" texturepath="Assets/Textures/characters.png"/>
@@ -92,7 +92,7 @@
 
 	<gui>
 		<guiButtons buttonsTexPath="Assets/UI/ButtonsSprites/Buttons.png"/>
-		
+		<guiButtons smallButtonTexPath="Assets/UI/ButtonsSprites/Buttons.png"/>
 	</gui>
 
 	<dialoguemanager dialoguetext="Assets/UI/Dialog/Dialog.png" font="Assets/Fonts/DialogFont.png" lookuptable="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz:?!.,     " rows="6">

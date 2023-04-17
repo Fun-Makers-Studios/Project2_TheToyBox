@@ -146,6 +146,7 @@
     <ClInclude Include="Source\NPC.h" />
     <ClInclude Include="Source\PartyManager.h" />
     <ClInclude Include="Source\PerfTimer.h" />
+    <ClInclude Include="Source\Scale.h" />
     <ClInclude Include="Source\SceneFight.h" />
     <ClInclude Include="Source\SlimeEnemy.h" />
     <ClInclude Include="Source\Entity.h" />

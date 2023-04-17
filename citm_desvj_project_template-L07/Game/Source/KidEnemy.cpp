@@ -40,7 +40,7 @@ bool KidEnemy::Start() {
 	width = 32;
 	height = 32;
 
-	idleAnim.PushBack({ 112, 28, 31, 47});
+	idleAnim.PushBack({ 192, 0, 32, 64 });
 	idleAnim.loop = true;
 	idleAnim.speed = 0.1f;
 
@@ -97,9 +97,9 @@ bool KidEnemy::Update()
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height));
 	}
 
-	SDL_Rect rect = currentAnim->GetCurrentFrame();
-	app->render->DrawTexture(texture, position.x, position.y, &rect, fliped);
-	currentAnim->Update();
+		SDL_Rect rect = currentAnim->GetCurrentFrame();
+		app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, ScaleType::WORLD);
+		currentAnim->Update();
 
 	return true;
 }

@@ -8,7 +8,7 @@
 #include "Fonts.h"
 #include "UI.h"
 
-GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, int textSize) : GuiControl(GuiControlType::BUTTON, id)
+GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, int textSize, ButtonType buttonType_) : GuiControl(GuiControlType::BUTTON, id)
 {
 	this->bounds = bounds;
 	this->text = text;
@@ -17,10 +17,12 @@ GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, int textSize)
 	canClick = true;
 	drawBasic = false;
 
+	buttonType = buttonType_;
+
 	//Load gui button atlas texture
 	buttonTexPath = app->configNode.child("gui").child("guiButtons").attribute("buttonsTexPath").as_string();
 	buttonTex = app->tex->Load(buttonTexPath);
-
+	
 	//buttonTex = app->tex->Load("Assets/Textures/button_texture_atlas.png");
 
 }
@@ -88,7 +90,14 @@ bool GuiButton::Draw(Render* render)
 	{
 		if (app->render->viewGUIbounds == true)
 			render->DrawRectangle(rec, 255, 255, 0, 255);
-		SDL_Rect rect = { 0,0,252,76 };
+
+		SDL_Rect rect;
+
+		if (buttonType == ButtonType::BIG)
+			rect = { 0, 0, 252, 76 };
+		else
+			rect = { 0, 233, 64, 76 };
+		
 		render->DrawTexture(buttonTex, rec.x, rec.y, &rect);
 
 	} break;
@@ -98,7 +107,13 @@ bool GuiButton::Draw(Render* render)
 	{
 		if (app->render->viewGUIbounds == true)
 			render->DrawRectangle(rec, 255, 255, 255, 160);
-		SDL_Rect rect = { 0,75,252,76 };
+		SDL_Rect rect;
+
+		if (buttonType == ButtonType::BIG)
+			rect = { 0,75,252,76 };
+		else
+			rect = { 94, 233, 64, 76 };
+
 		render->DrawTexture(buttonTex, rec.x, rec.y, &rect);
 
 	} break;
@@ -106,7 +121,13 @@ bool GuiButton::Draw(Render* render)
 	{
 		if (app->render->viewGUIbounds == true)
 			render->DrawRectangle(rec, 255, 255, 255, 0);
-		SDL_Rect rect = { 0,150,252,76 };
+		SDL_Rect rect;
+
+		if (buttonType == ButtonType::BIG)
+			rect = { 0,150,252,76 };
+		else
+			rect = { 188, 233, 64, 76 };
+
 		render->DrawTexture(buttonTex, rec.x, rec.y, &rect);
 
 	} break;
