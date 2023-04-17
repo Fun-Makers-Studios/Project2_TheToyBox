@@ -19,7 +19,9 @@ public:
 	// Called before the first frame
 	 bool Start();
 
-	 bool Update(float dt);
+	bool Update(float dt);
+
+	bool PostUpdate();
 
 	bool Draw();
 

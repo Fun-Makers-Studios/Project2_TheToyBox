@@ -270,9 +270,17 @@ bool Scene::Update(float dt)
 		app->ui->BlitTimeSinceStart();
 		app->ui->BlitFrameCount();
 	}
+	
+	return true;
+}
+
+// Called each loop iteration
+bool Scene::PostUpdate()
+{
+	bool ret = true;
 
 	if (gamePaused == true && (pauseMenu == true || partyMenu == true))
-		app->render->DrawTexture(img_pause, app->render->camera.x + app->render->camera.w/2 - pauseRect.w/2, app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
+		app->render->DrawTexture(img_pause, app->render->camera.x + app->render->camera.w / 2 - pauseRect.w / 2, app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
 
 	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) {
 		dialogueManager->Update();
@@ -288,7 +296,7 @@ bool Scene::Update(float dt)
 
 	if (pauseMenu == true)
 	{
-	
+
 		if (resumeButton14->state == GuiControlState::DISABLED) {
 			resumeButton14->state = GuiControlState::NORMAL;
 		}
@@ -303,10 +311,10 @@ bool Scene::Update(float dt)
 		}
 
 	}
-	
+
 	if (partyMenu == true)
 	{
-	
+
 		if (resumeButton14->state == GuiControlState::DISABLED) {
 			resumeButton14->state = GuiControlState::NORMAL;
 		}
@@ -321,14 +329,6 @@ bool Scene::Update(float dt)
 		}
 
 	}
-	
-	return true;
-}
-
-// Called each loop iteration
-bool Scene::PostUpdate()
-{
-	bool ret = true;
 
 	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) {
 		dialogueManager->Draw();
