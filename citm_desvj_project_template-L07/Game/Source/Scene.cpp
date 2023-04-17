@@ -573,6 +573,9 @@ void Scene::SceneMap() {
 void Scene::LoadNPC(SString mapName_)
 {
 	
+	if(npcList.start != NULL)
+		npcList.Clear();
+
 	if (mapName_ == "house")
 	{
 		

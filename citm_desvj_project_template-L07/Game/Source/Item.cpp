@@ -55,8 +55,8 @@ bool Item::Update()
 
 	if (app->scene->gamePaused != true)
 	{
-		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 2));
-		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 2));
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 4));
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 4));
 
 		if (isPicked == false) {
 				

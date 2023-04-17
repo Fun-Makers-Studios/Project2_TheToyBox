@@ -244,14 +244,14 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case MapZone::HOUSE1_TO_TOWN:
 		LOG("GO TO TOWN");
 		app->scene->mapName = "mapfile";
-		newPos = {1088, 576};
+		newPos = {180, 245};
 		app->scene->isMapChanging = true;
 		break;
 	
 	case MapZone::TOWN_TO_HOUSE1:
 		LOG("GO TO HOUSE");
 		app->scene->mapName = "house";
-		newPos = { 192, 576 };
+		newPos = { 480, 500 };
 		app->scene->isMapChanging = true;
 		break;
 	

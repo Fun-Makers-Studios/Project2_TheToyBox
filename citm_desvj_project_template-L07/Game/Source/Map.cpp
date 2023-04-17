@@ -700,7 +700,7 @@ bool Map::CreateColliders()
                             c1->mapZone = MapZone::TOWN_TO_HOUSE1;
                             break;
                         
-                        case 897:
+                        case 1:
                             c1->mapZone = MapZone::HOUSE1_TO_TOWN;
                             break;
 
