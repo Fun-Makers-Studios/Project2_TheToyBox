@@ -185,3 +185,16 @@ bool EntityManager::PostUpdate()
 
 	return ret;
 }
+
+void EntityManager::DeleteNPCActive() 
+{
+
+	/*ListItem<Entity*>* npc;
+	npc = entities.start;
+
+	while (npc != NULL) {
+		
+		npc = npc->next;
+	}*/
+
+}

@@ -71,13 +71,8 @@ bool Scene::Start()
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 	player->parameters = app->configNode.child("scene").child("player");
 
-
-	for (pugi::xml_node itemNode = app->configNode.child("scene").child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
-	{
-		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
-		npc->parameters = itemNode;
-		npcList.Add(npc);
-	}
+	mapName = "mapfile";
+	LoadNPC(mapName);
 	
 	for (pugi::xml_node itemNode = app->configNode.child("scene").child("bat"); itemNode; itemNode = itemNode.next_sibling("bat"))
 	{
@@ -184,6 +179,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	SceneMap();
+
 	if (continueGame == true)
 	{
 		app->LoadGameRequest();
@@ -445,32 +442,36 @@ void Scene::ResetScene() {
 	}
 }
 
+void Scene::SceneMap() {
+
+	if (isMapChanging == true)
+	{
+		
+		app->map->ChangeMap(mapName.GetString());
+		player->pbody->body->SetTransform(PIXEL_TO_METERS(player->newPos), 0.0f);
+		//LoadNPC(mapName.GetString());
+
+		isMapChanging = false;
+	}
+
+}
+
 void Scene::LoadNPC(SString mapName_)
 {
 	
-	/*if (mapName_ == "house.tmx")
+	if (mapName_ == "house")
 	{
-		iPoint position = { 200,250 };
-		entityManager->CreateEntity(EntityType::TOWN, position, anims, 0);
-
-		position = { 700,1060 };
-		entityManager->CreateEntity(EntityType::RAY, position, anims, 3);
-
-		position = { 700,810 };
-		entityManager->CreateEntity(EntityType::TABERN, position, anims, 2);
-
-		position = { 500,350 };
-		entityManager->CreateEntity(EntityType::NPC_WIZARD, position, anims, 1);
+		
 	}
-	else if (mapName_ == "pub.tmx")
+	else if (mapName_ == "mapfile")
 	{
-		iPoint position = { 638,280 };
-		Npc* npc = (Npc*)entityManager->CreateEntity(EntityType::TOWN, position, anims, 4);
-		npc->NpcMove(false);
-
-		position = { 670,360 };
-		entityManager->CreateEntity(EntityType::NPC_WIZARD, position, anims, 1);
-	}*/
+		for (pugi::xml_node itemNode = app->configNode.child("scene").child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
+		{
+			npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
+			npc->parameters = itemNode;
+			npcList.Add(npc);
+		}
+	}
 	
 }
 

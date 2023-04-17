@@ -45,6 +45,7 @@ public:
 	void ResetScene();
 	void FixCamera();
 
+	void SceneMap();
 	void LoadNPC(SString mapName_);
 
 	void SaveUI();
@@ -98,7 +99,8 @@ public:
 	List<Item*> livesCollectedList;
 	int itemLivesCount = 0;
 
-	bool isTeleporting = false;
+	SString mapName;
+	bool isMapChanging = false;
 
 private:
 	SDL_Texture* img_pause;

@@ -111,6 +111,8 @@ bool Player::Start() {
 	//Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x, position.y, width / 3, bodyType::DYNAMIC, ColliderType::PLAYER);
 
+	pbody->mapZone = MapZone::PLAYER;
+
 	pbody->listener = this;
 
 	return true;
@@ -207,13 +209,6 @@ bool Player::Update()
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width));
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height/1.5));
 
-		//Teleports to a house --> Change to ChangeMap() function
-		if (app->scene->isTeleporting == true) {
-
-			app->map->ChangeMap("house");
-			//pbody->body->SetTransform(PIXEL_TO_METERS(housePos), 0);
-			app->scene->isTeleporting = false;
-		}
 	}
 	else {
 		pbody->body->SetAwake(false);
@@ -244,7 +239,28 @@ bool Player::CleanUp()
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	// L07 DONE 7: Detect the type of collision
+	switch (physB->mapZone)
+	{
+	case MapZone::HOUSE1_TO_TOWN:
+		LOG("GO TO TOWN");
+		app->scene->mapName = "mapfile";
+		newPos = {1088, 576};
+		app->scene->isMapChanging = true;
+		break;
+	
+	case MapZone::TOWN_TO_HOUSE1:
+		LOG("GO TO HOUSE");
+		app->scene->mapName = "house";
+		newPos = { 192, 576 };
+		app->scene->isMapChanging = true;
+		break;
+	
+	case MapZone::UNKNOWN:
+		LOG("GO TO UNKNOWN");
 
+		break;
+	}
+	
 	switch (physB->cType)
 	{
 	case ColliderType::ITEM:
@@ -260,10 +276,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		/*coins++;
 		app->audio->PlayFx(pickCoinSFX);*/
 		LOG("COINS: %d", coins);
-		break;
-	case ColliderType::TELEPORT:
-		LOG("Collision TELEPORT");
-		app->scene->isTeleporting = true;
 		break;
 	
 	case ColliderType::CHECKPOINT:

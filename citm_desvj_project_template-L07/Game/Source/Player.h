@@ -77,6 +77,8 @@ public:
 
 	float lives = 3;
 
+	b2Vec2 newPos;
+
 private:
 
 	//L02: DONE 1: Declare player parameters
