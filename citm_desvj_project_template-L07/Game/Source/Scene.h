@@ -80,12 +80,6 @@ public:
 
 	bool playing = false;
 
-	SDL_Texture* originTex = nullptr;
-	const char* origintexturePath;
-
-	SDL_Texture* slimeTilePathTex = nullptr;
-	const char* slimeTilePath;
-	
 	SDL_Texture* checkPointTex = nullptr;
 	const char* checkPointTexPath;
 	bool checkpointEnabled = false;
@@ -114,6 +108,8 @@ public:
 private:
 	SDL_Texture* img_pause;
 	SDL_Rect pauseRect;
+
+	const char* popImg_settingsPath;
 	SDL_Texture* popImg_settings = nullptr;
 
 	iPoint startPosition;

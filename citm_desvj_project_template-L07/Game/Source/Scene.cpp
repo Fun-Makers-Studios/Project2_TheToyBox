@@ -49,6 +49,7 @@ bool Scene::Start()
 	musicPath = app->configNode.child("scene").child("music").attribute("musicPath").as_string();
 	selectSFXPath = app->configNode.child("scene").child("scenesfx").attribute("selectSFXPath").as_string();
 	imgPausePath = app->configNode.child("scene").child("imgPause").attribute("imgPausePath").as_string();
+	popImg_settingsPath = app->configNode.child("title").child("popImage").attribute("settingtexturepath").as_string();
 
 	// Iterate all objects in the scene
 	// Check https://pugixml.org/docs/quickstart.html#access
@@ -111,7 +112,7 @@ bool Scene::Start()
 
 	img_pause = app->tex->Load(imgPausePath);
 	pauseRect = {35, 69, 310, 555};
-	popImg_settings = app->tex->Load("Assets/Textures/SceneTitle/Settings/SettingsMenu.png");
+	popImg_settings = app->tex->Load(popImg_settingsPath);
 
 
 	// L15: TODO 2: Declare a GUI Button and create it using the GuiManager

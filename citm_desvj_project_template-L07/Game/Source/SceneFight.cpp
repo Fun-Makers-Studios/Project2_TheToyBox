@@ -158,19 +158,15 @@ bool SceneFight::Update(float dt)
 		}
 		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		{
-			enemySelected++;
-			enemySelected = enemySelected >= enemyList.Count() ? 0 : enemySelected;
-
-			while (enemyList.At(enemySelected)->data->status == MemberStatus::DEAD)
-			{
-				if (enemySelected >= enemyList.Count())
-					enemySelected = 0;
-			}
+			if (enemySelected < enemyList.Count() -1)
+				enemySelected++;
+			else
+				enemySelected = 0;
 		}
 	}
 	else if (turnMember->type == MemberType::ENEMY)
 	{
-		int randomMember = rand() % 3;
+		int randomMember = rand() % app->partyManager->party.Count();
 
 		Attack(turnMember, app->partyManager->party.At(randomMember)->data);
 
@@ -207,9 +203,12 @@ bool SceneFight::Update(float dt)
 	{
 		if (turnList.At(i)->data->status == MemberStatus::DEAD)
 		{
-			if (turnList.At(i)->data->type == MemberType::ENEMY)
+			if (turnList.At(i)->data->type == MemberType::ENEMY) {
 				enemyList.Del(enemyList.At(enemySelected));
+				if (enemySelected >= enemyList.Count())
+					enemySelected = 0;
 
+			}
 			turnList.Del(turnList.At(i));
 			
 		}
@@ -286,7 +285,7 @@ bool SceneFight::OnGuiMouseClickEvent(GuiControl* control)
 void SceneFight::Attack(PartyMember* turnMember_, PartyMember* receiverMember_)
 {
 	//TODO: Calculate crit, def
-
+	turn++;
 	//godmode no damage
 	if (turnMember_->type == MemberType::ENEMY && app->debug->godMode) { return; }
 
@@ -307,7 +306,7 @@ void SceneFight::Attack(PartyMember* turnMember_, PartyMember* receiverMember_)
 		receiverMember_->currentHp -= turnMember->attack;
 	}
 
-	turn++;
+	
 }
 
 void SceneFight::Escape()

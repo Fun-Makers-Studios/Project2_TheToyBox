@@ -42,9 +42,6 @@
 	</title>
 
 	<scene>
-		<originTexture origintexturePath = "Assets/Maps/x.png" />
-		<checkpoint checkpointPath = "Assets/Maps/Tileset_CheckPoints.png" />
-		<pathfinding  slimePathTile="Assets/Textures/Slime/path.png" />
 		<music musicPath="Assets/Audio/Music/song1.ogg" />
 		<imgPause imgPausePath="Assets/UI/PauseMenu/PauseMenuTemplate.png"/>
 		<scenesfx selectSFXPath="Assets/Audio/Fx/select.wav" />
