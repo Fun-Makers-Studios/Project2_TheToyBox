@@ -100,7 +100,6 @@ bool KidEnemy::Update()
 		SDL_Rect rect = currentAnim->GetCurrentFrame();
 		app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, ScaleType::WORLD);
 		currentAnim->Update();
-	}
 
 	return true;
 }
