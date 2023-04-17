@@ -106,9 +106,9 @@
 		
 	</gui>
 
-	<dialoguemanager dialogtext="Assets/UI/Dialog/Dialog.png">
+	<dialoguemanager dialoguetext="Assets/UI/Dialog/Dialog.png" font="Assets/Fonts/DialogFont.png" lookuptable="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz:         " rows="6">
 		<dialogue id ="0">
-			<node id="0" text="BOOBA">
+			<node id="0" text="El hector es un mamahuevo y no se ha comprado el  Tribes of Midgard porque es una rata que nunca se gasta dinero aunque tenga mas pasta que nadie porque trabaja en verano">
 				<option id="0" nextNodeId="1" text="NICE"/>
 				<option id="1" nextNodeId="-1" text="WTF"/>
 			</node>

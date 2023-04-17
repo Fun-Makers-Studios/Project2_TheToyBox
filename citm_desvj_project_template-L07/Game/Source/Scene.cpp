@@ -372,6 +372,8 @@ bool Scene::CleanUp()
 	pauseMenu = false;
 	partyMenu = false;
 
+	dialogueManager->~DialogueManager();
+
 	Mix_ResumeMusic();
 
 	app->tex->UnLoad(img_pause);
@@ -412,7 +414,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	switch (control->id)
 	{
 	case 14:
-		gamePaused = !gamePaused;
+		if (!dialogueManager->dialogueLoaded) { gamePaused = !gamePaused; }
 		pauseMenu = !pauseMenu;
 		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
 		break;

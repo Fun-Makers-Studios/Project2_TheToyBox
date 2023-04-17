@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "App.h"
 #include "Scene.h"
+#include "Fonts.h"
 
 #include "Log.h"
 
@@ -14,12 +15,16 @@ DialogueManager::DialogueManager(Scene* scene) {
 	this->scene = scene;
 
 	file = app->configNode.child("dialoguemanager");
-	dialogtext = app->tex->Load((const char*)file.attribute("dialogtext").as_string());
+	dialoguetext = app->tex->Load((const char*)file.attribute("dialoguetext").as_string());
+	dialogueFontId = app->fonts->Load((const char*)file.attribute("font").as_string(), (const char*)file.attribute("lookuptable").as_string(), file.attribute("rows").as_int());
 
 	dialogueLoaded = false;
 }
 
-DialogueManager::~DialogueManager(){}
+DialogueManager::~DialogueManager(){
+	app->fonts->UnLoad(dialogueFontId);
+	app->tex->UnLoad(dialoguetext);
+}
 
 void DialogueManager::Load(int dialogueId) {
 	LOG("Loading Dialog");
@@ -49,16 +54,32 @@ void DialogueManager::Update() {
 			currentDialogue->currentNode->currentOption = op;
 		}
 	}
+	else if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+		currentDialogue->currentNode = currentDialogue->SetCurrentNode(currentDialogue->currentNode->currentOption->nextNodeId);
+		if (currentDialogue->currentNode == nullptr) {
+			this->Unload();
+		}
+	}
 }
 
 void DialogueManager::Draw() {
 	SDL_Rect rect = {0,0,1182,196};
-	app->render->DrawTexture(dialogtext, 49, 505, &rect);
+	app->render->DrawTexture(dialoguetext, 49 + app->render->camera.x, 505 + app->render->camera.y, &rect);
 
-	rect = { 1182,0,15,21 };
-	app->render->DrawTexture(dialogtext, 175, 622, &rect);
+	int lines = app->fonts->BlitText2(95, 540, dialogueFontId, (const char*)this->currentDialogue->currentNode->text.GetString(), 8, 1090);
 
-	//app->fonts->BlitText(672, 576, font_text, "POINTS", false);
+	iPoint displacement = { 230, ((lines * (int)app->fonts->fonts[dialogueFontId].char_h) + 540) + 16 };
+	ListItem<Option*>* op = this->currentDialogue->currentNode->options.start;
+	while (op != nullptr)
+	{
+		if (currentDialogue->currentNode->currentOption->id == op->data->id) {
+			rect = { 1182,0,15,21 };
+			app->render->DrawTexture(dialoguetext, 175 + app->render->camera.x, displacement.y + app->render->camera.y, &rect);
+		}
+
+		displacement.y += app->fonts->fonts[dialogueFontId].char_h * app->fonts->BlitText2(displacement.x, displacement.y, dialogueFontId, (const char*)op->data->text.GetString(), 8, 890);
+		op = op->next;
+	}
 }
 
 void DialogueManager::Unload() {
