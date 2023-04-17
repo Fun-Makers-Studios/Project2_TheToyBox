@@ -53,19 +53,19 @@ bool Scene::Start()
 
 	// Iterate all objects in the scene
 	// Check https://pugixml.org/docs/quickstart.html#access
-	for (pugi::xml_node itemNode = app->configNode.child("scene").child("coin"); itemNode; itemNode = itemNode.next_sibling("coin"))
+	/*for (pugi::xml_node itemNode = app->configNode.child("scene").child("coin"); itemNode; itemNode = itemNode.next_sibling("coin"))
 	{
 		coin = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
 		coin->parameters = itemNode;
 		coinsList.Add(coin);
-	}
+	}*/
 	
-	for (pugi::xml_node itemNode = app->configNode.child("scene").child("potionhp"); itemNode; itemNode = itemNode.next_sibling("potionhp"))
+	/*for (pugi::xml_node itemNode = app->configNode.child("scene").child("potionhp"); itemNode; itemNode = itemNode.next_sibling("potionhp"))
 	{
 		item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		item->parameters = itemNode;
 		livesCollectedList.Add(item);
-	}
+	}*/
 
 	//Instantiate the player using the entity manager
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
@@ -656,10 +656,10 @@ void Scene::FixCamera()
 		if (app->render->camera.y < 0)
 			app->render->camera.y = 0;
 
-		if (app->render->camera.x > METERS_TO_PIXELS(app->map->mapData.width) - app->render->camera.w)
-			app->render->camera.x = METERS_TO_PIXELS(app->map->mapData.width) - app->render->camera.w;
-		if (app->render->camera.y > METERS_TO_PIXELS(app->map->mapData.height) - app->render->camera.h)
-			app->render->camera.y = METERS_TO_PIXELS(app->map->mapData.height) - app->render->camera.h;
+		if (app->render->camera.x > METERS_TO_PIXELS(app->map->mapData.width) * scale - app->render->camera.w)
+			app->render->camera.x = METERS_TO_PIXELS(app->map->mapData.width) * scale - app->render->camera.w;
+		if (app->render->camera.y > METERS_TO_PIXELS(app->map->mapData.height) * scale - app->render->camera.h)
+			app->render->camera.y = METERS_TO_PIXELS(app->map->mapData.height) * scale - app->render->camera.h;
 	}
 	else {
 		app->render->camera.x = 0;

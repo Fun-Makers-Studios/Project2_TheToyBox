@@ -125,18 +125,13 @@ bool Player::PreUpdate() {
 
 bool Player::Update()
 {
+	int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
+	int speed = 6 / scale;
 
 	currentAnim = &idlePlayer;
 
 	if (app->scene->gamePaused != true) 
 	{
-
-		//Enable/Disable Debug
-		/*if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-		{
-			app->physics->debug = !app->physics->debug;
-			app->audio->PlayFx(selectSFX);
-		}*/
 
 		if (godMode == true) {
 
@@ -215,8 +210,8 @@ bool Player::Update()
 	}
 
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
-	ScaleType scale = app->scaleObj->GetCurrentScale();
-	app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, scale);
+	ScaleType scaleType = app->scaleObj->GetCurrentScale();
+	app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, scaleType);
 	currentAnim->Update();
 
 

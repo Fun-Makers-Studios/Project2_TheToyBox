@@ -29,6 +29,7 @@ Debug::~Debug() {}
 bool Debug::Start()
 {
 	debug = false;
+	variables = true;
 	desiredFPS = 60;
 	return true;
 }
@@ -200,9 +201,9 @@ void Debug::DrawDebug()
 		//Scale
 		std::string currentScale = app->scaleObj->ScaleTypeToString(app->scaleObj->GetCurrentScale());
 		if (!app->scene->player->dead)
-			app->fonts->BlitText(debugX, debugY + 140, 0, currentScale.c_str());
+			app->fonts->BlitText(debugX, debugY + 200, 0, currentScale.c_str());
 		else
-			app->fonts->BlitText(debugX, debugY + 140, 0, currentScale.c_str());
+			app->fonts->BlitText(debugX, debugY + 200, 0, currentScale.c_str());
 		
 	}
 
