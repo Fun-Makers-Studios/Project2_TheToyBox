@@ -258,7 +258,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case MapZone::TOWN_TO_TAVERN:
 		LOG("GO TO TAVERN");
 		app->scene->mapName = "tavern";
-		newPos = { 480, 500 };
+		newPos = { 640, 500 };
 		app->scene->isMapChanging = true;
 		break;
 	case MapZone::TAVERN_TO_TOWN:
