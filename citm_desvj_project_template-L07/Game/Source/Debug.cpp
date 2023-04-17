@@ -178,8 +178,23 @@ void Debug::DrawDebug()
 
 		for (size_t i = 0; i < app->sceneFight->turnList.Count(); i++)
 		{
-			app->fonts->BlitText(debugX, debugY + 125 + i*10, 0, app->sceneFight->turnList.At(i)->data->name.GetString());
-			app->fonts->BlitText(debugX + 88, debugY + 125 + i*10, 0, std::to_string(app->sceneFight->turnList.At(i)->data->currentHp).c_str());
+			PartyMember* member = app->sceneFight->turnList.At(i)->data;
+
+			std::string status;
+			switch (member->status)
+			{
+			case MemberStatus::NORMAL: status = "normal"; break;
+			case MemberStatus::POISONED: status = "poisoned"; break;
+			case MemberStatus::STUNED: status = "stuned"; break;
+			case MemberStatus::DEAD: status = "dead"; break;
+			default: break;
+			}
+
+			std::string strName = std::string(member->name.GetString()); 
+			std::string strInfo = std::string(std::to_string(member->currentHp).c_str()) + "/" + std::to_string(member->maxHp).c_str() + "hp   " + status;
+
+			app->fonts->BlitText(debugX, debugY + 125 + i*10, 0, strName.c_str());
+			app->fonts->BlitText(debugX+88, debugY + 125 + i*10, 0, strInfo.c_str());
 		}
 
 		app->fonts->BlitText(debugX - 250, debugY, 0, app->sceneFight->turnMember->name.GetString());

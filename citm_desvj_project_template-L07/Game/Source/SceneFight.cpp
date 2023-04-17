@@ -185,8 +185,8 @@ bool SceneFight::Update(float dt)
 
 	for (size_t i = 0; i < turnList.Count(); i++)
 	{
-		if (turnList.At(i)->data->currentHp <= 0)
-			turnList.Del(turnList.At(i));
+		if (turnList.At(i)->data->currentHp <= 0){}
+			//turnList.Del(turnList.At(i));
 		else
 			app->render->DrawTexture(turnList.At(i)->data->texture, turnList.At(i)->data->fightPosition.x, turnList.At(i)->data->fightPosition.y, NULL);
 	}
