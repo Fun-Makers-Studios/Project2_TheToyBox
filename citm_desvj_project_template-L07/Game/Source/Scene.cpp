@@ -42,7 +42,9 @@ bool Scene::Awake(pugi::xml_node& config)
 
 // Called before the first frame
 bool Scene::Start()
-{	
+{
+	dialogueManager = new DialogueManager(this);
+
 	/*STORE INFO FROM XML*/
 	origintexturePath = app->configNode.child("scene").child("originTexture").attribute("origintexturePath").as_string();
 	checkPointTexPath = app->configNode.child("scene").child("checkpoint").attribute("checkpointPath").as_string();
@@ -71,13 +73,8 @@ bool Scene::Start()
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
 	player->parameters = app->configNode.child("scene").child("player");
 
-
-	for (pugi::xml_node itemNode = app->configNode.child("scene").child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
-	{
-		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
-		npc->parameters = itemNode;
-		npcList.Add(npc);
-	}
+	mapName = "mapfile";
+	LoadNPC(mapName);
 	
 	for (pugi::xml_node itemNode = app->configNode.child("scene").child("bat"); itemNode; itemNode = itemNode.next_sibling("bat"))
 	{
@@ -165,10 +162,10 @@ bool Scene::Start()
 	// L15: TODO 2: Declare a GUI Button and create it using the GuiManager
 	uint w, h;
 	app->win->GetWindowSize(w, h);
-	resumeButton14 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "resume", 7, { 515, 125, 252, 76 }, this);
-	backToTitleButton15 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 15, "back to title", 13, { 515, (125 * 2), 252, 76 }, this);
-	settingsButton16 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 16, "settings", 9, { 515, (125 * 3), 252, 76 }, this);
-	closeButton17 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 17, "exit", 5, { 515, (125 * 4), 252, 76 }, this);
+	resumeButton14 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "resume", 7, { 515, 295, 252, 76 }, this);
+	backToTitleButton15 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 15, "back to title", 13, { 515, 375, 252, 76 }, this);
+	settingsButton16 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 16, "settings", 8, { 515, 455, 252, 76 }, this);
+	closeButton17 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 17, "save and exit", 12, { 515, 535, 252, 76 }, this);
 
 
 	ResetScene();
@@ -185,6 +182,8 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	SceneMap();
+
 	if (continueGame == true)
 	{
 		app->LoadGameRequest();
@@ -207,7 +206,8 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		gamePaused = !gamePaused;
+		if (!dialogueManager->dialogueLoaded) { gamePaused = !gamePaused; }
+		pauseMenu = !pauseMenu;
 		
 		Mix_PauseMusic();
 	}
@@ -240,8 +240,9 @@ bool Scene::Update(float dt)
 	FixCamera();
 
 	
-	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && !dialogueManager->dialogueLoaded)
 	{
+		gamePaused = !gamePaused;
 		partyMenu = !partyMenu;
 		app->audio->PlayFx(selectSFX);
 	}
@@ -270,8 +271,12 @@ bool Scene::Update(float dt)
 		app->ui->BlitFrameCount();
 	}
 
-	if (gamePaused == true || partyMenu == true)
+	if (gamePaused == true && (pauseMenu == true || partyMenu == true))
 		app->render->DrawTexture(img_pause, app->render->camera.x + app->render->camera.w/2 - pauseRect.w/2, app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
+
+	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) {
+		dialogueManager->Update();
+	}
 
 	// Draw GUI
 	app->guiManager->Draw();
@@ -281,7 +286,7 @@ bool Scene::Update(float dt)
 	settingsButton16->state = GuiControlState::DISABLED;
 	closeButton17->state = GuiControlState::DISABLED;
 
-	if (gamePaused == true)
+	if (pauseMenu == true)
 	{
 	
 		if (resumeButton14->state == GuiControlState::DISABLED) {
@@ -325,6 +330,10 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
+	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) {
+		dialogueManager->Draw();
+	}
+
 	if (exitGame == true)
 		ret = false;
 
@@ -342,6 +351,9 @@ bool Scene::CleanUp()
 	
 	//app->guiManager->guiControlsList.Clear();
 	gamePaused = false;
+	pauseMenu = false;
+	partyMenu = false;
+
 	Mix_ResumeMusic();
 
 	app->tex->UnLoad(img_pause);
@@ -369,6 +381,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case 14:
 		gamePaused = !gamePaused;
+		pauseMenu = !pauseMenu;
 		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
 		break;
 
@@ -444,6 +457,39 @@ void Scene::ResetScene() {
 	else if (checkpointEnabled == true && result != NULL) {
 		app->LoadGameRequest();
 	}
+}
+
+void Scene::SceneMap() {
+
+	if (isMapChanging == true)
+	{
+		
+		app->map->ChangeMap(mapName.GetString());
+		player->pbody->body->SetTransform(PIXEL_TO_METERS(player->newPos), 0.0f);
+		//LoadNPC(mapName.GetString());
+
+		isMapChanging = false;
+	}
+
+}
+
+void Scene::LoadNPC(SString mapName_)
+{
+	
+	if (mapName_ == "house")
+	{
+		
+	}
+	else if (mapName_ == "mapfile")
+	{
+		for (pugi::xml_node itemNode = app->configNode.child("scene").child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
+		{
+			npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
+			npc->parameters = itemNode;
+			npcList.Add(npc);
+		}
+	}
+	
 }
 
 void Scene::FixCamera() {

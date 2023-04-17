@@ -99,6 +99,8 @@
     <ClCompile Include="Source\Coin.cpp" />
     <ClCompile Include="Source\Color.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
+    <ClCompile Include="Source\DIalogue.cpp" />
+    <ClCompile Include="Source\DialogueManager.cpp" />
     <ClCompile Include="Source\EndingScreen.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\Fonts.cpp" />
@@ -133,6 +135,8 @@
     <ClInclude Include="Source\Coin.h" />
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\Debug.h" />
+    <ClInclude Include="Source\Dialogue.h" />
+    <ClInclude Include="Source\DialogueManager.h" />
     <ClInclude Include="Source\EndingScreen.h" />
     <ClInclude Include="Source\Fonts.h" />
     <ClInclude Include="Source\GuiButton.h" />

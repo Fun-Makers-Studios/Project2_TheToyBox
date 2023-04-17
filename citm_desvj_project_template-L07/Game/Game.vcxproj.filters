@@ -97,14 +97,20 @@
     <ClCompile Include="Source\NPC.cpp">
       <Filter>Game\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Color.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SceneFight.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\PartyManager.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Color.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DIalogue.cpp">
+      <Filter>Game\Dialogue</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DialogueManager.cpp">
+      <Filter>Game\Dialogue</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -234,14 +240,20 @@
     <ClInclude Include="Source\NPC.h">
       <Filter>Game\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Color.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SceneFight.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\PartyManager.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Color.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Dialogue.h">
+      <Filter>Game\Dialogue</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DialogueManager.h">
+      <Filter>Game\Dialogue</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -274,6 +286,9 @@
     </Filter>
     <Filter Include="Game\Items">
       <UniqueIdentifier>{77c128c4-9f6e-4255-871e-9098623335dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Dialogue">
+      <UniqueIdentifier>{47e95652-630f-4f43-846c-0fdde62538f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

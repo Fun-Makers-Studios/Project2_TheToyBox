@@ -9,6 +9,7 @@
 #include "SlimeEnemy.h"
 #include "BatEnemy.h"
 #include "GuiButton.h"
+#include "DialogueManager.h"
 
 struct SDL_Texture;
 
@@ -44,6 +45,9 @@ public:
 
 	void ResetScene();
 	void FixCamera();
+
+	void SceneMap();
+	void LoadNPC(SString mapName_);
 
 	void SaveUI();
 	void Checkpoint();
@@ -89,6 +93,9 @@ public:
 
 	bool gamePaused = false;
 
+	bool partyMenu = false;
+	bool pauseMenu = false;
+
 	bool continueGame = false;
 
 	List<Coin*> coinsList;
@@ -96,7 +103,10 @@ public:
 	List<Item*> livesCollectedList;
 	int itemLivesCount = 0;
 
-	bool isTeleporting = false;
+	SString mapName;
+	bool isMapChanging = false;
+
+	DialogueManager* dialogueManager;
 
 private:
 	SDL_Texture* img_pause;
@@ -117,8 +127,6 @@ private:
 	GuiButton* backToTitleButton15;
 	GuiButton* settingsButton16;
 	GuiButton* closeButton17;
-
-	bool partyMenu = false;
 
 	bool exitGame = false;
 };

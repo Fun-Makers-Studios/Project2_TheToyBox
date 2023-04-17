@@ -30,6 +30,8 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
+	void DialogTriggerCheck();
+
 private:
 
 	SDL_Texture* texture;
@@ -52,7 +54,10 @@ public:
 
 	PhysBody* pbody;
 
+	SDL_Rect boundaries;
+
 	int npcid;
+	int dialogueid;
 };
 
 #endif // __NPC_H__
