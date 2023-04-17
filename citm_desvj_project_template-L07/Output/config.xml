@@ -57,17 +57,6 @@
 		<potionmana x="3000" y="170" iType ="potionmana" texturepath="Assets/Textures/Items/potion_mana.png"/>
 		<potionmana x="3000" y="170" iType ="potionmana" texturepath="Assets/Textures/Items/potion_mana.png"/>
 		<enemykid x="175" y="350" texturepath="Assets/Textures/characters.png"/>
-		<town>
-			<npc x="928" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3" dialogueid="0"/>
-			<npc x="736" y="352" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="1"/>
-			<npc x="1216" y="448" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4" dialogueid="2"/>
-			<npc x="672" y="960" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="1" dialogueid="-1"/>
-			<npc x="1184" y="832" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5" dialogueid="3"/>
-			<npc x="192" y="512" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="0" dialogueid="-1"/>
-			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="4"/>
-		</town>
-		<house>
-		</house>
 	</scene>
 
 	<sceneFight>
@@ -158,4 +147,54 @@
 		</dialogue>
 	</dialoguemanager>
 
+
+	<npcs>
+		<town>
+			<npc x="928" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3" dialogueid="0"/>
+			<npc x="736" y="352" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="1"/>
+			<npc x="1216" y="448" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4" dialogueid="2"/>
+			<npc x="672" y="960" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="1" dialogueid="-1"/>
+			<npc x="1184" y="832" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5" dialogueid="3"/>
+			<npc x="192" y="512" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="0" dialogueid="-1"/>
+			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="4"/>
+		</town>
+		<tavern>
+			<npc x="928" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3" dialogueid="0"/>
+			<npc x="736" y="352" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="1"/>
+			<npc x="1216" y="448" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4" dialogueid="2"/>
+			<npc x="672" y="960" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="1" dialogueid="-1"/>
+			<npc x="1184" y="832" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5" dialogueid="3"/>
+			<npc x="192" y="512" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="0" dialogueid="-1"/>
+			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="4"/>
+		</tavern>
+		<inn>
+			<npc x="928" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3" dialogueid="0"/>
+			<npc x="736" y="352" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="1"/>
+			<npc x="1216" y="448" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4" dialogueid="2"/>
+			<npc x="672" y="960" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="1" dialogueid="-1"/>
+			<npc x="1184" y="832" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5" dialogueid="3"/>
+			<npc x="192" y="512" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="0" dialogueid="-1"/>
+			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="4"/>
+		</inn>
+		<housebasement>
+			<npc x="928" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3" dialogueid="0"/>
+			<npc x="736" y="352" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="1"/>
+			<npc x="1216" y="448" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4" dialogueid="2"/>
+			<npc x="672" y="960" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="1" dialogueid="-1"/>
+			<npc x="1184" y="832" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5" dialogueid="3"/>
+			<npc x="192" y="512" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="0" dialogueid="-1"/>
+			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="4"/>
+		</housebasement>
+		<housefloor>
+			<npc x="928" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3" dialogueid="0"/>
+			<npc x="736" y="352" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="1"/>
+			<npc x="1216" y="448" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4" dialogueid="2"/>
+			<npc x="672" y="960" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="1" dialogueid="-1"/>
+			<npc x="1184" y="832" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5" dialogueid="3"/>
+			<npc x="192" y="512" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="0" dialogueid="-1"/>
+			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="4"/>
+		</housefloor>
+	</npcs>
+	
+	
 </config>
