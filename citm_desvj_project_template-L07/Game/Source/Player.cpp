@@ -243,7 +243,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	{
 	case MapZone::HOUSE1_TO_TOWN:
 		LOG("GO TO TOWN");
-		app->scene->mapName = "mapfile";
+		app->scene->mapName = "town";
 		newPos = {180, 245};
 		app->scene->isMapChanging = true;
 		break;

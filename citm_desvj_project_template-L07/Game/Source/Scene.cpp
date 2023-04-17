@@ -72,7 +72,6 @@ bool Scene::Start()
 	player->parameters = app->configNode.child("scene").child("player");
 
 	
-	
 	for (pugi::xml_node itemNode = app->configNode.child("scene").child("enemykid"); itemNode; itemNode = itemNode.next_sibling("enemykid"))
 	{
 		kid = (KidEnemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
@@ -89,7 +88,7 @@ bool Scene::Start()
 	exitGame = false;
 
 	//Load First Map NPCs
-	mapName = "mapfile";
+	mapName = "town";
 	LoadNPC(mapName);
 
 	// L03: DONE: Load map
@@ -580,9 +579,9 @@ void Scene::LoadNPC(SString mapName_)
 	{
 		
 	}
-	else if (mapName_ == "mapfile")
+	else if (mapName_ == "town")
 	{
-		for (pugi::xml_node itemNode = app->configNode.child("scene").child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
+		for (pugi::xml_node itemNode = app->configNode.child("scene").child("town").child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
 		{
 			npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
 			npc->parameters = itemNode;

@@ -38,7 +38,7 @@ bool Map::Start()
     LOG("Loading Map Parser");
     bool ret = true;
 
-    mapFileName = app->configNode.child("map").child("mapfile").attribute("path").as_string();
+    mapFileName = app->configNode.child("map").child("town").attribute("path").as_string();
     mapFolder = app->configNode.child("map").child("mapfolder").attribute("path").as_string();
 
     return ret;
