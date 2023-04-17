@@ -353,6 +353,19 @@ bool Scene::PostUpdate()
 			partyMenu = !partyMenu;
 			app->audio->PlayFx(app->titlescreen->closemenuSFX);
 		}
+
+		switch (partyMemberSelected)
+		{
+		case 0:
+
+			//app->render->DrawTexture(partyMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
+
+			break;
+
+		default:
+			break;
+		}
+
 	}
 
 	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) {
@@ -509,6 +522,18 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	case 26:
 		// V-Sync button
 		app->render->limitFPS = !app->render->limitFPS;
+		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		break;
+	
+	case 27:
+		// Choose First PartyMember
+		partyMemberSelected = 0;
+		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		break;
+		
+	case 28:
+		// Choose Second PartyMember
+		partyMemberSelected = 1;
 		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
 		break;
 

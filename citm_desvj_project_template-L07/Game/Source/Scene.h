@@ -143,6 +143,7 @@ private:
 	GuiButton* firstPMemberButton27;
 	GuiButton* secondPMemberButton28;
 
+	uint partyMemberSelected = 0;
 
 	bool exitGame = false;
 };
