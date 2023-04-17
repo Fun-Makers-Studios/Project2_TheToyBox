@@ -133,6 +133,13 @@ void Debug::DrawDebug()
 	int debugX = app->render->camera.w / scale * 0.7;
 	int debugY = app->render->camera.h / scale * 0.1;
 
+	//Debug box black bg
+	Color color = Black;
+	SDL_Rect rect = { debugX - 16, debugY - 16, 256, 256 };
+	app->render->DrawRectangle(rect, color.r, color.g, color.b, 255, false, false);
+	app->render->DrawRectangle(rect, color.r, color.g, color.b, 96, true, false);
+
+
 	app->fonts->BlitText(debugX, debugY, 0, "variables (v)");
 	//Camera Limits
 	if (camLimits)
@@ -176,6 +183,8 @@ void Debug::DrawDebug()
 		else
 			app->fonts->BlitText(debugX, debugY + 105, 0, "player.alive = false");
 
+		//Scene Fight
+
 		for (size_t i = 0; i < app->sceneFight->turnList.Count(); i++)
 		{
 			PartyMember* member = app->sceneFight->turnList.At(i)->data;
@@ -197,7 +206,10 @@ void Debug::DrawDebug()
 			app->fonts->BlitText(debugX+88, debugY + 125 + i*10, 0, strInfo.c_str());
 		}
 
-		app->fonts->BlitText(debugX - 250, debugY, 0, app->sceneFight->turnMember->name.GetString());
+		if (app->sceneFight->turnMember != nullptr)
+		{
+			app->fonts->BlitText(debugX - 250, debugY, 0, app->sceneFight->turnMember->name.GetString());
+		}
 		
 	}
 
@@ -338,5 +350,3 @@ void Debug::DrawEntities()
 		app->render->DrawRectangle(rect, color.r, color.g, color.b, 64, true);
 	}
 }
-
-
