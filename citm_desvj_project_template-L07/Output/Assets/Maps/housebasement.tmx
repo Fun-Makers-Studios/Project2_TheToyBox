@@ -891,7 +891,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="2" name="Collisions" width="40" height="22" visible="0">
+ <layer id="2" name="Collisions" width="40" height="22">
   <properties>
    <property name="Draw" type="bool" value="false"/>
    <property name="Navigation" type="bool" value="false"/>
@@ -1779,7 +1779,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="3" name="Teleport" width="40" height="22" visible="0">
+ <layer id="3" name="Teleport" width="40" height="22">
   <properties>
    <property name="Draw" type="bool" value="false"/>
    <property name="Navigation" type="bool" value="false"/>
@@ -1929,6 +1929,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="4"/>
    <tile/>
    <tile/>
    <tile/>
@@ -1968,6 +1969,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="4"/>
    <tile/>
    <tile/>
    <tile/>
@@ -2007,6 +2009,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="4"/>
    <tile/>
    <tile/>
    <tile/>
@@ -2480,13 +2483,10 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
-   <tile gid="1"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
    <tile/>
    <tile/>
    <tile/>

@@ -595,43 +595,17 @@ void Scene::LoadNPC(SString mapName_)
 void Scene::FixCamera() {
 
 	if (METERS_TO_PIXELS(app->map->mapData.width) > 1280 && METERS_TO_PIXELS(app->map->mapData.height) > 704) { //SMALL MAP SIZE 1280x704
-		app->render->camera.x = (player->position.x) - (app->win->screenSurface->w) / 2;
-		app->render->camera.y = (player->position.y) - (app->win->screenSurface->h) / 2;
+
+		app->render->camera.x = (player->position.x + 16) - ((app->win->screenSurface->w) / 2);
+		app->render->camera.y = (player->position.y + 16) - ((app->win->screenSurface->h) / 2);
 		if (app->render->camera.x < 0)
 			app->render->camera.x = 0;
 		if (app->render->camera.y < 0)
 			app->render->camera.y = 0;
-		if (app->render->camera.x + app->render->camera.w > METERS_TO_PIXELS(app->map->mapData.width)) {
-			if (cameraFixX == false)
-			{
-				cameraFixX = true;
-				cameraPos.x = app->render->camera.x;
-			}
-			app->render->camera.x = cameraPos.x;
-		}
-		else
-		{
-			if (cameraFixX == true)
-			{
-				cameraFixX = false;
-			}
-		}
-		if (app->render->camera.y + app->render->camera.h > METERS_TO_PIXELS(app->map->mapData.height)) {
-			if (cameraFixY == false)
-			{
-				cameraFixY = true;
-				LOG("CAMERA Y FIX: %d", cameraFixY);
-				cameraPos.y = app->render->camera.y;
-			}
-			app->render->camera.y = cameraPos.y;
-		}
-		else
-		{
-			if (cameraFixY == true)
-			{
-				cameraFixY = false;
-			}
-		}
+		if (app->render->camera.x > METERS_TO_PIXELS(app->map->mapData.width) - app->render->camera.w)
+			app->render->camera.x = METERS_TO_PIXELS(app->map->mapData.width) - app->render->camera.w;
+		if (app->render->camera.y > METERS_TO_PIXELS(app->map->mapData.height) - app->render->camera.h)
+			app->render->camera.y = METERS_TO_PIXELS(app->map->mapData.height) - app->render->camera.h;
 	}
 	else {
 		app->render->camera.x = 0;

@@ -251,14 +251,28 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case MapZone::HOUSE1_TO_TOWN:
 		LOG("GO TO TOWN");
 		app->scene->mapName = "town";
-		newPos = {180, 245};
+		newPos = {192, 256};
 		app->scene->isMapChanging = true;
 		break;
 
 	case MapZone::TOWN_TO_HOUSE1:
-		LOG("GO TO HOUSE");
-		app->scene->mapName = "house";
-		newPos = { 480, 500 };
+		LOG("GO TO HOUSE BASEMENT");
+		app->scene->mapName = "housebasement";
+		newPos = { 640, 480 };
+		app->scene->isMapChanging = true;
+		break;
+	
+	case MapZone::HOUSEBASE_TO_HOUSEFLOOR:
+		LOG("GO TO HOUSE FLOOR");
+		app->scene->mapName = "housefloor";
+		newPos = { 960, 256 };
+		app->scene->isMapChanging = true;
+		break;
+
+	case MapZone::HOUSEFLOOR_TO_HOUSEFBASE:
+		LOG("GO TO HOUSE BASEMENT");
+		app->scene->mapName = "housebasement";
+		newPos = { 672, 176 };
 		app->scene->isMapChanging = true;
 		break;
 
