@@ -385,7 +385,7 @@ bool Scene::CleanUp()
 	pauseMenu = false;
 	partyMenu = false;
 
-	dialogueManager->~DialogueManager();
+	dialogueManager->CleanUp();
 
 	Mix_ResumeMusic();
 

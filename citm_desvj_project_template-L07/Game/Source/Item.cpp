@@ -65,15 +65,13 @@ bool Item::Update()
 	{
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 4));
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 4));
-
-		if (isPicked == false) {
-				
-			app->render->DrawTexture(texture, position.x, position.y, &lifeRect);
-			
-		}
 	}
 
-	
+	if (isPicked == false) {
+
+		app->render->DrawTexture(texture, position.x, position.y, &lifeRect);
+
+	}
 
 	return true;
 }

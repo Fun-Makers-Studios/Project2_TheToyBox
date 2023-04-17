@@ -95,11 +95,11 @@ bool KidEnemy::Update()
 	{
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width/2));
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height));
-
-		SDL_Rect rect = currentAnim->GetCurrentFrame();
-		app->render->DrawTexture(texture, position.x, position.y, &rect, fliped);
-		currentAnim->Update();
 	}
+
+	SDL_Rect rect = currentAnim->GetCurrentFrame();
+	app->render->DrawTexture(texture, position.x, position.y, &rect, fliped);
+	currentAnim->Update();
 
 	return true;
 }

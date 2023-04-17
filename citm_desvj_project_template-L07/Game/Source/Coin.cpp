@@ -68,11 +68,8 @@ bool Coin::Update()
 	if(app->scene->gamePaused==true)
 		pbody->body->SetLinearVelocity({0,0});
 
-	if (app->scene->gamePaused != true)
-	{
-		if (isPicked == false)
-			app->render->DrawTexture(texture, position.x, position.y);
-	}
+	if (isPicked == false)
+		app->render->DrawTexture(texture, position.x, position.y);
 
 	if (isPicked == true) 
 	{

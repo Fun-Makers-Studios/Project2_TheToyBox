@@ -22,8 +22,7 @@ DialogueManager::DialogueManager(Scene* scene) {
 }
 
 DialogueManager::~DialogueManager(){
-	app->fonts->UnLoad(dialogueFontId);
-	app->tex->UnLoad(dialoguetext);
+	
 }
 
 void DialogueManager::Load(int dialogueId) {
@@ -90,4 +89,9 @@ void DialogueManager::Unload() {
 
 	dialogueLoaded = false;
 	app->scene->gamePaused = false;
+}
+
+void DialogueManager::CleanUp() {
+	app->fonts->UnLoad(dialogueFontId);
+	app->tex->UnLoad(dialoguetext);
 }
