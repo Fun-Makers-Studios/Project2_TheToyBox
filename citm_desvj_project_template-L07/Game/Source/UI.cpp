@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "Scene.h"
 #include "Window.h"
+#include "PartyManager.h"
 
 #include "SDL/include/SDL.h"
 

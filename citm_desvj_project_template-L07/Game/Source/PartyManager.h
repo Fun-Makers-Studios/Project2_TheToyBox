@@ -50,7 +50,7 @@ enum class MemberStatus
 class PartyMember
 {
 public:
-	PartyMember(MemberType type, MemberStatus status, SString name, uint maxHp, uint maxMana, uint attack, uint defense, uint speed, uint critRate, SDL_Texture* texture, iPoint fightPosition, SDL_Rect textureRect)
+	PartyMember(MemberType type, MemberStatus status, SString name, uint maxHp, uint maxMana, uint level, uint attack, uint defense, uint speed, uint critRate, SDL_Texture* texture, iPoint fightPosition, SDL_Rect textureRect)
 	{
 		this->type = type;
 		this->status = status;
@@ -59,6 +59,7 @@ public:
 		this->currentHp = maxHp;
 		this->maxMana = maxMana;
 		this->currentMana = maxMana;
+		this->level = level;
 		this->attack = attack;
 		this->defense = defense;
 		this->speed = speed;
@@ -75,6 +76,7 @@ public:
 	SString name;
 
 	uint maxHp;
+	uint level;
 	uint currentHp;
 	uint maxMana;
 	uint currentMana;

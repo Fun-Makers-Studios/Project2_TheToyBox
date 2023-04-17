@@ -57,6 +57,8 @@ public:
 
 	void FightKid();
 
+	void ShowPartyStats();
+
 public:
 
 	//L02: DONE 3: Declare a Player attribute 
@@ -103,6 +105,8 @@ public:
 	SString mapName;
 	bool isMapChanging = false;
 
+	uint partyMemberSelected = 0;
+
 	DialogueManager* dialogueManager;
 
 private:
@@ -145,8 +149,6 @@ private:
 
 	GuiButton* firstPMemberButton27;
 	GuiButton* secondPMemberButton28;
-
-	uint partyMemberSelected = 0;
 
 	bool exitGame = false;
 };
