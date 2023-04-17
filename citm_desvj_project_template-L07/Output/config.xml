@@ -95,53 +95,58 @@
 		<guiButtons smallButtonTexPath="Assets/UI/ButtonsSprites/Buttons.png"/>
 	</gui>
 
-	<dialoguemanager dialoguetext="Assets/UI/Dialog/Dialog.png" font="Assets/Fonts/DialogFont.png" lookuptable="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz:         " rows="6">
+	<dialoguemanager dialoguetext="Assets/UI/Dialog/Dialog.png" font="Assets/Fonts/DialogFont.png" lookuptable="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz:?!.,     " rows="6">
 		<dialogue id ="0">
-			<node id="0" text="Greetings traveler">
+			<node id="0" text="Greetings traveler.">
 				<option id="0" nextNodeId="1" text=""/>
 			</node>
 			<node id="1" text="Are you lost?">
 				<option id="0" nextNodeId="3" text="What is this place?"/>
-				<option id="1" nextNodeId="2" text="No thanks"/>
+				<option id="1" nextNodeId="2" text="No thanks."/>
 			</node>
 			<node id="2" text="Oh, sorry">
 				<option id="0" nextNodeId="-1" text=""/>
 			</node>
-			<node id="3" text="Place? What a silly cuestion">
+			<node id="3" text="Place? What a silly cuestion.">
 				<option id="0" nextNodeId="-1" text=""/>
 			</node>
 		</dialogue>
 		<dialogue id ="1">
 			<node id="0" text="Have you tried the beer they serve here?">
-				<option id="0" nextNodeId="1" text="No"/>
+				<option id="0" nextNodeId="1" text="No."/>
 			</node>
-			<node id="1" text="Well then, enter the tabern and get one yourself">
+			<node id="1" text="Well then, enter the tabern and get one yourself.">
 				<option id="0" nextNodeId="-1" text=""/>
-				<option id="1" nextNodeId="2" text="No thanks"/>
+				<option id="1" nextNodeId="2" text="No thanks."/>
 			</node>
 			<node id="2" text="O fuck off">
-				<option id="0" nextNodeId="-1" text="Wtf"/>
+				<option id="0" nextNodeId="-1" text="Wtf?!"/>
 			</node>
 		</dialogue>
 		<dialogue id ="2">
-			<node id="0" text="No place like this Inn">
+			<node id="0" text="No place like this Inn.">
 				<option id="0" nextNodeId="1" text="Did you say Inn?"/>
 			</node>
 			<node id="1" text="Yes, what happens sweety?">
-				<option id="0" nextNodeId="-1" text="Ah, nothing. Thanks"/>
-				<option id="1" nextNodeId="2" text="Thank god, somewhere to rest"/>
+				<option id="0" nextNodeId="-1" text="Ah, nothing. Thanks."/>
+				<option id="1" nextNodeId="2" text="Thank god, somewhere to rest."/>
 			</node>
-			<node id="2" text="Well, not a cheap place">
-				<option id="0" nextNodeId="-1" text="Fuck"/>
+			<node id="2" text="Well, not a cheap place.">
+				<option id="0" nextNodeId="-1" text="Fuck."/>
 			</node>
 		</dialogue>
 		<dialogue id ="3">
-			<node id="0" text="Seems like no market today. Everybody went to the circus">
+			<node id="0" text="Seems like no market today. Everybody went to the circus.">
 				<option id="0" nextNodeId="-1" text=""/>
 			</node>
 		</dialogue>
 		<dialogue id ="4">
-			<node id="0" text="O man, all the tickets are sold">
+			<node id="0" text="O man, all the tickets are sold.">
+				<option id="0" nextNodeId="-1" text=""/>
+			</node>
+		</dialogue>
+		<dialogue id ="5">
+			<node id="0" text="Fuck off!! Leave me alone.">
 				<option id="0" nextNodeId="-1" text=""/>
 			</node>
 		</dialogue>
@@ -159,40 +164,17 @@
 			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="4"/>
 		</town>
 		<tavern>
-			<npc x="928" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3" dialogueid="0"/>
-			<npc x="736" y="352" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="1"/>
-			<npc x="1216" y="448" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4" dialogueid="2"/>
-			<npc x="672" y="960" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="1" dialogueid="-1"/>
-			<npc x="1184" y="832" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5" dialogueid="3"/>
-			<npc x="192" y="512" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="0" dialogueid="-1"/>
-			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="4"/>
+			<npc x="448" y="416" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="5" dialogueid="5"/>
+			<npc x="608" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="1" dialogueid="-1"/>
 		</tavern>
 		<inn>
-			<npc x="928" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3" dialogueid="0"/>
-			<npc x="736" y="352" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="1"/>
-			<npc x="1216" y="448" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4" dialogueid="2"/>
-			<npc x="672" y="960" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="1" dialogueid="-1"/>
-			<npc x="1184" y="832" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5" dialogueid="3"/>
-			<npc x="192" y="512" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="0" dialogueid="-1"/>
-			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="4"/>
+			<npc x="1120" y="320" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="-1"/>
 		</inn>
 		<housebasement>
-			<npc x="928" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3" dialogueid="0"/>
-			<npc x="736" y="352" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="1"/>
-			<npc x="1216" y="448" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4" dialogueid="2"/>
-			<npc x="672" y="960" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="1" dialogueid="-1"/>
-			<npc x="1184" y="832" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5" dialogueid="3"/>
-			<npc x="192" y="512" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="0" dialogueid="-1"/>
-			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="4"/>
+			<npc x="864" y="320" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="2" dialogueid="-1"/>
 		</housebasement>
 		<housefloor>
-			<npc x="928" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3" dialogueid="0"/>
-			<npc x="736" y="352" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="1"/>
-			<npc x="1216" y="448" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4" dialogueid="2"/>
-			<npc x="672" y="960" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="1" dialogueid="-1"/>
-			<npc x="1184" y="832" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5" dialogueid="3"/>
-			<npc x="192" y="512" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="0" dialogueid="-1"/>
-			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="4"/>
+			<npc x="736" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="5"/>
 		</housefloor>
 	</npcs>
 	
