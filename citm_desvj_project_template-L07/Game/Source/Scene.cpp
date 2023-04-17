@@ -575,19 +575,12 @@ void Scene::LoadNPC(SString mapName_)
 {
 	app->entityManager->DeleteNPCActive();
 
-	if (mapName_ == "house")
+	for (pugi::xml_node itemNode = app->configNode.child("scene").child(mapName_.GetString()).child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
 	{
-		
-	}
-	else if (mapName_ == "town")
-	{
-		for (pugi::xml_node itemNode = app->configNode.child("scene").child("town").child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
-		{
-			npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
-			npc->parameters = itemNode;
-			npcList.Add(npc);
-			npc->Start();
-		}
+		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
+		npc->parameters = itemNode;
+		npcList.Add(npc);
+		npc->Start();
 	}
 	
 }
