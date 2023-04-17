@@ -9,6 +9,7 @@
 #include "TitleScreen.h"
 #include "UI.h"
 #include "GuiManager.h"
+#include "Debug.h"
 #include "List.h"
 #include <time.h>
 
@@ -37,11 +38,13 @@ bool SceneFight::Start()
 	LOG("--FORMING PARTY--");
 
 	/*Initialize*/
-	imgPath = app->configNode.child("sceneFight").child("backgroundimage").attribute("texturepath").as_string();
+	path_bg = app->configNode.child("sceneFight").child("backgroundimage").attribute("texturepath").as_string();
+	path_arrow = app->configNode.child("sceneFight").child("arrowimage").attribute("texturepath").as_string();
 	//musicPath = app->configNode.child("logo").child("music").attribute("musicPath").as_string();
 
 	/*Load*/
-	img = app->tex->Load(imgPath);
+	tex_bg = app->tex->Load(path_bg);
+	tex_arrow = app->tex->Load(path_arrow);
 	//app->audio->PlayMusic(musicPath);
 
 
@@ -84,6 +87,7 @@ bool SceneFight::Start()
 
 		PartyMember* member = new PartyMember(
 			type,
+			MemberStatus::NORMAL,
 			itemNode.attribute("name").as_string(),
 			itemNode.attribute("maxHp").as_uint(),
 			itemNode.attribute("maxMana").as_uint(),
@@ -101,8 +105,8 @@ bool SceneFight::Start()
 	enemySelected = 0;
 
 	attackButton18 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 18, "attack", 7, { 100, 600, 252, 76 }, this);
-	defenseButton19 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 19, "defense", 8, { 510, 600, 252, 76 }, this);
-	turnJumpButton20 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "jump turn", 10, { 915, 600, 252, 76 }, this);
+	defenseButton19 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 19, "defend", 8, { 510, 600, 252, 76 }, this);
+	turnJumpButton20 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "skip turn", 10, { 915, 600, 252, 76 }, this);
 
 	srand(time(NULL));
 
@@ -127,24 +131,29 @@ bool SceneFight::Update(float dt)
 	turnMember = turnList.At(id)->data;
 
 	//	check player turn
-	if (turnMember->type == ALLY)
+	if (turnMember->type == MemberType::ALLY)
 	{
-		//	choose option/enemy
+		//	choose enemy
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-		{
-			enemySelected--;
-			if (enemySelected < 0)
-				enemySelected = enemyList.Count();
+		{			
+			if (enemySelected == 0)
+				enemySelected = enemyList.Count() - 1;
+			else
+				enemySelected--;
 		}
 		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		{
 			enemySelected++;
-			if (enemySelected > enemyList.Count())
-				enemySelected = 0;
-		}
+			enemySelected = enemySelected >= enemyList.Count() ? 0 : enemySelected;
 
+			while (enemyList.At(enemySelected)->data->status == MemberStatus::DEAD)
+			{
+				if (enemySelected >= enemyList.Count())
+					enemySelected = 0;
+			}
+		}
 	}
-	else if (turnMember->type == ENEMY)
+	else if (turnMember->type == MemberType::ENEMY)
 	{
 		int randomMember = rand() % 3;
 
@@ -153,8 +162,8 @@ bool SceneFight::Update(float dt)
 	}
 
 	
-	//	draw stats
-	
+	//	draw selected enemy
+	app->render->DrawTexture(tex_arrow, enemyList.At(enemySelected)->data->fightPosition.x, enemyList.At(enemySelected)->data->fightPosition.y - 32, NULL);
 
 	// Draw GUI
 	app->guiManager->Draw();
@@ -190,8 +199,8 @@ bool SceneFight::PostUpdate()
 {
 	bool ret = true;
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
+	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;*/
 
 	return ret;
 }
@@ -201,16 +210,12 @@ bool SceneFight::CleanUp()
 {
 	LOG("Freeing LOGO SCENE");
 
-	if (attackButton18 != nullptr)
-		attackButton18->state = GuiControlState::DISABLED;
-	if (defenseButton19 != nullptr)
-		defenseButton19->state = GuiControlState::DISABLED;
-	if (turnJumpButton20 != nullptr)
-		turnJumpButton20->state = GuiControlState::DISABLED;
+	if (attackButton18 != nullptr) attackButton18->state = GuiControlState::DISABLED;
+	if (defenseButton19 != nullptr) defenseButton19->state = GuiControlState::DISABLED;
+	if (turnJumpButton20 != nullptr) turnJumpButton20->state = GuiControlState::DISABLED;
 
-	if (img != nullptr) {
-		app->tex->UnLoad(img);
-	}
+	if (tex_bg != nullptr) { app->tex->UnLoad(tex_bg); }
+	if (tex_arrow != nullptr) { app->tex->UnLoad(tex_arrow); }
 
 	return true;
 }
@@ -246,18 +251,26 @@ bool SceneFight::OnGuiMouseClickEvent(GuiControl* control)
 void SceneFight::Attack(PartyMember* turnMember_, PartyMember* receiverMember_)
 {
 	//TODO: Calculate crit, def
-	LOG("%c HP BEFORE: %u", receiverMember_->name,receiverMember_->currentHp);
-	if (turnMember->attack > receiverMember_->currentHp)
+
+	turn++;
+
+	//godmode no damage
+	if (turnMember_->type == MemberType::ENEMY && app->debug->godMode) { return; }
+
+	//check death || godmode instakill
+	if ((turnMember->attack > receiverMember_->currentHp) || 
+		(turnMember_->type == MemberType::ALLY && app->debug->godMode))
 	{
 		receiverMember_->currentHp = 0;
+		receiverMember_->status = MemberStatus::DEAD;
 	}
-	else {
+	else
+	{
 		receiverMember_->currentHp -= turnMember->attack;
 	}
-	LOG("%c HP AFTER: %d", receiverMember_->name,receiverMember_->currentHp);
-	turn++;
 }
 
-void SceneFight::SkipTurn() {
+void SceneFight::SkipTurn()
+{
 	turn++;
 }

@@ -5,7 +5,6 @@
 #include "GuiButton.h"
 #include "SDL/include/SDL.h"
 
-
 class SceneFight : public Module
 {
 public:
@@ -51,11 +50,12 @@ public:
 	PartyMember* turnMember = nullptr;
 
 private:
-	SDL_Texture* img = nullptr;
+	SDL_Texture* tex_bg = nullptr;
+	SDL_Texture* tex_arrow = nullptr;
 
-	const char* imgPath;
-	const char* musicPath;
-	const char* startSFXPath;
+	const char* path_bg;
+	const char* path_arrow;
+	const char* path_startsSfx;
 
 	// Declare a GUI Button and create it using the GuiManager
 	GuiButton* attackButton18;

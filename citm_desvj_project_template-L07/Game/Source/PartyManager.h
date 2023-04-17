@@ -32,18 +32,27 @@ struct Gear
 
 };
 
-enum MemberType
+enum class MemberType
 {
 	ALLY,
 	ENEMY
 };
 
+enum class MemberStatus
+{
+	NORMAL,
+	POISONED,
+	STUNED,
+	DEAD
+};
+
 class PartyMember
 {
 public:
-	PartyMember(MemberType type, SString name, uint maxHp, uint maxMana, uint attack, uint defense, uint speed, uint critRate, SDL_Texture* texture, iPoint fightPosition)
+	PartyMember(MemberType type, MemberStatus status, SString name, uint maxHp, uint maxMana, uint attack, uint defense, uint speed, uint critRate, SDL_Texture* texture, iPoint fightPosition)
 	{
 		this->type = type;
+		this->status = status;
 		this->name = name;
 		this->maxHp = maxHp;
 		this->currentHp = maxHp;
@@ -60,6 +69,7 @@ public:
 	~PartyMember() {};
 
 	MemberType type;
+	MemberStatus status;
 	SString name;
 
 	uint maxHp;

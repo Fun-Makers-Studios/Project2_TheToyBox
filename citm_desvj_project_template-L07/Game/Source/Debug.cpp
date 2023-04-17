@@ -178,7 +178,7 @@ void Debug::DrawDebug()
 
 		for (size_t i = 0; i < app->sceneFight->turnList.Count(); i++)
 		{
-			app->fonts->BlitText(debugX, debugY + 125 + i*10, 0, "enemy hp =");
+			app->fonts->BlitText(debugX, debugY + 125 + i*10, 0, app->sceneFight->turnList.At(i)->data->name.GetString());
 			app->fonts->BlitText(debugX + 88, debugY + 125 + i*10, 0, std::to_string(app->sceneFight->turnList.At(i)->data->currentHp).c_str());
 		}
 

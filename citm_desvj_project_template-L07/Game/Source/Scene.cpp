@@ -109,6 +109,7 @@ bool Scene::Start()
 
 		PartyMember* member = new PartyMember(
 			type,
+			MemberStatus::NORMAL,
 			itemNode.attribute("name").as_string(),
 			itemNode.attribute("maxHp").as_uint(),
 			itemNode.attribute("maxMana").as_uint(),
