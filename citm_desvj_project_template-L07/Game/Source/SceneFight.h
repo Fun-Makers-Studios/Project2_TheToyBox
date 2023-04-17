@@ -36,7 +36,7 @@ public:
 
 	void Attack(PartyMember* turnMember_, PartyMember* receiverMember_);
 
-	void SkipTurn();
+	void Escape();
 
 public:
 	uint startSFX = 0;
@@ -60,5 +60,8 @@ private:
 	// Declare a GUI Button and create it using the GuiManager
 	GuiButton* attackButton18;
 	GuiButton* defenseButton19;
-	GuiButton* skipTurnButton20;
+	GuiButton* escapeButton20;
+
+	uint alliesAlive;
+	uint enemiesAlive;
 };

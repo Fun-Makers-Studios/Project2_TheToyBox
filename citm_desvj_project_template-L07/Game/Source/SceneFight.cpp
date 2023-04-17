@@ -7,6 +7,7 @@
 #include "Log.h"
 #include "PartyManager.h"
 #include "TitleScreen.h"
+#include "ModuleFadeToBlack.h"
 #include "UI.h"
 #include "GuiManager.h"
 #include "Debug.h"
@@ -58,6 +59,8 @@ bool SceneFight::Start()
 		member = member->next;
 	}
 	
+	alliesAlive = turnList.Count() + 1;
+
 	//Add enemies
 	const char* enemy = app->partyManager->enemyToFight;
 	uchar amount;
@@ -112,11 +115,13 @@ bool SceneFight::Start()
 		enemyList.Add(member);
 	}
 	
+	enemiesAlive = enemyList.Count();
+
 	enemySelected = 0;
 
 	attackButton18 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 18, "attack", 7, { 100, 600, 252, 76 }, this);
-	defenseButton19 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 19, "defend", 8, { 510, 600, 252, 76 }, this);
-	skipTurnButton20 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "skip turn", 10, { 915, 600, 252, 76 }, this);
+	defenseButton19 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 19, "defend", 7, { 510, 600, 252, 76 }, this);
+	escapeButton20 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "escape", 7, { 915, 600, 252, 76 }, this);
 
 	srand(time(NULL));
 
@@ -180,7 +185,7 @@ bool SceneFight::Update(float dt)
 
 	attackButton18->state = GuiControlState::DISABLED;
 	defenseButton19->state = GuiControlState::DISABLED;
-	skipTurnButton20->state = GuiControlState::DISABLED;
+	escapeButton20->state = GuiControlState::DISABLED;
 
 	if (attackButton18->state == GuiControlState::DISABLED) {
 		attackButton18->state = GuiControlState::NORMAL;
@@ -188,16 +193,28 @@ bool SceneFight::Update(float dt)
 	if (defenseButton19->state == GuiControlState::DISABLED) {
 		defenseButton19->state = GuiControlState::NORMAL;
 	}
-	if (skipTurnButton20->state == GuiControlState::DISABLED) {
-		skipTurnButton20->state = GuiControlState::NORMAL;
+	if (escapeButton20->state == GuiControlState::DISABLED) {
+		escapeButton20->state = GuiControlState::NORMAL;
 	}
 	
+	if (enemiesAlive <= 0)
+		app->fade->FadeToBlack(this, (Module*)app->scene, 0);
+	else if (alliesAlive <= 0)
+		app->fade->FadeToBlack(this, (Module*)app->scene, 0);
+		//app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
 
 	for (size_t i = 0; i < turnList.Count(); i++)
 	{
-		if (turnList.At(i)->data->currentHp <= 0){}
-			//turnList.Del(turnList.At(i));
-		else {
+		if (turnList.At(i)->data->status == MemberStatus::DEAD)
+		{
+			if (turnList.At(i)->data->type == MemberType::ENEMY)
+				enemyList.Del(enemyList.At(enemySelected));
+
+			turnList.Del(turnList.At(i));
+			
+		}
+		else 
+		{
 
 			app->render->DrawTexture(turnList.At(i)->data->texture, turnList.At(i)->data->fightPosition.x, turnList.At(i)->data->fightPosition.y, &turnList.At(i)->data->textureRect);
 			
@@ -224,9 +241,13 @@ bool SceneFight::CleanUp()
 {
 	LOG("Freeing LOGO SCENE");
 
+	turnList.Clear();
+	
+	enemyList.Clear();
+
 	if (attackButton18 != nullptr) attackButton18->state = GuiControlState::DISABLED;
 	if (defenseButton19 != nullptr) defenseButton19->state = GuiControlState::DISABLED;
-	if (skipTurnButton20 != nullptr) skipTurnButton20->state = GuiControlState::DISABLED;
+	if (escapeButton20 != nullptr) escapeButton20->state = GuiControlState::DISABLED;
 
 	if (tex_bg != nullptr) { app->tex->UnLoad(tex_bg); }
 	if (tex_arrow != nullptr) { app->tex->UnLoad(tex_arrow); }
@@ -245,12 +266,12 @@ bool SceneFight::OnGuiMouseClickEvent(GuiControl* control)
 		break;
 
 	case 19: //Defense
-		
+		turn++;
 		app->audio->PlayFx(app->titlescreen->startSFX);
 		break;
 
 	case 20: //Skip turn
-		SkipTurn();
+		Escape();
 		app->audio->PlayFx(app->titlescreen->startSFX);
 		break;
 
@@ -266,25 +287,38 @@ void SceneFight::Attack(PartyMember* turnMember_, PartyMember* receiverMember_)
 {
 	//TODO: Calculate crit, def
 
-	turn++;
-
 	//godmode no damage
 	if (turnMember_->type == MemberType::ENEMY && app->debug->godMode) { return; }
 
 	//check death || godmode instakill
-	if ((turnMember->attack > receiverMember_->currentHp) || 
+	if ((turnMember_->attack > receiverMember_->currentHp) || 
 		(turnMember_->type == MemberType::ALLY && app->debug->godMode))
 	{
 		receiverMember_->currentHp = 0;
 		receiverMember_->status = MemberStatus::DEAD;
+
+		if (receiverMember_->type == MemberType::ENEMY)
+			enemiesAlive--;
+		else
+			alliesAlive--;
 	}
 	else
 	{
 		receiverMember_->currentHp -= turnMember->attack;
 	}
+
+	turn++;
 }
 
-void SceneFight::SkipTurn()
+void SceneFight::Escape()
 {
-	turn++;
+	int randomNumber = rand() % 10;
+	
+	if (randomNumber % 2)
+	{
+		app->fade->FadeToBlack(this, (Module*)app->scene, 0);
+	}
+	else {
+		turn++;
+	}
 }

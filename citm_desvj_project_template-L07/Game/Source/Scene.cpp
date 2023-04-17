@@ -46,9 +46,6 @@ bool Scene::Start()
 	dialogueManager = new DialogueManager(this);
 
 	/*STORE INFO FROM XML*/
-	origintexturePath = app->configNode.child("scene").child("originTexture").attribute("origintexturePath").as_string();
-	checkPointTexPath = app->configNode.child("scene").child("checkpoint").attribute("checkpointPath").as_string();
-	slimeTilePath = app->configNode.child("scene").child("pathfinding").attribute("slimePathTile").as_string();
 	musicPath = app->configNode.child("scene").child("music").attribute("musicPath").as_string();
 	selectSFXPath = app->configNode.child("scene").child("scenesfx").attribute("selectSFXPath").as_string();
 	imgPausePath = app->configNode.child("scene").child("imgPause").attribute("imgPausePath").as_string();
@@ -83,54 +80,6 @@ bool Scene::Start()
 		kid->parameters = itemNode;
 	}
 
-	//Create party
-	uchar partyCount = 0;
-	for (pugi::xml_node itemNode = app->configNode.child("sceneFight").child("partymember"); itemNode; itemNode = itemNode.next_sibling("partymember"))
-	{
-		//type
-		SString typeStr = itemNode.attribute("type").as_string();
-		MemberType type = typeStr == "ally" ? MemberType::ALLY : MemberType::ENEMY;
-
-		//texture
-		const char* path = itemNode.attribute("texturepath").as_string();
-		SDL_Texture* tex = app->tex->Load(path);
-		
-		SDL_Rect textureRect;
-		SString nameStr = itemNode.attribute("name").as_string();
-		if(nameStr == "mage")
-			textureRect = {4, 16, 26, 59};
-		else if(nameStr == "warrior")
-			textureRect = {58, 24, 27, 51};
-		else if(nameStr == "assassin")
-			textureRect = {0, 89, 42, 61};
-		
-
-		//battle position
-		int offsetX = 200;
-		int offsetY = 300;
-
-		iPoint position;
-		position.x = offsetX;
-		position.y = offsetY + 96 * partyCount;
-		partyCount++;
-
-		PartyMember* member = new PartyMember(
-			type,
-			MemberStatus::NORMAL,
-			itemNode.attribute("name").as_string(),
-			itemNode.attribute("maxHp").as_uint(),
-			itemNode.attribute("maxMana").as_uint(),
-			itemNode.attribute("attack").as_uint(),
-			itemNode.attribute("defense").as_uint(),
-			itemNode.attribute("speed").as_uint(),
-			itemNode.attribute("critRate").as_uint(),
-			tex,
-			position,
-			textureRect);
-
-		app->partyManager->AddMemberToParty(member);
-	}
-
 	/*INITIALIZE NECESSARY MODULES*/
 	app->physics->Enable();
 	app->pathfinding->Enable();
@@ -159,13 +108,6 @@ bool Scene::Start()
 
 	// Loading set of SFX
 	selectSFX = app->audio->LoadFx(selectSFXPath);
-	
-	// Texture to highligh mouse position 
-	slimeTilePathTex = app->tex->Load(slimeTilePath);
-	// Texture to show path origin 
-	originTex = app->tex->Load(origintexturePath);
-
-	checkPointTex = app->tex->Load(checkPointTexPath);
 
 	img_pause = app->tex->Load(imgPausePath);
 	pauseRect = {35, 69, 310, 555};
@@ -779,7 +721,7 @@ bool Scene::SaveState(pugi::xml_node& data)
 	checkpointEnabled.append_attribute("checkpointEnabled") = checkpointEnabled;
 
 	// Save current bat position
-	pugi::xml_node kidPos = data.append_child("batPosition");
+	pugi::xml_node kidPos = data.append_child("kidPosition");
 	kidPos.append_attribute("x") = app->scene->kid->pbody->body->GetTransform().p.x;
 	kidPos.append_attribute("y") = app->scene->kid->pbody->body->GetTransform().p.y;
 	

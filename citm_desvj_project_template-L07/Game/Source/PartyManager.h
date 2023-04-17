@@ -96,10 +96,12 @@ public:
 
 	~PartyManager();
 
+	bool Start();
+
 	void AddMemberToParty(PartyMember* member);
 
 public:
 	List<PartyMember*> party;
 	const char* enemyToFight;
-
+	uint maxPartyMembers = 3;
 };
