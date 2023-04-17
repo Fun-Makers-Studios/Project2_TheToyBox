@@ -573,8 +573,13 @@ void Scene::SceneMap() {
 
 void Scene::LoadNPC(SString mapName_)
 {
-	app->entityManager->DeleteNPCActive();
+	ListItem<NPC*>* npcItem;
 
+	for (npcItem = npcList.start; npcItem != NULL; npcItem = npcItem->next)
+	{
+		npcItem->data->needToDestroy = true;
+	}
+	
 	for (pugi::xml_node itemNode = app->configNode.child("scene").child(mapName_.GetString()).child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
 	{
 		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);

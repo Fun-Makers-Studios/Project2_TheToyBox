@@ -38,8 +38,6 @@ public:
 
 	void AddEntity(Entity* entity);
 
-	void DeleteNPCActive();
-
 public:
 
 	List<Entity*> entities;

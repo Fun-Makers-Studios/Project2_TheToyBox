@@ -89,6 +89,13 @@ bool NPC::PostUpdate() {
 
 bool NPC::CleanUp()
 {
+
+	delete pbody;
+	pbody = nullptr;
+
+	delete currentAnim;
+	currentAnim = nullptr;
+
 	return true;
 }
 

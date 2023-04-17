@@ -158,6 +158,14 @@ bool EntityManager::Update(float dt)
 	{
 		pEntity = item->data;
 
+		if (pEntity->needToDestroy == false) continue;
+		ret = item->data->CleanUp();
+	}
+
+	for (item = entities.start; item != NULL && ret == true; item = item->next)
+	{
+		pEntity = item->data;
+
 		if (pEntity->active == false) continue;
 		ret = item->data->Update();
 	}
@@ -182,44 +190,3 @@ bool EntityManager::PostUpdate()
 	return ret;
 }
 
-void EntityManager::DeleteNPCActive() 
-{
-
-	ListItem<Entity*>* item;
-
-	for (item = entities.start; item != NULL; item = item->next)
-	{
-		if (item->data->type == EntityType::NPC) {
-		
-			RELEASE(item->data);
-			entities.Del(item);
-
-		} 
-	}
-
-	/*ListItem<Entity*>* npc;
-	npc = entities.start;
-
-	for (npc; npc != entities.end; npc++)
-	{
-		Entity* entity = npc->data;
-		if (entity->type == EntityType::NPC)
-		{
-			entity->CleanUp();
-			RELEASE(npc->data);
-			entities.Del(npc);
-		}
-
-	}*/
-
-	/*while (npc != NULL) {
-
-		if (npc->data->type == EntityType::NPC) 
-		{
-			RELEASE(npc->data);
-		}
-		
-		npc = npc->next;
-	}*/
-
-}

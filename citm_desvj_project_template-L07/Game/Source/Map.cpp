@@ -700,8 +700,16 @@ bool Map::CreateColliders()
                             c1->mapZone = MapZone::TOWN_TO_HOUSE1;
                             break;
                         
-                        case 1:
+                        case 2:
                             c1->mapZone = MapZone::HOUSE1_TO_TOWN;
+                            break;
+                        
+                        case 17:
+                            c1->mapZone = MapZone::TOWN_TO_TAVERN;
+                            break;
+                        
+                        case 1:
+                            c1->mapZone = MapZone::TAVERN_TO_TOWN;
                             break;
 
                         default: break;

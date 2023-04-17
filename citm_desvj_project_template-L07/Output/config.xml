@@ -97,7 +97,7 @@
 	<map>
 		<mapfolder path="Assets/Maps/"/>
 		<town path="Assets/Maps/map_town.tmx"/>
-		<house path="Assets/Maps/house.tmx"/>
+		<tavern path="Assets/Maps/tavern.tmx"/>
 		<house2 path="Assets/Maps/Town.tmx"/>
 	</map>
 
