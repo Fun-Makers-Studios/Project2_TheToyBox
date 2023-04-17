@@ -115,6 +115,9 @@ bool Scene::Start()
 	pauseRect = {35, 69, 310, 555};
 	popImg_settings = app->tex->Load(popImg_settingsPath);
 	partyMenuImg = app->tex->Load("Assets/Textures/SceneGame/PartyMenu/PartyMenu.png");
+	zeroImg = app->tex->Load("Assets/Textures/SceneGame/PartyMenu/Characters/ZeroPic.png");
+	sophieImg = app->tex->Load("Assets/Textures/SceneGame/PartyMenu/Characters/SophiePic.png");
+
 
 	// L15: TODO 2: Declare a GUI Button and create it using the GuiManager
 	uint w, h;
@@ -354,6 +357,24 @@ bool Scene::PostUpdate()
 			partyMenu = !partyMenu;
 			app->audio->PlayFx(app->titlescreen->closemenuSFX);
 		}
+
+		switch (partyMemberSelected)
+		{
+		case 0:
+			// Zero
+			app->render->DrawTexture(zeroImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
+			break;
+
+		case 1:
+			// Sophie
+			app->render->DrawTexture(sophieImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
+			
+			break;
+		default:
+			break;
+		}
+		ShowPartyStats();
+
 	}
 
 	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) {
@@ -386,6 +407,9 @@ bool Scene::CleanUp()
 
 	app->tex->UnLoad(img_pause);
 	app->tex->UnLoad(popImg_settings);
+	app->tex->UnLoad(partyMenuImg);
+	app->tex->UnLoad(zeroImg);
+	app->tex->UnLoad(sophieImg);
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -510,6 +534,18 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	case 26:
 		// V-Sync button
 		app->render->limitFPS = !app->render->limitFPS;
+		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		break;
+	
+	case 27:
+		// Choose First PartyMember
+		partyMemberSelected = 0;
+		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		break;
+		
+	case 28:
+		// Choose Second PartyMember
+		partyMemberSelected = 1;
 		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
 		break;
 
@@ -730,4 +766,44 @@ bool Scene::SaveState(pugi::xml_node& data)
 	checkPoint.append_attribute("checkPoint") = app->scene->checkpointEnabled;
 
 	return true;
+}
+
+void Scene::ShowPartyStats()
+{
+	app->fonts->BlitText(544, 225, app->ui->font1_id, app->partyManager->party.At(partyMemberSelected)->data->name.GetString());
+
+	char level[5];
+	sprintf_s(level, 5, "%d", app->partyManager->party.At(partyMemberSelected)->data->level);
+	app->fonts->BlitText(544, 264, app->ui->font1_id, level);
+
+	char currentHP[8];
+	sprintf_s(currentHP, 8, "hp %d/", app->partyManager->party.At(partyMemberSelected)->data->currentHp);
+	char maxHP[3];
+	sprintf_s(maxHP, 3, "%d", app->partyManager->party.At(partyMemberSelected)->data->maxHp);
+	app->fonts->BlitText(780, 270, app->ui->font1_id, currentHP);
+	app->fonts->BlitText(828, 270, app->ui->font1_id, maxHP);
+
+	char currentMana[10];
+	sprintf_s(currentMana, 10, "mana %d/", app->partyManager->party.At(partyMemberSelected)->data->currentMana);
+	char maxMana[3];
+	sprintf_s(maxMana, 3, "%d", app->partyManager->party.At(partyMemberSelected)->data->maxMana);
+	app->fonts->BlitText(875, 270, app->ui->font1_id, currentMana);
+	app->fonts->BlitText(940, 270, app->ui->font1_id, maxMana);
+
+	char attack[12];
+	sprintf_s(attack, 12, "attack %d", app->partyManager->party.At(partyMemberSelected)->data->attack);
+	app->fonts->BlitText(780, 295, app->ui->font1_id, attack);
+
+	char defense[15];
+	sprintf_s(defense, 15, "defense %d", app->partyManager->party.At(partyMemberSelected)->data->defense);
+	app->fonts->BlitText(875, 295, app->ui->font1_id, defense);
+
+	char speed[10];
+	sprintf_s(speed, 10, "speed %d", app->partyManager->party.At(partyMemberSelected)->data->speed);
+	app->fonts->BlitText(780, 320, app->ui->font1_id, speed);
+
+	char critRate[15];
+	sprintf_s(critRate, 15, "crit r %d", app->partyManager->party.At(partyMemberSelected)->data->critRate);
+	app->fonts->BlitText(875, 320, app->ui->font1_id, critRate);
+
 }

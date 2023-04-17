@@ -8,17 +8,39 @@ In Toy Box, players will travel through the four zones of the world, each of the
 
 ## Key Features
 
+ - {F1} - Reset Player position
+ - {F3} - Restart scene
  - {F5} - Save current game state
  - {F6} - Load the previous game state (player & enemies)
- - {F9} - View colliders/logic/paths
  - {F8} - View GUI bounds rectangles and state
+ - {F9} - View colliders/logic/paths
  - {F10} - God Mode
+ - {F11} - FPS cap ON/OFF
+ - {TAB} - Debug mode ON/OFF
+ - {V} - Variables ON/OFF
+ - {C} - Camera limits ON/OFF
+ - {T} - Teleport ON/OFF
+ - {F} - Free Camera ON/OFF
+ - {E} - Draw Entities ON/OFF
+ - {1} - With teleport On - tp player to a position
 
 ## Controls
 
+ - {Mouse} - Selection on menus
  - {WASD} - Player's movement
  - {T} - Player's Team Party Menu
  - {ESCAPE} - Pause the game
+ - {G} - Dialogue interaction
+
+### Dialogue
+ - {Up} - Dialogue option choice up
+ - {Down} - Dialogue option choice down
+ - {Enter} - Choice dialogue option
+
+### Battle
+ - {W} - Selection UP
+ - {S} - Selection Down
+ - {Mouse} - Selecting butons
 
 ## Developers
 
@@ -41,6 +63,11 @@ In Toy Box, players will travel through the four zones of the world, each of the
 ## License
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](https://mit-license.org/) for further details.
+
+### Assets
+
+The majority of the assets are done of owr own but there are assets that we purchased.
+[UI assets purchased](https://limezu.itch.io/modernuserinterface)
 
 ## Latest release
 

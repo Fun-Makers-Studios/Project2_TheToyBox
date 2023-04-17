@@ -57,6 +57,8 @@ public:
 
 	void FightKid();
 
+	void ShowPartyStats();
+
 public:
 
 	Player* player;
@@ -101,6 +103,8 @@ public:
 	SString mapName;
 	bool isMapChanging = false;
 
+	uint partyMemberSelected = 0;
+
 	DialogueManager* dialogueManager;
 
 private:
@@ -111,6 +115,9 @@ private:
 	SDL_Texture* popImg_settings = nullptr;
 
 	SDL_Texture* partyMenuImg = nullptr;
+
+	SDL_Texture* zeroImg = nullptr;
+	SDL_Texture* sophieImg = nullptr;
 
 	iPoint startPosition;
 	
@@ -140,7 +147,6 @@ private:
 
 	GuiButton* firstPMemberButton27;
 	GuiButton* secondPMemberButton28;
-
 
 	bool exitGame = false;
 };

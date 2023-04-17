@@ -43,6 +43,7 @@ bool PartyManager::Start()
 			itemNode.attribute("name").as_string(),
 			itemNode.attribute("maxHp").as_uint(),
 			itemNode.attribute("maxMana").as_uint(),
+			itemNode.attribute("level").as_uint(),
 			itemNode.attribute("attack").as_uint(),
 			itemNode.attribute("defense").as_uint(),
 			itemNode.attribute("speed").as_uint(),
