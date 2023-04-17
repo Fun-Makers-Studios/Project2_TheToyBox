@@ -586,7 +586,7 @@ void Scene::LoadNPC(SString mapName_)
 	{
 		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
 		npc->parameters = itemNode;
-		//npcList.Add(npc);
+		npcList.Add(npc);
 		npc->Start();
 	}
 	
