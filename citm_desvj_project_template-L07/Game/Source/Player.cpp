@@ -276,6 +276,20 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		app->scene->isMapChanging = true;
 		break;
 	
+	case MapZone::TOWN_TO_INN:
+		LOG("GO TO INN");
+		app->scene->mapName = "inn";
+		newPos = { 960, 544 };
+		app->scene->isMapChanging = true;
+		break;
+
+	case MapZone::INN_TO_TOWN:
+		LOG("GO TO TOWN");
+		app->scene->mapName = "town";
+		newPos = { 1184, 448 };
+		app->scene->isMapChanging = true;
+		break;
+	
 	case MapZone::UNKNOWN:
 		LOG("GO TO UNKNOWN");
 

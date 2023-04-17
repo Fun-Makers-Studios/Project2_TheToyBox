@@ -52,6 +52,9 @@ enum class MapZone {
 	
 	TAVERN_TO_TOWN,
 	TOWN_TO_TAVERN,
+	
+	TOWN_TO_INN,
+	INN_TO_TOWN,
 
 	UNKNOWN
 };

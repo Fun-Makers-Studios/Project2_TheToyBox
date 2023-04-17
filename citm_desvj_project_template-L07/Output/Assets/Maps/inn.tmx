@@ -891,7 +891,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="3" name="Collisions" width="40" height="22">
+ <layer id="3" name="Collisions" width="40" height="22" visible="0">
   <properties>
    <property name="Draw" type="bool" value="false"/>
    <property name="Navigation" type="bool" value="false"/>
@@ -1779,7 +1779,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="2" name="Teleport" width="40" height="22">
+ <layer id="2" name="Teleport" width="40" height="22" visible="0">
   <properties>
    <property name="Draw" type="bool" value="false"/>
    <property name="Navigation" type="bool" value="false"/>
