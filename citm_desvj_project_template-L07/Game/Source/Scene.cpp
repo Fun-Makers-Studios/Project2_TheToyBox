@@ -230,7 +230,8 @@ bool Scene::Update(float dt)
 	//Blit UI
 	app->ui->BlitFPS();
 
-	if (app->physics->debug) {
+	if (app->physics->debug)
+	{
 		app->ui->BlitPlayerXPos();
 		app->ui->BlitPlayerYPos();
 		app->ui->BlitAverageFPS();
@@ -519,7 +520,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	return true;
 }
 
-void Scene::SaveUI() {
+void Scene::SaveUI()
+{
 	if (app->saveGameRequested == true) {
 		showSavingState = true;
 	}
@@ -554,8 +556,8 @@ void Scene::Checkpoint()
 	}
 }
 
-void Scene::ResetScene() {
-	
+void Scene::ResetScene()
+{
 	app->audio->PlayMusic("Assets/Audio/Music/song1.ogg", 1.0f);
 
 	pugi::xml_document gameStateFile;
@@ -571,8 +573,8 @@ void Scene::ResetScene() {
 	}
 }
 
-void Scene::SceneMap() {
-
+void Scene::SceneMap()
+{
 	if (isMapChanging == true)
 	{
 		
@@ -604,16 +606,20 @@ void Scene::LoadNPC(SString mapName_)
 	
 }
 
-void Scene::FixCamera() {
+void Scene::FixCamera()
+{
+	if (METERS_TO_PIXELS(app->map->mapData.width) > 1280 && METERS_TO_PIXELS(app->map->mapData.height) > 704)	//SMALL MAP SIZE 1280x704
+	{
+		uint scale = app->scaleObj->ScaleTypeToInt(ScaleType::WORLD);
 
-	if (METERS_TO_PIXELS(app->map->mapData.width) > 1280 && METERS_TO_PIXELS(app->map->mapData.height) > 704) { //SMALL MAP SIZE 1280x704
+		app->render->camera.x = (player->position.x * scale + 16) - ((app->win->screenSurface->w) / 2);
+		app->render->camera.y = (player->position.y * scale + 16) - ((app->win->screenSurface->h) / 2);
 
-		app->render->camera.x = (player->position.x + 16) - ((app->win->screenSurface->w) / 2);
-		app->render->camera.y = (player->position.y + 16) - ((app->win->screenSurface->h) / 2);
 		if (app->render->camera.x < 0)
 			app->render->camera.x = 0;
 		if (app->render->camera.y < 0)
 			app->render->camera.y = 0;
+
 		if (app->render->camera.x > METERS_TO_PIXELS(app->map->mapData.width) - app->render->camera.w)
 			app->render->camera.x = METERS_TO_PIXELS(app->map->mapData.width) - app->render->camera.w;
 		if (app->render->camera.y > METERS_TO_PIXELS(app->map->mapData.height) - app->render->camera.h)
@@ -625,11 +631,10 @@ void Scene::FixCamera() {
 	}
 }
 
-void Scene::FightKid() {
-
+void Scene::FightKid()
+{
 	app->partyManager->enemyToFight = "enemykid";
 	app->fade->FadeToBlack(this, (Module*)app->sceneFight, 0);
-
 }
 
 bool Scene::LoadState(pugi::xml_node& data)

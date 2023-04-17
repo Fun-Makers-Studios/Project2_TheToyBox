@@ -58,7 +58,6 @@ public:
 	SDL_Rect camera;
 	SDL_Rect viewport;
 	SDL_Color background;
-	Scale* scaleObj;
 };
 
 #endif // __RENDER_H__

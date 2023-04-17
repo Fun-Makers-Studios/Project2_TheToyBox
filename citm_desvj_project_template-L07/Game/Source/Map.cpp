@@ -6,6 +6,7 @@
 #include "Pathfinding.h"
 #include "Physics.h"
 #include "Player.h"
+#include "Scale.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -133,7 +134,7 @@ void Map::Draw()
                         pos.y,
                         &r,
                         SDL_FLIP_NONE,
-                        ScaleType::WORLD);
+                        app->scaleObj->GetCurrentScale());
                 }
             }
         }
@@ -646,6 +647,8 @@ bool Map::Parallax(TileSet* tileset_, iPoint pos, SDL_Rect r, float x) {
 bool Map::CreateColliders()
 {
     bool ret = true;
+
+    int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
 
     ListItem<MapLayer*>* mapLayerItem;
     mapLayerItem = mapData.maplayers.start;

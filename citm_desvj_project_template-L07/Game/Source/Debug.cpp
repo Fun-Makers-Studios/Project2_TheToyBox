@@ -113,13 +113,13 @@ bool Debug::PostUpdate()
 {
 	if (debug)
 	{
-		DrawDebug();
-
 		if (drawColliders && app->physics->active)
 			DrawColliders();
 
 		if (drawEntities)
 			DrawEntities();
+
+		DrawDebug();
 	}
 		
 
@@ -137,7 +137,7 @@ void Debug::DrawDebug()
 	Color color = Black;
 	SDL_Rect rect = { debugX - 16, debugY - 16, 256, 256 };
 	app->render->DrawRectangle(rect, color.r, color.g, color.b, 255, false, false);
-	app->render->DrawRectangle(rect, color.r, color.g, color.b, 96, true, false);
+	app->render->DrawRectangle(rect, color.r, color.g, color.b, 160, true, false);
 
 
 	app->fonts->BlitText(debugX, debugY, 0, "variables (v)");
@@ -184,7 +184,6 @@ void Debug::DrawDebug()
 			app->fonts->BlitText(debugX, debugY + 105, 0, "player.alive = false");
 
 		//Scene Fight
-
 		for (size_t i = 0; i < app->sceneFight->turnList.Count(); i++)
 		{
 			PartyMember* member = app->sceneFight->turnList.At(i)->data;
@@ -210,6 +209,14 @@ void Debug::DrawDebug()
 		{
 			app->fonts->BlitText(debugX - 250, debugY, 0, app->sceneFight->turnMember->name.GetString());
 		}
+
+
+		//Scale
+		std::string currentScale = app->scaleObj->ScaleTypeToString(app->scaleObj->GetCurrentScale());
+		if (!app->scene->player->dead)
+			app->fonts->BlitText(debugX, debugY + 140, 0, currentScale.c_str());
+		else
+			app->fonts->BlitText(debugX, debugY + 140, 0, currentScale.c_str());
 		
 	}
 
@@ -242,6 +249,8 @@ void Debug::DrawColliders()
 {
 	b2World* world = app->physics->GetWorld();
 
+	int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
+
 	// Bonus code: this will iterate all objects in the world and draw the circles
 	// You need to provide your own macro to translate meters to pixels
 	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
@@ -257,9 +266,9 @@ void Debug::DrawColliders()
 				uint width, height;
 				app->win->GetWindowSize(width, height);
 				b2Vec2 pos = f->GetBody()->GetPosition();
-				app->render->DrawCircle(METERS_TO_PIXELS(pos.x) * app->win->GetScale(),
-					METERS_TO_PIXELS(pos.y) * app->win->GetScale(),
-					METERS_TO_PIXELS(shape->m_radius) * app->win->GetScale(), 255, 255, 255);
+				app->render->DrawCircle(METERS_TO_PIXELS(pos.x) * scale,
+					METERS_TO_PIXELS(pos.y) * scale,
+					METERS_TO_PIXELS(shape->m_radius) * scale, 255, 255, 255);
 			}
 			break;
 
@@ -274,13 +283,13 @@ void Debug::DrawColliders()
 				{
 					v = b->GetWorldPoint(polygonShape->GetVertex(i));
 					if (i > 0)
-						app->render->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 255, 100);
+						app->render->DrawLine(METERS_TO_PIXELS(prev.x) * scale, METERS_TO_PIXELS(prev.y) * scale, METERS_TO_PIXELS(v.x) * scale, METERS_TO_PIXELS(v.y) * scale, 255, 255, 100);
 
 					prev = v;
 				}
 
 				v = b->GetWorldPoint(polygonShape->GetVertex(0));
-				app->render->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100);
+				app->render->DrawLine(METERS_TO_PIXELS(prev.x) * scale, METERS_TO_PIXELS(prev.y) * scale, METERS_TO_PIXELS(v.x) * scale, METERS_TO_PIXELS(v.y) * scale, 255, 100, 100);
 			}
 			break;
 

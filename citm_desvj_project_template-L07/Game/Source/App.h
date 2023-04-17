@@ -36,6 +36,8 @@ class PartyManager;
 class GuiManager;
 class Debug;
 
+class Scale;
+
 class App
 {
 public:
@@ -123,6 +125,8 @@ public:
 	PathFinding* pathfinding;
 	GuiManager* guiManager;
 	Debug* debug;
+
+	Scale* scaleObj;
 
 	// L01: DONE 2: Create new variables from pugui namespace:
 	// xml_document to store the config file and

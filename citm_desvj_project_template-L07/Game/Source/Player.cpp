@@ -132,11 +132,11 @@ bool Player::Update()
 	{
 
 		//Enable/Disable Debug
-		if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+		/*if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 		{
 			app->physics->debug = !app->physics->debug;
 			app->audio->PlayFx(selectSFX);
-		}
+		}*/
 
 		if (godMode == true) {
 
@@ -215,7 +215,8 @@ bool Player::Update()
 	}
 
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
-	app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, ScaleType::WORLD);
+	ScaleType scale = app->scaleObj->GetCurrentScale();
+	app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, scale);
 	currentAnim->Update();
 
 
@@ -251,6 +252,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		app->scene->mapName = "town";
 		newPos = {192, 256};
 		app->scene->isMapChanging = true;
+		app->scaleObj->SetCurrentScale(ScaleType::WORLD);
 		break;
 
 	case MapZone::TOWN_TO_HOUSE1:
@@ -258,6 +260,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		app->scene->mapName = "housebasement";
 		newPos = { 640, 480 };
 		app->scene->isMapChanging = true;
+		app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
 		break;
 	
 	case MapZone::HOUSEBASE_TO_HOUSEFLOOR:
@@ -265,6 +268,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		app->scene->mapName = "housefloor";
 		newPos = { 960, 256 };
 		app->scene->isMapChanging = true;
+		app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
 		break;
 
 	case MapZone::HOUSEFLOOR_TO_HOUSEFBASE:
@@ -272,6 +276,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		app->scene->mapName = "housebasement";
 		newPos = { 672, 176 };
 		app->scene->isMapChanging = true;
+		app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
 		break;
 
 	case MapZone::TOWN_TO_TAVERN:
@@ -279,6 +284,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		app->scene->mapName = "tavern";
 		newPos = { 640, 500 };
 		app->scene->isMapChanging = true;
+		app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
 		break;
 
 	case MapZone::TAVERN_TO_TOWN:
@@ -286,6 +292,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		app->scene->mapName = "town";
 		newPos = { 800, 352 };
 		app->scene->isMapChanging = true;
+		app->scaleObj->SetCurrentScale(ScaleType::WORLD);
 		break;
 	
 	case MapZone::TOWN_TO_INN:
@@ -293,6 +300,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		app->scene->mapName = "inn";
 		newPos = { 960, 544 };
 		app->scene->isMapChanging = true;
+		app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
 		break;
 
 	case MapZone::INN_TO_TOWN:
@@ -300,6 +308,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		app->scene->mapName = "town";
 		newPos = { 1184, 448 };
 		app->scene->isMapChanging = true;
+		app->scaleObj->SetCurrentScale(ScaleType::WORLD);
 		break;
 	
 	case MapZone::UNKNOWN:

@@ -71,7 +71,8 @@ bool NPC::Update()
 	boundaries.y = position.y - ((boundaries.h / 2) - (height/2));
 
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
-	app->render->DrawTexture(texture, position.x, position.y, &rect, SDL_FLIP_NONE, ScaleType::WORLD);
+	ScaleType scale = app->scaleObj->GetCurrentScale();
+	app->render->DrawTexture(texture, position.x, position.y, &rect, SDL_FLIP_NONE, scale);
 	currentAnim->Update();
 
 	this->DialogTriggerCheck();
@@ -79,11 +80,11 @@ bool NPC::Update()
 	return true;
 }
 
-bool NPC::PostUpdate() {
+bool NPC::PostUpdate()
+{
 	if (app->physics->debug) {
 		app->render->DrawRectangle(boundaries, 255, 0, 0, 255U, false);
 	}
-
 	return true;
 }
 
