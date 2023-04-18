@@ -27,13 +27,12 @@ bool PartyManager::Start()
 			textureRect = { 128, 0, 32, 64 };
 		
 
-
 		//battle position
-		int offsetX = 200;
+		int offsetX = 350;
 		int offsetY = 300;
 
 		iPoint position;
-		position.x = offsetX;
+		position.x = offsetX - 32 * partyCount;;
 		position.y = offsetY + 96 * partyCount;
 		partyCount++;
 

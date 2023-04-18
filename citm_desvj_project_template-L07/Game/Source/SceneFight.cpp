@@ -38,6 +38,8 @@ bool SceneFight::Start()
 {
 	LOG("--FORMING PARTY--");
 
+	app->scaleObj->SetCurrentScale(ScaleType::FIGHT);
+	int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
 	/*Initialize*/
 	path_bg = app->configNode.child("sceneFight").child("backgroundimage").attribute("texturepath").as_string();
 	path_arrow = app->configNode.child("sceneFight").child("arrowimage").attribute("texturepath").as_string();
@@ -90,12 +92,12 @@ bool SceneFight::Start()
 			textureRect = { 128, 64, 64, 96 };
 
 		//battle position
-		int offsetX = 800;
-		int offsetY = 300;
+		int offsetX = 750;
+		int offsetY = 250;
 
 		iPoint position;
-		position.x = offsetX;
-		position.y = offsetY + 96 * i;
+		position.x = (offsetX + 32 * i)/scale;
+		position.y = (offsetY + 96 * i)/scale;
 
 		PartyMember* member = new PartyMember(
 			type,
@@ -251,6 +253,8 @@ bool SceneFight::CleanUp()
 	if (attackButton18 != nullptr && attackButton18->state != GuiControlState::DISABLED) attackButton18->state = GuiControlState::DISABLED;
 	if (defenseButton19 != nullptr && defenseButton19->state != GuiControlState::DISABLED) defenseButton19->state = GuiControlState::DISABLED;
 	if (escapeButton20 != nullptr && escapeButton20->state != GuiControlState::DISABLED) escapeButton20->state = GuiControlState::DISABLED;
+
+	app->scaleObj->SetCurrentScale(ScaleType::WORLD);
 
 	return true;
 }
