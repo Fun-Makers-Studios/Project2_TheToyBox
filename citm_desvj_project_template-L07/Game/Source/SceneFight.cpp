@@ -245,12 +245,12 @@ bool SceneFight::CleanUp()
 	
 	enemyList.Clear();
 
-	if (attackButton18 != nullptr) attackButton18->state = GuiControlState::DISABLED;
-	if (defenseButton19 != nullptr) defenseButton19->state = GuiControlState::DISABLED;
-	if (escapeButton20 != nullptr) escapeButton20->state = GuiControlState::DISABLED;
-
 	if (tex_bg != nullptr) { app->tex->UnLoad(tex_bg); }
 	if (tex_arrow != nullptr) { app->tex->UnLoad(tex_arrow); }
+
+	if (attackButton18 != nullptr && attackButton18->state != GuiControlState::DISABLED) attackButton18->state = GuiControlState::DISABLED;
+	if (defenseButton19 != nullptr && defenseButton19->state != GuiControlState::DISABLED) defenseButton19->state = GuiControlState::DISABLED;
+	if (escapeButton20 != nullptr && escapeButton20->state != GuiControlState::DISABLED) escapeButton20->state = GuiControlState::DISABLED;
 
 	return true;
 }
