@@ -48,7 +48,9 @@ bool SceneFight::Start()
 	/*Load*/
 	tex_bg = app->tex->Load(path_bg);
 	tex_arrow = app->tex->Load(path_arrow);
-	//app->audio->PlayMusic(musicPath);
+
+	//CHANGE HARDCODED PATH
+	app->audio->PlayMusic("Assets/Audio/Music/battle.ogg");
 
 
 	// ======== CREATE TURN LIST ========
