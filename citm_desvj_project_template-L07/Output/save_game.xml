@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<save_state>
+	<input />
+	<window />
+	<textures />
+	<Fonts_Module />
+	<audio />
+	<fade />
+	<LogoScreen />
+	<TitleScreen />
+	<EndingScreen />
+	<scene>
+		<playerPosition x="7" y="16.5625" />
+		<cameraIsFix value="false" />
+		<cameraIsFix2 value="false" />
+		<playerLives playerLives="3" />
+		<coins coins="0" />
+		<itemLives itemLives="true" />
+		<checkpointEnabled checkpointEnabled="true" />
+		<kidPosition x="5.46875" y="10.9375" />
+		<checkPoint checkPoint="false" />
+	</scene>
+	<sceneFight />
+	<:anonymous />
+	<pathfinding />
+	<UI_Module />
+	<entitymanager />
+	<:anonymous />
+	<map />
+	<guiManager />
+	<:anonymous />
+	<renderer>
+		<camera x="0" y="672" />
+	</renderer>
+</save_state>

@@ -45,22 +45,22 @@ public:
 	uint closemenuSFX = 0;
 
 	// Declare a GUI Button and create it using the GuiManager
-	GuiButton* playButton1;
-	GuiButton* settingsButton2;
-	GuiButton* creditsButton3;
-	GuiButton* exitButton4;
-	GuiButton* continueButton5; // Show only if there is a saved game in "save_game.xml"
+	GuiButton* playButton1 = nullptr;
+	GuiButton* settingsButton2 = nullptr;
+	GuiButton* creditsButton3 = nullptr;
+	GuiButton* exitButton4 = nullptr;
+	GuiButton* continueButton5 = nullptr; // Show only if there is a saved game in "save_game.xml"
 	
 
-	GuiButton* decreaseMusicButton8;
-	GuiButton* increaseMusicButton9;
+	GuiButton* decreaseMusicButton8 = nullptr;
+	GuiButton* increaseMusicButton9 = nullptr;
 
-	GuiButton* decreaseSFXButton10;
-	GuiButton* increaseSFXButton11;
+	GuiButton* decreaseSFXButton10 = nullptr;
+	GuiButton* increaseSFXButton11 = nullptr;
 
-	GuiButton* fullscreenButton12;
+	GuiButton* fullscreenButton12 = nullptr;
 
-	GuiButton* vsyncButton13;
+	GuiButton* vsyncButton13 = nullptr;
 
 	bool settingMenu = false;
 	bool creditsMenu = false;
