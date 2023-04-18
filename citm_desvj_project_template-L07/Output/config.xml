@@ -1,0 +1,182 @@
+<config>
+	<app>
+		<title>The Toy Box by Fun Makers Studio</title>
+		<organization>UPC</organization>
+		<frcap value ="16" value2 ="33"/>
+	</app>
+
+	<renderer>
+		<vsync value ="false"/>
+	</renderer>
+
+	<window>
+		<resolution width="1280" height="720" scale="1"/>
+		<fullscreen value="false"/>
+		<borderless value="false"/>
+		<resizable value="false"/>
+		<fullscreen_window value="false"/>
+	</window>
+
+	<audio>
+		<music volume="40"/>
+		<fx volume="50"/>
+	</audio>
+
+	<ui>
+		<font1 texturepath="Assets/Textures/font1.png"/>
+		<font2 texturepath="Assets/Textures/font2.png"/>
+		<font2Red texturepath="Assets/Textures/font2_red.png"/>
+	</ui>
+
+	<logo>
+		<backgroundimage texturepath="Assets/Textures/SceneLogo/logo.png"/>
+		<music musicPath="Assets/Audio/Music/logoedit.ogg"/>
+	</logo>
+
+	<title>
+		<backgroundimage texturepath="Assets/Textures/SceneTitle/title.png"/>
+		<popImage settingtexturepath="Assets/Textures/SceneTitle/Settings/SettingsMenu.png" creditstexturepath="Assets/Textures/SceneTitle/Credits/CreditsMenu.png"/>
+		<music musicPath="Assets/Audio/Music/title_screen.ogg"/>
+		<startsfx startSFXPath="Assets/Audio/Fx/start_game.wav"/>
+		<selectsfx selectSFXPath="Assets/Audio/FX/menu_selection.wav"/>
+	</title>
+
+	<scene>
+		<music musicPath="Assets/Audio/Music/song1.ogg" />
+		<imgPause imgPausePath="Assets/UI/PauseMenu/PauseMenuTemplate.png"/>
+		<scenesfx selectSFXPath="Assets/Audio/Fx/select.wav" />
+		<slimesfx stompSFXPath="Assets/Audio/Fx/stomp.wav" powerUpSFXPath="Assets/Audio/Fx/powerUp.wav" slimeHitSFXPath="Assets/Audio/Fx/slime_hit.wav" />
+		<batsfx batHitSFXPath="Assets/Audio/Fx/bat_hit.wav"/>
+		<player x="224" y="530" texturepath="Assets/Textures/PlayerJones.png"/>
+		<coin x="704" y="300" texturepath="Assets/Textures/bitcoin.png"/>
+		<coin x="1312" y="250" texturepath="Assets/Textures/bitcoin.png"/>
+		<coin x="2192" y="430" texturepath="Assets/Textures/bitcoin.png"/>
+		<coin x="2928" y="150" texturepath="Assets/Textures/bitcoin.png"/>
+		<potionhp x="230" y="400" iType ="potionhp" texturepath="Assets/Textures/Items/potion_hp.png"/>
+		<potionhp x="1550" y="250" iType ="potionhp" texturepath="Assets/Textures/Items/potion_hp.png"/>
+		<potionmana x="3000" y="170" iType ="potionmana" texturepath="Assets/Textures/Items/potion_mana.png"/>
+		<potionmana x="3000" y="170" iType ="potionmana" texturepath="Assets/Textures/Items/potion_mana.png"/>
+		<enemykid x="175" y="350" texturepath="Assets/Textures/characters.png"/>
+	</scene>
+
+	<sceneFight>
+		<backgroundimage texturepath="Assets/Textures/SceneCombat/combat.png"/>
+		<arrowimage texturepath="Assets/Textures/SceneCombat/cursedArrow.png"/>
+		<partymember type="ally" name="zero" maxHp="25" maxMana="20" level ="23" attack="8" defense="30" speed="40" critRate="10" texturepath="Assets/Textures/characters.png"/>
+		<partymember type="ally" name="sophie" maxHp="15" maxMana="30" level ="15" attack="12" defense="10" speed="50" critRate="15" texturepath="Assets/Textures/characters.png"/>
+		<enemykid type="enemy" name="enemykid" maxHp="20" maxMana="25" attack="10" defense="10" speed="20" critRate="30" texturepath="Assets/Textures/characters.png"/>
+		<enemyshopkeeper type="enemy" name="enemyshopkeeper" maxHp="20" maxMana="25" attack="10" defense="10" speed="20" critRate="30" texturepath="Assets/Textures/characters.png"/>
+		<enemyclown type="enemy" name="enemyclown" maxHp="20" maxMana="25" attack="10" defense="10" speed="20" critRate="30" texturepath="Assets/Textures/characters.png"/>
+	</sceneFight>
+
+	<player>
+		<SFXset jumpSFXPath="Assets/Audio/Fx/jump.wav" dieSFXPath="Assets/Audio/Fx/death.wav" hurtSFXPath="Assets/Audio/Fx/hurt.wav"
+				pickCoinSFXPath="Assets/Audio/Fx/pick_coin.wav" levelCompletedSFXPath="Assets/Audio/Fx/level_completed.wav" selectSFXPath="Assets/Audio/Fx/select.wav"
+				shortRangeAttackSFXPath="Assets/Audio/Fx/whip_attack.wav" pickLifeSFXPath="Assets/Audio/Fx/life_up.wav"/>
+	</player>
+
+	<ending>
+		<backgroundimage texturepath="Assets/Textures/EndingScreen.png"/>
+		<music musicPath="Assets/Audio/Music/gameOver.ogg"/>
+		<endingsfx startSFXPath="Assets/Audio/Fx/start_game.wav"/>
+	</ending>
+
+	<map>
+		<mapfolder path="Assets/Maps/"/>
+		<town path="Assets/Maps/map_town.tmx"/>
+		<tavern path="Assets/Maps/tavern.tmx"/>
+		<inn path="Assets/Maps/inn.tmx"/>
+		<housebasement path="Assets/Maps/housebasement.tmx"/>
+		<housefloor path="Assets/Maps/housefloor.tmx"/>
+	</map>
+
+	<gui>
+		<guiButtons buttonsTexPath="Assets/UI/ButtonsSprites/Buttons.png"/>
+		<guiButtons smallButtonTexPath="Assets/UI/ButtonsSprites/Buttons.png"/>
+	</gui>
+
+	<dialoguemanager dialoguetext="Assets/UI/Dialog/Dialog.png" font="Assets/Fonts/DialogFont.png" lookuptable="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz:?!.,     " rows="6">
+		<dialogue id ="0">
+			<node id="0" text="Greetings traveler.">
+				<option id="0" nextNodeId="1" text=""/>
+			</node>
+			<node id="1" text="Are you lost?">
+				<option id="0" nextNodeId="3" text="What is this place?"/>
+				<option id="1" nextNodeId="2" text="No thanks."/>
+			</node>
+			<node id="2" text="Oh, sorry">
+				<option id="0" nextNodeId="-1" text=""/>
+			</node>
+			<node id="3" text="Place? What a silly cuestion.">
+				<option id="0" nextNodeId="-1" text=""/>
+			</node>
+		</dialogue>
+		<dialogue id ="1">
+			<node id="0" text="Have you tried the beer they serve here?">
+				<option id="0" nextNodeId="1" text="No."/>
+			</node>
+			<node id="1" text="Well then, enter the tabern and get one yourself.">
+				<option id="0" nextNodeId="-1" text=""/>
+				<option id="1" nextNodeId="2" text="No thanks."/>
+			</node>
+			<node id="2" text="O fuck off">
+				<option id="0" nextNodeId="-1" text="Wtf?!"/>
+			</node>
+		</dialogue>
+		<dialogue id ="2">
+			<node id="0" text="No place like this Inn.">
+				<option id="0" nextNodeId="1" text="Did you say Inn?"/>
+			</node>
+			<node id="1" text="Yes, what happens sweety?">
+				<option id="0" nextNodeId="-1" text="Ah, nothing. Thanks."/>
+				<option id="1" nextNodeId="2" text="Thank god, somewhere to rest."/>
+			</node>
+			<node id="2" text="Well, not a cheap place.">
+				<option id="0" nextNodeId="-1" text="Fuck."/>
+			</node>
+		</dialogue>
+		<dialogue id ="3">
+			<node id="0" text="Seems like no market today. Everybody went to the circus.">
+				<option id="0" nextNodeId="-1" text=""/>
+			</node>
+		</dialogue>
+		<dialogue id ="4">
+			<node id="0" text="O man, all the tickets are sold.">
+				<option id="0" nextNodeId="-1" text=""/>
+			</node>
+		</dialogue>
+		<dialogue id ="5">
+			<node id="0" text="Fuck off!! Leave me alone.">
+				<option id="0" nextNodeId="-1" text=""/>
+			</node>
+		</dialogue>
+	</dialoguemanager>
+
+
+	<npcs>
+		<town>
+			<npc x="928" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3" dialogueid="0"/>
+			<npc x="736" y="352" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="1"/>
+			<npc x="1216" y="448" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4" dialogueid="2"/>
+			<npc x="672" y="960" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="1" dialogueid="-1"/>
+			<npc x="1184" y="832" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5" dialogueid="3"/>
+			<npc x="192" y="512" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="0" dialogueid="-1"/>
+			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="4"/>
+		</town>
+		<tavern>
+			<npc x="448" y="416" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="5" dialogueid="5"/>
+			<npc x="608" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="1" dialogueid="-1"/>
+		</tavern>
+		<inn>
+			<npc x="1120" y="320" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="-1"/>
+		</inn>
+		<housebasement>
+			<npc x="864" y="320" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="2" dialogueid="-1"/>
+		</housebasement>
+		<housefloor>
+			<npc x="736" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="5"/>
+		</housefloor>
+	</npcs>
+	
+	
+</config>
