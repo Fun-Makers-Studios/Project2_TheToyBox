@@ -168,7 +168,7 @@ bool TitleScreen::Update(float dt)
 
 	if (settingMenu == true)
 	{
-		if(continueButton5 != nullptr)
+		if(continueButton5 != nullptr && continueButton5->state != GuiControlState::DISABLED)
 			continueButton5->state = GuiControlState::DISABLED;
 
 		playButton1->state = GuiControlState::DISABLED;
@@ -211,7 +211,7 @@ bool TitleScreen::Update(float dt)
 	// Credits Menu
 	if (creditsMenu == true)
 	{
-		if (continueButton5 != nullptr)
+		if (continueButton5 != nullptr && continueButton5->state != GuiControlState::DISABLED)
 			continueButton5->state = GuiControlState::DISABLED;
 
 		playButton1->state = GuiControlState::DISABLED;
@@ -259,7 +259,7 @@ bool TitleScreen::CleanUp()
 	}
 	
 	//STORE IN A LIST THIS BUTTONS AND THEN CHECK HERE IF NULLPTR TO CLEAN THEM UP
-	if(continueButton5 != nullptr)
+	if(continueButton5 != nullptr && continueButton5->state != GuiControlState::DISABLED)
 		continueButton5->state = GuiControlState::DISABLED;
 	if(playButton1 != nullptr)
 		playButton1->state = GuiControlState::DISABLED;
