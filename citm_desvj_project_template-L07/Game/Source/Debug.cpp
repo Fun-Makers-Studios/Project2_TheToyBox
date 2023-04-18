@@ -121,7 +121,6 @@ bool Debug::PostUpdate()
 		DrawDebug();
 	}
 		
-
 	return true;
 }
 
@@ -139,28 +138,26 @@ void Debug::DrawDebug()
 	app->render->DrawRectangle(rect, color.r, color.g, color.b, 160, true, false);
 
 
-	app->fonts->BlitText(debugX, debugY, 0, "variables (v)");
-	//Camera Limits
-	if (camLimits)
-		app->fonts->BlitText(debugX, debugY + 10, 0, "camera limits (c)  on");
+	app->fonts->BlitText(debugX, debugY, 0, "#debug mode (tab)  on/off");
+
+	//Free Camera
+	if (drawColliders)
+		app->fonts->BlitText(debugX, debugY + 15, 0, "#colliders (f9)  on");
 	else
-		app->fonts->BlitText(debugX, debugY + 10, 0, "camera limits (c)  off");
+		app->fonts->BlitText(debugX, debugY + 15, 0, "#colliders (f9)  off");
+	
+	//God Mode
+	if (godMode)
+		app->fonts->BlitText(debugX, debugY + 30, 0, "#god mode  (f10)  on");
+	else
+		app->fonts->BlitText(debugX, debugY + 30, 0, "#god mode  (f10)  off");
 
 
 	//Variables
+	app->fonts->BlitText(debugX, debugY, 45, "#variables ( V )  on/off");
+
 	if (variables)
 	{
-		//Free Camera
-		if (freeCam)
-			app->fonts->BlitText(debugX, debugY + 30, 0, "#free cam (f8)  on");
-		else
-			app->fonts->BlitText(debugX, debugY + 30, 0, "#free cam (f8)  off");
-
-		//God Mode
-		if (godMode)
-			app->fonts->BlitText(debugX, debugY + 40, 0, "#god mode (f10)  on");
-		else
-			app->fonts->BlitText(debugX, debugY + 40, 0, "#god mode (f10)  off");
 
 		//Player x, y
 		app->fonts->BlitText(debugX, debugY + 55, 0, "player.x =");
@@ -236,11 +233,11 @@ void Debug::DrawDebug()
 	//Teleport
 	if (teleport)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		/*if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 		{
 			app->scene->player->position.x = 2120;
 			app->scene->player->position.y = 385;
-		}
+		}*/
 	}
 }
 
@@ -250,7 +247,7 @@ void Debug::DrawColliders()
 
 	int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
 
-	// Bonus code: this will iterate all objects in the world and draw the circles
+	// Iterate all objects in the world and draw shapes
 	// You need to provide your own macro to translate meters to pixels
 	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
 	{
@@ -344,13 +341,13 @@ void Debug::DrawEntities()
 
 		switch (pEntity->type)
 		{
-		case EntityType::PLAYER:color = Magenta;break;
-		case EntityType::NPC:	color = Blue;	break;
-		case EntityType::ENEMY: color = Red;	break;
-		case EntityType::FLYING_ENEMY: color = Red;	break;
-		case EntityType::ITEM:	color = Green;	break;
-		case EntityType::COIN:	color = Yellow; break;
-		default: color = White; break;
+		case EntityType::PLAYER:		color = Magenta;	break;
+		case EntityType::NPC:			color = Blue;		break;
+		case EntityType::ENEMY:			color = Red;		break;
+		case EntityType::FLYING_ENEMY:	color = Red;		break;
+		case EntityType::ITEM:			color = Green;		break;
+		case EntityType::COIN:			color = Yellow;		break;
+		default:						color = White;		break;
 		}
 
 		SDL_Rect rect = { pEntity->position.x, pEntity->position.y, 32, 32};
