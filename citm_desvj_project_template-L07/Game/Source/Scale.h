@@ -25,7 +25,7 @@ public:
 		switch (scale)
 		{
 		case ScaleType::NORMAL: return 1;
-		case ScaleType::WORLD:	return 2; //2
+		case ScaleType::WORLD:	return 1; //2
 		case ScaleType::HOUSE:	return 1;
 		case ScaleType::FIGHT:	return 1; //3
 		case ScaleType::UI_50:	return 1;

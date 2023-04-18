@@ -57,25 +57,37 @@ bool Debug::Update(float dt)
 			drawEntities = !drawEntities;
 
 	}
+	// F1: Add functionality
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+
+	}
+	// F2: Add functionality
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+
+	}
 
 	// F3: Start from the beginning of the current level
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-		app->fade->FadeToBlack((Module*)app->scene, (Module*)app->scene);
+		app->scene->player->ResetPlayerPos();
+		app->audio->PlayFx(app->scene->player->selectSFX);
 	}
 
 	// F5: Save the current game state
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
 		app->SaveGameRequest();
+		app->audio->PlayFx(app->scene->player->selectSFX);
 	}
 
 	// F6: Load the previous state (even across levels)
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
 		app->LoadGameRequest();
+		app->audio->PlayFx(app->scene->player->selectSFX);
 	}
 
-	// F8:  View GUI bounds rectangles and state in different colors
+	// F8: View GUI bounds rectangles and state in different colors
 	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
-		colourblind = !colourblind;
+		app->render->viewGUIbounds = !app->render->viewGUIbounds;
+		app->audio->PlayFx(app->scene->player->selectSFX);
 	}
 
 	// F9: View colliders / logic / paths

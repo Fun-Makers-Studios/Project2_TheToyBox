@@ -190,15 +190,6 @@ bool Player::Update()
 			}
 			
 			pbody->body->SetLinearVelocity(velocity);
-			
-			//Reset player position input
-			if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN
-				|| app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-			{
-				ResetPlayerPos();
-				app->audio->PlayFx(selectSFX);
-			}
-
 		}
 
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width));

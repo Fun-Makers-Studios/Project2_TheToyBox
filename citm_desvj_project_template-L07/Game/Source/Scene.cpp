@@ -169,12 +169,6 @@ bool Scene::Update(float dt)
 		FightKid();
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
-	{
-		app->render->viewGUIbounds = !app->render->viewGUIbounds;
-		app->audio->PlayFx(selectSFX);
-	}
-
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		if (!dialogueManager->dialogueLoaded && settingSceneMenu == false && partyMenu == false) { gamePaused = !gamePaused; }
@@ -189,24 +183,12 @@ bool Scene::Update(float dt)
 	{
 		Mix_ResumeMusic();
 
-		// L03: DONE 3: Request App to Load / Save when pressing the keys F5 (save) / F6 (load)
-		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-		{
-			app->SaveGameRequest();
-			app->audio->PlayFx(selectSFX);
-		}
-		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		{
-			app->LoadGameRequest();
-			app->audio->PlayFx(selectSFX);
-		}
-
 		// God Mode key
-		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		/*if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		{
 			player->godMode = !player->godMode;
 			app->audio->PlayFx(selectSFX);
-		}
+		}*/
 	}
 	
 	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && !dialogueManager->dialogueLoaded)
