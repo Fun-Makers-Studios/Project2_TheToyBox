@@ -108,6 +108,8 @@ bool Player::Start() {
 	dead = false;
 	lives = 3;
 
+	newPos = { 0, 0 };
+
 	//Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x, position.y, width / 3, bodyType::DYNAMIC, ColliderType::PLAYER);
 

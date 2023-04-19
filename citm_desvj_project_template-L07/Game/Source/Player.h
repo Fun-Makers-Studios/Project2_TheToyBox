@@ -37,7 +37,7 @@ public:
 
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
-	Animation* currentAnim;
+	Animation* currentAnim = nullptr;
 
 	//Set of animations (JUMP ANIM DDOESN'T EXISTS)
 	Animation idlePlayer;
@@ -48,30 +48,29 @@ public:
 
 	//Set of SFX
 	uint jumpSFX = 0;
-	const char* jumpSFXPath;
+	const char* jumpSFXPath = nullptr;
 	uint dieSFX = 0;
-	const char* dieSFXPath;
+	const char* dieSFXPath = nullptr;
 	uint hurtSFX = 0;
-	const char* hurtSFXPath;
+	const char* hurtSFXPath = nullptr;
 	uint pickCoinSFX = 0;
-	const char* pickCoinSFXPath;
+	const char* pickCoinSFXPath = nullptr;
 	uint pickLifeSFX = 0;
-	const char* pickLifeSFXPath;
+	const char* pickLifeSFXPath = nullptr;
 	uint levelCompletedSFX = 0;
-	const char* levelCompletedSFXPath;
+	const char* levelCompletedSFXPath = nullptr;
 	uint selectSFX = 0;
-	const char* selectSFXPath;
+	const char* selectSFXPath = nullptr;
 	uint shortRangeAttackSFX = 0;
-	const char* shortRangeAttackSFXPath;
+	const char* shortRangeAttackSFXPath = nullptr;
 
 	bool dead = false;
 	bool godMode = false;
 	bool onCollision = false;
 
-	PhysBody* pbody;
+	PhysBody* pbody = nullptr;
 
-	PhysBody* hitbox;
-	b2Vec2 hitboxPos;
+	PhysBody* hitbox = nullptr;
 
 	int coins = 0;
 
@@ -82,8 +81,8 @@ public:
 private:
 
 	//L02: DONE 1: Declare player parameters
-	SDL_Texture* texture;
-	const char* texturePath;
+	SDL_Texture* texture = nullptr;
+	const char* texturePath = nullptr;
 
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 	
