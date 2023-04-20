@@ -57,19 +57,18 @@ public:
 
 	void FightKid();
 
-	void ShowPartyStats();
 
 public:
 
-	Player* player;
+	Player* player = nullptr;
 	
 	NPC* npc;
 	List<NPC*> npcList;
 
-	KidEnemy* kid;
+	KidEnemy* kid = nullptr;
 
-	Item* item;
-	Coin* coin;
+	Item* item = nullptr;
+	Coin* coin = nullptr;
 
 	// Set of SFX
 	uint selectSFX = 0;
@@ -108,7 +107,7 @@ public:
 	DialogueManager* dialogueManager;
 
 private:
-	SDL_Texture* img_pause;
+	SDL_Texture* img_pause = nullptr;
 	SDL_Rect pauseRect;
 
 	const char* popImg_settingsPath;
@@ -125,28 +124,28 @@ private:
 	iPoint origin;
 	bool originSelected = false;
 
-	const char* imgPausePath;
-	const char* musicPath;
-	const char* selectSFXPath;
+	const char* imgPausePath = nullptr;
+	const char* musicPath = nullptr;
+	const char* selectSFXPath = nullptr;
 
 	// Declare a GUI Button and create it using the GuiManager
-	GuiButton* resumeButton14;
-	GuiButton* backToTitleButton15;
-	GuiButton* settingsButton16;
-	GuiButton* closeButton17;
+	GuiButton* resumeButton14 = nullptr;
+	GuiButton* backToTitleButton15 = nullptr;
+	GuiButton* settingsButton16 = nullptr;
+	GuiButton* closeButton17 = nullptr;
 	
 	// Settings menu on scene game
-	GuiButton* decreaseMusicButton21;
-	GuiButton* increaseMusicButton22;
+	GuiButton* decreaseMusicButton21 = nullptr;
+	GuiButton* increaseMusicButton22 = nullptr;
 
-	GuiButton* decreaseSFXButton23;
-	GuiButton* increaseSFXButton24;
+	GuiButton* decreaseSFXButton23 = nullptr;
+	GuiButton* increaseSFXButton24 = nullptr;
 
-	GuiButton* fullscreenButton25;
-	GuiButton* vsyncButton26;
+	GuiButton* fullscreenButton25 = nullptr;
+	GuiButton* vsyncButton26 = nullptr;
 
-	GuiButton* firstPMemberButton27;
-	GuiButton* secondPMemberButton28;
+	GuiButton* firstPMemberButton27 = nullptr;
+	GuiButton* secondPMemberButton28 = nullptr;
 
 	bool exitGame = false;
 };
