@@ -34,10 +34,12 @@ public:
 
 private:
 
-	SDL_Texture* texture;
-	const char* texturePath;
+	SDL_Texture* texture = nullptr;
+	const char* texturePath = nullptr;
+	SDL_Texture* shadowTexture = nullptr;
+	const char* shadowTexturePath = nullptr;
 
-	Animation* currentAnim;
+	Animation* currentAnim = nullptr;
 	Animation idleAnim;
 
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
@@ -52,7 +54,7 @@ private:
 
 public:
 
-	PhysBody* pbody;
+	PhysBody* pbody = nullptr;
 
 	SDL_Rect boundaries;
 

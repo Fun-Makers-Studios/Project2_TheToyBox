@@ -82,8 +82,6 @@ Entity* EntityManager::CreateEntity(EntityType type)
 {
 	Entity* entity = nullptr; 
 
-	//L02: DONE 2: Instantiate entity according to the type and add the new entoty it to the list of Entities
-
 	switch (type)
 	{
 

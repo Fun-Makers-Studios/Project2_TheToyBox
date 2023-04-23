@@ -128,13 +128,11 @@ public:
 
 	Scale* scaleObj;
 
-	// L01: DONE 2: Create new variables from pugui namespace:
 	// xml_document to store the config file and
 	// xml_node(s) to read specific branches of the xml
 	pugi::xml_document configFile;
 	pugi::xml_node configNode;
 
-	// L03: DONE 1: Create control variables to control that the real Load and Save happens at the end of the frame
 	bool saveGameRequested;
 	bool loadGameRequested;
 
@@ -152,8 +150,6 @@ private:
 	uint frames;
 	float dt;
 
-	// L13: TODO 4: Calculate some timing measures
-	// required variables are provided:
 	Timer timer;
 	PerfTimer ptimer;
 

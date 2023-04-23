@@ -73,8 +73,6 @@ public:
 	// Set of SFX
 	uint selectSFX = 0;
 
-	bool cameraFixX = false;
-	bool cameraFixY = false;
 	iPoint cameraPos;
 
 	bool playing = false;

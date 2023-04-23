@@ -29,7 +29,10 @@ bool NPC::Start() {
 
 	startPos.x = parameters.attribute("x").as_int();
 	startPos.y = parameters.attribute("y").as_int();
+
 	texturePath = parameters.attribute("texturepath").as_string();
+	shadowTexturePath = parameters.attribute("shadowtexturepath").as_string();
+
 	npcid = parameters.attribute("id").as_int();
 	dialogueid = parameters.attribute("dialogueid").as_int();
 	int character = parameters.attribute("character").as_int();
@@ -41,8 +44,8 @@ bool NPC::Start() {
 	idleAnim.loop = true;
 	idleAnim.speed = 0.1f;
 
-	// initilize textures
 	texture = app->tex->Load(texturePath);
+	shadowTexture = app->tex->Load(shadowTexturePath);
 
 	currentAnim = &idleAnim;
 
@@ -72,6 +75,7 @@ bool NPC::Update()
 
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 	ScaleType scale = app->scaleObj->GetCurrentScale();
+	app->render->DrawTexture(shadowTexture, position.x, position.y -30, NULL, fliped, scale);
 	app->render->DrawTexture(texture, position.x, position.y, &rect, SDL_FLIP_NONE, scale);
 	currentAnim->Update();
 
@@ -102,8 +106,6 @@ bool NPC::CleanUp()
 }
 
 void NPC::OnCollision(PhysBody* physA, PhysBody* physB) {
-
-	// L07 DONE 7: Detect the type of collision
 
 	switch (physB->cType)
 	{

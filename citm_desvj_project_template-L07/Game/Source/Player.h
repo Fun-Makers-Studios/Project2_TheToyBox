@@ -83,6 +83,8 @@ private:
 	//L02: DONE 1: Declare player parameters
 	SDL_Texture* texture = nullptr;
 	const char* texturePath = nullptr;
+	SDL_Texture* shadowTexture = nullptr;
+	const char* shadowTexturePath = nullptr;
 
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 	

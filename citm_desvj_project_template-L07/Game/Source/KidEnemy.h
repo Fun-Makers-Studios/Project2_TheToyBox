@@ -37,14 +37,10 @@ public:
 
 public:
 
-	// The pointer to the current player animation
-	// It will be switched depending on the player's movement direction
 	Animation* currentAnim;
 
-	//Set of animations
 	Animation idleAnim;
-	
-	//Set of SFX
+
 	uint stompSFX = 0;
 	const char* stompSFXPath;
 	uint powerUpSFX = 0;
@@ -60,7 +56,6 @@ public:
 
 private:
 
-	//L02: DONE 1: Declare player parameters
 	SDL_Texture* texture;
 	const char* texturePath;
 

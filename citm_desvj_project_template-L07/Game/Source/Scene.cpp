@@ -52,13 +52,7 @@ bool Scene::Start()
 	popImg_settingsPath = app->configNode.child("title").child("popImage").attribute("settingtexturepath").as_string();
 
 	// Iterate all objects in the scene
-	// Check https://pugixml.org/docs/quickstart.html#access
-	/*for (pugi::xml_node itemNode = app->configNode.child("scene").child("coin"); itemNode; itemNode = itemNode.next_sibling("coin"))
-	{
-		coin = (Coin*)app->entityManager->CreateEntity(EntityType::COIN);
-		coin->parameters = itemNode;
-		coinsList.Add(coin);
-	}*/
+	
 	
 	/*for (pugi::xml_node itemNode = app->configNode.child("scene").child("potionhp"); itemNode; itemNode = itemNode.next_sibling("potionhp"))
 	{
@@ -95,7 +89,7 @@ bool Scene::Start()
 	app->map->Load();
 	
 	// L12 Create walkability map
-	if (app->map->Load()) {
+	/*if (app->map->Load()) {
 		int w, h;
 		uchar* data = NULL;
 
@@ -103,7 +97,7 @@ bool Scene::Start()
 		if (retWalkMap) app->pathfinding->SetMap(w, h, data);
 
 		RELEASE_ARRAY(data);
-	}
+	}*/
 
 	// Play level music
 	app->audio->PlayMusic(musicPath, 1.0f);
@@ -199,8 +193,6 @@ bool Scene::Update(float dt)
 			app->audio->PlayFx(selectSFX);
 		
 	}
-
-
 
 	// Camera movement related to player's movement
 	FixCamera();
@@ -710,14 +702,6 @@ bool Scene::SaveState(pugi::xml_node& data)
 	pugi::xml_node playerPos = data.append_child("playerPosition");
 	playerPos.append_attribute("x") = app->scene->player->pbody->body->GetTransform().p.x;
 	playerPos.append_attribute("y") = app->scene->player->pbody->body->GetTransform().p.y;
-
-	// Save cameraFix parameter
-	pugi::xml_node cameraIsFix = data.append_child("cameraIsFix");
-	cameraIsFix.append_attribute("value") = app->scene->cameraFixX;
-
-	// Save cameraFix2 parameter
-	pugi::xml_node cameraIsFix2 = data.append_child("cameraIsFix2");
-	cameraIsFix2.append_attribute("value") = app->scene->cameraFixY;
 
 	// Save current player number of lives
 	pugi::xml_node playerLives = data.append_child("playerLives");

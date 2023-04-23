@@ -30,7 +30,6 @@ bool KidEnemy::Awake() {
 
 bool KidEnemy::Start() {
 
-	//L02: DONE 1: Initialize Player parameters
 	startPos.x = parameters.attribute("x").as_int();
 	startPos.y = parameters.attribute("y").as_int();
 
@@ -44,15 +43,12 @@ bool KidEnemy::Start() {
 	idleAnim.loop = true;
 	idleAnim.speed = 0.1f;
 
-	//initilize textures
 	texture = app->tex->Load(texturePath);
 
-	//Initialize SFX
-	stompSFXPath = app->configNode.child("scene").child("slimesfx").attribute("stompSFXPath").as_string();		// same as slime
-	powerUpSFXPath = app->configNode.child("scene").child("slimesfx").attribute("powerUpSFXPath").as_string();	// same as slime
+	stompSFXPath = app->configNode.child("scene").child("slimesfx").attribute("stompSFXPath").as_string();		
+	powerUpSFXPath = app->configNode.child("scene").child("slimesfx").attribute("powerUpSFXPath").as_string();	
 	batHitSFXPath = app->configNode.child("scene").child("batsfx").attribute("batHitSFXPath").as_string();
 
-	// Loading the set of SFX, BETTER HERE FOR ENABLE/DISABLE
 	stompSFX = app->audio->LoadFx(stompSFXPath);
 	powerUpSFX = app->audio->LoadFx(powerUpSFXPath);
 	batHitSFX = app->audio->LoadFx(batHitSFXPath);
@@ -63,7 +59,6 @@ bool KidEnemy::Start() {
 	position.x = startPos.x;
 	position.y = startPos.y;
 
-	//Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x, position.y, width/2, bodyType::STATIC, ColliderType::ENEMY);
 
 	pbody->listener = this;
@@ -127,8 +122,6 @@ bool KidEnemy::CleanUp()
 }
 
 void KidEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
-
-	// L07 DONE 7: Detect the type of collision
 
 	switch (physB->cType)
 	{

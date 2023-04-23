@@ -104,6 +104,6 @@ public:
 
 public:
 	List<PartyMember*> party;
-	const char* enemyToFight;
+	const char* enemyToFight = nullptr;
 	uint maxPartyMembers = 3;
 };
