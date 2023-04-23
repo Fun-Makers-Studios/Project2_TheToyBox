@@ -33,18 +33,15 @@ bool Window::Awake(pugi::xml_node& config)
 	else
 	{
 		// Create window
-		// L01: DONE 6: Load all required configurations from config.xml
-		// Tip: get the name of the child and the attribute value
 		Uint32 flags = SDL_WINDOW_SHOWN;
-		fullscreenMode = config.child("fullscreen").attribute("value").as_bool(); // get from config
-		bool borderless = config.child("bordeless").attribute("value").as_bool(); // get from config
-		bool resizable = config.child("resizable").attribute("value").as_bool(); // get from config
-		bool fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool(); // get from config
+		fullscreenMode = config.child("fullscreen").attribute("value").as_bool();
+		bool borderless = config.child("bordeless").attribute("value").as_bool(); 
+		bool resizable = config.child("resizable").attribute("value").as_bool(); 
+		bool fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool();
 
-		width = config.child("resolution").attribute("width").as_int(); //get from config 
-		height = config.child("resolution").attribute("height").as_int();; //get from config 
-		scale = config.child("resolution").attribute("scale").as_int();; //get from config 
-
+		width = config.child("resolution").attribute("width").as_int();
+		height = config.child("resolution").attribute("height").as_int();
+		scale = config.child("resolution").attribute("scale").as_int();
 		if (fullscreenMode == true) flags |= SDL_WINDOW_FULLSCREEN;
 		if (borderless == true) flags |= SDL_WINDOW_BORDERLESS;
 		if (resizable == true) flags |= SDL_WINDOW_RESIZABLE;

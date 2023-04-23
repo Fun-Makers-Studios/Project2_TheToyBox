@@ -124,31 +124,24 @@ void App::AddModule(Module* module, bool activate)
 // Called before render is available
 bool App::Awake()
 {
-	// L13: TODO 3: Measure the amount of ms that takes to execute the Awake and LOG the result
 	timer = Timer();
 
 	bool ret = false;
 
-	// L01: DONE 3: Load config from XML
+	//Load config from XML
 	ret = LoadConfig();
 
 	if (ret == true)
 	{
-		title = configNode.child("app").child("title").child_value(); // L01: DONE 4: Read the title from the config file
-
-		// L14: TODO 1: Read from config file your framerate cap
+		title = configNode.child("app").child("title").child_value();
 		
-			maxFrameDuration = configNode.child("app").child("frcap").attribute("value").as_int();
+		maxFrameDuration = configNode.child("app").child("frcap").attribute("value").as_int();
 	
 		ListItem<Module*>* item;
 		item = modules.start;
 
 		while (item != NULL && ret == true)
 		{
-			// L01: DONE 5: Add a new argument to the Awake method to receive a pointer to an xml node.
-			// If the section with the module name exists in config.xml, fill the pointer with the valid xml_node
-			// that can be used to read all variables for that module.
-			// Send nullptr if the node does not exist in config.xml
 			pugi::xml_node node = configNode.child(item->data->name.GetString());
 			ret = item->data->Awake(node);
 			item = item->next;
@@ -163,7 +156,6 @@ bool App::Awake()
 // Called before the first frame
 bool App::Start()
 {
-	// L13: TODO 3: Measure the amount of ms that takes to execute the App Start() and LOG the result
 	timer.Start();
 	startupTime.Start();
 	lastSecFrameTime.Start();
@@ -216,10 +208,9 @@ bool App::LoadConfig()
 {
 	bool ret = false;
 
-	// L01: DONE 3: Load config.xml file using load_file() method from the xml_document class
+	//Load config.xml file using load_file() method from the xml_document class
 	pugi::xml_parse_result parseResult = configFile.load_file("config.xml");
 
-	// L01: DONE 3: Check result for loading errors
 	if (parseResult) {
 		ret = true;
 		configNode = configFile.child("config");
@@ -241,11 +232,10 @@ void App::PrepareUpdate()
 void App::FinishUpdate()
 {
 	OPTICK_CATEGORY("FinishUpdate", Optick::Category::GameLogic);
-	// L03: DONE 1: This is a good place to call Load / Save methods
+	
 	if (loadGameRequested == true) LoadFromFile();
 	if (saveGameRequested == true) SaveToFile();
 
-	// L13: TODO 4: Now calculate:
 	// Amount of frames since startup
 	frameCount++;
 	// Amount of time since game start (use a low resolution timer)
@@ -262,9 +252,6 @@ void App::FinishUpdate()
 		// Average FPS for the whole game life
 		averageFps = (averageFps + framesPerSecond) / 2;
 	}
-
-	// L14: TODO 2: Use SDL_Delay to make sure you get your capped framerate
-	// L14: TODO 3: Measure accurately the amount of time SDL_Delay() actually waits compared to what was expected
 
 	float delay = float(maxFrameDuration) - dt;
 
@@ -431,9 +418,7 @@ uint App::GetFrameCount()
 	return frameCount;
 }
 
-
-// L02: DONE 1: Implement methods to request load / save and methods 
-// for the real execution of load / save (to be implemented in TODO 5 and 7)
+//----------------------------------------
 void App::LoadGameRequest()
 {
 	// NOTE: We should check if SAVE_STATE_FILENAME actually exist
@@ -448,8 +433,6 @@ void App::SaveGameRequest()
 }
 
 
-// L02: DONE 5: Implement the method LoadFromFile() to actually load a xml file
-// then call all the modules to load themselves
 bool App::LoadFromFile()
 {
 	bool ret = true;

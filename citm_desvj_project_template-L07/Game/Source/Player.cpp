@@ -33,57 +33,8 @@ bool Player::Start() {
 	startPos.y = parameters.attribute("y").as_int();
 
 	texturePath = parameters.attribute("texturepath").as_string();
-
-	width = 32;
-	height = 32;
-
-	idlePlayer.PushBack({ 0, 0, 65, 33 });
-	idlePlayer.PushBack({ 64, 0, 65, 33 });
-	idlePlayer.PushBack({ 128, 0, 65, 33 });
-	idlePlayer.PushBack({ 192, 0, 65, 33 });
-	idlePlayer.PushBack({ 256, 0, 65, 33 });
-	idlePlayer.PushBack({ 319, 0, 65, 33 });
-	idlePlayer.PushBack({ 384, 0, 65, 33 });
-	idlePlayer.PushBack({ 448, 0, 65, 33 });
-	idlePlayer.loop = true;
-	idlePlayer.speed = 0.1f;
-
-	runPlayer.PushBack({ 0, 32, 65, 33 });
-	runPlayer.PushBack({ 64, 32, 65, 33 });
-	runPlayer.PushBack({ 128, 32, 65, 33 });
-	runPlayer.PushBack({ 192, 32, 65, 33 });
-	runPlayer.PushBack({ 256, 32, 65, 33 });
-	runPlayer.PushBack({ 319, 32, 65, 33 });
-	runPlayer.PushBack({ 384, 32, 65, 33 });
-	runPlayer.PushBack({ 448, 32, 65, 33 });
-	runPlayer.loop = true;
-	runPlayer.speed = 0.3f;
-
-	attackPlayer.PushBack({ 0, 128, 65, 33 });
-	attackPlayer.PushBack({ 64, 128, 65, 33 });
-	attackPlayer.PushBack({ 128, 128, 65, 33 });
-	attackPlayer.PushBack({ 192, 128, 65, 33 });
-	attackPlayer.PushBack({ 256, 128, 65, 33 });
-	attackPlayer.PushBack({ 319, 128, 65, 33 });
-	attackPlayer.PushBack({ 384, 128, 65, 33 });
-	attackPlayer.PushBack({ 448, 128, 65, 33 });
-	attackPlayer.loop = false;
-	attackPlayer.speed = 0.3f;
-
-	diePlayer.PushBack({ 0, 192, 65, 33 });
-	diePlayer.PushBack({ 64, 192, 65, 33 });
-	diePlayer.PushBack({ 134, 192, 65, 33 });
-	diePlayer.PushBack({ 197, 192, 65, 33 });
-	diePlayer.PushBack({ 262, 192, 65, 33 });
-	diePlayer.loop = false;
-	diePlayer.speed = 0.1f;
-
-	hitPlayer.PushBack({ 450, 64, 65, 33 });
-	hitPlayer.loop = false;
-	hitPlayer.speed = 0.1f;
-
-	//initilize textures
-	texture = app->tex->Load(texturePath);
+	texture2Path = parameters.attribute("texture2path").as_string();
+	shadowTexturePath = parameters.attribute("shadowtexture").as_string();
 
 	jumpSFXPath = app->configNode.child("player").child("SFXset").attribute("jumpSFXPath").as_string();
 	dieSFXPath = app->configNode.child("player").child("SFXset").attribute("dieSFXPath").as_string();
@@ -93,6 +44,18 @@ bool Player::Start() {
 	levelCompletedSFXPath = app->configNode.child("player").child("SFXset").attribute("levelCompletedSFXPath").as_string();
 	selectSFXPath = app->configNode.child("player").child("SFXset").attribute("selectSFXPath").as_string();
 	shortRangeAttackSFXPath = app->configNode.child("player").child("SFXset").attribute("shortRangeAttackSFXPath").as_string();
+
+	width = 32;
+	height = 64;
+
+	idlePlayer.PushBack({ 0, 0, 32, 64 });
+	idlePlayer.loop = true;
+	idlePlayer.speed = 0.1f;
+
+	//initilize textures
+	texture = app->tex->Load(texturePath);
+	texture2 = app->tex->Load(texture2Path);
+	shadowTexture = app->tex->Load(shadowTexturePath);
 
 	// Loading the set of SFX, BETTER HERE FOR ENABLE/DISABLE
 	jumpSFX = app->audio->LoadFx(jumpSFXPath);
@@ -106,7 +69,8 @@ bool Player::Start() {
 
 	currentAnim = &idlePlayer;
 	dead = false;
-	lives = 3;
+
+	newPos = { 0, 0 };
 
 	//Add physics to the player - initialize physics body
 	pbody = app->physics->CreateCircle(position.x, position.y, width / 3, bodyType::DYNAMIC, ColliderType::PLAYER);
@@ -192,17 +156,36 @@ bool Player::Update()
 			pbody->body->SetLinearVelocity(velocity);
 		}
 
-		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width));
-		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height/1.5));
+		if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+			changeTexture = !changeTexture;
+
+
+
+		
 
 	}
 	else {
 		pbody->body->SetAwake(false);
 	}
 
-	SDL_Rect rect = currentAnim->GetCurrentFrame();
+	//SDL_Rect rect = currentAnim->GetCurrentFrame();
 	ScaleType scaleType = app->scaleObj->GetCurrentScale();
-	app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, scaleType);
+	
+
+	if (changeTexture) {
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - width / 2);
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - height);
+		SDL_Rect rect = currentAnim->GetCurrentFrame();
+		app->render->DrawTexture(shadowTexture, position.x, position.y + 3, NULL, fliped, scaleType);
+		app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, scaleType);
+	}	
+	else {
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x-width/2);
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y-height/3);
+		app->render->DrawTexture(shadowTexture, position.x, position.y-height/2, NULL, fliped, scaleType);
+		app->render->DrawTexture(texture2, position.x, position.y, NULL, fliped, scaleType);
+	}
+	
 	currentAnim->Update();
 
 
@@ -221,6 +204,7 @@ bool Player::CleanUp()
 	texture = nullptr;
 
 	pbody->body->DestroyFixture(pbody->body->GetFixtureList());
+	app->physics->world->DestroyBody(this->pbody->body);
 	delete pbody;
 	pbody = nullptr;
 
@@ -313,30 +297,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
-		/*if (app->scene->item->iType == "life" && lives < 3)
-		{
-			app->audio->PlayFx(pickLifeSFX);
-			lives += 0.5f;
-		}*/
+	
 		break;
 
-	case ColliderType::COIN:
-		LOG("Collision COIN");
-		/*coins++;
-		app->audio->PlayFx(pickCoinSFX);*/
-		LOG("COINS: %d", coins);
-		break;
-	
-	case ColliderType::CHECKPOINT:
-		LOG("Collision CHECKPOINT");
-		/*if (app->scene->checkpointEnabled == false) {
-			app->scene->checkpointEnabled = true;
-			app->SaveGameRequest();
-			app->audio->PlayFx(levelCompletedSFX);
-		}*/
-		//app->fade->FadeToBlack((Module*)app->scene, (Module*)app->titlescreen, 90);
-		break;
-	
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
@@ -347,12 +310,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 void Player::ResetPlayerPos() {
 
-	pbody->body->SetAwake(true);
 	velocity = { 0, 0 };
 	pbody->body->SetTransform(PIXEL_TO_METERS(startPos), 0.0f);
-	app->scene->cameraFixY = false;
-	app->scene->cameraFixX = false;
-	app->render->camera.x = 0;
 	dead = false;
 	
 	LOG("--RESETING PLAYER--");

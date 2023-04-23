@@ -309,6 +309,8 @@ void Physics::DestroyMapColliders() {
 	while (collisionsItem != NULL)
 	{
 		collisionsItem->data->body->DestroyFixture(collisionsItem->data->body->GetFixtureList());
+		RELEASE(collisionsItem->data->listener);
+		world->DestroyBody(collisionsItem->data->body);
 		RELEASE(collisionsItem->data);
 		collisionsItem = collisionsItem->next;
 	}

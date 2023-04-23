@@ -1,4 +1,3 @@
-
 #include "App.h"
 #include "Render.h"
 #include "Textures.h"
@@ -45,7 +44,7 @@ bool Map::Start()
     return ret;
 }
 
-// L12: Create walkability map for pathfinding
+//Create walkability map for pathfinding
 bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 {
     bool ret = false;
@@ -81,7 +80,6 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
                     if (mapData.type == MapTypes::MAPTYPE_ORTHOGONAL && tileId == 696) map[i] = 1;
                     else map[i] = 0;
 
-                   //map[i] = (tileId - tileset->firstgid) > 0 ? 0 : 1;
                 }
                 else {
                     LOG("CreateWalkabilityMap: Invalid tileset found");
@@ -106,24 +104,19 @@ void Map::Draw()
     if(mapLoaded == false)
         return;
 
-    // L05: DONE 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
-
     ListItem<MapLayer*>* mapLayerItem;
     mapLayerItem = mapData.maplayers.start;
 
     while (mapLayerItem != NULL) {
 
-        //L06: DONE 7: use GetProperty method to ask each layer if your “Draw” property is true.
         if (mapLayerItem->data->properties.GetProperty("Draw") != NULL && mapLayerItem->data->properties.GetProperty("Draw")->value) {
 
             for (int x = 0; x < mapLayerItem->data->width; x++)
             {
                 for (int y = 0; y < mapLayerItem->data->height; y++)
                 {
-                    // L05: DONE 9: Complete the draw function
                     int gid = mapLayerItem->data->Get(x, y);
 
-                    //L06: DONE 3: Obtain the tile set using GetTilesetFromTileId
                     TileSet* tileset = GetTilesetFromTileId(gid);
 
                     SDL_Rect r = tileset->GetTileRect(gid);
@@ -143,7 +136,7 @@ void Map::Draw()
     }
 }
 
-// L05: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
+//Translates x,y coordinates from map positions to world positions
 iPoint Map::MapToWorld(int x, int y) const
 {
     iPoint ret;
@@ -154,7 +147,7 @@ iPoint Map::MapToWorld(int x, int y) const
     return ret;
 }
 
-// L08: DONE 3: Add method WorldToMap to obtain  map coordinates from screen coordinates
+//Map coordinates from screen coordinates
 iPoint Map::WorldToMap(int x, int y)
 {
     iPoint ret(0, 0);
@@ -186,7 +179,6 @@ SDL_Rect TileSet::GetTileRect(int gid) const
     SDL_Rect rect = { 0 };
     int relativeIndex = gid - firstgid;
 
-    // L05: DONE 7: Get relative Tile rectangle
     rect.w = tileWidth;
     rect.h = tileHeight;
     rect.x = margin + (tileWidth + spacing) * (relativeIndex % columns);
@@ -196,7 +188,7 @@ SDL_Rect TileSet::GetTileRect(int gid) const
 }
 
 
-// L06: DONE 2: Pick the right Tileset based on a tile id
+//Pick the right Tileset based on a tile id
 TileSet* Map::GetTilesetFromTileId(int gid) const
 {
     ListItem<TileSet*>* item = mapData.tilesets.start;
@@ -220,7 +212,6 @@ bool Map::CleanUp()
 {
     LOG("Unloading map");
 
-    // L04: DONE 2: Make sure you clean up any memory allocated from tilesets/map
 	ListItem<TileSet*>* item;
 	item = mapData.tilesets.start;
 
@@ -232,8 +223,6 @@ bool Map::CleanUp()
 	}
 	mapData.tilesets.Clear();
 
-    // L05: DONE 2: clean up all layer data
-    // Remove all layers
     ListItem<MapLayer*>* layerItem;
     layerItem = mapData.maplayers.start;
 
@@ -293,7 +282,7 @@ bool Map::Load()
         ret = LoadTileSet(mapFileXML);
     }
 
-    // L05: DONE 4: Iterate all layers and load each of them
+    //Iterate all layers and load each of them
     if (ret == true)
     {
         ret = LoadAllLayers(mapFileXML.child("map"));
@@ -344,7 +333,7 @@ bool Map::Load()
     return ret;
 }
 
-// L04: DONE 3: Implement LoadMap to load the map properties
+//Implement LoadMap to load the map properties
 bool Map::LoadMap(pugi::xml_node mapFile)
 {
     bool ret = true;
@@ -364,7 +353,7 @@ bool Map::LoadMap(pugi::xml_node mapFile)
         mapData.tileWidth = map.attribute("tilewidth").as_int();
         mapData.type = MAPTYPE_UNKNOWN;
 
-        // L08: DONE 2: Read the prientation of the map
+        //Read the prientation of the map
         mapData.type = MAPTYPE_UNKNOWN;
         if (strcmp(map.attribute("orientation").as_string(), "isometric") == 0)
         {
@@ -379,7 +368,7 @@ bool Map::LoadMap(pugi::xml_node mapFile)
     return ret;
 }
 
-// L04: DONE 4: Implement the LoadTileSet function to load the tileset properties
+//Function to load the tileset properties
 bool Map::LoadTileSet(pugi::xml_node mapFile){
 
     bool ret = true; 
@@ -389,7 +378,7 @@ bool Map::LoadTileSet(pugi::xml_node mapFile){
     {
         TileSet* set = new TileSet();
 
-        // L04: DONE 4: Load Tileset attributes
+        //Load Tileset attributes
         set->name = tileset.attribute("name").as_string();
         set->firstgid = tileset.attribute("firstgid").as_int();
         set->margin = tileset.attribute("margin").as_int();
@@ -399,7 +388,7 @@ bool Map::LoadTileSet(pugi::xml_node mapFile){
         set->columns = tileset.attribute("columns").as_int();
         set->tilecount = tileset.attribute("tilecount").as_int();
 
-        // L04: DONE 4: Load Tileset image
+        //Load Tileset image
         SString tmp("%s%s", mapFolder.GetString(), tileset.child("image").attribute("source").as_string());
         set->texture = app->tex->Load(tmp.GetString());
 
@@ -409,7 +398,7 @@ bool Map::LoadTileSet(pugi::xml_node mapFile){
     return ret;
 }
 
-// L05: DONE 3: Implement a function that loads a single layer layer
+//Function that loads a single layer layer
 bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
     bool ret = true;
@@ -420,7 +409,7 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
     layer->width = node.attribute("width").as_int();
     layer->height = node.attribute("height").as_int();
 
-    //L06: DONE 6 Call Load Propoerties
+    //Call Load Propoerties
     LoadProperties(node, layer->properties);
 
     //Reserve the memory for the data 
@@ -439,7 +428,7 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
     return ret;
 }
 
-// L05: DONE 4: Iterate all layers and load each of them
+//Iterate all layers and load each of them
 bool Map::LoadAllLayers(pugi::xml_node mapNode) {
     bool ret = true;
 
@@ -465,7 +454,7 @@ bool Map::LoadObject(pugi::xml_node& node, Object* object)
     object->x = node.attribute("x").as_int();
     object->y = node.attribute("y").as_int();
 
-    //L06: DONE 6 Call Load Propoerties
+    //Call Load Propoerties
     SString polygonString;
     polygonString = node.child("polygon").attribute("points").as_string();
 
@@ -481,22 +470,15 @@ bool Map::LoadObject(pugi::xml_node& node, Object* object)
     object->chainPoints = new int[arrLenght];
     memset(object->chainPoints, 0, arrLenght);
 
-
-    //char* temp = strtok(polygonString.GetCharString(), " ");
     char* temp;
     int arr[100];
     int count = 0;
     int j = 0;
     bool negative = false;
-    /*SString clearString;
-    while (temp != NULL)
-    {
-        clearString += temp;
-    }*/
+
     LOG("number %s", polygonString.GetString());
     for (uint i = 0; i < polygonString.Length(); i++, j++)
     {
-        //LOG("number %s", polygonString.GetTerm(i));
         if ((polygonString.GetTerm(i) != ' ') && (polygonString.GetTerm(i) != ','))
         {
             if (polygonString.GetTerm(i) == '-')
@@ -569,7 +551,7 @@ bool Map::LoadObjectGroup(pugi::xml_node& node, ObjectGroup* objectGroup)
         Object* mapObject = new Object();
         ret = LoadObject(objectNode, mapObject);
 
-        //add the object to the map
+        //Add the object to the map
         objectGroup->objects.Add(mapObject);
     }
 
@@ -586,14 +568,14 @@ bool Map::LoadAllObjectGroups(pugi::xml_node mapNode)
         ObjectGroup* mapObjectGroup = new ObjectGroup();
         ret = LoadObjectGroup(objectGroupNode, mapObjectGroup);
 
-        //add the objectGroup to the map
+        //Add the objectGroup to the map
         mapData.mapObjectGroups.Add(mapObjectGroup);
     }
 
     return ret;
 }
 
-// L06: DONE 6: Load a group of properties from a node and fill a list with it
+//Load a group of properties from a node and fill a list with it
 bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
     bool ret = false;
@@ -610,7 +592,7 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
     return ret;
 }
 
-// L06: DONE 7: Ask for the value of a custom property
+//Ask for the value of a custom property
 Properties::Property* Properties::GetProperty(const char* name)
 {
     ListItem<Property*>* item = list.start;
@@ -799,16 +781,16 @@ bool Map::CreateColliders()
 
                 switch (mapObjectItem->data->id) {
                 case 40:
-                    c1->cType = ColliderType::NONCAMERAFIX;
+                    
                     break;
                 case 41:
-                    c1->cType = ColliderType::CAMERAFIX;
+                    
                     break;
                 case 42:
-                    c1->cType = ColliderType::CAMERAFIX_2;
+                    
                     break;
                 case 43:
-                    c1->cType = ColliderType::NONCAMERAFIX_2;
+                    
                     break;
 
                 default: break;

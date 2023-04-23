@@ -42,11 +42,7 @@ bool Input::Awake(pugi::xml_node& config)
 	for (int i = 0; i < num_controllers; ++i)
 		if (SDL_IsGameController(i))
 			sdl_controllers[i] = SDL_GameControllerOpen(i);
-	// Here we don't really have access to the controller
-	// SDL_GameController* is obfuscated, it is to know they are there.
-	// We will pass data to our own array of controllers
-
-
+	
 	return ret;
 }
 

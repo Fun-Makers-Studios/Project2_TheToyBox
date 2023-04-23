@@ -94,7 +94,7 @@ bool SceneFight::Start()
 			textureRect = { 128, 64, 64, 96 };
 
 		//battle position
-		int offsetX = 750;
+		int offsetX = 850;
 		int offsetY = 250;
 
 		iPoint position;

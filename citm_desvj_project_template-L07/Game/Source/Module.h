@@ -58,7 +58,7 @@ public:
 		return true;
 	}
 
-	// L03: DONE 2: Create new virtual methods to LoadState / SaveState
+	// Virtual methods to LoadState / SaveState
 	virtual bool LoadState(pugi::xml_node&)
 	{
 		return true;
@@ -69,7 +69,6 @@ public:
 		return true;
 	}
 
-	// L07 TODO 2: Add Physics Module
 	virtual void OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
 
 	}

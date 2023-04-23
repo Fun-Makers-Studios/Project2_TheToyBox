@@ -44,10 +44,11 @@
 	<scene>
 		<music musicPath="Assets/Audio/Music/town.ogg" />
 		<imgPause imgPausePath="Assets/UI/PauseMenu/PauseMenuTemplate.png"/>
+		<partyMenuImg partyMenuImgPath="Assets/UI/PartyMenu/PartyMenu.png"/>
+		<zeroImg zeroImgPath="Assets/UI/PartyMenu/Characters/ZeroPic.png"/>
+		<sophieImg sophieImgPath="Assets/UI/PartyMenu/Characters/SophiePic.png"/>
 		<scenesfx selectSFXPath="Assets/Audio/Fx/select.wav" />
-		<slimesfx stompSFXPath="Assets/Audio/Fx/stomp.wav" powerUpSFXPath="Assets/Audio/Fx/powerUp.wav" slimeHitSFXPath="Assets/Audio/Fx/slime_hit.wav" />
-		<batsfx batHitSFXPath="Assets/Audio/Fx/bat_hit.wav"/>
-		<player x="224" y="530" texturepath="Assets/Textures/PlayerJones.png"/>
+		<player x="224" y="530" texturepath="Assets/Textures/characters.png" texture2path="Assets/Textures/Character.png" shadowtexture="Assets/Textures/shadow.png"/>
 		<coin x="704" y="300" texturepath="Assets/Textures/bitcoin.png"/>
 		<coin x="1312" y="250" texturepath="Assets/Textures/bitcoin.png"/>
 		<coin x="2192" y="430" texturepath="Assets/Textures/bitcoin.png"/>
@@ -155,26 +156,26 @@
 
 	<npcs>
 		<town>
-			<npc x="928" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="3" dialogueid="0"/>
-			<npc x="736" y="352" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="1"/>
-			<npc x="1216" y="448" texturepath="Assets/Textures/SceneGame/NPCs.png" id="3" character="4" dialogueid="2"/>
-			<npc x="672" y="960" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="1" dialogueid="-1"/>
-			<npc x="1184" y="832" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="5" dialogueid="3"/>
-			<npc x="192" y="512" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="0" dialogueid="-1"/>
-			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="4"/>
+			<npc x="928" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="1" character="3" dialogueid="0"/>
+			<npc x="736" y="352" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="2" character="2" dialogueid="1"/>
+			<npc x="1216" y="448" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="3" character="4" dialogueid="2"/>
+			<npc x="672" y="960" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="1" dialogueid="-1"/>
+			<npc x="1184" y="832" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="5" dialogueid="3"/>
+			<npc x="192" y="512" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="0" dialogueid="-1"/>
+			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="6" dialogueid="4"/>
 		</town>
 		<tavern>
-			<npc x="448" y="416" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="5" dialogueid="5"/>
-			<npc x="608" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="1" dialogueid="-1"/>
+			<npc x="448" y="416" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="1" character="5" dialogueid="5"/>
+			<npc x="608" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="2" character="1" dialogueid="-1"/>
 		</tavern>
 		<inn>
-			<npc x="1120" y="320" texturepath="Assets/Textures/SceneGame/NPCs.png" id="2" character="2" dialogueid="-1"/>
+			<npc x="1120" y="320" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="2" character="2" dialogueid="-1"/>
 		</inn>
 		<housebasement>
-			<npc x="864" y="320" texturepath="Assets/Textures/SceneGame/NPCs.png" id="1" character="2" dialogueid="-1"/>
+			<npc x="864" y="320" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="1" character="2" dialogueid="-1"/>
 		</housebasement>
 		<housefloor>
-			<npc x="736" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" id="4" character="6" dialogueid="5"/>
+			<npc x="736" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="6" dialogueid="5"/>
 		</housefloor>
 	</npcs>
 	
