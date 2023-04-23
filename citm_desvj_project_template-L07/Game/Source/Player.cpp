@@ -33,6 +33,7 @@ bool Player::Start() {
 	startPos.y = parameters.attribute("y").as_int();
 
 	texturePath = parameters.attribute("texturepath").as_string();
+	texture2Path = parameters.attribute("texture2path").as_string();
 	shadowTexturePath = parameters.attribute("shadowtexture").as_string();
 
 	jumpSFXPath = app->configNode.child("player").child("SFXset").attribute("jumpSFXPath").as_string();
@@ -53,6 +54,7 @@ bool Player::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
+	texture2 = app->tex->Load(texture2Path);
 	shadowTexture = app->tex->Load(shadowTexturePath);
 
 	// Loading the set of SFX, BETTER HERE FOR ENABLE/DISABLE
@@ -154,18 +156,36 @@ bool Player::Update()
 			pbody->body->SetLinearVelocity(velocity);
 		}
 
-		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - width/2);
-		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - height);
+		if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+			changeTexture = !changeTexture;
+
+
+
+		
 
 	}
 	else {
 		pbody->body->SetAwake(false);
 	}
 
-	SDL_Rect rect = currentAnim->GetCurrentFrame();
+	//SDL_Rect rect = currentAnim->GetCurrentFrame();
 	ScaleType scaleType = app->scaleObj->GetCurrentScale();
-	app->render->DrawTexture(shadowTexture, position.x, position.y+3, NULL, fliped, scaleType);
-	app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, scaleType);
+	
+
+	if (changeTexture) {
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - width / 2);
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - height);
+		SDL_Rect rect = currentAnim->GetCurrentFrame();
+		app->render->DrawTexture(shadowTexture, position.x, position.y + 3, NULL, fliped, scaleType);
+		app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, scaleType);
+	}	
+	else {
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x-width/2);
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y-height/3);
+		app->render->DrawTexture(shadowTexture, position.x, position.y-height/2, NULL, fliped, scaleType);
+		app->render->DrawTexture(texture2, position.x, position.y, NULL, fliped, scaleType);
+	}
+	
 	currentAnim->Update();
 
 

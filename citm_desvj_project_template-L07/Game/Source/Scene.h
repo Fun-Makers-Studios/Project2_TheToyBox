@@ -108,12 +108,16 @@ private:
 	SDL_Texture* img_pause = nullptr;
 	SDL_Rect pauseRect;
 
-	const char* popImg_settingsPath;
+	const char* popImg_settingsPath = nullptr;
 	SDL_Texture* popImg_settings = nullptr;
 
+	const char* partyMenuImgPath = nullptr;
 	SDL_Texture* partyMenuImg = nullptr;
-
+	
+	const char* zeroImgPath = nullptr;
 	SDL_Texture* zeroImg = nullptr;
+	
+	const char* sophieImgPath = nullptr;
 	SDL_Texture* sophieImg = nullptr;
 
 	iPoint startPosition;

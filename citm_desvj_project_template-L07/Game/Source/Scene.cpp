@@ -50,6 +50,9 @@ bool Scene::Start()
 	selectSFXPath = app->configNode.child("scene").child("scenesfx").attribute("selectSFXPath").as_string();
 	imgPausePath = app->configNode.child("scene").child("imgPause").attribute("imgPausePath").as_string();
 	popImg_settingsPath = app->configNode.child("title").child("popImage").attribute("settingtexturepath").as_string();
+	partyMenuImgPath = app->configNode.child("scene").child("partyMenuImg").attribute("partyMenuImgPath").as_string();
+	zeroImgPath = app->configNode.child("scene").child("zeroImg").attribute("zeroImgPath").as_string();
+	sophieImgPath = app->configNode.child("scene").child("sophieImg").attribute("sophieImgPath").as_string();
 
 	// Iterate all objects in the scene
 	
@@ -61,11 +64,6 @@ bool Scene::Start()
 		livesCollectedList.Add(item);
 	}*/
 
-	//Instantiate the player using the entity manager
-	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
-	player->parameters = app->configNode.child("scene").child("player");
-
-	
 	for (pugi::xml_node itemNode = app->configNode.child("scene").child("enemykid"); itemNode; itemNode = itemNode.next_sibling("enemykid"))
 	{
 		kid = (KidEnemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
@@ -84,6 +82,11 @@ bool Scene::Start()
 	//Load First Map NPCs
 	mapName = "town";
 	LoadNPC(mapName);
+
+	//Instantiate and init the player using the entity manager
+	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
+	player->parameters = app->configNode.child("scene").child("player");
+	player->Start();
 
 	// L03: DONE: Load map
 	app->map->Load();
@@ -108,9 +111,9 @@ bool Scene::Start()
 	img_pause = app->tex->Load(imgPausePath);
 	pauseRect = {35, 69, 310, 555};
 	popImg_settings = app->tex->Load(popImg_settingsPath);
-	partyMenuImg = app->tex->Load("Assets/Textures/SceneGame/PartyMenu/PartyMenu.png");
-	zeroImg = app->tex->Load("Assets/Textures/SceneGame/PartyMenu/Characters/ZeroPic.png");
-	sophieImg = app->tex->Load("Assets/Textures/SceneGame/PartyMenu/Characters/SophiePic.png");
+	partyMenuImg = app->tex->Load(partyMenuImgPath);
+	zeroImg = app->tex->Load(zeroImgPath);
+	sophieImg = app->tex->Load(sophieImgPath);
 
 
 	// L15: TODO 2: Declare a GUI Button and create it using the GuiManager
@@ -368,7 +371,7 @@ bool Scene::CleanUp()
 	app->entityManager->Disable();
 	app->pathfinding->Disable();
 	app->physics->Disable();
-	//app->map->Disable();
+	app->map->Disable();
 	
 	//app->guiManager->guiControlsList.Clear();
 	gamePaused = false;
@@ -568,7 +571,7 @@ void Scene::Checkpoint()
 
 void Scene::ResetScene()
 {
-	app->audio->PlayMusic("Assets/Audio/Music/song1.ogg", 1.0f);
+	app->audio->PlayMusic(musicPath, 1.0f);
 
 	pugi::xml_document gameStateFile;
 	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
@@ -576,7 +579,6 @@ void Scene::ResetScene()
 	if (checkpointEnabled == false || result == NULL) {
 		checkpointEnabled = false;
 		player->ResetPlayerPos();
-		player->lives = 3;
 	}
 	else if (checkpointEnabled == true && result != NULL) {
 		app->LoadGameRequest();
@@ -654,40 +656,9 @@ bool Scene::LoadState(pugi::xml_node& data)
 	app->scene->player->pbody->body->SetTransform(playerPos, 0);
 
 	//Load previous saved player number of lives
-	app->scene->player->lives = data.child("playerLives").attribute("playerLives").as_float();
-
-	app->scene->player->coins = data.child("coins").attribute("coins").as_int();
-	ListItem<Coin*>* coinsCollected;
-	coinsCollected = coinsList.start;
-	int countCoins = app->scene->player->coins;
-	while(countCoins >= 0 && coinsCollected != NULL){
-		
-		if (coinsCollected->data->isPicked == false) {
-			coinsCollected->data->isPicked = true;
-			countCoins--;
-		}
-			
-
-		coinsCollected = coinsCollected->next;
-	}
-	
-	itemLivesCount = data.child("itemLives").attribute("itemLives").as_int();
-	ListItem<Item*>* livesCollected;
-	livesCollected = livesCollectedList.start;
-	int countLives = itemLivesCount;
-	while(countLives >= 0 && livesCollected != NULL){
-		
-		if (livesCollected->data->isPicked == false) {
-			livesCollected->data->isPicked = true;
-			countLives--;
-		}
-			
-
-		livesCollected = livesCollected->next;
-	}
-
-	//Load previous saved player number of lives
 	checkpointEnabled = data.child("checkpointEnabled").attribute("checkpointEnabled").as_bool();
+
+	mapName = data.child("mapName").attribute("mapName").as_string();
 
 	// Load previous saved bat position
 	b2Vec2 kidPos = { data.child("kidPosition").attribute("x").as_float(), data.child("kidPosition").attribute("y").as_float() };
@@ -702,14 +673,6 @@ bool Scene::SaveState(pugi::xml_node& data)
 	pugi::xml_node playerPos = data.append_child("playerPosition");
 	playerPos.append_attribute("x") = app->scene->player->pbody->body->GetTransform().p.x;
 	playerPos.append_attribute("y") = app->scene->player->pbody->body->GetTransform().p.y;
-
-	// Save current player number of lives
-	pugi::xml_node playerLives = data.append_child("playerLives");
-	playerLives.append_attribute("playerLives") = app->scene->player->lives;
-	
-	// Save current player number of coins
-	pugi::xml_node playerCoins = data.append_child("coins");
-	playerCoins.append_attribute("coins") = app->scene->player->coins;
 	
 	// Save current player number of coins
 	pugi::xml_node itemLives = data.append_child("itemLives");
@@ -726,6 +689,9 @@ bool Scene::SaveState(pugi::xml_node& data)
 	
 	pugi::xml_node checkPoint = data.append_child("checkPoint");
 	checkPoint.append_attribute("checkPoint") = app->scene->checkpointEnabled;
+	
+	pugi::xml_node actualMapName = data.append_child("mapName");
+	actualMapName.append_attribute("mapName") = mapName.GetString();
 
 	return true;
 }
