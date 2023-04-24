@@ -183,7 +183,7 @@ bool Player::Update()
 	else {
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x-width/2);
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y-height/3);
-		app->render->DrawTexture(shadowTexture, position.x, position.y-height/2, NULL, fliped, scaleType);
+		app->render->DrawTexture(shadowTexture, position.x, position.y-height/2.25, NULL, fliped, scaleType);
 		app->render->DrawTexture(texture2, position.x, position.y, NULL, fliped, scaleType);
 	}
 	
