@@ -67,12 +67,6 @@
     <ClCompile Include="Source\Player.cpp">
       <Filter>Game\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SlimeEnemy.cpp">
-      <Filter>Game\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Coin.cpp">
-      <Filter>Game\Items</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Item.cpp">
       <Filter>Game\Items</Filter>
     </ClCompile>
@@ -204,12 +198,6 @@
     <ClInclude Include="Source\Player.h">
       <Filter>Game\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SlimeEnemy.h">
-      <Filter>Game\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Coin.h">
-      <Filter>Game\Items</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Item.h">
       <Filter>Game\Items</Filter>
     </ClInclude>
@@ -255,6 +243,9 @@
     <ClInclude Include="Source\DialogueManager.h">
       <Filter>Game\Dialogue</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Scale.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -290,10 +281,30 @@
     <Filter Include="Game\Dialogue">
       <UniqueIdentifier>{47e95652-630f-4f43-846c-0fdde62538f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Maps">
+      <UniqueIdentifier>{ed4ccb52-1f5d-433e-aacb-8b711f66caa8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Output\config.xml">
       <Filter>Core</Filter>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Output\Assets\Maps\map_town.tmx">
+      <Filter>Game\Maps</Filter>
+    </None>
+    <None Include="..\Output\Assets\Maps\housebasement.tmx">
+      <Filter>Game\Maps</Filter>
+    </None>
+    <None Include="..\Output\Assets\Maps\housefloor.tmx">
+      <Filter>Game\Maps</Filter>
+    </None>
+    <None Include="..\Output\Assets\Maps\inn.tmx">
+      <Filter>Game\Maps</Filter>
+    </None>
+    <None Include="..\Output\Assets\Maps\tavern.tmx">
+      <Filter>Game\Maps</Filter>
+    </None>
   </ItemGroup>
 </Project>

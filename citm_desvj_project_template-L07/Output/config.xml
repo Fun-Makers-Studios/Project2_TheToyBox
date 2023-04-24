@@ -23,9 +23,9 @@
 	</audio>
 
 	<ui>
-		<font1 texturepath="Assets/Textures/font1.png"/>
-		<font2 texturepath="Assets/Textures/font2.png"/>
-		<font2Red texturepath="Assets/Textures/font2_red.png"/>
+		<font1 texturepath="Assets/Textures/UI/Fonts/font1.png"/>
+		<font2 texturepath="Assets/Textures/UI/Fonts/font2.png"/>
+		<font2Red texturepath="Assets/Textures/UI/Fonts/font2_red.png"/>
 	</ui>
 
 	<logo>
@@ -43,16 +43,12 @@
 
 	<scene>
 		<music musicPath="Assets/Audio/Music/town.ogg" />
-		<imgPause imgPausePath="Assets/UI/PauseMenu/PauseMenuTemplate.png"/>
-		<partyMenuImg partyMenuImgPath="Assets/UI/PartyMenu/PartyMenu.png"/>
-		<zeroImg zeroImgPath="Assets/UI/PartyMenu/Characters/ZeroPic.png"/>
-		<sophieImg sophieImgPath="Assets/UI/PartyMenu/Characters/SophiePic.png"/>
+		<imgPause imgPausePath="Assets/Textures/UI/PauseMenu/PauseMenuTemplate.png"/>
+		<partyMenuImg partyMenuImgPath="Assets/Textures/UI/PartyMenu/PartyMenu.png"/>
+		<zeroImg zeroImgPath="Assets/Textures/UI/PartyMenu/Characters/ZeroPic.png"/>
+		<sophieImg sophieImgPath="Assets/Textures/UI/PartyMenu/Characters/SophiePic.png"/>
 		<scenesfx selectSFXPath="Assets/Audio/Fx/select.wav" />
 		<player x="224" y="530" texturepath="Assets/Textures/characters.png" texture2path="Assets/Textures/Character.png" shadowtexture="Assets/Textures/shadow.png"/>
-		<coin x="704" y="300" texturepath="Assets/Textures/bitcoin.png"/>
-		<coin x="1312" y="250" texturepath="Assets/Textures/bitcoin.png"/>
-		<coin x="2192" y="430" texturepath="Assets/Textures/bitcoin.png"/>
-		<coin x="2928" y="150" texturepath="Assets/Textures/bitcoin.png"/>
 		<potionhp x="230" y="400" iType ="potionhp" texturepath="Assets/Textures/Items/potion_hp.png"/>
 		<potionhp x="1550" y="250" iType ="potionhp" texturepath="Assets/Textures/Items/potion_hp.png"/>
 		<potionmana x="3000" y="170" iType ="potionmana" texturepath="Assets/Textures/Items/potion_mana.png"/>
@@ -92,11 +88,11 @@
 	</map>
 
 	<gui>
-		<guiButtons buttonsTexPath="Assets/UI/ButtonsSprites/Buttons.png"/>
-		<guiButtons smallButtonTexPath="Assets/UI/ButtonsSprites/Buttons.png"/>
+		<guiButtons buttonsTexPath="Assets/Textures/UI/ButtonsSprites/Buttons.png"/>
+		<guiButtons smallButtonTexPath="Assets/Textures/UI/ButtonsSprites/Buttons.png"/>
 	</gui>
 
-	<dialoguemanager dialoguetext="Assets/UI/Dialog/Dialog.png" font="Assets/Fonts/DialogFont.png" lookuptable="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz:?!.,     " rows="6">
+	<dialoguemanager dialoguetext="Assets/Textures/UI/Dialog/Dialog.png" font="Assets/Textures/UI/Fonts/DialogFont.png" lookuptable="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz:?!.,     " rows="6">
 		<dialogue id ="0">
 			<node id="0" text="Greetings traveler.">
 				<option id="0" nextNodeId="1" text=""/>

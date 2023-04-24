@@ -55,8 +55,6 @@ bool Scene::Start()
 	sophieImgPath = app->configNode.child("scene").child("sophieImg").attribute("sophieImgPath").as_string();
 
 	// Iterate all objects in the scene
-	
-	
 	/*for (pugi::xml_node itemNode = app->configNode.child("scene").child("potionhp"); itemNode; itemNode = itemNode.next_sibling("potionhp"))
 	{
 		item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
@@ -91,7 +89,7 @@ bool Scene::Start()
 	// L03: DONE: Load map
 	app->map->Load();
 	
-	// L12 Create walkability map
+	//Create walkability map for pathfinding
 	/*if (app->map->Load()) {
 		int w, h;
 		uchar* data = NULL;
@@ -115,8 +113,6 @@ bool Scene::Start()
 	zeroImg = app->tex->Load(zeroImgPath);
 	sophieImg = app->tex->Load(sophieImgPath);
 
-
-	// L15: TODO 2: Declare a GUI Button and create it using the GuiManager
 	uint w, h;
 	app->win->GetWindowSize(w, h);
 	resumeButton14 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "resume", 7, { 515, 295, 252, 76 }, this);

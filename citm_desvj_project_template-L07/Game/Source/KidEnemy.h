@@ -37,27 +37,27 @@ public:
 
 public:
 
-	Animation* currentAnim;
+	Animation* currentAnim = nullptr;
 
 	Animation idleAnim;
 
 	uint stompSFX = 0;
-	const char* stompSFXPath;
+	const char* stompSFXPath = nullptr;
 	uint powerUpSFX = 0;
-	const char* powerUpSFXPath;
+	const char* powerUpSFXPath = nullptr;
 	uint batHitSFX = 0;
-	const char* batHitSFXPath;
+	const char* batHitSFXPath = nullptr;
 
 	bool onGround = false;
 	bool dead = false;
 	bool onCollision = false;
 
-	PhysBody* pbody;
+	PhysBody* pbody = nullptr;
 
 private:
 
-	SDL_Texture* texture;
-	const char* texturePath;
+	SDL_Texture* texture = nullptr;
+	const char* texturePath = nullptr;
 
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 

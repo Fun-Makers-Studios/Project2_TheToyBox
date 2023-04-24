@@ -5,8 +5,6 @@
 #include "Player.h"
 #include "NPC.h"
 #include "Item.h"
-#include "Coin.h"
-#include "SlimeEnemy.h"
 #include "KidEnemy.h"
 #include "GuiButton.h"
 #include "DialogueManager.h"
@@ -68,7 +66,6 @@ public:
 	KidEnemy* kid = nullptr;
 
 	Item* item = nullptr;
-	Coin* coin = nullptr;
 
 	// Set of SFX
 	uint selectSFX = 0;
@@ -91,8 +88,6 @@ public:
 	bool settingSceneMenu = false;
 
 	bool continueGame = false;
-
-	List<Coin*> coinsList;
 
 	List<Item*> livesCollectedList;
 	int itemLivesCount = 0;

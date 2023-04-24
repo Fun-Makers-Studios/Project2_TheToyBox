@@ -43,8 +43,6 @@ bool EndingScreen::Start()
 {
 	LOG("--STARTS ENDING SCENE--");
 
-	app->map->Disable();
-
 	/*Initialize*/
 	imgPath = app->configNode.child("ending").child("backgroundimage").attribute("texturepath").as_string();
 	musicPath = app->configNode.child("ending").child("music").attribute("musicPath").as_string();
@@ -52,8 +50,6 @@ bool EndingScreen::Start()
 	
 	/*Load*/
 	img = app->tex->Load(imgPath);
-	/*app->scene->player->dead = false;
-	app->scene->player->ResetPlayerPos();*/
 	startSFX = app->audio->LoadFx(startSFXPath);
 	app->audio->PlayMusic(musicPath);
 
@@ -97,9 +93,20 @@ bool EndingScreen::PostUpdate()
 bool EndingScreen::CleanUp()
 {
 	LOG("Freeing ENDING SCENE");
+
 	if (img != nullptr) {
 		app->tex->UnLoad(img);
 	}
+	if (musicPath != nullptr) {
+		delete[] musicPath;
+	}
+	if (startSFXPath != nullptr) {
+		delete[] startSFXPath;
+	}
+	if (imgPath != nullptr) {
+		delete[] imgPath;
+	}
+
 
 	return true;
 }

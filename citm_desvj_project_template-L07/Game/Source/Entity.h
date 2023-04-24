@@ -15,7 +15,6 @@ enum class EntityType
 	ENEMY,
 	FLYING_ENEMY,
 	ITEM,
-	COIN,
 	UNKNOWN
 };
 

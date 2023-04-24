@@ -346,7 +346,6 @@ void Debug::DrawEntities()
 		case EntityType::ENEMY:			color = Red;		break;
 		case EntityType::FLYING_ENEMY:	color = Red;		break;
 		case EntityType::ITEM:			color = Green;		break;
-		case EntityType::COIN:			color = Yellow;		break;
 		default:						color = White;		break;
 		}
 

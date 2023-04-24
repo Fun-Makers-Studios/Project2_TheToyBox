@@ -10,6 +10,7 @@
 #include "Point.h"
 #include "Map.h"
 #include "ModuleFadeToBlack.h"
+#include "EntityManager.h"
 
 
 Player::Player() : Entity(EntityType::PLAYER)
@@ -207,6 +208,7 @@ bool Player::CleanUp()
 	app->physics->world->DestroyBody(this->pbody->body);
 	delete pbody;
 	pbody = nullptr;
+	app->entityManager->DestroyEntity(this);
 
 	return true;
 }
