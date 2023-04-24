@@ -47,9 +47,9 @@ bool Player::Start() {
 	shortRangeAttackSFXPath = app->configNode.child("player").child("SFXset").attribute("shortRangeAttackSFXPath").as_string();
 
 	width = 32;
-	height = 64;
+	height = 32;
 
-	idlePlayer.PushBack({ 0, 0, 32, 64 });
+	idlePlayer.PushBack({ 65, 32, 32, 32 });
 	idlePlayer.loop = true;
 	idlePlayer.speed = 0.1f;
 
@@ -174,16 +174,16 @@ bool Player::Update()
 	
 
 	if (changeTexture) {
-		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - width / 2);
-		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - height);
+		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - width / 2.25);
+		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - height/2);
 		SDL_Rect rect = currentAnim->GetCurrentFrame();
-		app->render->DrawTexture(shadowTexture, position.x, position.y + 3, NULL, fliped, scaleType);
+		app->render->DrawTexture(shadowTexture, position.x, position.y-height/1.15, NULL, fliped, scaleType);
 		app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, scaleType);
 	}	
 	else {
 		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x-width/2);
 		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y-height/3);
-		app->render->DrawTexture(shadowTexture, position.x, position.y-height/2.25, NULL, fliped, scaleType);
+		app->render->DrawTexture(shadowTexture, position.x, position.y-height/1.1, NULL, fliped, scaleType);
 		app->render->DrawTexture(texture2, position.x, position.y, NULL, fliped, scaleType);
 	}
 	
