@@ -1,0 +1,10 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(499,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  App.cpp
+D:\Arnau\UPC CITM\p2\Project2_TheToyBox\citm_desvj_project_template-L07\Game\Source\Animation.h(84,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+D:\Arnau\UPC CITM\p2\Project2_TheToyBox\citm_desvj_project_template-L07\Game\Source\Animation.h(86,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+D:\Arnau\UPC CITM\p2\Project2_TheToyBox\citm_desvj_project_template-L07\Game\Source\App.cpp(248,43): warning C4244: '=': conversion from 'uint32' to 'float', possible loss of data
+D:\Arnau\UPC CITM\p2\Project2_TheToyBox\citm_desvj_project_template-L07\Game\Source\App.cpp(270,13): warning C4244: 'argument': conversion from 'float' to 'Uint32', possible loss of data
+D:\Arnau\UPC CITM\p2\Project2_TheToyBox\citm_desvj_project_template-L07\Game\Source\App.cpp(272,8): warning C4244: '=': conversion from 'uint32' to 'float', possible loss of data
+D:\Arnau\UPC CITM\p2\Project2_TheToyBox\citm_desvj_project_template-L07\Game\Source\App.cpp(425,9): warning C4244: 'return': conversion from 'uint64' to 'uint', possible loss of data
+  Game.vcxproj -> D:\Arnau\UPC CITM\p2\Project2_TheToyBox\citm_desvj_project_template-L07\Build\Debug\Game.exe
+          1 archivo(s) copiado(s).
