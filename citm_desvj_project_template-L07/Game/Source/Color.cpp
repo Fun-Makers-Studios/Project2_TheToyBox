@@ -10,3 +10,4 @@ Color Pink		=	Color(255, 0, 255);
 Color Black		=	Color(0, 0, 0);
 Color White		=	Color(255, 255, 255);
 Color Grey		=	Color(128, 128, 128);
+Color Beige		=	Color(216, 187, 143);

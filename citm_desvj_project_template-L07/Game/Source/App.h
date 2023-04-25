@@ -35,6 +35,7 @@ class Animation;
 class PartyManager;
 class GuiManager;
 class Debug;
+class ParticleSystemManager;
 
 class Scale;
 
@@ -125,6 +126,7 @@ public:
 	PathFinding* pathfinding;
 	GuiManager* guiManager;
 	Debug* debug;
+	ParticleSystemManager* particlesManager;
 
 	Scale* scaleObj;
 

@@ -7,6 +7,7 @@
 #include "Item.h"
 #include "KidEnemy.h"
 #include "GuiButton.h"
+#include "ParticleSystem.h"
 #include "DialogueManager.h"
 
 struct SDL_Texture;
@@ -143,6 +144,10 @@ private:
 
 	GuiButton* firstPMemberButton27 = nullptr;
 	GuiButton* secondPMemberButton28 = nullptr;
+
+	ParticleSystem* mouseFirePS;
+
+	iPoint mousePos;
 
 	bool exitGame = false;
 };

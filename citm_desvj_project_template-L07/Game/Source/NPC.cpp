@@ -95,7 +95,6 @@ bool NPC::PostUpdate()
 bool NPC::CleanUp()
 {
 	app->tex->UnLoad(texture);
-	texture = nullptr;
 
 	pbody->body->DestroyFixture(pbody->body->GetFixtureList());
 	app->physics->world->DestroyBody(this->pbody->body);

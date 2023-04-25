@@ -49,10 +49,10 @@ public:
 	uint font2_id = -1;
 	uint font2Red_id = -1;
 
-	SDL_Texture* livesTex;
+	SDL_Texture* livesTex = nullptr;
 	const char* livesTexPath;
 	
-	SDL_Texture* coinsTex;
+	SDL_Texture* coinsTex = nullptr;
 	const char* coinsTexPath;
 
 private:

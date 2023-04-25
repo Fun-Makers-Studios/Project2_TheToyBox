@@ -106,6 +106,15 @@
     <ClCompile Include="Source\PartyManager.cpp">
       <Filter>Core\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ParticleSystemManager.cpp">
+      <Filter>Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Particle.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ParticleSystem.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -245,6 +254,15 @@
     </ClInclude>
     <ClInclude Include="Source\PartyManager.h">
       <Filter>Core\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleSystemManager.h">
+      <Filter>Core\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Particle.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ParticleSystem.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

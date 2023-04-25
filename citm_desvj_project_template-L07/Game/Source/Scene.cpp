@@ -15,6 +15,7 @@
 #include "GuiManager.h"
 #include "TitleScreen.h"
 #include "PartyManager.h"
+#include "ParticleSystemManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -203,6 +204,21 @@ bool Scene::Update(float dt)
 		app->ui->BlitDT();
 		app->ui->BlitTimeSinceStart();
 		app->ui->BlitFrameCount();
+	}
+
+	if (mouseFirePS != nullptr) {
+		app->input->GetMousePosition(mousePos.x, mousePos.y);
+		mouseFirePS->SetPosition(mousePos.x, mousePos.y);
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
+		if (mouseFirePS == nullptr) {
+			mouseFirePS = app->particlesManager->CreateParticleSystem(mousePos, Blueprint::CONSTANT_FIRE);
+		}
+		else {
+			mouseFirePS->TurnOff();
+			mouseFirePS = nullptr;
+		}
 	}
 	
 	return true;

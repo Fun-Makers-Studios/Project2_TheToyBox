@@ -115,6 +115,9 @@
     <ClCompile Include="Source\ModuleController.cpp" />
     <ClCompile Include="Source\ModuleFadeToBlack.cpp" />
     <ClCompile Include="Source\NPC.cpp" />
+    <ClCompile Include="Source\Particle.cpp" />
+    <ClCompile Include="Source\ParticleSystem.cpp" />
+    <ClCompile Include="Source\ParticleSystemManager.cpp" />
     <ClCompile Include="Source\PartyManager.cpp" />
     <ClCompile Include="Source\Pathfinding.cpp" />
     <ClCompile Include="Source\PerfTimer.cpp" />
@@ -141,6 +144,9 @@
     <ClInclude Include="Source\GuiManager.h" />
     <ClInclude Include="Source\ModuleController.h" />
     <ClInclude Include="Source\NPC.h" />
+    <ClInclude Include="Source\Particle.h" />
+    <ClInclude Include="Source\ParticleSystem.h" />
+    <ClInclude Include="Source\ParticleSystemManager.h" />
     <ClInclude Include="Source\PartyManager.h" />
     <ClInclude Include="Source\PerfTimer.h" />
     <ClInclude Include="Source\Scale.h" />

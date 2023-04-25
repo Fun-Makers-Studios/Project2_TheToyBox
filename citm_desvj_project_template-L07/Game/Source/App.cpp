@@ -19,6 +19,7 @@
 #include "ModuleFadeToBlack.h"
 
 #include "UI.h"
+#include "ParticleSystemManager.h"
 #include "GuiManager.h"
 #include "GuiButton.h"
 #include "GuiControl.h"
@@ -56,6 +57,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	physics = new Physics();
 	pathfinding = new PathFinding();
 	ui = new UI();
+	particlesManager = new ParticleSystemManager();
 	entityManager = new EntityManager();
 	partyManager = new PartyManager();
 	map = new Map();
@@ -84,6 +86,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(physics, false);
 	AddModule(pathfinding, false);
 	AddModule(ui, true);
+	AddModule(particlesManager, true);
 	AddModule(entityManager, false);
 	AddModule(partyManager, true);
 	AddModule(map, false);

@@ -149,6 +149,57 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 	return ret;
 }
 
+bool Render::DrawParticleAlpha(SDL_Texture* texture, int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 alpha, float scale, const SDL_Rect* section, ScaleType scaleType, float speed, double angle, int pivotX, int pivotY) const
+{
+	bool ret = true;
+	uint windowScale = app->scaleObj->ScaleTypeToInt(scaleType);
+
+	SDL_Rect rect;
+	rect.x = (int)(-camera.x * speed) + x * windowScale;
+	rect.y = (int)(-camera.y * speed) + y * windowScale;
+
+	if (section != NULL)
+	{
+		rect.w = section->w;
+		rect.h = section->h;
+	}
+	else
+	{
+		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+	}
+
+	rect.w *= windowScale;
+	rect.h *= windowScale;
+
+	/*rect.w *= scale;
+	rect.h *= scale;*/
+
+	/*rect.x -= rect.w * 0.5f;
+	rect.y -= rect.h * 0.5f;*/
+
+	SDL_Point* p = NULL;
+	SDL_Point pivot;
+
+	if (pivotX != INT_MAX && pivotY != INT_MAX)
+	{
+		pivot.x = pivotX;
+		pivot.y = pivotY;
+		p = &pivot;
+
+	}
+
+	SDL_SetTextureColorMod(texture, r, g, b);
+	SDL_SetTextureAlphaMod(texture, alpha);
+
+	if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
+	{
+		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+		ret = false;
+	}
+
+	return ret;
+}
+
 bool Render::DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const
 {
 	bool ret = true;
