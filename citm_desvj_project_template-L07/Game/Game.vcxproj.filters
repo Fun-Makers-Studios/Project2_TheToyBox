@@ -19,9 +19,6 @@
     <ClCompile Include="Source\TitleScreen.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\EntityManager.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Map.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -94,9 +91,6 @@
     <ClCompile Include="Source\SceneFight.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\PartyManager.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Color.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -105,6 +99,12 @@
     </ClCompile>
     <ClCompile Include="Source\DialogueManager.cpp">
       <Filter>Game\Dialogue</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EntityManager.cpp">
+      <Filter>Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PartyManager.cpp">
+      <Filter>Core\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +146,6 @@
     </ClInclude>
     <ClInclude Include="Source\TitleScreen.h">
       <Filter>Game\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\EntityManager.h">
-      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\Map.h">
       <Filter>Core</Filter>
@@ -231,9 +228,6 @@
     <ClInclude Include="Source\SceneFight.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PartyManager.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Color.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -245,6 +239,12 @@
     </ClInclude>
     <ClInclude Include="Source\Scale.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EntityManager.h">
+      <Filter>Core\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PartyManager.h">
+      <Filter>Core\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -283,6 +283,9 @@
     </Filter>
     <Filter Include="Game\Maps">
       <UniqueIdentifier>{ed4ccb52-1f5d-433e-aacb-8b711f66caa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Managers">
+      <UniqueIdentifier>{957f2650-3838-4d07-93d1-3f9517b0e576}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -60,5 +60,5 @@ bool PartyManager::Start()
 
 void PartyManager::AddMemberToParty(PartyMember* member)
 {
-	party.Add(member);
+	party.Add(member);	 
 }

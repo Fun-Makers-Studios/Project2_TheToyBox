@@ -108,14 +108,17 @@ bool KidEnemy::PostUpdate() {
 
 bool KidEnemy::CleanUp()
 {
-
-	app->tex->UnLoad(texture);
-	texture = nullptr;
-
+	if (texture != nullptr)
+	{
+		app->tex->UnLoad(texture);
+		texture = nullptr;
+	}
+	
 	pbody->body->DestroyFixture(pbody->body->GetFixtureList());
 	app->physics->world->DestroyBody(this->pbody->body);
 	delete pbody;
 	pbody = nullptr;
+
 	app->entityManager->DestroyEntity(this);
 
 
