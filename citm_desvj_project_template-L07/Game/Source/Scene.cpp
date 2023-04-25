@@ -391,8 +391,8 @@ bool Scene::CleanUp()
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 
-	app->guiManager->guiControlsList.Clear();
-
+	delete player;
+	player = nullptr;
 
 	return true;
 }
