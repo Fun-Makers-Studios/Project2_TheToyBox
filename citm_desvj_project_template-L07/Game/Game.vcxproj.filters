@@ -70,9 +70,6 @@
     <ClCompile Include="Source\Item.cpp">
       <Filter>Game\Items</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GuiButton.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GuiManager.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
@@ -105,6 +102,15 @@
     </ClCompile>
     <ClCompile Include="Source\DialogueManager.cpp">
       <Filter>Game\Dialogue</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiButton.cpp">
+      <Filter>GUI\GUI Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiCheckBox.cpp">
+      <Filter>GUI\GUI Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiSlider.cpp">
+      <Filter>GUI\GUI Controls</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -201,9 +207,6 @@
     <ClInclude Include="Source\Item.h">
       <Filter>Game\Items</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GuiButton.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GuiControl.h">
       <Filter>GUI</Filter>
     </ClInclude>
@@ -246,6 +249,15 @@
     <ClInclude Include="Source\Scale.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GuiButton.h">
+      <Filter>GUI\GUI Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiCheckBox.h">
+      <Filter>GUI\GUI Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiSlider.h">
+      <Filter>GUI\GUI Controls</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -283,6 +295,9 @@
     </Filter>
     <Filter Include="Game\Maps">
       <UniqueIdentifier>{ed4ccb52-1f5d-433e-aacb-8b711f66caa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\GUI Controls">
+      <UniqueIdentifier>{a6aa238f-c758-4b73-a1e5-6cbbd8a5122c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
