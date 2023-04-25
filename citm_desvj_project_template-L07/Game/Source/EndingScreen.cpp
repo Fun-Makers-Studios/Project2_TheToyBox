@@ -97,16 +97,6 @@ bool EndingScreen::CleanUp()
 	if (img != nullptr) {
 		app->tex->UnLoad(img);
 	}
-	if (musicPath != nullptr) {
-		delete[] musicPath;
-	}
-	if (startSFXPath != nullptr) {
-		delete[] startSFXPath;
-	}
-	if (imgPath != nullptr) {
-		delete[] imgPath;
-	}
-
 
 	return true;
 }

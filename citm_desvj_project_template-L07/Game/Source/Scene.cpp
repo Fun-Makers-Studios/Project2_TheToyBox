@@ -88,17 +88,6 @@ bool Scene::Start()
 
 	// L03: DONE: Load map
 	app->map->Load();
-	
-	//Create walkability map for pathfinding
-	/*if (app->map->Load()) {
-		int w, h;
-		uchar* data = NULL;
-
-		bool retWalkMap = app->map->CreateWalkabilityMap(w, h, &data);
-		if (retWalkMap) app->pathfinding->SetMap(w, h, data);
-
-		RELEASE_ARRAY(data);
-	}*/
 
 	// Play level music
 	app->audio->PlayMusic(musicPath, 1.0f);
@@ -378,41 +367,32 @@ bool Scene::CleanUp()
 
 	Mix_ResumeMusic();
 
-	app->tex->UnLoad(img_pause);
-	app->tex->UnLoad(popImg_settings);
-	app->tex->UnLoad(partyMenuImg);
-	app->tex->UnLoad(zeroImg);
-	app->tex->UnLoad(sophieImg);
+	if (img_pause != nullptr)
+	{
+		app->tex->UnLoad(img_pause);
+	}
+	if (popImg_settings != nullptr)
+	{
+		app->tex->UnLoad(popImg_settings);
+	}
+	if (partyMenuImg != nullptr)
+	{
+		app->tex->UnLoad(partyMenuImg);
+	}
+	if (zeroImg != nullptr)
+	{
+		app->tex->UnLoad(zeroImg);
+	}
+	if (sophieImg != nullptr)
+	{
+		app->tex->UnLoad(sophieImg);
+	}
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 
-	if(resumeButton14 != nullptr)
-		resumeButton14->state = GuiControlState::DISABLED;
-	if(backToTitleButton15 != nullptr)
-		backToTitleButton15->state = GuiControlState::DISABLED;
-	if(settingsButton16 != nullptr)
-		settingsButton16->state = GuiControlState::DISABLED;
-	if(closeButton17 != nullptr)
-		closeButton17->state = GuiControlState::DISABLED;
+	app->guiManager->guiControlsList.Clear();
 
-	if (decreaseMusicButton21 != nullptr)
-		decreaseMusicButton21->state = GuiControlState::DISABLED;
-	if (increaseMusicButton22 != nullptr)
-		increaseMusicButton22->state = GuiControlState::DISABLED;
-	if (decreaseSFXButton23 != nullptr)
-		decreaseSFXButton23->state = GuiControlState::DISABLED;
-	if (increaseSFXButton24 != nullptr)
-		increaseSFXButton24->state = GuiControlState::DISABLED;
-	if (fullscreenButton25 != nullptr)
-		fullscreenButton25->state = GuiControlState::DISABLED;
-	if (vsyncButton26 != nullptr)
-		vsyncButton26->state = GuiControlState::DISABLED;
-
-	if (firstPMemberButton27 != nullptr)
-		firstPMemberButton27->state = GuiControlState::DISABLED;
-	if (secondPMemberButton28 != nullptr)
-		secondPMemberButton28->state = GuiControlState::DISABLED;
 
 	return true;
 }

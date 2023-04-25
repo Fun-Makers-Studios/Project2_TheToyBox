@@ -94,4 +94,4 @@ void DialogueManager::Unload() {
 void DialogueManager::CleanUp() {
 	app->fonts->UnLoad(dialogueFontId);
 	app->tex->UnLoad(dialoguetext);
-}
+}	
