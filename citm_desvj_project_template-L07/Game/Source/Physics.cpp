@@ -96,6 +96,7 @@ PhysBody* Physics::CreateRectangle(int x, int y, int width, int height, bodyType
 	pbody->width = width * 0.5f;
 	pbody->height = height * 0.5f;
 	pbody->cType = ctype;
+	pbody->shape = RECTANGLE;
 
 	return pbody;
 }
@@ -127,6 +128,7 @@ PhysBody* Physics::CreateCircle(int x, int y, int radious, bodyType type, Collid
 	pbody->width = radious * 0.5f;
 	pbody->height = radious * 0.5f;
 	pbody->cType = ctype;
+	pbody->shape = CIRCLE;
 
 	return pbody;
 }
@@ -434,4 +436,121 @@ b2WeldJoint* Physics::CreateWeldJoint(PhysBody* A, b2Vec2 anchorA, PhysBody* B, 
 	weldJointDef.referenceAngle = 0;
 
 	return (b2WeldJoint*)world->CreateJoint(&weldJointDef);
+}
+
+
+void Physics::collision_solver(PhysBody* element, PhysBody* element_to_check) {
+	//We do not have shapetype so a ve com ho canvio
+	
+	b2Vec2 c1 = element->body->GetPosition();
+	b2Vec2 c2 = element_to_check->body->GetPosition();
+
+	
+	if (element->GetShape() == ShapeType::CIRCLE) {
+		
+		int radius = element->width * 0.5;
+
+		if (((c2.y + (element_to_check->height / 2)) < (c1.y + radius)) && ((abs((c1.x) - ((c2.x) + ((element_to_check->width) / 2))) < ((element_to_check->width) / 2)) && (abs((c1.x + radius) - ((c2.x) + ((element_to_check->width) / 2))) < ((element_to_check->width) / 2)))) {
+			// TP element to ground surface
+			c1.y = c2.y + element_to_check->height + radius;
+
+			//// Elastic bounce with ground
+			//element->data->velocity.y = -element->data->velocity.y;
+
+			//// FUYM non-elasticity
+			//element->data->velocity.x *= element->data->coef_friction;
+			//element->data->velocity.y *= element->data->coef_restitution;
+		}
+		else if (((c2.y + (element_to_check->height / 2)) >= (c1.y + radius)) && ((abs((c1.x) - ((c2.x) + ((element_to_check->width) / 2))) < ((element_to_check->width) / 2)) && (abs((c1.x + radius) - ((c2.x) + ((element_to_check->width) / 2))) < ((element_to_check->width) / 2)))) {
+			// TP element to ground bottom
+			c1.y = c2.y - radius;
+		}
+		else if (((c2.x + (element_to_check->width / 2)) < (c1.x + radius)) && ((abs((c1.y) - ((c2.y) + ((element_to_check->height) / 2))) < ((element_to_check->height) / 2)) && (abs((c1.y + radius) - ((c2.y) + ((element_to_check->height) / 2))) < ((element_to_check->height) / 2)))) {
+			// TP element to ground left
+			c1.x = c2.x + element_to_check->width + radius;
+
+			//// Elastic bounce with ground
+			//element->data->velocity.x = -element->data->velocity.x;
+			//
+			//// FUYM non-elasticity
+			//element->data->velocity.y *= element->data->coef_friction;
+		}
+		else if (((c2.x + (element_to_check->width / 2)) >= (c1.x + radius)) && ((abs((c1.y) - ((c2.y) + ((element_to_check->height) / 2))) < ((element_to_check->height) / 2)) && (abs((c1.y + radius) - ((c2.y) + ((element_to_check->height) / 2))) < ((element_to_check->height) / 2)))) {
+			// TP element to ground right
+			c1.x = c2.x - radius;
+
+			//// Elastic bounce with ground
+			//element->data->velocity.x = -element->data->velocity.x;
+			//
+			//// FUYM non-elasticity
+			//element->data->velocity.y *= element->data->coef_friction;
+		}
+		else if ((c2.y + (element_to_check->height / 2)) < (c1.y + radius)) {
+			// TP element to ground surface
+			c1.y = c2.y + element_to_check->height + radius;
+
+			//// Elastic bounce with ground
+			//element->data->velocity.y = -element->data->velocity.y;
+			//
+			//// FUYM non-elasticity
+			//element->data->velocity.x *= element->data->coef_friction;
+			//element->data->velocity.y *= element->data->coef_restitution;
+		}
+		else if ((c2.y + (element_to_check->height / 2)) >= (c1.y + radius)) {
+			// TP element to ground bottom
+			c1.y = c2.y - radius;
+		}
+	}
+	else if (element->GetShape() == ShapeType::RECTANGLE) {
+		if (((c2.y + (element_to_check->height / 2)) < (c1.y + (element->height / 2))) && ((abs((c1.x) - ((c2.x) + ((element_to_check->width) / 2))) < ((element_to_check->width) / 2)) && (abs(((c1.x) + (element->width)) - ((c2.x) + ((element_to_check->width) / 2))) < ((element_to_check->width) / 2)))) {
+			// TP element to ground surface
+			c1.y = c2.y + element_to_check->height;
+
+			//// Elastic bounce with ground
+			//element->data->velocity.y = -element->data->velocity.y;
+			//
+			//// FUYM non-elasticity
+			//element->data->velocity.x *= element->data->coef_friction;
+			//element->data->velocity.y *= element->data->coef_restitution;
+		}
+		else if (((c2.y + (element_to_check->height / 2)) >= (c1.y + (element->height / 2))) && ((abs((c1.x) - ((c2.x) + ((element_to_check->width) / 2))) < ((element_to_check->width) / 2)) && (abs(((c1.x) + (element->width)) - ((c2.x) + ((element_to_check->width) / 2))) < ((element_to_check->width) / 2)))) {
+			// TP element to ground bottom
+			c1.y = c2.y - element->height;
+		}
+		else if (((c2.x + (element_to_check->width / 2)) < (c1.x + (element->width / 2))) && ((abs((c1.y) - ((c2.y) + ((element_to_check->height) / 2))) < ((element_to_check->height) / 2)) && (abs(((c1.y) + (element->height)) - ((c2.y) + ((element_to_check->height) / 2))) < ((element_to_check->height) / 2)))) {
+			// TP element to ground left
+			c1.x = c2.x + element_to_check->width;
+
+			//// Elastic bounce with ground
+			//element->data->velocity.x = -element->data->velocity.x;
+			//
+			//// FUYM non-elasticity
+			//element->data->velocity.y *= element->data->coef_friction;
+		}
+		else if (((c2.x + (element_to_check->width / 2)) >= (c1.x + (element->width / 2))) && ((abs((c1.y) - ((c2.y) + ((element_to_check->height) / 2))) < ((element_to_check->height) / 2)) && (abs(((c1.y) + (element->height)) - ((c2.y) + ((element_to_check->height) / 2))) < ((element_to_check->height) / 2)))) {
+			// TP element to ground right
+			c1.x = c2.x - element->width;
+
+			//// Elastic bounce with ground
+			//element->data->velocity.x = -element->data->velocity.x;
+			//
+			//// FUYM non-elasticity
+			//element->data->velocity.y *= element->data->coef_friction;
+		}
+		else if ((c2.y + (element_to_check->height / 2)) < (c1.y + (element->height / 2))) {
+			// TP element to ground surface
+			c1.y = c2.y + element_to_check->height;
+
+			//// Elastic bounce with ground
+			//element->data->velocity.y = -element->data->velocity.y;
+			//
+			//// FUYM non-elasticity
+			//element->data->velocity.x *= element->data->coef_friction;
+			//element->data->velocity.y *= element->data->coef_restitution;
+		}
+		else if ((c2.y + (element_to_check->height / 2)) >= (c1.y + (element->height / 2))) {
+			// TP element to ground bottom
+			c1.y = c2.y - element->height;
+		}
+	}
 }

@@ -26,6 +26,11 @@ enum bodyType {
 	KINEMATIC
 };
 
+enum ShapeType {
+	CIRCLE,
+	RECTANGLE
+};
+
 enum class ColliderType {
 	PLAYER,
 	NPC,
@@ -69,12 +74,16 @@ public:
 	float GetRotation() const;
 	bool Contains(int x, int y) const;
 	int RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const;
+	ShapeType GetShape() {
+		return shape;
+	}
 
 public:
 	int width, height;
 	b2Body* body;
 	Entity* listener;
 	ColliderType cType;
+	ShapeType shape;
 	MapZone mapZone;
 };
 
@@ -102,7 +111,9 @@ public:
 	b2RevoluteJoint* CreateRevoluteJoint(PhysBody* A, b2Vec2 anchorA, PhysBody* B, b2Vec2 anchorB, float angle, bool collideConnected, bool enableLimit);
 	b2PrismaticJoint* CreatePrismaticJoint(PhysBody* A, b2Vec2 anchorA, PhysBody* B, b2Vec2 anchorB, b2Vec2 axys, float maxHeight, bool collideConnected, bool enableLimit);
 	b2WeldJoint* CreateWeldJoint(PhysBody* A, b2Vec2 anchorA, PhysBody* B, b2Vec2 anchorB, float angle, bool collideConnected, bool enableLimit);
-
+	
+	//Collision Solver
+	void collision_solver(PhysBody* element, PhysBody* element_to_check);
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
 
