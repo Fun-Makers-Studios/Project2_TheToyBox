@@ -187,7 +187,7 @@ bool Scene::Update(float dt)
 	FixCamera();
 
 	// Draw map
-	app->map->Draw();
+	//app->map->Draw();
 
 	Checkpoint();
 		
@@ -206,14 +206,16 @@ bool Scene::Update(float dt)
 		app->ui->BlitFrameCount();
 	}
 
-	if (mouseFirePS != nullptr) {
-		app->input->GetMousePosition(mousePos.x, mousePos.y);
-		mouseFirePS->SetPosition(mousePos.x, mousePos.y);
+	if (app->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN) {
+		iPoint startPosition = iPoint{ 200, 300 };
+		ParticleSystem* ps = app->particlesManager->CreateParticleSystem(player->position, FIRE);
+		iPoint endPosition = iPoint{ 600, 300 };
+		ps->SetObjective(endPosition.x, endPosition.y);
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN) {
 		if (mouseFirePS == nullptr) {
-			mouseFirePS = app->particlesManager->CreateParticleSystem(mousePos, Blueprint::CONSTANT_FIRE);
+			mouseFirePS = app->particlesManager->CreateParticleSystem(player->position, Blueprint::CONSTANT_FIRE);
 		}
 		else {
 			mouseFirePS->TurnOff();

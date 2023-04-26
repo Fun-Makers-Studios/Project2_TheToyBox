@@ -149,7 +149,7 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 	return ret;
 }
 
-bool Render::DrawParticleAlpha(SDL_Texture* texture, int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 alpha, float scale, const SDL_Rect* section, ScaleType scaleType, float speed, double angle, int pivotX, int pivotY) const
+bool Render::DrawParticleAlpha(SDL_Texture* texture, int x, int y, Uint8 r, Uint8 g, Uint8 b, Uint8 alpha, float scale, ScaleType scaleType, const SDL_Rect* section, float speed, double angle, int pivotX, int pivotY) const
 {
 	bool ret = true;
 	uint windowScale = app->scaleObj->ScaleTypeToInt(scaleType);
