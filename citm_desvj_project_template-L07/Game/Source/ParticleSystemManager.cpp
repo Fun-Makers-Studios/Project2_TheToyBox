@@ -51,8 +51,11 @@ bool ParticleSystemManager::PreUpdate()
 
 bool ParticleSystemManager::Update(float dt)
 {
+	//Particles calculated in seconds
+	float newDt = dt / 1000;
+
 	for (ListItem<ParticleSystem*>* item = particleSystems.start; item != NULL; item = item->next) {
-		bool isAlive = item->data->Update(dt);
+		bool isAlive = item->data->Update(newDt);
 		if (!isAlive) {
 			ParticleSystem* PSToDelete = item->data;
 			TakeParticlesFromPS(item->data);
@@ -119,8 +122,8 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(iPoint initialPositi
 		PS->SetTexture(alphaTextures[SMOKE_SHADED]);
 		PS->spawnRate = 0.3f;
 		PS->isConstant = true;
-		PS->initialColor.Set(150, 150, 150, 255);
-		PS->objectiveColor.Set(0, 0, 0, 0);
+		PS->initialColor = Beige;
+		PS->objectiveColor.SetAlpha(Beige, 0);
 		PS->particleLifespan = 10;
 		PS->shootingAcceleration = fPoint{ 0.0f, 0.5f };
 		PS->randomSpawnPositionRangeMin = iPoint{ -20, 0 };
@@ -146,6 +149,23 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(iPoint initialPositi
 		PS->initialScale = 6.0f;
 		PS->objectiveScale = 1.0f;
 		break;
+
+	case SAND:
+		GiveParticlesToPS(PS, 50);
+		PS->SetTexture(alphaTextures[SMOKE_SHADED]);
+		PS->spawnRate = 0.3f;
+		PS->isConstant = true;
+		PS->initialColor = Beige;
+		PS->objectiveColor.SetAlpha(Beige, 0);
+		PS->particleLifespan = .75;
+		PS->shootingAcceleration = fPoint{ 0.0f, 0.5f };
+		PS->randomSpawnPositionRangeMin = iPoint{ -20, 0 };
+		PS->randomSpawnPositionRangeMax = iPoint{ 20, 0 };
+		PS->randomShootingVelocityRangeMin = iPoint{ 2, 0 };
+		PS->randomShootingVelocityRangeMax = iPoint{ 10, 0 };
+
+		break;
+
 	case NONE:
 		break;
 	default:

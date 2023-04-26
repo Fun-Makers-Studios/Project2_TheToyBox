@@ -171,11 +171,11 @@ bool Render::DrawParticleAlpha(SDL_Texture* texture, int x, int y, Uint8 r, Uint
 	rect.w *= windowScale;
 	rect.h *= windowScale;
 
-	/*rect.w *= scale;
-	rect.h *= scale;*/
+	rect.w *= scale;
+	rect.h *= scale;
 
-	/*rect.x -= rect.w * 0.5f;
-	rect.y -= rect.h * 0.5f;*/
+	rect.x -= rect.w * 0.5f;
+	rect.y -= rect.h * 0.5f;
 
 	SDL_Point* p = NULL;
 	SDL_Point pivot;

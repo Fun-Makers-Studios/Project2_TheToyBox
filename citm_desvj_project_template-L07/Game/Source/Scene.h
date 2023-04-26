@@ -145,7 +145,7 @@ private:
 	GuiButton* firstPMemberButton27 = nullptr;
 	GuiButton* secondPMemberButton28 = nullptr;
 
-	ParticleSystem* mouseFirePS;
+	ParticleSystem* smokePS;
 
 	iPoint mousePos;
 

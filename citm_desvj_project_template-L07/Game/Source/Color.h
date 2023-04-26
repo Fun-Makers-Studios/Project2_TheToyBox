@@ -4,25 +4,33 @@
 
 struct Color
 {
-	uint r, g, b, a;
+	uchar r, g, b, a;
 
 	Color() : r(0), g(0), b(0), a(255)
 	{}
 
-	Color(float r, float g, float b, float a = 255) : r(r), g(g), b(b), a(a)
+	Color(uchar r, uchar g, uchar b, uchar a = 255) : r(r), g(g), b(b), a(a)
 	{}
 
-	void Set(float r, float g, float b, float a = 255)
+	void Set(uchar r, uchar g, uchar b, uchar a = 255)
 	{
 		this->r = r;
 		this->g = g;
 		this->b = b;
 		this->a = a;
 	}
-
-	float* operator & ()
+	
+	void SetAlpha(Color colorcito, uchar a)
 	{
-		return (float*)this;
+		this->r = colorcito.r;
+		this->g = colorcito.g;
+		this->b = colorcito.b;
+		this->a = a;
+	}
+
+	uchar* operator & ()
+	{
+		return (uchar*)this;
 	}
 };
 
@@ -36,3 +44,4 @@ extern Color Pink;
 extern Color Black;
 extern Color White;
 extern Color Grey;
+extern Color Beige;

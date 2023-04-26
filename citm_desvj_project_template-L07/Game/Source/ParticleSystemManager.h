@@ -13,6 +13,7 @@ enum Blueprint {
 	FIRE,
 	SMOKE,
 	EXPLOSION,
+	SAND,
 	NONE
 };
 

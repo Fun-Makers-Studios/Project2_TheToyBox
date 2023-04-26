@@ -10,7 +10,7 @@
 	<TitleScreen />
 	<EndingScreen />
 	<scene>
-		<playerPosition x="6.44000053" y="16.0025005" />
+		<playerPosition x="5.80000114" y="17.2024994" />
 		<itemLives itemLives="true" />
 		<checkpointEnabled checkpointEnabled="true" />
 		<kidPosition x="5.46875" y="10.9375" />
@@ -21,12 +21,13 @@
 	<:anonymous />
 	<pathfinding />
 	<UI_Module />
+	<psmanager />
 	<entitymanager />
 	<:anonymous />
 	<map />
 	<guiManager />
 	<:anonymous />
 	<renderer>
-		<camera x="0" y="660" />
+		<camera x="0" y="736" />
 	</renderer>
 </save_state>
