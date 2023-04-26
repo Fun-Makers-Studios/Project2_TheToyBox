@@ -148,6 +148,18 @@
 				<option id="0" nextNodeId="-1" text=""/>
 			</node>
 		</dialogue>
+		<dialogue id ="6">
+			<node id="0" text="Hello, hello! Do you wanna save?.">
+				<option id="0" nextNodeId="1" text="Yes in your mum ass."/>
+				<option id="1" nextNodeId="2" text="No, im not a pussy."/>
+			</node>
+			<node id="1" text="WOWOWOW! Relax my friend, here you have.">
+				<option id="0" nextNodeId="-1" text="Bye fucking asshole."/>
+			</node>
+			<node id="2" text="Dammnnn that is how things work here. Yeah!">
+				<option id="0" nextNodeId="-1" text="Shut up old man."/>
+			</node>
+		</dialogue>
 	</dialoguemanager>
 
 
@@ -160,8 +172,8 @@
 			<npc x="1184" y="832" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="5" dialogueid="3"/>
 			<npc x="192" y="512" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="0" dialogueid="-1"/>
 			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="6" dialogueid="4"/>
-			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="6" dialogueid="4" />
-			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="6" dialogueid="4" />
+			<npc x="415" y="666" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="7" dialogueid="6" name="Mage"/>
+			<npc x="1285" y="340" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="7" dialogueid="6" name="Mage"/>
 		</town>
 		<tavern>
 			<npc x="448" y="416" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="1" character="5" dialogueid="5"/>
