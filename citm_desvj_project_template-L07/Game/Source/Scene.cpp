@@ -376,7 +376,7 @@ bool Scene::CleanUp()
 	app->physics->Disable();
 	app->map->Disable();
 	
-	//app->guiManager->guiControlsList.Clear();
+	app->guiManager->guiControlsList.Clear();
 	gamePaused = false;
 	pauseMenu = false;
 	partyMenu = false;

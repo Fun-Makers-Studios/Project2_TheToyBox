@@ -41,6 +41,7 @@ bool UI::Start()
 	font1Path = app->configNode.child("ui").child("font1").attribute("texturepath").as_string();
 	font2Path = app->configNode.child("ui").child("font2").attribute("texturepath").as_string();
 	font2_RedPath = app->configNode.child("ui").child("font2Red").attribute("texturepath").as_string();
+	font3Path = app->configNode.child("ui").child("font3").attribute("texturepath").as_string();
 	livesTexPath = app->configNode.child("scene").child("life").attribute("texturepath").as_string();
 	coinsTexPath = app->configNode.child("scene").child("coin").attribute("texturepath").as_string();
 
@@ -53,6 +54,9 @@ bool UI::Start()
 	
 	char lookupTableFont2Red[] = { "! %&'()*+,-./0123456789:;<=>abcdefghijklmnopqrstuvwxyz" };
 	font2Red_id = app->fonts->Load(font2_RedPath, lookupTableFont2Red, 1);
+
+	char lookupTableFont3[] = { "abcdefghijklmnopqrstuvwxyz 0123456789.,;:$#'! /?%&()@ -+=      " };
+	font3_id = app->fonts->Load(font3Path, lookupTableFont3, 7);
 
 	livesTex = app->tex->Load(livesTexPath);
 	coinsTex = app->tex->Load(coinsTexPath);
@@ -85,6 +89,8 @@ bool UI::CleanUp()
 
 	app->fonts->UnLoad(font1_id);
 	app->fonts->UnLoad(font2_id);
+	app->fonts->UnLoad(font2Red_id);
+	app->fonts->UnLoad(font3_id);
 	app->tex->UnLoad(livesTex);
 	app->tex->UnLoad(coinsTex);
 

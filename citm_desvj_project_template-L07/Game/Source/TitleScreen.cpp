@@ -250,8 +250,6 @@ bool TitleScreen::CleanUp()
 {
 	LOG("Freeing TITLE SCENE");
 
-	//app->guiManager->guiControlsList.Clear();
-
 	if (img != nullptr && popImg_settings != nullptr && popImg_credits != nullptr) {
 		app->tex->UnLoad(img);
 		app->tex->UnLoad(popImg_settings);

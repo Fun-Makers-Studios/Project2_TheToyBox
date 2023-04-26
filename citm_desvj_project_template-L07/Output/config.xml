@@ -26,6 +26,7 @@
 		<font1 texturepath="Assets/Textures/UI/Fonts/font1.png"/>
 		<font2 texturepath="Assets/Textures/UI/Fonts/font2.png"/>
 		<font2Red texturepath="Assets/Textures/UI/Fonts/font2_red.png"/>
+		<font3 texturepath="Assets/Textures/UI/Fonts/font3.png"/>
 	</ui>
 
 	<logo>

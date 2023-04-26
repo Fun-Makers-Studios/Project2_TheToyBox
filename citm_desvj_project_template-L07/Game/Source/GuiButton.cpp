@@ -44,13 +44,13 @@ bool GuiButton::Update(float dt)
 		{
 			state = GuiControlState::FOCUSED;
 
-			app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->ui->font1_id, this->text);
+			app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->ui->font3_id, this->text);
 
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
 			{
 				state = GuiControlState::PRESSED;
 			
-				app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->ui->font1_id, this->text);
+				app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->ui->font3_id, this->text);
 
 			}
 
@@ -64,7 +64,7 @@ bool GuiButton::Update(float dt)
 		else {
 			state = GuiControlState::NORMAL;
 
-			app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2) - 4, app->ui->font1_id, this->text);
+			app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2) - 4, app->ui->font3_id, this->text);
 
 		}
 	}
