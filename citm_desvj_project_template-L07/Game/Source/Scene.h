@@ -49,7 +49,6 @@ public:
 	void LoadNPC(SString mapName_);
 
 	void SaveUI();
-	void Checkpoint();
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&);
@@ -75,9 +74,9 @@ public:
 
 	bool playing = false;
 
-	SDL_Texture* checkPointTex = nullptr;
-	const char* checkPointTexPath;
-	bool checkpointEnabled = false;
+	SDL_Texture* saveTex = nullptr;
+	const char* saveTexPath;
+	bool saveEnabled = false;
 
 	int saveTime = 0;
 	bool showSavingState = false;

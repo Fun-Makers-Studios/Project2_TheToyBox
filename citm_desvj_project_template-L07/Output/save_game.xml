@@ -10,7 +10,7 @@
 	<TitleScreen />
 	<EndingScreen />
 	<scene>
-		<playerPosition x="5.80000114" y="17.2024994" />
+		<playerPosition x="7" y="15.3625011" />
 		<itemLives itemLives="true" />
 		<checkpointEnabled checkpointEnabled="true" />
 		<kidPosition x="5.46875" y="10.9375" />
@@ -28,6 +28,6 @@
 	<guiManager />
 	<:anonymous />
 	<renderer>
-		<camera x="0" y="736" />
+		<camera x="0" y="618" />
 	</renderer>
 </save_state>

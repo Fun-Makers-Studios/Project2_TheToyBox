@@ -46,6 +46,7 @@
 		<music musicPath="Assets/Audio/Music/town.ogg" />
 		<imgPause imgPausePath="Assets/Textures/UI/PauseMenu/PauseMenuTemplate.png"/>
 		<partyMenuImg partyMenuImgPath="Assets/Textures/UI/PartyMenu/PartyMenu.png"/>
+		<saveTex saveTexPath="Assets/Textures/UI/save.png"/>
 		<zeroImg zeroImgPath="Assets/Textures/UI/PartyMenu/Characters/ZeroPic.png"/>
 		<sophieImg sophieImgPath="Assets/Textures/UI/PartyMenu/Characters/SophiePic.png"/>
 		<scenesfx selectSFXPath="Assets/Audio/Fx/select.wav" />

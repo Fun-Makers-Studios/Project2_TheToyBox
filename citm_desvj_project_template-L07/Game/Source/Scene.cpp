@@ -54,6 +54,7 @@ bool Scene::Start()
 	partyMenuImgPath = app->configNode.child("scene").child("partyMenuImg").attribute("partyMenuImgPath").as_string();
 	zeroImgPath = app->configNode.child("scene").child("zeroImg").attribute("zeroImgPath").as_string();
 	sophieImgPath = app->configNode.child("scene").child("sophieImg").attribute("sophieImgPath").as_string();
+	saveTexPath = app->configNode.child("scene").child("saveTex").attribute("saveTexPath").as_string();
 
 	// Iterate all objects in the scene
 	/*for (pugi::xml_node itemNode = app->configNode.child("scene").child("potionhp"); itemNode; itemNode = itemNode.next_sibling("potionhp"))
@@ -102,6 +103,7 @@ bool Scene::Start()
 	partyMenuImg = app->tex->Load(partyMenuImgPath);
 	zeroImg = app->tex->Load(zeroImgPath);
 	sophieImg = app->tex->Load(sophieImgPath);
+	saveTex = app->tex->Load(saveTexPath);
 
 	uint w, h;
 	app->win->GetWindowSize(w, h);
@@ -189,10 +191,6 @@ bool Scene::Update(float dt)
 	// Draw map
 	app->map->Draw();
 
-	Checkpoint();
-		
-	SaveUI();
-
 	//Blit UI
 	app->ui->BlitFPS();
 
@@ -223,6 +221,8 @@ bool Scene::Update(float dt)
 bool Scene::PostUpdate()
 {
 	bool ret = true;
+
+	SaveUI();
 
 	if (gamePaused == true && pauseMenu == true)
 		app->render->DrawTexture(img_pause, app->render->camera.x + app->render->camera.w / 2 - pauseRect.w / 2, app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
@@ -433,7 +433,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	
 	case 17:
 		app->SaveGameRequest();
-		exitGame = !exitGame;
+		//exitGame = !exitGame;
 		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
 		break;
 	
@@ -527,10 +527,7 @@ void Scene::SaveUI()
 	}
 	if (showSavingState == true) {
 		if (saveTime < 50) {
-			uint w, h;
-			SDL_Rect rect_2 = { 64, 0, 32, 32 };
-			app->win->GetWindowSize(w, h);
-			app->render->DrawTexture(checkPointTex, w - 100, h - 100, &rect_2, SDL_FLIP_HORIZONTAL, ScaleType::NORMAL, 0);
+			app->render->DrawTexture(saveTex, app->render->camera.w - 100, app->render->camera.h - 100, NULL);
 			saveTime++;
 			LOG("SAVETIME: %d", saveTime);
 		}
@@ -542,20 +539,6 @@ void Scene::SaveUI()
 	}
 }
 
-void Scene::Checkpoint()
-{
-	//Checkpoint
-	if (checkpointEnabled == false) {
-		SDL_Rect rect_1 = { 32, 0, 32, 32 };
-		app->render->DrawTexture(checkPointTex, 62 * 32, 10 * 32, &rect_1);
-	}
-	else
-	{
-		SDL_Rect rect_1 = { 0, 0, 32, 32 };
-		app->render->DrawTexture(checkPointTex, 62 * 32, 10 * 32, &rect_1);
-	}
-}
-
 void Scene::ResetScene()
 {
 	app->audio->PlayMusic(musicPath, 1.0f);
@@ -563,11 +546,11 @@ void Scene::ResetScene()
 	pugi::xml_document gameStateFile;
 	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
 
-	if (checkpointEnabled == false || result == NULL) {
-		checkpointEnabled = false;
+	if (saveEnabled == false || result == NULL) {
+		saveEnabled = false;
 		player->ResetPlayerPos();
 	}
-	else if (checkpointEnabled == true && result != NULL) {
+	else if (saveEnabled == true && result != NULL) {
 		app->LoadGameRequest();
 	}
 }
@@ -643,7 +626,7 @@ bool Scene::LoadState(pugi::xml_node& data)
 	app->scene->player->pbody->body->SetTransform(playerPos, 0);
 
 	//Load previous saved player number of lives
-	checkpointEnabled = data.child("checkpointEnabled").attribute("checkpointEnabled").as_bool();
+	saveEnabled = data.child("checkpointEnabled").attribute("checkpointEnabled").as_bool();
 
 	mapName = data.child("mapName").attribute("mapName").as_string();
 
@@ -675,7 +658,7 @@ bool Scene::SaveState(pugi::xml_node& data)
 	kidPos.append_attribute("y") = app->scene->kid->pbody->body->GetTransform().p.y;
 	
 	pugi::xml_node checkPoint = data.append_child("checkPoint");
-	checkPoint.append_attribute("checkPoint") = app->scene->checkpointEnabled;
+	checkPoint.append_attribute("checkPoint") = app->scene->saveEnabled;
 	
 	pugi::xml_node actualMapName = data.append_child("mapName");
 	actualMapName.append_attribute("mapName") = mapName.GetString();
