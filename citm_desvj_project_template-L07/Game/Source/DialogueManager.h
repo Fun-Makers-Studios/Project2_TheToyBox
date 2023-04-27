@@ -20,6 +20,7 @@ public:
 	void Draw();
 	void Unload();
 	void CleanUp();
+	Dialogue* GetCurrentDialogue() { return currentDialogue; }
 
 	bool dialogueLoaded;
 

@@ -222,8 +222,6 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	SaveUI();
-
 	if (gamePaused == true && pauseMenu == true)
 		app->render->DrawTexture(img_pause, app->render->camera.x + app->render->camera.w / 2 - pauseRect.w / 2, app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
 
@@ -353,6 +351,15 @@ bool Scene::PostUpdate()
 	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) {
 		dialogueManager->Draw();
 	}
+
+	SaveUI();
+
+	//Saves game if choosing the option when talkin with MAGE
+	if (dialogueManager->GetCurrentDialogue() != nullptr && dialogueManager->GetCurrentDialogue()->id == 6 && dialogueManager->GetCurrentDialogue()->currentNode->id == 1 && app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	{
+		showSavingState = true;
+	}
+
 
 	if (exitGame == true)
 		ret = false;

@@ -115,6 +115,12 @@
     <ClCompile Include="Source\ParticleSystem.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Easing.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Spline.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -263,6 +269,12 @@
     </ClInclude>
     <ClInclude Include="Source\ParticleSystem.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Easing.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Spline.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
