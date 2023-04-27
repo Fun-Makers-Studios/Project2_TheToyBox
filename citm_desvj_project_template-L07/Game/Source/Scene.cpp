@@ -432,6 +432,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		break;
 	
 	case 17:
+		showSavingState = true;
 		app->SaveGameRequest();
 		//exitGame = !exitGame;
 		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
@@ -522,12 +523,9 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 
 void Scene::SaveUI()
 {
-	if (app->saveGameRequested == true) {
-		showSavingState = true;
-	}
 	if (showSavingState == true) {
 		if (saveTime < 50) {
-			app->render->DrawTexture(saveTex, app->render->camera.w - 100, app->render->camera.h - 100, NULL);
+			app->render->DrawTexture(saveTex, app->render->camera.x + (app->render->camera.w - 100) , app->render->camera.y + (app->render->camera.h - 100), NULL);
 			saveTime++;
 			LOG("SAVETIME: %d", saveTime);
 		}
@@ -535,7 +533,6 @@ void Scene::SaveUI()
 			showSavingState = false;
 			saveTime = 0;
 		}
-
 	}
 }
 

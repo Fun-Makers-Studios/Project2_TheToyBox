@@ -10,12 +10,12 @@
 	<TitleScreen />
 	<EndingScreen />
 	<scene>
-		<playerPosition x="7" y="15.3625011" />
+		<playerPosition x="20" y="14.4400005" />
 		<itemLives itemLives="true" />
 		<checkpointEnabled checkpointEnabled="true" />
 		<kidPosition x="5.46875" y="10.9375" />
 		<checkPoint checkPoint="false" />
-		<mapName mapName="town" />
+		<mapName mapName="housebasement" />
 	</scene>
 	<sceneFight />
 	<:anonymous />
@@ -28,6 +28,6 @@
 	<guiManager />
 	<:anonymous />
 	<renderer>
-		<camera x="0" y="618" />
+		<camera x="0" y="0" />
 	</renderer>
 </save_state>
