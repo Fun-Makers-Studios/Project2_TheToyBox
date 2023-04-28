@@ -12,6 +12,7 @@
 #include "PathFinding.h"
 #include "ModuleFadeToBlack.h"
 #include "EntityManager.h"
+#include "Debug.h"
 
 NPC::NPC() : Entity(EntityType::NPC)
 {
@@ -20,13 +21,14 @@ NPC::NPC() : Entity(EntityType::NPC)
 
 NPC::~NPC() {}
 
-bool NPC::Awake() {
+bool NPC::Awake()
+{
 
 	return true;
 }
 
-bool NPC::Start() {
-
+bool NPC::Start()
+{
 	startPos.x = parameters.attribute("x").as_int();
 	startPos.y = parameters.attribute("y").as_int();
 
@@ -49,16 +51,21 @@ bool NPC::Start() {
 
 	currentAnim = &idleAnim;
 
-	pbody = app->physics->CreateCircle(startPos.x+60, startPos.y, width / 3, bodyType::STATIC, ColliderType::NPC);
-
-	pbody->listener = this;
+	//Physics
+	// HEKATE
+	body = new Body();
+	body->type = ColliderType::NPC;
+	body->shape = ColliderShape::CIRCLE;
+	body->pos = { startPos.x, startPos.y };
+	body->r = 16;
 
 	boundaries = { (int)startPos.x, (int)startPos.y,96,96 };
 
 	return true;
 }
 
-bool NPC::PreUpdate() {
+bool NPC::PreUpdate()
+{
 
 	return true;
 }
@@ -67,8 +74,9 @@ bool NPC::Update()
 {
 	currentAnim = &idleAnim;
 
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 2));
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 2));
+	// HEKATE
+	/*position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 2));
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 2));*/
 
 	boundaries.x = position.x - ((boundaries.w / 2)-(width/2));
 	boundaries.y = position.y - ((boundaries.h / 2) - (height/2));
@@ -86,9 +94,9 @@ bool NPC::Update()
 
 bool NPC::PostUpdate()
 {
-	if (app->physics->debug) {
+	if (app->debug->debug)
 		app->render->DrawRectangle(boundaries, 255, 0, 0, 255U, false);
-	}
+	
 	return true;
 }
 
@@ -96,18 +104,20 @@ bool NPC::CleanUp()
 {
 	app->tex->UnLoad(texture);
 
-	pbody->body->DestroyFixture(pbody->body->GetFixtureList());
+	// HEKATE
+	/*pbody->body->DestroyFixture(pbody->body->GetFixtureList());
 	app->physics->world->DestroyBody(this->pbody->body);
 	delete pbody;
-	pbody = nullptr;
+	pbody = nullptr;*/
 	app->entityManager->DestroyEntity(this);
 
 	return true;
 }
 
-void NPC::OnCollision(PhysBody* physA, PhysBody* physB) {
-
-	switch (physB->cType)
+void NPC::OnCollision(PhysBody* physA, PhysBody* physB)
+{
+	// HEKATE
+	/*switch (physB->cType)
 	{
 	
 	case ColliderType::PLAYER:
@@ -117,11 +127,12 @@ void NPC::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
-	}
+	}*/
 
 }
 
-void NPC::DialogTriggerCheck() {
+void NPC::DialogTriggerCheck()
+{
 	if ((app->scene->player->position.x + (65 / 2) >= boundaries.x) &&
 		(app->scene->player->position.x + (65 / 2) < boundaries.x + boundaries.w) &&
 		(app->scene->player->position.y + (33 / 2) >= boundaries.y) &&

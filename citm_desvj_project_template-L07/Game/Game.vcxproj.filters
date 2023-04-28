@@ -40,7 +40,7 @@
     <ClCompile Include="Source\Pathfinding.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Physics.cpp">
+    <ClCompile Include="Source\Collisions.cpp">
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="Source\Render.cpp">
@@ -180,7 +180,7 @@
     <ClInclude Include="Source\Pathfinding.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Physics.h">
+    <ClInclude Include="Source\Collisions.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\Render.h">

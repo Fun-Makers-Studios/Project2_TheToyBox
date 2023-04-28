@@ -7,7 +7,7 @@
 #include "Scene.h"
 #include "EntityManager.h"
 #include "Map.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "PathFinding.h"
 #include "ModuleFadeToBlack.h"
 #include "EndingScreen.h"
@@ -16,6 +16,7 @@
 #include "TitleScreen.h"
 #include "PartyManager.h"
 #include "ParticleSystemManager.h"
+#include "Debug.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -71,12 +72,12 @@ bool Scene::Start()
 	}
 
 	/*INITIALIZE NECESSARY MODULES*/
-	app->physics->Enable();
+	app->collisions->Enable();
 	app->pathfinding->Enable();
 	app->entityManager->Enable();
 	app->map->Enable();
 	LOG("--STARTS GAME SCENE--");
-	app->physics->debug = false;
+	app->debug->debug = false;
 	exitGame = false;
 
 	//Load First Map NPCs
@@ -88,8 +89,18 @@ bool Scene::Start()
 	player->parameters = app->configNode.child("scene").child("player");
 	player->Start();
 
-	// L03: DONE: Load map
-	app->map->Load();
+	// Load map
+	if (app->map->Load())
+	{
+		int w, h;
+		uchar* buffer = NULL;
+
+		if (app->map->CreateWalkabilityMap(w, h, &buffer))
+			// HEKATE
+			//app->pathFinding->SetMap(w, h, buffer);
+
+		RELEASE_ARRAY(buffer);
+	}
 
 	// Play level music
 	app->audio->PlayMusic(musicPath, 1.0f);
@@ -194,7 +205,8 @@ bool Scene::Update(float dt)
 	//Blit UI
 	app->ui->BlitFPS();
 
-	if (app->physics->debug)
+	// HEKATE
+	if (app->debug->debug)
 	{
 		app->ui->BlitPlayerXPos();
 		app->ui->BlitPlayerYPos();
@@ -206,7 +218,7 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
 		if (smokePS == nullptr) {
-			smokePS = app->particlesManager->CreateParticleSystem(player->position, Blueprint::SAND);
+			smokePS = app->particleManager->CreateParticleSystem(player->position, Blueprint::SAND);
 		}
 		else {
 			smokePS->TurnOff();
@@ -366,7 +378,7 @@ bool Scene::CleanUp()
 	LOG("Freeing GAME SCENE");
 	app->entityManager->Disable();
 	app->pathfinding->Disable();
-	app->physics->Disable();
+	app->collisions->Disable();
 	app->map->Disable();
 	
 	app->guiManager->guiControlsList.Clear();
@@ -561,7 +573,7 @@ void Scene::SceneMap()
 	{
 		
 		app->map->ChangeMap(mapName.GetString());
-		player->pbody->body->SetTransform(PIXEL_TO_METERS(player->newPos), 0.0f);
+		//HEKATE player->pbody->body->SetTransform(PIXEL_TO_METERS(player->newPos), 0.0f);
 		LoadNPC(mapName.GetString());
 
 		isMapChanging = false;
@@ -590,7 +602,8 @@ void Scene::LoadNPC(SString mapName_)
 
 void Scene::FixCamera()
 {
-	if (METERS_TO_PIXELS(app->map->mapData.width) > 1280 && METERS_TO_PIXELS(app->map->mapData.height) > 704)	//SMALL MAP SIZE 1280x704
+	// HEKATE remove METERS_TO_PIXELS ?
+	if (app->map->mapData.width > 1280 && app->map->mapData.height > 704)	//SMALL MAP SIZE 1280x704
 	{
 		uint scale = app->scaleObj->ScaleTypeToInt(ScaleType::WORLD);
 
@@ -602,10 +615,10 @@ void Scene::FixCamera()
 		if (app->render->camera.y < 0)
 			app->render->camera.y = 0;
 
-		if (app->render->camera.x > METERS_TO_PIXELS(app->map->mapData.width) * scale - app->render->camera.w)
-			app->render->camera.x = METERS_TO_PIXELS(app->map->mapData.width) * scale - app->render->camera.w;
-		if (app->render->camera.y > METERS_TO_PIXELS(app->map->mapData.height) * scale - app->render->camera.h)
-			app->render->camera.y = METERS_TO_PIXELS(app->map->mapData.height) * scale - app->render->camera.h;
+		if (app->render->camera.x > app->map->mapData.width * scale - app->render->camera.w)
+			app->render->camera.x = app->map->mapData.width * scale - app->render->camera.w;
+		if (app->render->camera.y > app->map->mapData.height * scale - app->render->camera.h)
+			app->render->camera.y = app->map->mapData.height * scale - app->render->camera.h;
 	}
 	else {
 		app->render->camera.x = 0;
@@ -621,47 +634,49 @@ void Scene::FightKid()
 
 bool Scene::LoadState(pugi::xml_node& data)
 {
+	// HEKATE
 	// Load previous saved player position
-	b2Vec2 playerPos = { data.child("playerPosition").attribute("x").as_float(), data.child("playerPosition").attribute("y").as_float() };
-	app->scene->player->pbody->body->SetTransform(playerPos, 0);
+	//iPoint playerPos = { data.child("playerPosition").attribute("x").as_float(), data.child("playerPosition").attribute("y").as_float() };
+	//app->scene->player->pbody->body->SetTransform(playerPos, 0);
 
-	//Load previous saved player number of lives
-	saveEnabled = data.child("checkpointEnabled").attribute("checkpointEnabled").as_bool();
+	////Load previous saved player number of lives
+	//saveEnabled = data.child("checkpointEnabled").attribute("checkpointEnabled").as_bool();
 
-	mapName = data.child("mapName").attribute("mapName").as_string();
+	//mapName = data.child("mapName").attribute("mapName").as_string();
 
-	// Load previous saved bat position
-	b2Vec2 kidPos = { data.child("kidPosition").attribute("x").as_float(), data.child("kidPosition").attribute("y").as_float() };
-	app->scene->kid->pbody->body->SetTransform(kidPos, 0);
+	//// Load previous saved bat position
+	//iPoint kidPos = { data.child("kidPosition").attribute("x").as_float(), data.child("kidPosition").attribute("y").as_float() };
+	//app->scene->kid->pbody->body->SetTransform(kidPos, 0);
 
 	return true;
 }
 
 bool Scene::SaveState(pugi::xml_node& data)
 {
+	// HEKATE
 	// Save current player position
-	pugi::xml_node playerPos = data.append_child("playerPosition");
-	playerPos.append_attribute("x") = app->scene->player->pbody->body->GetTransform().p.x;
-	playerPos.append_attribute("y") = app->scene->player->pbody->body->GetTransform().p.y;
-	
-	// Save current player number of coins
-	pugi::xml_node itemLives = data.append_child("itemLives");
-	itemLives.append_attribute("itemLives") = itemLives;
-	
-	// Save current player number of coins
-	pugi::xml_node checkpointEnabled = data.append_child("checkpointEnabled");
-	checkpointEnabled.append_attribute("checkpointEnabled") = checkpointEnabled;
+	//pugi::xml_node playerPos = data.append_child("playerPosition");
+	//playerPos.append_attribute("x") = app->scene->player->pbody->body->GetTransform().p.x;
+	//playerPos.append_attribute("y") = app->scene->player->pbody->body->GetTransform().p.y;
+	//
+	//// Save current player number of coins
+	//pugi::xml_node itemLives = data.append_child("itemLives");
+	//itemLives.append_attribute("itemLives") = itemLives;
+	//
+	//// Save current player number of coins
+	//pugi::xml_node checkpointEnabled = data.append_child("checkpointEnabled");
+	//checkpointEnabled.append_attribute("checkpointEnabled") = checkpointEnabled;
 
-	// Save current bat position
-	pugi::xml_node kidPos = data.append_child("kidPosition");
-	kidPos.append_attribute("x") = app->scene->kid->pbody->body->GetTransform().p.x;
-	kidPos.append_attribute("y") = app->scene->kid->pbody->body->GetTransform().p.y;
-	
-	pugi::xml_node checkPoint = data.append_child("checkPoint");
-	checkPoint.append_attribute("checkPoint") = app->scene->saveEnabled;
-	
-	pugi::xml_node actualMapName = data.append_child("mapName");
-	actualMapName.append_attribute("mapName") = mapName.GetString();
+	//// Save current bat position
+	//pugi::xml_node kidPos = data.append_child("kidPosition");
+	//kidPos.append_attribute("x") = app->scene->kid->pbody->body->GetTransform().p.x;
+	//kidPos.append_attribute("y") = app->scene->kid->pbody->body->GetTransform().p.y;
+	//
+	//pugi::xml_node checkPoint = data.append_child("checkPoint");
+	//checkPoint.append_attribute("checkPoint") = app->scene->saveEnabled;
+	//
+	//pugi::xml_node actualMapName = data.append_child("mapName");
+	//actualMapName.append_attribute("mapName") = mapName.GetString();
 
 	return true;
 }

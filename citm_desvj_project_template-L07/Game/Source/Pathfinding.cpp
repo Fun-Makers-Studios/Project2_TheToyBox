@@ -1,23 +1,23 @@
 #include "App.h"
-#include "PathFinding.h"
+#include "Pathfinding.h"
 
 #include "Defs.h"
 #include "Log.h"
 #include "Optick/include/optick.h"
 
-PathFinding::PathFinding() : Module(), map(NULL), lastPath(DEFAULT_PATH_LENGTH), width(0), height(0)
+Pathfinding::Pathfinding() : Module(), map(NULL), lastPath(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
 	name.Create("pathfinding");
 }
 
 // Destructor
-PathFinding::~PathFinding()
+Pathfinding::~Pathfinding()
 {
 	RELEASE_ARRAY(map);
 }
 
 // Called before quitting
-bool PathFinding::CleanUp()
+bool Pathfinding::CleanUp()
 {
 	LOG("Freeing pathfinding library");
 
@@ -28,7 +28,7 @@ bool PathFinding::CleanUp()
 }
 
 // Sets up the walkability map
-void PathFinding::SetMap(uint width, uint height, uchar* data)
+void Pathfinding::SetMap(uint width, uint height, uchar* data)
 {
 	this->width = width;
 	this->height = height;
@@ -39,21 +39,21 @@ void PathFinding::SetMap(uint width, uint height, uchar* data)
 }
 
 // Utility: return true if pos is inside the map boundaries
-bool PathFinding::CheckBoundaries(const iPoint& pos) const
+bool Pathfinding::CheckBoundaries(const iPoint& pos) const
 {
 	return (pos.x >= 0 && pos.x <= (int)width &&
 		pos.y >= 0 && pos.y <= (int)height);
 }
 
 // Utility: returns true is the tile is walkable
-bool PathFinding::IsWalkable(const iPoint& pos) const
+bool Pathfinding::IsWalkable(const iPoint& pos) const
 {
 	uchar t = GetTileAt(pos);
 	return t != INVALID_WALK_CODE && t > 0;
 }
 
 // Utility: return the walkability value of a tile
-uchar PathFinding::GetTileAt(const iPoint& pos) const
+uchar Pathfinding::GetTileAt(const iPoint& pos) const
 {
 	if (CheckBoundaries(pos))
 		return map[(pos.y * width) + pos.x];
@@ -62,13 +62,13 @@ uchar PathFinding::GetTileAt(const iPoint& pos) const
 }
 
 // To request all tiles involved in the last generated path
-const DynArray<iPoint>* PathFinding::GetLastPath() const
+const DynArray<iPoint>* Pathfinding::GetLastPath() const
 {
 	return &lastPath;
 }
 
 // To request next tile involved in the last generated path
-const int PathFinding::GetNextTileY(unsigned int index) const
+const int Pathfinding::GetNextTileY(unsigned int index) const
 {
 	if (lastPath.At(index) != NULL)
 		return lastPath.At(index)->y;
@@ -77,7 +77,7 @@ const int PathFinding::GetNextTileY(unsigned int index) const
 }
 
 // To request all tiles involved in the last generated path
-void PathFinding::ClearLastPath()
+void Pathfinding::ClearLastPath()
 {
 	lastPath.Clear();
 }
@@ -182,9 +182,9 @@ int PathNode::CalculateF(const iPoint& destination)
 }
 
 // ----------------------------------------------------------------------------------
-// Actual A* algorithm: return number of steps in the creation of the path or -1 ----
+// Actual A* algorithm: return number of steps in the creation of the path or -1    -
 // ----------------------------------------------------------------------------------
-int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
+int Pathfinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	OPTICK_CATEGORY("Create Path", Optick::Category::GameLogic);
 	int ret = -1;

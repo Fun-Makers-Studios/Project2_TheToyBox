@@ -7,7 +7,7 @@
 #include "Scene.h"
 #include "Log.h"
 #include "Point.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "EntityManager.h"
 
 Item::Item() : Entity(EntityType::ITEM)
@@ -17,13 +17,13 @@ Item::Item() : Entity(EntityType::ITEM)
 
 Item::~Item() {}
 
-bool Item::Awake() {
-
+bool Item::Awake()
+{
 	return true;
 }
 
-bool Item::Start() {
-
+bool Item::Start()
+{
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
@@ -41,10 +41,11 @@ bool Item::Start() {
 	if (iType == "potionhp")
 		lifeRect = {0, 0, 16, 16};
 
-	// L07 TODO 4: Add a physics to an item - initialize the physics body
-	pbody = app->physics->CreateCircleSensor(position.x, position.y, width/3, bodyType::KINEMATIC, ColliderType::ITEM);
-
-	pbody->listener = this;
+	// Add a physics to an item - initialize the physics body
+	body->type = ColliderType::ITEM;
+	body->shape = ColliderShape::CIRCLE;
+	body->pos = { (double)position.x, (double)position.y };
+	body->r = 16;
 
 	return true;
 }
@@ -55,7 +56,7 @@ bool Item::Update()
 
 	if (isPicked == true)
 	{
-		app->physics->world->DestroyBody(pbody->body);
+		// HEKATE app->physics->world->DestroyBody(pbody->body);
 		app->entityManager->DestroyEntity(this);
 		
 		//CleanUp();
@@ -63,8 +64,8 @@ bool Item::Update()
 
 	if (app->scene->gamePaused != true)
 	{
-		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 4));
-		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 4));
+		// HEKATE position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 4));
+		// HEKATE position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 4));
 	}
 
 	if (isPicked == false) {
@@ -84,35 +85,36 @@ bool Item::PostUpdate()
 
 bool Item::CleanUp()
 {
-
 	app->tex->UnLoad(texture);
 	texture = nullptr;
 
-	app->physics->world->DestroyBody(pbody->body);
-	delete pbody;
-	pbody = nullptr;
+	// HEKATE app->physics->world->DestroyBody(pbody->body);
+	// HEKATE delete pbody;
+	// HEKATE pbody = nullptr;
 	app->entityManager->DestroyEntity(this);
 
 	return true;
 }
 
-void Item::OnCollision(PhysBody* physA, PhysBody* physB) {
-
-	switch (physB->cType)
-	{
-	case ColliderType::PLAYER:
-		LOG("Collision PLAYER");
-		
-		/*pbody->body->SetActive(false);
-		this->Disable();*/
-		isPicked = true;
-		break;
-	}
+void Item::OnCollision(PhysBody* physA, PhysBody* physB)
+{
+	//switch (physB->cType)
+	//{
+	//case ColliderType::PLAYER:
+	//	LOG("Collision PLAYER");
+	//	
+	//	/*pbody->body->SetActive(false);
+	//	this->Disable();*/
+	//	isPicked = true;
+	//	break;
+	//}
 
 }
 
-void Item::ResetItem() {
-	SDL_SetTextureAlphaMod(texture, 1);
+void Item::ResetItem()
+{
+	// HEKATE
+	/*SDL_SetTextureAlphaMod(texture, 1);
 	pbody->body->SetActive(true);
-	isPicked = false;
+	isPicked = false;*/
 }

@@ -3,7 +3,7 @@
 
 #include "Entity.h"
 #include "Point.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
@@ -33,8 +33,7 @@ public:
 
 	bool isPicked = false;
 
-	//TODO 4: Add a physics to an item
-	PhysBody* pbody;
+	Body* body;
 	SString iType;
 
 private:
@@ -44,7 +43,7 @@ private:
 
 	SDL_Rect lifeRect;
 	
-	b2Vec2 velocity;
+	dPoint velocity;
 
 	int timeMov = 0;
 

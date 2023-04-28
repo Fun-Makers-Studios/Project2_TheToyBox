@@ -16,14 +16,14 @@
 // Details: http://theory.stanford.edu/~amitp/GameProgramming/
 // --------------------------------------------------
 
-class PathFinding : public Module
+class Pathfinding : public Module
 {
 public:
 
-	PathFinding();
+	Pathfinding();
 
 	// Destructor
-	~PathFinding();
+	~Pathfinding();
 
 	// Called before quitting
 	bool CleanUp();

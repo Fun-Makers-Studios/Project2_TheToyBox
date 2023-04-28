@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "Animation.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
@@ -34,6 +34,8 @@ public:
 
 private:
 
+	Body* body;
+
 	SDL_Texture* texture = nullptr;
 	const char* texturePath = nullptr;
 	SDL_Texture* shadowTexture = nullptr;
@@ -44,8 +46,8 @@ private:
 
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 
-	b2Vec2 startPos;
-	b2Vec2 velocity;
+	dPoint startPos;
+	dPoint velocity;
 
 	int width;
 	int height;
@@ -53,8 +55,6 @@ private:
 	bool isFliped = false;
 
 public:
-
-	PhysBody* pbody = nullptr;
 
 	SDL_Rect boundaries;
 

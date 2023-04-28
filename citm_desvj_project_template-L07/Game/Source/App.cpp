@@ -14,7 +14,7 @@
 
 #include "EntityManager.h"
 #include "Map.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "Pathfinding.h"
 #include "ModuleFadeToBlack.h"
 
@@ -54,13 +54,15 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	sceneFight = new SceneFight();
 	endingscreen = new EndingScreen();
 
-	physics = new Physics();
-	pathfinding = new PathFinding();
-	ui = new UI();
-	particlesManager = new ParticleSystemManager();
+	map = new Map();
+	pathfinding = new Pathfinding();
+	collisions = new Collisions();
+
 	entityManager = new EntityManager();
 	partyManager = new PartyManager();
-	map = new Map();
+	particleManager = new ParticleSystemManager();
+
+	ui = new UI();
 	guiManager = new GuiManager();
 	debug = new Debug();
 
@@ -75,21 +77,23 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fonts, true);
 	AddModule(audio, true);
 	//AddModule(controller, true);
-	AddModule(fade, true);
 
+	AddModule(fade, true);
 	AddModule(logoscreen, true);
 	AddModule(titlescreen, false);
 	AddModule(endingscreen, false);
 	AddModule(scene, false);
 	AddModule(sceneFight, false);
 
-	AddModule(physics, false);
+	AddModule(map, false);
 	AddModule(pathfinding, false);
-	AddModule(ui, true);
-	AddModule(particlesManager, true);
+	AddModule(collisions, false);
+
 	AddModule(entityManager, false);
 	AddModule(partyManager, true);
-	AddModule(map, false);
+	AddModule(particleManager, true);
+
+	AddModule(ui, true);
 	AddModule(guiManager, true);
 	AddModule(debug, true);
 

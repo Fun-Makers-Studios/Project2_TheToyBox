@@ -6,8 +6,6 @@
 #include "PugiXml/src/pugixml.hpp"
 
 class App;
-// L07 TODO 2: Add Physics Module
-class PhysBody;
 class GuiControl;
 
 class Module
@@ -67,10 +65,6 @@ public:
 	virtual bool SaveState(pugi::xml_node&)
 	{
 		return true;
-	}
-
-	virtual void OnCollision(PhysBody* bodyA, PhysBody* bodyB) {
-
 	}
 	
 	virtual bool OnGuiMouseClickEvent(GuiControl* control)

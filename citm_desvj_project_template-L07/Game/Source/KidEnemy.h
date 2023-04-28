@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "Animation.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
@@ -61,8 +61,8 @@ private:
 
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 
-	b2Vec2 velocity;
-	b2Vec2 startPos;
+	dPoint velocity;
+	dPoint startPos;
 
 	int width;
 	int height;

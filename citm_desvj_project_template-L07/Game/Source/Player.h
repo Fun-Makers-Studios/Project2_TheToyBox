@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "Animation.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
@@ -34,6 +34,7 @@ public:
 	void ResetPlayerPos();
 
 public:
+	Body* body;
 
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
@@ -68,9 +69,7 @@ public:
 	bool godMode = false;
 	bool onCollision = false;
 
-	PhysBody* pbody = nullptr;
-
-	b2Vec2 newPos;
+	dPoint newPos;
 
 private:
 
@@ -84,8 +83,8 @@ private:
 
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 	
-	b2Vec2 velocity;
-	b2Vec2 startPos;
+	dPoint velocity;
+	dPoint startPos;
 
 	int width;
 	int height;

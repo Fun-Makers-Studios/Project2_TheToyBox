@@ -5,7 +5,7 @@
 #include "Input.h"
 #include "Render.h"
 #include "Audio.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "ModuleFadeToBlack.h"
 #include "Fonts.h"
 #include "UI.h"
@@ -129,7 +129,7 @@ bool ModuleController::PreUpdate()
 	//Check player 1 Left Axis X & Y
 	if (Controller_player1_LAxisX > 6400)
 	{
-		app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
+		app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT; // HEKATE All of this should probably be '=' not '=='
 	}
 	else if (Controller_player1_LAxisX < -DEATHZONE)
 	{

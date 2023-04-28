@@ -3,7 +3,7 @@
 #include "Textures.h"
 #include "Map.h"
 #include "Pathfinding.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "Player.h"
 #include "Scale.h"
 
@@ -72,12 +72,13 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
                 int tileId = layer->Get(x, y);
                 TileSet* tileset = (tileId > 0) ? GetTilesetFromTileId(tileId) : NULL;
 
-                LOG("Tilset gid: %d", tileset->firstgid);
+                // HEKATE
+                //LOG("Tilset gid: %d", tileset->firstgid);
 
                 if (tileset != NULL)
                 {
                     //According to the mapType use the ID of the tile to set the walkability value
-                    if (mapData.type == MapTypes::MAPTYPE_ORTHOGONAL && tileId == 696) map[i] = 1;
+                    if (mapData.type == MapTypes::MAPTYPE_ORTHOGONAL && tileId == 17) map[i] = 1;
                     else map[i] = 0;
 
                 }
@@ -421,7 +422,7 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
     int i = 0;
     for (tile = node.child("data").child("tile"); tile && ret; tile = tile.next_sibling("tile"))
     {
-        layer->data[i] = tile.attribute("gid").as_int();
+        layer->data[i] = tile.attribute("gid").as_int(); // HEKATE ! writing int to char
         i++;
     }
 
@@ -630,8 +631,8 @@ bool Map::CreateColliders()
 {
     bool ret = true;
 
-    int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
-
+    // HEKATE
+    /*
     ListItem<MapLayer*>* mapLayerItem;
     mapLayerItem = mapData.maplayers.start;
 
@@ -802,20 +803,23 @@ bool Map::CreateColliders()
        
         mapObjectGroupItem = mapObjectGroupItem->next;
     }
+    */
 
     return ret;
 }
 
-bool Map::ChangeMap(const char* mapFileName_) {
-    
+bool Map::ChangeMap(const char* mapFileName_)
+{   
     bool ret = true;
 
     mapFileName = app->configNode.child("map").child(mapFileName_).attribute("path").as_string();
 
+    // HEKATE
     CleanUp();
-    app->physics->DestroyMapColliders();
+    //app->physics->DestroyMapColliders();
 
-    if (Load()) {
+    if (Load())
+    {
         int w, h;
         uchar* data = NULL;
 
@@ -828,4 +832,3 @@ bool Map::ChangeMap(const char* mapFileName_) {
     return ret;
 
 }
-

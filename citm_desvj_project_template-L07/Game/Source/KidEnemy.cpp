@@ -59,9 +59,9 @@ bool KidEnemy::Start() {
 	position.x = startPos.x;
 	position.y = startPos.y;
 
-	pbody = app->physics->CreateCircle(position.x, position.y, width/2, bodyType::STATIC, ColliderType::ENEMY);
+	//HEKATE pbody = app->physics->CreateCircle(position.x, position.y, width/2, bodyType::STATIC, ColliderType::ENEMY);
 
-	pbody->listener = this;
+	//HEKATE pbody->listener = this;
 
 	return true;
 }
@@ -81,15 +81,16 @@ bool KidEnemy::Update()
 	{
 		//Destroy entity
 		app->entityManager->DestroyEntity(this);
-		app->physics->world->DestroyBody(pbody->body);
+		//HEKATE
+		//app->physics->world->DestroyBody(pbody->body);
 		app->audio->PlayFx(powerUpSFX);
 		dead = false;
 	}
 
 	if (app->scene->gamePaused != true)
 	{
-		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width/2));
-		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height));
+		//HEKATE position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width/2));
+		//HEKATE position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height));
 	}
 
 		SDL_Rect rect = currentAnim->GetCurrentFrame();
@@ -110,10 +111,10 @@ bool KidEnemy::CleanUp()
 {
 	app->tex->UnLoad(texture);
 
-	pbody->body->DestroyFixture(pbody->body->GetFixtureList());
-	app->physics->world->DestroyBody(this->pbody->body);
-	delete pbody;
-	pbody = nullptr;
+	//HEKATE pbody->body->DestroyFixture(pbody->body->GetFixtureList());
+	//HEKATE app->physics->world->DestroyBody(this->pbody->body);
+	//HEKATE delete pbody;
+	//HEKATE pbody = nullptr;
 
 	app->entityManager->DestroyEntity(this);
 
@@ -123,19 +124,19 @@ bool KidEnemy::CleanUp()
 
 void KidEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 
-	switch (physB->cType)
+	/*switch (physB->cType)
 	{
 	
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
-	}
+	}*/
 
 }
 
 void KidEnemy::ResetBat() {
 
-	pbody->body->SetSleepingAllowed(false);
+	//HEKATE pbody->body->SetSleepingAllowed(false);
 
 
 }
