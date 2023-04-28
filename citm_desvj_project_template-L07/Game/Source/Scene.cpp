@@ -218,15 +218,15 @@ bool Scene::Update(float dt)
 	//Blit UI
 	app->ui->BlitFPS();
 
-	// HEKATE
+	// HEKATE Developent old debug
 	if (app->debug->debug)
 	{
-		app->ui->BlitPlayerXPos();
+		/*app->ui->BlitPlayerXPos();
 		app->ui->BlitPlayerYPos();
 		app->ui->BlitAverageFPS();
 		app->ui->BlitDT();
 		app->ui->BlitTimeSinceStart();
-		app->ui->BlitFrameCount();
+		app->ui->BlitFrameCount();*/
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {

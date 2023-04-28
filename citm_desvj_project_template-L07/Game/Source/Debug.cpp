@@ -219,8 +219,8 @@ void Debug::DrawDebug()
 	//Camera limits
 	if (camLimits)
 	{
-		app->render->DrawLine(app->render->camera.w / 2, 0, app->render->camera.w / 2, app->render->camera.h, 255, 0, 0, 255, false);
-		app->render->DrawLine(0, app->render->camera.h / 2, app->render->camera.w, app->render->camera.h / 2, 255, 0, 0, 255, false);
+		app->render->DrawLine(app->render->camera.w / 2, 0, app->render->camera.w / 2, app->render->camera.h, 0, 0, 255, 255, false);
+		app->render->DrawLine(0, app->render->camera.h / 2, app->render->camera.w, app->render->camera.h / 2, 0, 0, 255, 255, false);
 	}
 
 	//Teleport

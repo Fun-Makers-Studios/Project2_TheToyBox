@@ -52,19 +52,16 @@ bool Collisions::Update(double dt)
     {
         for (int j = 0; j < pos.y; j++) //cols
         {
-            if (i >= 0 && j >= 0) //valid map tiles
+            if (app->pathfinding->GetTileAt({ i, j }) == 1) //non walkable tiles, 255 invalid walk code
             {
-                if (app->pathfinding->GetTileAt({ i, j }) == 1) //non walkable tiles
+                Body tileCollider;
+                iPoint iPos = app->map->MapToWorld(i, j);
+                tileCollider.pos = { (double)iPos.x, (double)iPos.y };
+                tileCollider.shape = ColliderShape::RECTANGLE;
+
+                if (CheckCollision(app->scene->player->body, &tileCollider))
                 {
-                    Body tileCollider;
-                    iPoint iPos = app->map->MapToWorld(i, j);
-                    tileCollider.pos = { (double)iPos.x, (double)iPos.y };
-                    tileCollider.shape = ColliderShape::RECTANGLE;
 
-                    if (CheckCollision(app->scene->player->body, &tileCollider))
-                    {
-
-                    }
                 }
             }
         }
@@ -86,12 +83,12 @@ bool Collisions::PostUpdate()
     {
         for (int j = 0; j < app->map->mapData.height; j++) //cols
         {
-            if (app->pathfinding->GetTileAt(iPoint{ i, j }) == 1) //non walkable tiles, 255 invalid walk code
+            if (app->pathfinding->GetTileAt({ i, j }) == 1) //non walkable tiles, 255 invalid walk code
             {
                 
                 SDL_Rect rect = { i * tileW, j * tileH, tileW, tileH };
-                app->render->DrawRectangle(rect, 255, 0, 0, 128);
-                app->render->DrawRectangle(rect, 255, 0, 0, 255, false);
+                app->render->DrawRectangle(rect, 255, 0, 0, 32);
+                app->render->DrawRectangle(rect, 255, 0, 0, 196, false);
             }
         }
     }
