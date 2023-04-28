@@ -72,10 +72,10 @@ bool Scene::Start()
 	}
 
 	/*INITIALIZE NECESSARY MODULES*/
-	app->collisions->Enable();
 	app->pathfinding->Enable();
-	app->entityManager->Enable();
 	app->map->Enable();
+	app->collisions->Enable();
+	app->entityManager->Enable();
 	LOG("--STARTS GAME SCENE--");
 	app->debug->debug = false;
 	exitGame = false;
@@ -96,8 +96,7 @@ bool Scene::Start()
 		uchar* buffer = NULL;
 
 		if (app->map->CreateWalkabilityMap(w, h, &buffer))
-			// HEKATE
-			//app->pathFinding->SetMap(w, h, buffer);
+			app->pathfinding->SetMap(w, h, buffer);
 
 		RELEASE_ARRAY(buffer);
 	}
@@ -206,7 +205,7 @@ bool Scene::Update(float dt)
 	else
 	{
 		// Camera movement related to player's movement
-		// HEKATE FixCamera() not working??
+		// HEKATE FixCamera() not working on RELEASE???
 		FixCamera();
 		uint scale = app->scaleObj->ScaleTypeToInt(ScaleType::WORLD);
 		app->render->camera.x = player->body->pos.x * scale - (app->render->camera.w / 2 - 16 * scale);
