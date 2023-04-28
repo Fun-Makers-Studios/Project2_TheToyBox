@@ -158,8 +158,11 @@ bool Scene::Update(float dt)
 	{
 		if (!dialogueManager->dialogueLoaded && settingSceneMenu == false && partyMenu == false) { gamePaused = !gamePaused; }
 		
-		if(settingSceneMenu == false)
+		if (settingSceneMenu == false) {
 			pauseMenu = !pauseMenu;
+			//easingPause->SetFinished(false);
+		}
+			
 	
 		Mix_PauseMusic();
 	}
@@ -634,6 +637,23 @@ bool Scene::LoadState(pugi::xml_node& data)
 	b2Vec2 playerPos = { data.child("playerPosition").attribute("x").as_float(), data.child("playerPosition").attribute("y").as_float() };
 	app->scene->player->pbody->body->SetTransform(playerPos, 0);
 
+	ListItem<PartyMember*>* pmemberItem;
+	for (pmemberItem = app->partyManager->party.start; pmemberItem != NULL; pmemberItem = pmemberItem->next)
+	{
+		pugi::xml_node partyMember = data.append_child("partymember");
+		pmemberItem->data->name = data.child("partymember").attribute("name").as_string();
+		pmemberItem->data->maxHp = data.child("partymember").attribute("maxHp").as_uint();
+		pmemberItem->data->maxMana = data.child("partymember").attribute("maxMana").as_uint();
+		pmemberItem->data->currentHp = data.child("partymember").attribute("currentHp").as_uint();
+		pmemberItem->data->level = data.child("partymember").attribute("level").as_uint();
+		pmemberItem->data->attack = data.child("partymember").attribute("attack").as_uint();
+		pmemberItem->data->defense = data.child("partymember").attribute("defense").as_uint();
+		pmemberItem->data->speed = data.child("partymember").attribute("speed").as_uint();
+		pmemberItem->data->critRate = data.child("partymember").attribute("critRate").as_uint();
+		pmemberItem->data->fightPosition.x = data.child("partymember").attribute("fightPosX").as_int();
+		pmemberItem->data->fightPosition.y = data.child("partymember").attribute("fightPosY").as_int();
+	}
+
 	//Load previous saved player number of lives
 	saveEnabled = data.child("checkpointEnabled").attribute("checkpointEnabled").as_bool();
 
@@ -653,13 +673,23 @@ bool Scene::SaveState(pugi::xml_node& data)
 	playerPos.append_attribute("x") = app->scene->player->pbody->body->GetTransform().p.x;
 	playerPos.append_attribute("y") = app->scene->player->pbody->body->GetTransform().p.y;
 	
-	// Save current player number of coins
-	pugi::xml_node itemLives = data.append_child("itemLives");
-	itemLives.append_attribute("itemLives") = itemLives;
-	
-	// Save current player number of coins
-	pugi::xml_node checkpointEnabled = data.append_child("checkpointEnabled");
-	checkpointEnabled.append_attribute("checkpointEnabled") = checkpointEnabled;
+	ListItem<PartyMember*>* pmemberItem;
+
+	for (pmemberItem = app->partyManager->party.start; pmemberItem != NULL; pmemberItem = pmemberItem->next)
+	{
+		pugi::xml_node partyMember = data.append_child("partymember");
+		partyMember.append_attribute("name") = pmemberItem->data->name.GetString();
+		partyMember.append_attribute("maxHP") = pmemberItem->data->maxHp;
+		partyMember.append_attribute("maxMana") = pmemberItem->data->maxMana;
+		partyMember.append_attribute("currentHp") = pmemberItem->data->currentHp;
+		partyMember.append_attribute("level") = pmemberItem->data->level;
+		partyMember.append_attribute("attack") = pmemberItem->data->attack;
+		partyMember.append_attribute("defense") = pmemberItem->data->defense;
+		partyMember.append_attribute("speed") = pmemberItem->data->speed;
+		partyMember.append_attribute("critRate") = pmemberItem->data->critRate;
+		partyMember.append_attribute("fightPosX") = pmemberItem->data->fightPosition.x;
+		partyMember.append_attribute("fightPosY") = pmemberItem->data->fightPosition.y;
+	}
 
 	// Save current bat position
 	pugi::xml_node kidPos = data.append_child("kidPosition");
@@ -668,6 +698,10 @@ bool Scene::SaveState(pugi::xml_node& data)
 	
 	pugi::xml_node checkPoint = data.append_child("checkPoint");
 	checkPoint.append_attribute("checkPoint") = app->scene->saveEnabled;
+
+	// Save current player number of coins
+	pugi::xml_node nightEnabled = data.append_child("nightEnabled");
+	nightEnabled.append_attribute("nightEnabled") = isNight;
 	
 	pugi::xml_node actualMapName = data.append_child("mapName");
 	actualMapName.append_attribute("mapName") = mapName.GetString();

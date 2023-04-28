@@ -10,11 +10,12 @@
 	<TitleScreen />
 	<EndingScreen />
 	<scene>
-		<playerPosition x="15.468421" y="20.587244" />
-		<itemLives itemLives="true" />
-		<checkpointEnabled checkpointEnabled="true" />
+		<playerPosition x="7.23999977" y="16.5625" />
+		<partymember name="zero" maxHP="25" maxMana="20" currentHp="25" level="23" attack="8" defense="30" speed="40" critRate="10" fightPosX="350" fightPosY="300" />
+		<partymember name="sophie" maxHP="15" maxMana="30" currentHp="15" level="15" attack="12" defense="10" speed="50" critRate="15" fightPosX="318" fightPosY="396" />
 		<kidPosition x="5.46875" y="10.9375" />
 		<checkPoint checkPoint="false" />
+		<nightEnabled nightEnabled="false" />
 		<mapName mapName="town" />
 	</scene>
 	<sceneFight />
@@ -28,6 +29,6 @@
 	<guiManager />
 	<:anonymous />
 	<renderer>
-		<camera x="336" y="940" />
+		<camera x="0" y="684" />
 	</renderer>
 </save_state>

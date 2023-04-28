@@ -9,6 +9,8 @@
 #include "GuiButton.h"
 #include "ParticleSystem.h"
 #include "DialogueManager.h"
+#include "Spline.h"
+#include "Easing.h"
 
 struct SDL_Texture;
 
@@ -147,6 +149,11 @@ private:
 	ParticleSystem* smokePS;
 
 	bool isNight = false;
+
+	//EASINGS
+	Easing* easingPause = nullptr;
+	Easing* easingButton = nullptr;
+
 
 	bool exitGame = false;
 };
