@@ -146,7 +146,7 @@ private:
 
 	ParticleSystem* smokePS;
 
-	iPoint mousePos;
+	bool isNight = false;
 
 	bool exitGame = false;
 };

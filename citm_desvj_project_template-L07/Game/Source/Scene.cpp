@@ -191,6 +191,29 @@ bool Scene::Update(float dt)
 	// Draw map
 	app->map->Draw();
 
+	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+		if (smokePS == nullptr) {
+			smokePS = app->particlesManager->CreateParticleSystem(player->position, Blueprint::SAND);
+		}
+		else {
+			smokePS->TurnOff();
+			smokePS = nullptr;
+		}
+	}
+
+	if(isNight)
+		app->render->DrawRectangle(app->render->viewport, 0, 0, 255, 100, true, false);
+
+	SaveUI();
+
+	//Saves game if choosing the option when talkin with MAGE
+	if (dialogueManager->GetCurrentDialogue() != nullptr && dialogueManager->GetCurrentDialogue()->id == 6 && dialogueManager->GetCurrentDialogue()->currentNode->id == 1 && app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	{
+		showSavingState = true;
+		isNight = !isNight;
+		app->SaveGameRequest();
+	}
+
 	//Blit UI
 	app->ui->BlitFPS();
 
@@ -204,16 +227,6 @@ bool Scene::Update(float dt)
 		app->ui->BlitFrameCount();
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
-		if (smokePS == nullptr) {
-			smokePS = app->particlesManager->CreateParticleSystem(player->position, Blueprint::SAND);
-		}
-		else {
-			smokePS->TurnOff();
-			smokePS = nullptr;
-		}
-	}
-	
 	return true;
 }
 
@@ -351,15 +364,6 @@ bool Scene::PostUpdate()
 	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) {
 		dialogueManager->Draw();
 	}
-
-	SaveUI();
-
-	//Saves game if choosing the option when talkin with MAGE
-	if (dialogueManager->GetCurrentDialogue() != nullptr && dialogueManager->GetCurrentDialogue()->id == 6 && dialogueManager->GetCurrentDialogue()->currentNode->id == 1 && app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-	{
-		showSavingState = true;
-	}
-
 
 	if (exitGame == true)
 		ret = false;
@@ -531,7 +535,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 void Scene::SaveUI()
 {
 	if (showSavingState == true) {
-		if (saveTime < 50) {
+		if (saveTime < 75) {
 			app->render->DrawTexture(saveTex, app->render->camera.x + (app->render->camera.w - 100) , app->render->camera.y + (app->render->camera.h - 100), NULL);
 			saveTime++;
 			LOG("SAVETIME: %d", saveTime);
