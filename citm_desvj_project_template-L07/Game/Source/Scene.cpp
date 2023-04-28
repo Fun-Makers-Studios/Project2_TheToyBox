@@ -201,6 +201,7 @@ bool Scene::Update(float dt)
 		}
 	}
 
+	//Changes to Night Mode
 	if(isNight)
 		app->render->DrawRectangle(app->render->viewport, 0, 0, 255, 100, true, false);
 

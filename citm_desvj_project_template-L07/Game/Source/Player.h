@@ -40,11 +40,11 @@ public:
 	Animation* currentAnim = nullptr;
 
 	//Set of animations (JUMP ANIM DDOESN'T EXISTS)
-	Animation idlePlayer;
-	Animation runPlayer;
-	Animation attackPlayer;
-	Animation diePlayer;
-	Animation hitPlayer;
+	Animation idle;
+	Animation walkDown;
+	Animation walkRight;
+	Animation walkUp;
+	Animation walkLeft;
 
 	//Set of SFX
 	uint jumpSFX = 0;
@@ -77,8 +77,6 @@ private:
 	//L02: DONE 1: Declare player parameters
 	SDL_Texture* texture = nullptr;
 	const char* texturePath = nullptr;
-	SDL_Texture* texture2 = nullptr;
-	const char* texture2Path = nullptr;
 	SDL_Texture* shadowTexture = nullptr;
 	const char* shadowTexturePath = nullptr;
 
@@ -91,7 +89,6 @@ private:
 	int height;
 
 	bool isFliped = false;
-	bool changeTexture = false;
 };
 
 #endif // __PLAYER_H__
