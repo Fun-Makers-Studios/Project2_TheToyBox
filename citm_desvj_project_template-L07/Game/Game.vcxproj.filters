@@ -67,9 +67,6 @@
     <ClCompile Include="Source\Item.cpp">
       <Filter>Game\Items</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GuiButton.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GuiManager.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
@@ -120,6 +117,15 @@
     </ClCompile>
     <ClCompile Include="Source\Spline.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiButton.cpp">
+      <Filter>GUI\GUI Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiCheckBox.cpp">
+      <Filter>GUI\GUI Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiSlider.cpp">
+      <Filter>GUI\GUI Controls</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -213,9 +219,6 @@
     <ClInclude Include="Source\Item.h">
       <Filter>Game\Items</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GuiButton.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GuiControl.h">
       <Filter>GUI</Filter>
     </ClInclude>
@@ -276,6 +279,15 @@
     <ClInclude Include="Source\Spline.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GuiButton.h">
+      <Filter>GUI\GUI Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiCheckBox.h">
+      <Filter>GUI\GUI Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiSlider.h">
+      <Filter>GUI\GUI Controls</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -316,6 +328,9 @@
     </Filter>
     <Filter Include="Core\Managers">
       <UniqueIdentifier>{957f2650-3838-4d07-93d1-3f9517b0e576}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\GUI Controls">
+      <UniqueIdentifier>{eeb52c69-651d-4298-a69d-e69607d99fee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
