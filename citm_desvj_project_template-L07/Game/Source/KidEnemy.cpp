@@ -19,16 +19,20 @@ KidEnemy::KidEnemy() : Entity(EntityType::FLYING_ENEMY)
 	name.Create("Bat");
 }
 
-KidEnemy::~KidEnemy() {
+KidEnemy::~KidEnemy()
+{
 
 }
 
-bool KidEnemy::Awake() {
+bool KidEnemy::Awake()
+{
 
 	return true;
 }
 
-bool KidEnemy::Start() {
+bool KidEnemy::Start()
+{
+	body = new Body();
 
 	startPos.x = parameters.attribute("x").as_int();
 	startPos.y = parameters.attribute("y").as_int();
@@ -56,8 +60,8 @@ bool KidEnemy::Start() {
 	currentAnim = &idleAnim;
 	dead = false;
 
-	position.x = startPos.x;
-	position.y = startPos.y;
+	body->pos.x = startPos.x;
+	body->pos.y = startPos.y;
 
 	//HEKATE pbody = app->physics->CreateCircle(position.x, position.y, width/2, bodyType::STATIC, ColliderType::ENEMY);
 
@@ -66,7 +70,8 @@ bool KidEnemy::Start() {
 	return true;
 }
 
-bool KidEnemy::PreUpdate() {
+bool KidEnemy::PreUpdate()
+{
 
 	return true;
 }
@@ -95,13 +100,14 @@ bool KidEnemy::Update()
 
 		SDL_Rect rect = currentAnim->GetCurrentFrame();
 		ScaleType scale = app->scaleObj->GetCurrentScale();
-		app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, scale);
+		app->render->DrawTexture(texture, body->pos.x, body->pos.y, &rect, fliped, scale);
 		currentAnim->Update();
 
 	return true;
 }
 
-bool KidEnemy::PostUpdate() {
+bool KidEnemy::PostUpdate()
+{
 
 
 	return true;
@@ -122,8 +128,8 @@ bool KidEnemy::CleanUp()
 	return true;
 }
 
-void KidEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
-
+void KidEnemy::OnCollision()
+{
 	/*switch (physB->cType)
 	{
 	
@@ -134,9 +140,9 @@ void KidEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 }
 
-void KidEnemy::ResetBat() {
+void KidEnemy::ResetBat()
+{
 
 	//HEKATE pbody->body->SetSleepingAllowed(false);
-
 
 }

@@ -45,7 +45,7 @@ bool Collisions::Update(double dt)
 {
     bool ret = true;
 
-    iPoint pos = app->map->WorldToMap(app->scene->player->position.x, app->scene->player->position.y);
+    iPoint pos = app->map->WorldToMap(app->scene->player->body->pos.x, app->scene->player->body->pos.y);
 
     // Check player collision in a 3x3 tile area 
     for (int i = 0; i < pos.x; i++) //rows

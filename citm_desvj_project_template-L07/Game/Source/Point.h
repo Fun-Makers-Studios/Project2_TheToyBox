@@ -123,6 +123,24 @@ public:
 	{
 		return abs(v.x - x) + abs(v.y - y);
 	}
+
+	// Type conversion ---------------------------------------
+	// HEKATE
+	/*iPoint ConvertToInt(const dPoint& dp)
+	{
+		iPoint ip;
+		ip.x = static_cast<int>(dp.x);
+		ip.y = static_cast<int>(dp.y);
+		return ip;
+	}
+
+	dPoint ConvertToDouble(const iPoint& ip)
+	{
+		dPoint dp;
+		dp.x = static_cast<double>(ip.x);
+		dp.y = static_cast<double>(ip.y);
+		return dp;
+	}*/
 };
 
 typedef Point<int> iPoint;

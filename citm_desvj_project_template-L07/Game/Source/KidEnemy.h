@@ -31,7 +31,7 @@ public:
 
 	void MovementDirection(const iPoint& origin, const iPoint& destination);
 
-	void OnCollision(PhysBody* physA, PhysBody* physB);
+	void OnCollision();
 
 	void ResetBat();
 
@@ -52,7 +52,7 @@ public:
 	bool dead = false;
 	bool onCollision = false;
 
-	PhysBody* pbody = nullptr;
+	Body* body = nullptr;
 
 private:
 
@@ -61,7 +61,6 @@ private:
 
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 
-	dPoint velocity;
 	dPoint startPos;
 
 	int width;

@@ -50,7 +50,7 @@ bool Debug::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 			teleport = !teleport;
 
-		if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
 			freeCam = !freeCam;
 
 		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
@@ -161,10 +161,10 @@ void Debug::DrawDebug()
 
 		//Player x, y
 		app->fonts->BlitText(debugX, debugY + 55, 0, "player.x =");
-		app->fonts->BlitText(debugX + 88, debugY + 55, 0, std::to_string(app->scene->player->position.x).c_str());
+		app->fonts->BlitText(debugX + 88, debugY + 55, 0, std::to_string(app->scene->player->body->pos.x).c_str());
 
 		app->fonts->BlitText(debugX, debugY + 65, 0, "player.y =");
-		app->fonts->BlitText(debugX + 88, debugY + 65, 0, std::to_string(app->scene->player->position.y).c_str());
+		app->fonts->BlitText(debugX + 88, debugY + 65, 0, std::to_string(app->scene->player->body->pos.y).c_str());
 
 		//Camera x, y
 		app->fonts->BlitText(debugX, debugY + 80, 0, "camera.x =");
@@ -219,15 +219,8 @@ void Debug::DrawDebug()
 	//Camera limits
 	if (camLimits)
 	{
-		/*
-		int scale = app->win->GetScale();
-
-		app->scene->rectCamera.x = app->render->camera.w * 0.4;
-		app->scene->rectCamera.y = app->render->camera.h * 0.4;
-		app->scene->rectCamera.w = app->render->camera.w * 0.2;
-		app->scene->rectCamera.h = app->render->camera.h * 0.2;
-		app->render->DrawRectangle(app->scene->rectCamera, 0, 255, 0, 255, false, false);
-		*/
+		app->render->DrawLine(app->render->camera.w / 2, 0, app->render->camera.w / 2, app->render->camera.h, 255, 0, 0, 255, false);
+		app->render->DrawLine(0, app->render->camera.h / 2, app->render->camera.w, app->render->camera.h / 2, 255, 0, 0, 255, false);
 	}
 
 	//Teleport
@@ -267,7 +260,7 @@ void Debug::DrawEntities()
 		default:						color = White;		break;
 		}
 
-		SDL_Rect rect = { pEntity->position.x, pEntity->position.y, 32, 32};
+		SDL_Rect rect = { pEntity->body->pos.x, pEntity->body->pos.y, 32, 32};
 		app->render->DrawRectangle(rect, color.r, color.g, color.b, 255, false);
 		app->render->DrawRectangle(rect, color.r, color.g, color.b, 64, true);
 	}

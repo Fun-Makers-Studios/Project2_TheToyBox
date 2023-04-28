@@ -28,13 +28,11 @@ public:
 
 	bool CleanUp();
 
-	void OnCollision(PhysBody* physA, PhysBody* physB);
+	void OnCollision();
 
 	void DialogTriggerCheck();
 
 private:
-
-	Body* body;
 
 	SDL_Texture* texture = nullptr;
 	const char* texturePath = nullptr;
@@ -46,8 +44,8 @@ private:
 
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 
+	Body* body = nullptr;
 	dPoint startPos;
-	dPoint velocity;
 
 	int width;
 	int height;

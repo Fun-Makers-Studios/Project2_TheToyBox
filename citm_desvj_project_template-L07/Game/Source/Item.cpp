@@ -24,8 +24,8 @@ bool Item::Awake()
 
 bool Item::Start()
 {
-	position.x = parameters.attribute("x").as_int();
-	position.y = parameters.attribute("y").as_int();
+	double posX = parameters.attribute("x").as_int();
+	double posY = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
 	iType = parameters.attribute("iType").as_string();
 
@@ -44,7 +44,7 @@ bool Item::Start()
 	// Add a physics to an item - initialize the physics body
 	body->type = ColliderType::ITEM;
 	body->shape = ColliderShape::CIRCLE;
-	body->pos = { (double)position.x, (double)position.y };
+	body->pos = { posX, posY };
 	body->r = 16;
 
 	return true;
@@ -70,7 +70,7 @@ bool Item::Update()
 
 	if (isPicked == false) {
 
-		app->render->DrawTexture(texture, position.x, position.y, &lifeRect);
+		app->render->DrawTexture(texture, body->pos.x, body->pos.y, &lifeRect);
 
 	}
 
@@ -96,7 +96,7 @@ bool Item::CleanUp()
 	return true;
 }
 
-void Item::OnCollision(PhysBody* physA, PhysBody* physB)
+void Item::OnCollision()
 {
 	//switch (physB->cType)
 	//{

@@ -104,36 +104,7 @@ bool Player::Update()
 	if (app->scene->gamePaused != true) 
 	{
 
-		if (godMode == true) {
-
-			velocity = { 0, 0 };
-			// HEKATE pbody->body->SetGravityScale(0);
-
-			// Fly around the map
-			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-				velocity.y = -5;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-				velocity.y = 5;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				isFliped = true;
-				velocity.x = -5;
-				if (isFliped == true && fliped == SDL_FLIP_NONE) {
-					fliped = SDL_FLIP_HORIZONTAL;
-				}
-			}
-			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-				isFliped = false;
-				velocity.x = 5;
-				if (isFliped == false && fliped == SDL_FLIP_HORIZONTAL) {
-					fliped = SDL_FLIP_NONE;
-				}
-			}
-			// HEKATE pbody->body->SetLinearVelocity(velocity);
-
-		}
-		else if (godMode == false && dead == false)
+		if (godMode)
 		{
 			velocity = { 0, 0 };
 			// HEKATE pbody->body->SetGravityScale(0);
@@ -159,16 +130,42 @@ bool Player::Update()
 					fliped = SDL_FLIP_NONE;
 				}
 			}
+			// HEKATE pbody->body->SetLinearVelocity(velocity);
+
+		}
+		else if (!godMode && !dead)
+		{
+			velocity = { 0, 0 };
+			// HEKATE pbody->body->SetGravityScale(0);
+
+			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+				velocity.y = -5;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+				velocity.y = 5;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+				isFliped = true;
+				velocity.x = -5;
+				if (isFliped == true && fliped == SDL_FLIP_NONE) {
+					fliped = SDL_FLIP_HORIZONTAL;
+				}
+			}
+			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+				isFliped = false;
+				velocity.x = 5;
+				if (isFliped == false && fliped == SDL_FLIP_HORIZONTAL) {
+					fliped = SDL_FLIP_NONE;
+				}
+			}
 			
 			// HEKATE pbody->body->SetLinearVelocity(velocity);
+			body->pos.x += velocity.x;
+			body->pos.y += velocity.y;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
-			changeTexture = !changeTexture;
-
-
-
-		
+			changeTexture = !changeTexture;		
 
 	}
 	else {
@@ -179,19 +176,21 @@ bool Player::Update()
 	ScaleType scaleType = app->scaleObj->GetCurrentScale();
 	
 	// HEKATE
-	/*if (changeTexture) {
-		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - width / 2.25);
-		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - height/2);
+	if (changeTexture)
+	{
+		//body->pos.x = body->pos.x - width / 2.25;
+		//body->pos.y = body->pos.y - height / 2;
 		SDL_Rect rect = currentAnim->GetCurrentFrame();
-		app->render->DrawTexture(shadowTexture, position.x, position.y-height/1.15, NULL, fliped, scaleType);
-		app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, scaleType);
-	}	
-	else {
-		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x-width/2);
-		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y-height/3);
-		app->render->DrawTexture(shadowTexture, position.x, position.y-height/1.1, NULL, fliped, scaleType);
-		app->render->DrawTexture(texture2, position.x, position.y, NULL, fliped, scaleType);
-	}*/
+		app->render->DrawTexture(shadowTexture, body->pos.x, body->pos.y-height/1.15, NULL, fliped, scaleType);
+		app->render->DrawTexture(texture, body->pos.x, body->pos.y, &rect, fliped, scaleType);
+	}
+	else
+	{
+		//body->pos.x = body->pos.x - width / 2;
+		//body->pos.y = body->pos.y - height / 3;
+		app->render->DrawTexture(shadowTexture, body->pos.x, body->pos.y-height/1.1, NULL, fliped, scaleType);
+		app->render->DrawTexture(texture2, body->pos.x, body->pos.y, NULL, fliped, scaleType);
+	}
 	
 	currentAnim->Update();
 
@@ -219,7 +218,7 @@ bool Player::CleanUp()
 	return true;
 }
 
-void Player::OnCollision(PhysBody* physA, PhysBody* physB)
+void Player::OnCollision()
 {
 	// HEKATE
 	// DO THIS ON COLLISIONS

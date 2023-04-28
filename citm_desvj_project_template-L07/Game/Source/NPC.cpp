@@ -78,13 +78,13 @@ bool NPC::Update()
 	/*position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 2));
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 2));*/
 
-	boundaries.x = position.x - ((boundaries.w / 2)-(width/2));
-	boundaries.y = position.y - ((boundaries.h / 2) - (height/2));
+	boundaries.x = body->pos.x - ((boundaries.w / 2)-(width/2));
+	boundaries.y = body->pos.y - ((boundaries.h / 2) - (height/2));
 
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 	ScaleType scale = app->scaleObj->GetCurrentScale();
-	app->render->DrawTexture(shadowTexture, position.x, position.y -30, NULL, fliped, scale);
-	app->render->DrawTexture(texture, position.x, position.y, &rect, SDL_FLIP_NONE, scale);
+	app->render->DrawTexture(shadowTexture, body->pos.x, body->pos.y -30, NULL, fliped, scale);
+	app->render->DrawTexture(texture, body->pos.x, body->pos.y, &rect, SDL_FLIP_NONE, scale);
 	currentAnim->Update();
 
 	this->DialogTriggerCheck();
@@ -114,7 +114,7 @@ bool NPC::CleanUp()
 	return true;
 }
 
-void NPC::OnCollision(PhysBody* physA, PhysBody* physB)
+void NPC::OnCollision()
 {
 	// HEKATE
 	/*switch (physB->cType)
@@ -133,10 +133,10 @@ void NPC::OnCollision(PhysBody* physA, PhysBody* physB)
 
 void NPC::DialogTriggerCheck()
 {
-	if ((app->scene->player->position.x + (65 / 2) >= boundaries.x) &&
-		(app->scene->player->position.x + (65 / 2) < boundaries.x + boundaries.w) &&
-		(app->scene->player->position.y + (33 / 2) >= boundaries.y) &&
-		(app->scene->player->position.y + (33 / 2) < boundaries.y + boundaries.h) &&
+	if ((app->scene->player->body->pos.x + (65 / 2) >= boundaries.x) &&
+		(app->scene->player->body->pos.x + (65 / 2) < boundaries.x + boundaries.w) &&
+		(app->scene->player->body->pos.y + (33 / 2) >= boundaries.y) &&
+		(app->scene->player->body->pos.y + (33 / 2) < boundaries.y + boundaries.h) &&
 		(app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)) {
 		if (this->dialogueid != -1) {
 			app->scene->dialogueManager->Load(this->dialogueid);

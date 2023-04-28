@@ -189,15 +189,29 @@ bool Scene::Update(float dt)
 	
 	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && !dialogueManager->dialogueLoaded)
 	{
-		
-			gamePaused = !gamePaused;
-			partyMenu = !partyMenu;
-			app->audio->PlayFx(selectSFX);
-		
+		gamePaused = !gamePaused;
+		partyMenu = !partyMenu;
+		app->audio->PlayFx(selectSFX);
 	}
 
-	// Camera movement related to player's movement
-	FixCamera();
+	// Camera movement
+	if (app->debug->debug && app->debug->freeCam)
+	{
+		//Free camera on debug mode
+		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)	{ app->render->camera.x -= 8 * dt / 16; }
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)	{ app->render->camera.x += 8 * dt / 16; }
+		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)		{ app->render->camera.y -= 8 * dt / 16; }
+		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)	{ app->render->camera.y += 8 * dt / 16; }
+	}
+	else
+	{
+		// Camera movement related to player's movement
+		// HEKATE FixCamera() not working??
+		FixCamera();
+		uint scale = app->scaleObj->ScaleTypeToInt(ScaleType::WORLD);
+		app->render->camera.x = player->body->pos.x * scale - (app->render->camera.w / 2 - 16 * scale);
+		app->render->camera.y = player->body->pos.y * scale - (app->render->camera.h / 2 - 16 * scale);
+	}
 
 	// Draw map
 	app->map->Draw();
@@ -218,7 +232,9 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
 		if (smokePS == nullptr) {
-			smokePS = app->particleManager->CreateParticleSystem(player->position, Blueprint::SAND);
+			iPoint point;
+			point.Create(player->body->pos.x, player->body->pos.y);
+			smokePS = app->particleManager->CreateParticleSystem(point, Blueprint::SAND);
 		}
 		else {
 			smokePS->TurnOff();
@@ -607,8 +623,8 @@ void Scene::FixCamera()
 	{
 		uint scale = app->scaleObj->ScaleTypeToInt(ScaleType::WORLD);
 
-		app->render->camera.x = (player->position.x * scale + 16) - ((app->win->screenSurface->w) / 2);
-		app->render->camera.y = (player->position.y * scale + 16) - ((app->win->screenSurface->h) / 2);
+		app->render->camera.x = (player->body->pos.x * scale + 16) - ((app->win->screenSurface->w) / 2);
+		app->render->camera.y = (player->body->pos.y * scale + 16) - ((app->win->screenSurface->h) / 2);
 
 		if (app->render->camera.x < 0)
 			app->render->camera.x = 0;

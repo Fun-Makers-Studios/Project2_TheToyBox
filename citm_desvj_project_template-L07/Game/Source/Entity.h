@@ -5,8 +5,9 @@
 #include "SString.h"
 #include "Input.h"
 #include "Render.h"
+#include "Collisions.h"
 
-class PhysBody;
+class Body;
 
 enum class EntityType
 {
@@ -82,10 +83,6 @@ public:
 		}
 	}
 
-	virtual void OnCollision(PhysBody* physA, PhysBody* physB) {
-
-	};
-
 
 public:
 
@@ -94,7 +91,7 @@ public:
 	bool active = true;
 	pugi::xml_node parameters;
 
-	iPoint position;             
+	Body* body;             
 	bool renderable = true;
 
 	bool needToDestroy = false;
