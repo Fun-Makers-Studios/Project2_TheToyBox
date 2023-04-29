@@ -45,6 +45,8 @@ bool Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Scene::Start()
 {
+	LOG("--STARTS GAME SCENE--");
+
 	dialogueManager = new DialogueManager(this);
 
 	/*STORE INFO FROM XML*/
@@ -65,29 +67,30 @@ bool Scene::Start()
 		livesCollectedList.Add(item);
 	}*/
 
-	for (pugi::xml_node itemNode = app->configNode.child("scene").child("enemykid"); itemNode; itemNode = itemNode.next_sibling("enemykid"))
+	/*for (pugi::xml_node itemNode = app->configNode.child("scene").child("enemykid"); itemNode; itemNode = itemNode.next_sibling("enemykid"))
 	{
 		kid = (KidEnemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
 		kid->parameters = itemNode;
-	}
+	}*/
+
+	
+
+	//Load First Map NPCs
+	mapName = "town";
+	//HEKATE LoadNPC(mapName);
+
+	//Instantiate and init the player using the entity manager
+	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
+	player->parameters = app->configNode.child("scene").child("player");
+	//player->Start();
 
 	/*INITIALIZE NECESSARY MODULES*/
 	app->pathfinding->Enable();
 	app->map->Enable();
 	app->collisions->Enable();
 	app->entityManager->Enable();
-	LOG("--STARTS GAME SCENE--");
 	app->debug->debug = false;
 	exitGame = false;
-
-	//Load First Map NPCs
-	mapName = "town";
-	LoadNPC(mapName);
-
-	//Instantiate and init the player using the entity manager
-	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
-	player->parameters = app->configNode.child("scene").child("player");
-	player->Start();
 
 	// Load map
 	if (app->map->Load())
@@ -115,6 +118,7 @@ bool Scene::Start()
 	sophieImg = app->tex->Load(sophieImgPath);
 	saveTex = app->tex->Load(saveTexPath);
 
+	// UI
 	uint w, h;
 	app->win->GetWindowSize(w, h);
 	resumeButton14 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "resume", 7, { 515, 295, 252, 76 }, this);
@@ -215,19 +219,19 @@ bool Scene::Update(float dt)
 	// Draw map
 	app->map->Draw();
 
+	// HEKATE Development old debug UI
 	//Blit UI
-	app->ui->BlitFPS();
+	/*app->ui->BlitFPS();
 
-	// HEKATE Developent old debug
 	if (app->debug->debug)
 	{
-		/*app->ui->BlitPlayerXPos();
+		app->ui->BlitPlayerXPos();
 		app->ui->BlitPlayerYPos();
 		app->ui->BlitAverageFPS();
 		app->ui->BlitDT();
 		app->ui->BlitTimeSinceStart();
-		app->ui->BlitFrameCount();*/
-	}
+		app->ui->BlitFrameCount();
+	}*/
 
 	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
 		if (smokePS == nullptr) {
@@ -588,7 +592,8 @@ void Scene::SceneMap()
 	{
 		
 		app->map->ChangeMap(mapName.GetString());
-		//HEKATE player->pbody->body->SetTransform(PIXEL_TO_METERS(player->newPos), 0.0f);
+		
+		//player->pbody->body->SetTransform(PIXEL_TO_METERS(player->newPos), 0.0f);
 		LoadNPC(mapName.GetString());
 
 		isMapChanging = false;
@@ -651,17 +656,17 @@ bool Scene::LoadState(pugi::xml_node& data)
 {
 	// HEKATE
 	// Load previous saved player position
-	//iPoint playerPos = { data.child("playerPosition").attribute("x").as_float(), data.child("playerPosition").attribute("y").as_float() };
-	//app->scene->player->pbody->body->SetTransform(playerPos, 0);
+	//iPoint playerpos = { data.child("playerposition").attribute("x").as_float(), data.child("playerposition").attribute("y").as_float() };
+	//app->scene->player->pbody->body->settransform(playerpos, 0);
 
-	////Load previous saved player number of lives
-	//saveEnabled = data.child("checkpointEnabled").attribute("checkpointEnabled").as_bool();
+	////load previous saved player number of lives
+	//saveEnabled = data.child("checkpointenabled").attribute("checkpointenabled").as_bool();
 
-	//mapName = data.child("mapName").attribute("mapName").as_string();
+	//mapName = data.child("mapname").attribute("mapname").as_string();
 
-	//// Load previous saved bat position
-	//iPoint kidPos = { data.child("kidPosition").attribute("x").as_float(), data.child("kidPosition").attribute("y").as_float() };
-	//app->scene->kid->pbody->body->SetTransform(kidPos, 0);
+	//// load previous saved bat position
+	//iPoint kidpos = { data.child("kidposition").attribute("x").as_float(), data.child("kidposition").attribute("y").as_float() };
+	//app->scene->kid->pbody->body->settransform(kidpos, 0);
 
 	return true;
 }

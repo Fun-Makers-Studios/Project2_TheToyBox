@@ -16,6 +16,14 @@
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
+
+	// Initialize collider body
+	// HEKATE must do cleanup
+	body = new Body();
+	body->type = ColliderType::PLAYER;
+	body->shape = ColliderShape::CIRCLE;
+	body->pos = { startPos.x, startPos.y };
+	body->r = 16;
 }
 
 Player::~Player() {
@@ -27,9 +35,9 @@ bool Player::Awake() {
 	return true;
 }
 
-bool Player::Start() {
-
-	//L02: DONE 1: Initialize Player parameters
+bool Player::Start()
+{
+	// Initialize Player parameters
 	startPos.x = parameters.attribute("x").as_int();
 	startPos.y = parameters.attribute("y").as_int();
 
@@ -53,7 +61,7 @@ bool Player::Start() {
 	idlePlayer.loop = true;
 	idlePlayer.speed = 0.1f;
 
-	//initilize textures
+	// Initilize textures
 	texture = app->tex->Load(texturePath);
 	texture2 = app->tex->Load(texture2Path);
 	shadowTexture = app->tex->Load(shadowTexturePath);
@@ -73,14 +81,6 @@ bool Player::Start() {
 
 	newPos = { 0, 0 };
 
-	//Add physics to the player - initialize physics body
-	// HEKATE
-	body = new Body();
-	body->type = ColliderType::PLAYER;
-	body->shape = ColliderShape::CIRCLE;
-	body->pos = { startPos.x, startPos.y };
-	body->r = 16;
-
 
 	// HEKATE pbody->mapZone = MapZone::PLAYER;
 
@@ -97,7 +97,7 @@ bool Player::PreUpdate() {
 bool Player::Update()
 {
 	int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
-	int speed = 6 / scale;
+	double speed = (6 * app->GetDT() / 16) / scale;
 
 	currentAnim = &idlePlayer;
 
@@ -111,21 +111,21 @@ bool Player::Update()
 
 			// Fly around the map
 			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-				velocity.y = -5;
+				velocity.y = -speed;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-				velocity.y = 5;
+				velocity.y = speed;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 				isFliped = true;
-				velocity.x = -5;
+				velocity.x = -speed;
 				if (isFliped == true && fliped == SDL_FLIP_NONE) {
 					fliped = SDL_FLIP_HORIZONTAL;
 				}
 			}
 			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				isFliped = false;
-				velocity.x = 5;
+				velocity.x = speed;
 				if (isFliped == false && fliped == SDL_FLIP_HORIZONTAL) {
 					fliped = SDL_FLIP_NONE;
 				}
@@ -139,21 +139,21 @@ bool Player::Update()
 			// HEKATE pbody->body->SetGravityScale(0);
 
 			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-				velocity.y = -5;
+				velocity.y = -speed;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-				velocity.y = 5;
+				velocity.y = speed;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 				isFliped = true;
-				velocity.x = -5;
+				velocity.x = -speed;
 				if (isFliped == true && fliped == SDL_FLIP_NONE) {
 					fliped = SDL_FLIP_HORIZONTAL;
 				}
 			}
 			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				isFliped = false;
-				velocity.x = 5;
+				velocity.x = speed;
 				if (isFliped == false && fliped == SDL_FLIP_HORIZONTAL) {
 					fliped = SDL_FLIP_NONE;
 				}

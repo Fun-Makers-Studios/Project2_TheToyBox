@@ -236,7 +236,8 @@ void Debug::DrawDebug()
 
 void Debug::DrawColliders()
 {
-	//HEKATE MUST DRAW COLLIDERS
+	// HEKATE MUST DRAW COLLIDERS
+	// Currently at Collisions Update()
 }
 
 void Debug::DrawEntities()
@@ -260,8 +261,19 @@ void Debug::DrawEntities()
 		default:						color = White;		break;
 		}
 
-		SDL_Rect rect = { pEntity->body->pos.x, pEntity->body->pos.y, 32, 32};
+		if (pEntity->body != nullptr)
+		{
+			app->render->DrawCircle(
+				pEntity->body->pos.x,
+				pEntity->body->pos.y,
+				pEntity->body->r,
+				color.r, color.g, color.b, 255);
+		}
+		
+
+
+		/*SDL_Rect rect = { pEntity->body->pos.x, pEntity->body->pos.y, 32, 32};
 		app->render->DrawRectangle(rect, color.r, color.g, color.b, 255, false);
-		app->render->DrawRectangle(rect, color.r, color.g, color.b, 64, true);
+		app->render->DrawRectangle(rect, color.r, color.g, color.b, 64, true);*/
 	}
 }

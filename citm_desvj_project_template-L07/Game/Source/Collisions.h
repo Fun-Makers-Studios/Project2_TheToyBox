@@ -28,6 +28,7 @@ struct Body
 	ColliderType type;
 	dPoint pos;
 	dPoint vel;
+	double w, h;
 	double r;
 };
 
@@ -64,7 +65,7 @@ public:
 	bool CleanUp();
 
 	//Collision Solver
-	bool CheckCollision(Body* a, Body* b);
+	bool CheckCollision(const Body& body1, const Body& body2);
 
 	void DestroyMapColliders();
 

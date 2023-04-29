@@ -40,8 +40,8 @@ bool EntityManager::Awake(pugi::xml_node& config)
 
 }
 
-bool EntityManager::Start() {
-
+bool EntityManager::Start()
+{
 	bool ret = true; 
 
 	//Iterates over the entities and calls Start

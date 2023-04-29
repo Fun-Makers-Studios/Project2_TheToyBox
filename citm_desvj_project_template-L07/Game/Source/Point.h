@@ -124,6 +124,14 @@ public:
 		return abs(v.x - x) + abs(v.y - y);
 	}
 
+	// Algorithm ---------------------------------------------
+	Point Clamp(const Point& min_, const Point& max_)
+	{
+		double clamped_x = fmax(min_.x, fmin(max_.x, x));
+		double clamped_y = fmax(min_.y, fmin(max_.y, y));
+		return { clamped_x, clamped_y };
+	}
+	
 	// Type conversion ---------------------------------------
 	// HEKATE
 	/*iPoint ConvertToInt(const dPoint& dp)

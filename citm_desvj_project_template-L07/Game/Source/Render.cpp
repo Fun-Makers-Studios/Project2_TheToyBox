@@ -255,7 +255,7 @@ bool Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b,
 bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera) const
 {
 	bool ret = true;
-	uint scale = app->win->GetScale();
+	uint scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
@@ -268,12 +268,12 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 	for(uint i = 0; i < 360; ++i)
 	{
 		if (app->titlescreen->active == true || app->logoscreen->active == true) {
-			points[i].x = (int)(-camera.x + radius * cos(i * factor));
-			points[i].y = (int)(-camera.y + radius * sin(i * factor));
+			points[i].x = (int)(-camera.x + radius * cos(i * factor) * scale);
+			points[i].y = (int)(-camera.y + radius * sin(i * factor) * scale);
 		}
 		else {
-			points[i].x = (int)(-camera.x + x + radius * cos(i * factor));
-			points[i].y = (int)(-camera.y + y + radius * sin(i * factor));
+			points[i].x = (int)(-camera.x + x * scale + radius * cos(i * factor) * scale);
+			points[i].y = (int)(-camera.y + y * scale + radius * sin(i * factor) * scale);
 		}
 	}
 

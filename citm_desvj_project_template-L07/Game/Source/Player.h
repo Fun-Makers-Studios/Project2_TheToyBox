@@ -34,7 +34,6 @@ public:
 	void ResetPlayerPos();
 
 public:
-	Body* body;
 
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
