@@ -209,11 +209,8 @@ bool Scene::Update(float dt)
 	else
 	{
 		// Camera movement related to player's movement
-		// HEKATE FixCamera() not working on RELEASE???
+		// HEKATE FixCamera() Modified
 		FixCamera();
-		uint scale = app->scaleObj->ScaleTypeToInt(ScaleType::WORLD);
-		app->render->camera.x = player->body->pos.x * scale - (app->render->camera.w / 2 - 16 * scale);
-		app->render->camera.y = player->body->pos.y * scale - (app->render->camera.h / 2 - 16 * scale);
 	}
 
 	// Draw map
@@ -622,13 +619,13 @@ void Scene::LoadNPC(SString mapName_)
 
 void Scene::FixCamera()
 {
-	// HEKATE remove METERS_TO_PIXELS ?
-	if (app->map->mapData.width > 1280 && app->map->mapData.height > 704)	//SMALL MAP SIZE 1280x704
+	// HEKATE width/height in TILES (townMap 55x36)
+	if (app->map->mapData.width == 55 && app->map->mapData.height == 36)	//SMALL MAP SIZE 1280x704
 	{
 		uint scale = app->scaleObj->ScaleTypeToInt(ScaleType::WORLD);
 
-		app->render->camera.x = (player->body->pos.x * scale + 16) - ((app->win->screenSurface->w) / 2);
-		app->render->camera.y = (player->body->pos.y * scale + 16) - ((app->win->screenSurface->h) / 2);
+		app->render->camera.x = player->body->pos.x * scale - app->win->screenSurface->w / 2;
+		app->render->camera.y = player->body->pos.y * scale - app->win->screenSurface->h / 2;
 
 		if (app->render->camera.x < 0)
 			app->render->camera.x = 0;
@@ -700,5 +697,3 @@ bool Scene::SaveState(pugi::xml_node& data)
 
 	return true;
 }
-
-

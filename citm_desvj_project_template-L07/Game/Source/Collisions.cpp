@@ -158,8 +158,8 @@ bool Collisions::CheckCollision(const Body& body1, const Body& body2)
         }
 
         // Calculate distance between circle center and rectangle center
-        double circleDistanceX = std::abs(circle.pos.x - rectangle.pos.x);
-        double circleDistanceY = std::abs(circle.pos.y - rectangle.pos.y);
+        double circleDistanceX = std::abs(circle.pos.x - (rectangle.pos.x + rectangle.w / 2));
+        double circleDistanceY = std::abs(circle.pos.y - (rectangle.pos.y + rectangle.h / 2));
 
         // Check if circle is too far away from rectangle to collide
         if (circleDistanceX > (rectangle.w / 2.0 + circle.r)) { return false; }
