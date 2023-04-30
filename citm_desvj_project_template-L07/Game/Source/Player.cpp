@@ -13,31 +13,12 @@
 #include "EntityManager.h"
 
 
-Player::Player() : Entity(EntityType::PLAYER)
+Player::Player(pugi::xml_node parameters) : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
 
-	// Initialize collider body
-	// HEKATE must do cleanup
-	body = new Body();
-	body->type = ColliderType::PLAYER;
-	body->shape = ColliderShape::CIRCLE;
-	body->pos = { startPos.x, startPos.y };
-	body->r = 8;
-}
-
-Player::~Player() {
-
-}
-
-bool Player::Awake() {
-
-	return true;
-}
-
-bool Player::Start()
-{
-	// Initialize Player parameters
+	// Initialize parameters from xml
+	this->parameters = parameters;
 	startPos.x = parameters.attribute("x").as_int();
 	startPos.y = parameters.attribute("y").as_int();
 
@@ -54,6 +35,33 @@ bool Player::Start()
 	selectSFXPath = app->configNode.child("player").child("SFXset").attribute("selectSFXPath").as_string();
 	shortRangeAttackSFXPath = app->configNode.child("player").child("SFXset").attribute("shortRangeAttackSFXPath").as_string();
 
+	// Create collider body
+	body = new Body();
+	body->type = ColliderType::PLAYER;
+	body->shape = ColliderShape::CIRCLE;
+	body->pos = { startPos.x, startPos.y };
+	body->r = 8;
+}
+
+Player::~Player()
+{
+	app->tex->UnLoad(texture);
+	texture = nullptr;
+
+	delete body;
+	body = nullptr;
+
+	app->entityManager->DestroyEntity(this);
+}
+
+bool Player::Awake()
+{
+
+	return true;
+}
+
+bool Player::Start()
+{
 	width = 32;
 	height = 32;
 
@@ -84,7 +92,6 @@ bool Player::Start()
 
 	// HEKATE pbody->mapZone = MapZone::PLAYER;
 
-	// HEKATE pbody->listener = this;
 
 	return true;
 }
@@ -106,26 +113,26 @@ bool Player::Update()
 
 		if (godMode)
 		{
-			velocity = { 0, 0 };
+			body->vel = { 0, 0 };
 			// HEKATE pbody->body->SetGravityScale(0);
 
 			// Fly around the map
 			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-				velocity.y = -speed;
+				body->vel.y = -speed;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-				velocity.y = speed;
+				body->vel.y = speed;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 				isFliped = true;
-				velocity.x = -speed;
+				body->vel.x = -speed;
 				if (isFliped == true && fliped == SDL_FLIP_NONE) {
 					fliped = SDL_FLIP_HORIZONTAL;
 				}
 			}
 			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				isFliped = false;
-				velocity.x = speed;
+				body->vel.x = speed;
 				if (isFliped == false && fliped == SDL_FLIP_HORIZONTAL) {
 					fliped = SDL_FLIP_NONE;
 				}
@@ -135,33 +142,33 @@ bool Player::Update()
 		}
 		else if (!godMode && !dead)
 		{
-			velocity = { 0, 0 };
+			body->vel = { 0, 0 };
 			// HEKATE pbody->body->SetGravityScale(0);
 
 			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-				velocity.y = -speed;
+				body->vel.y = -speed;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-				velocity.y = speed;
+				body->vel.y = speed;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 				isFliped = true;
-				velocity.x = -speed;
+				body->vel.x = -speed;
 				if (isFliped == true && fliped == SDL_FLIP_NONE) {
 					fliped = SDL_FLIP_HORIZONTAL;
 				}
 			}
 			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				isFliped = false;
-				velocity.x = speed;
+				body->vel.x = speed;
 				if (isFliped == false && fliped == SDL_FLIP_HORIZONTAL) {
 					fliped = SDL_FLIP_NONE;
 				}
 			}
 			
 			// HEKATE pbody->body->SetLinearVelocity(velocity);
-			body->pos.x += velocity.x;
-			body->pos.y += velocity.y;
+			body->pos.x += body->vel.x;
+			body->pos.y += body->vel.y;
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
@@ -206,14 +213,6 @@ bool Player::PostUpdate() {
 
 bool Player::CleanUp()
 {
-	app->tex->UnLoad(texture);
-	texture = nullptr;
-	// HEKATE
-	/*pbody->body->DestroyFixture(pbody->body->GetFixtureList());
-	app->physics->world->DestroyBody(this->pbody->body);
-	delete pbody;
-	pbody = nullptr;*/
-	app->entityManager->DestroyEntity(this);
 
 	return true;
 }
@@ -316,13 +315,12 @@ void Player::OnCollision()
 		break;
 	}
 	*/
-
 }
 
 
 void Player::ResetPlayerPos()
 {
-	velocity = { 0, 0 };
+	body->vel = { 0, 0 };
 	// HEKATE
 	//pbody->body->SetTransform(PIXEL_TO_METERS(startPos), 0.0f);
 	dead = false;

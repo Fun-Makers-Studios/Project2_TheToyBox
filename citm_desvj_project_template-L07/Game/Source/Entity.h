@@ -88,12 +88,14 @@ public:
 
 	SString name;
 	EntityType type;
-	bool active = true;
 	pugi::xml_node parameters;
 
-	Body* body;             
-	bool renderable = true;
+	// Collider
+	Body* body = nullptr;
 
+	// States
+	bool active = true;
+	bool renderable = true;
 	bool needToDestroy = false;
 };
 

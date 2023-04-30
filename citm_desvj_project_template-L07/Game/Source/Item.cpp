@@ -10,12 +10,35 @@
 #include "Collisions.h"
 #include "EntityManager.h"
 
-Item::Item() : Entity(EntityType::ITEM)
+Item::Item(pugi::xml_node parameters) : Entity(EntityType::ITEM)
 {
 	name.Create("item");
+
+	// Initialize parameters from xml
+	this->parameters = parameters;
+
+	double posX = parameters.attribute("x").as_int();
+	double posY = parameters.attribute("y").as_int();
+	texturePath = parameters.attribute("texturepath").as_string();
+	itemType = parameters.attribute("itemType").as_string();
+
+	// Create collider body
+	body->type = ColliderType::ITEM;
+	body->shape = ColliderShape::CIRCLE;
+	body->pos = { posX, posY };
+	body->r = 8;
 }
 
-Item::~Item() {}
+Item::~Item()
+{
+	app->tex->UnLoad(texture);
+	texture = nullptr;
+
+	delete body;
+	body = nullptr;
+
+	app->entityManager->DestroyEntity(this);
+}
 
 bool Item::Awake()
 {
@@ -24,28 +47,17 @@ bool Item::Awake()
 
 bool Item::Start()
 {
-	double posX = parameters.attribute("x").as_int();
-	double posY = parameters.attribute("y").as_int();
-	texturePath = parameters.attribute("texturepath").as_string();
-	iType = parameters.attribute("iType").as_string();
-
 	width = 32;
 	height = 32;
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 	
-	if (iType == "life")
+	if (itemType == "life")
 		lifeRect = {0, 0, 32, 32};
 	
-	if (iType == "potionhp")
+	if (itemType == "potionhp")
 		lifeRect = {0, 0, 16, 16};
-
-	// Add a physics to an item - initialize the physics body
-	body->type = ColliderType::ITEM;
-	body->shape = ColliderShape::CIRCLE;
-	body->pos = { posX, posY };
-	body->r = 16;
 
 	return true;
 }
@@ -85,13 +97,6 @@ bool Item::PostUpdate()
 
 bool Item::CleanUp()
 {
-	app->tex->UnLoad(texture);
-	texture = nullptr;
-
-	// HEKATE app->physics->world->DestroyBody(pbody->body);
-	// HEKATE delete pbody;
-	// HEKATE pbody = nullptr;
-	app->entityManager->DestroyEntity(this);
 
 	return true;
 }

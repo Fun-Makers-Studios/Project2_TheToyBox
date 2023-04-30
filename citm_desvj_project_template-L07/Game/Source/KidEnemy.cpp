@@ -14,14 +14,37 @@
 #include "EntityManager.h"
 
 
-KidEnemy::KidEnemy() : Entity(EntityType::FLYING_ENEMY)
+KidEnemy::KidEnemy(pugi::xml_node parameters) : Entity(EntityType::FLYING_ENEMY)
 {
 	name.Create("Bat");
+
+	// Initialize parameters from xml
+	this->parameters = parameters;
+	startPos.x = parameters.attribute("x").as_int();
+	startPos.y = parameters.attribute("y").as_int();
+
+	texturePath = parameters.attribute("texturepath").as_string();
+
+	stompSFXPath = app->configNode.child("scene").child("slimesfx").attribute("stompSFXPath").as_string();
+	powerUpSFXPath = app->configNode.child("scene").child("slimesfx").attribute("powerUpSFXPath").as_string();
+	batHitSFXPath = app->configNode.child("scene").child("batsfx").attribute("batHitSFXPath").as_string();
+
+	// Create collider body
+	body = new Body();
+	body->type = ColliderType::ENEMY;
+	body->shape = ColliderShape::CIRCLE;
+	body->pos = { startPos.x, startPos.y };
+	body->r = 16;
 }
 
 KidEnemy::~KidEnemy()
 {
+	app->tex->UnLoad(texture);
 
+	delete body;
+	body = nullptr;
+
+	app->entityManager->DestroyEntity(this);
 }
 
 bool KidEnemy::Awake()
@@ -32,40 +55,29 @@ bool KidEnemy::Awake()
 
 bool KidEnemy::Start()
 {
-	body = new Body();
-
-	startPos.x = parameters.attribute("x").as_int();
-	startPos.y = parameters.attribute("y").as_int();
-
-	texturePath = parameters.attribute("texturepath").as_string();
-
-
-	width = 32;
-	height = 32;
-
-	idleAnim.PushBack({ 192, 0, 32, 64 });
-	idleAnim.loop = true;
-	idleAnim.speed = 0.1f;
-
-	texture = app->tex->Load(texturePath);
-
-	stompSFXPath = app->configNode.child("scene").child("slimesfx").attribute("stompSFXPath").as_string();		
-	powerUpSFXPath = app->configNode.child("scene").child("slimesfx").attribute("powerUpSFXPath").as_string();	
-	batHitSFXPath = app->configNode.child("scene").child("batsfx").attribute("batHitSFXPath").as_string();
-
-	stompSFX = app->audio->LoadFx(stompSFXPath);
-	powerUpSFX = app->audio->LoadFx(powerUpSFXPath);
-	batHitSFX = app->audio->LoadFx(batHitSFXPath);
-
-	currentAnim = &idleAnim;
+	//set var
 	dead = false;
 
 	body->pos.x = startPos.x;
 	body->pos.y = startPos.y;
 
-	//HEKATE pbody = app->physics->CreateCircle(position.x, position.y, width/2, bodyType::STATIC, ColliderType::ENEMY);
+	width = 32;
+	height = 32;
 
-	//HEKATE pbody->listener = this;
+	//Animations
+	idleAnim.PushBack({ 192, 0, 32, 64 });
+	idleAnim.loop = true;
+	idleAnim.speed = 0.1f;
+	currentAnim = &idleAnim;
+
+	// Load texure
+	texture = app->tex->Load(texturePath);
+
+	// Load sfx
+	stompSFX = app->audio->LoadFx(stompSFXPath);
+	powerUpSFX = app->audio->LoadFx(powerUpSFXPath);
+	batHitSFX = app->audio->LoadFx(batHitSFXPath);
+
 
 	return true;
 }
@@ -115,15 +127,6 @@ bool KidEnemy::PostUpdate()
 
 bool KidEnemy::CleanUp()
 {
-	app->tex->UnLoad(texture);
-
-	//HEKATE pbody->body->DestroyFixture(pbody->body->GetFixtureList());
-	//HEKATE app->physics->world->DestroyBody(this->pbody->body);
-	//HEKATE delete pbody;
-	//HEKATE pbody = nullptr;
-
-	app->entityManager->DestroyEntity(this);
-
 
 	return true;
 }

@@ -12,7 +12,7 @@ class Item : public Entity
 {
 public:
 
-	Item();
+	Item(pugi::xml_node parameters);
 	virtual ~Item();
 
 	bool Awake();
@@ -33,8 +33,7 @@ public:
 
 	bool isPicked = false;
 
-	Body* body;
-	SString iType;
+	SString itemType;
 
 private:
 
@@ -42,14 +41,11 @@ private:
 	const char* texturePath;
 
 	SDL_Rect lifeRect;
-	
-	dPoint velocity;
 
 	int timeMov = 0;
 
 	int width;
 	int height;
-
 };
 
 #endif // __ITEM_H__

@@ -13,7 +13,7 @@ class KidEnemy : public Entity
 {
 public:
 
-	KidEnemy();
+	KidEnemy(pugi::xml_node parameters);
 
 	virtual ~KidEnemy();
 
@@ -28,8 +28,6 @@ public:
 	bool PostUpdate();
 
 	bool CleanUp();
-
-	void MovementDirection(const iPoint& origin, const iPoint& destination);
 
 	void OnCollision();
 

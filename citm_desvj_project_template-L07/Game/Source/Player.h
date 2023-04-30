@@ -13,7 +13,7 @@ class Player : public Entity
 {
 public:
 
-	Player();
+	Player(pugi::xml_node parameters);
 	
 	virtual ~Player();
 
@@ -72,7 +72,7 @@ public:
 
 private:
 
-	//L02: DONE 1: Declare player parameters
+	// Textures
 	SDL_Texture* texture = nullptr;
 	const char* texturePath = nullptr;
 	SDL_Texture* texture2 = nullptr;
@@ -82,7 +82,6 @@ private:
 
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 	
-	dPoint velocity;
 	dPoint startPos;
 
 	int width;

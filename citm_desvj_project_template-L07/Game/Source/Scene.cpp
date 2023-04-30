@@ -67,22 +67,19 @@ bool Scene::Start()
 		livesCollectedList.Add(item);
 	}*/
 
-	/*for (pugi::xml_node itemNode = app->configNode.child("scene").child("enemykid"); itemNode; itemNode = itemNode.next_sibling("enemykid"))
+
+	for (pugi::xml_node itemNode = app->configNode.child("scene").child("enemykid"); itemNode; itemNode = itemNode.next_sibling("enemykid"))
 	{
-		kid = (KidEnemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		kid->parameters = itemNode;
-	}*/
+		kid = (KidEnemy*)app->entityManager->CreateEntity(EntityType::ENEMY, itemNode);
+	}
 
 	
-
 	//Load First Map NPCs
 	mapName = "town";
-	//HEKATE LoadNPC(mapName);
+	LoadNPC(mapName);
 
 	//Instantiate and init the player using the entity manager
-	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
-	player->parameters = app->configNode.child("scene").child("player");
-	//player->Start();
+	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER, app->configNode.child("scene").child("player"));
 
 	/*INITIALIZE NECESSARY MODULES*/
 	app->pathfinding->Enable();
@@ -586,8 +583,7 @@ void Scene::ResetScene()
 void Scene::SceneMap()
 {
 	if (isMapChanging == true)
-	{
-		
+	{		
 		app->map->ChangeMap(mapName.GetString());
 		
 		//player->pbody->body->SetTransform(PIXEL_TO_METERS(player->newPos), 0.0f);
@@ -595,7 +591,6 @@ void Scene::SceneMap()
 
 		isMapChanging = false;
 	}
-
 }
 
 void Scene::LoadNPC(SString mapName_)
@@ -609,8 +604,7 @@ void Scene::LoadNPC(SString mapName_)
 	
 	for (pugi::xml_node itemNode = app->configNode.child("npcs").child(mapName_.GetString()).child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
 	{
-		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
-		npc->parameters = itemNode;
+		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC, itemNode);
 		npcList.Add(npc);
 		npc->Start();
 	}

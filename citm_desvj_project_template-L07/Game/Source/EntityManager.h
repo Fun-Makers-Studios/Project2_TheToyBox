@@ -32,7 +32,7 @@ public:
 	bool CleanUp();
 
 	// Additional methods
-	Entity* CreateEntity(EntityType type);
+	Entity* CreateEntity(EntityType type, pugi::xml_node itemNode);
 
 	void DestroyEntity(Entity* entity);
 

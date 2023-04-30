@@ -13,7 +13,7 @@ class NPC : public Entity
 {
 public:
 
-	NPC();
+	NPC(pugi::xml_node parameters);
 	virtual ~NPC();
 
 	bool Awake();
@@ -44,7 +44,6 @@ private:
 
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 
-	Body* body = nullptr;
 	dPoint startPos;
 
 	int width;
