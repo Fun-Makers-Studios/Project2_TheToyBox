@@ -22,8 +22,7 @@
 #include "Log.h"
 
 Scene::Scene() : Module()
-{
-	
+{	
 	name.Create("scene");
 	
 }
@@ -35,7 +34,6 @@ Scene::~Scene()
 // Called before render is available
 bool Scene::Awake(pugi::xml_node& config)
 {
-
 	LOG("Loading Scene");
 	bool ret = true;
 
@@ -67,10 +65,10 @@ bool Scene::Start()
 		livesCollectedList.Add(item);
 	}*/
 
-
+	// Load Enemies
 	for (pugi::xml_node itemNode = app->configNode.child("scene").child("enemykid"); itemNode; itemNode = itemNode.next_sibling("enemykid"))
 	{
-		kid = (KidEnemy*)app->entityManager->CreateEntity(EntityType::ENEMY, itemNode);
+		kid = (KidEnemy*)app->entityManager->CreateEntity(EntityType::ENEMY_KID, itemNode);
 	}
 
 	
@@ -152,7 +150,7 @@ bool Scene::Update(float dt)
 {
 	SceneMap();
 
-	if (continueGame == true)
+	if (continueGame)
 	{
 		app->LoadGameRequest();
 		app->audio->PlayFx(selectSFX);
@@ -547,20 +545,22 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 
 void Scene::SaveUI()
 {
-	if (app->saveGameRequested == true) {
+	if (app->saveGameRequested)
 		showSavingState = true;
-	}
-	if (showSavingState == true) {
-		if (saveTime < 50) {
+
+	if (showSavingState)
+	{
+		if (saveTime < 50)
+		{
+			LOG("SAVETIME: %d", saveTime);
 			app->render->DrawTexture(saveTex, app->render->camera.w - 100, app->render->camera.h - 100, NULL);
 			saveTime++;
-			LOG("SAVETIME: %d", saveTime);
 		}
-		else {
+		else
+		{
 			showSavingState = false;
 			saveTime = 0;
 		}
-
 	}
 }
 
@@ -582,7 +582,7 @@ void Scene::ResetScene()
 
 void Scene::SceneMap()
 {
-	if (isMapChanging == true)
+	if (isMapChanging)
 	{		
 		app->map->ChangeMap(mapName.GetString());
 		
@@ -631,7 +631,8 @@ void Scene::FixCamera()
 		if (app->render->camera.y > app->map->mapData.height * scale - app->render->camera.h)
 			app->render->camera.y = app->map->mapData.height * scale - app->render->camera.h;
 	}
-	else {
+	else
+	{
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
 	}

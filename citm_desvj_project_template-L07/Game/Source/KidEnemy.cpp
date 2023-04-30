@@ -14,7 +14,7 @@
 #include "EntityManager.h"
 
 
-KidEnemy::KidEnemy(pugi::xml_node parameters) : Entity(EntityType::FLYING_ENEMY)
+KidEnemy::KidEnemy(pugi::xml_node parameters) : Entity(EntityType::ENEMY_KID)
 {
 	name.Create("Bat");
 
@@ -34,7 +34,7 @@ KidEnemy::KidEnemy(pugi::xml_node parameters) : Entity(EntityType::FLYING_ENEMY)
 	body->type = ColliderType::ENEMY;
 	body->shape = ColliderShape::CIRCLE;
 	body->pos = { startPos.x, startPos.y };
-	body->r = 16;
+	body->r = 14;
 }
 
 KidEnemy::~KidEnemy()
@@ -60,9 +60,6 @@ bool KidEnemy::Start()
 
 	body->pos.x = startPos.x;
 	body->pos.y = startPos.y;
-
-	width = 32;
-	height = 32;
 
 	//Animations
 	idleAnim.PushBack({ 192, 0, 32, 64 });
@@ -96,9 +93,9 @@ bool KidEnemy::Update()
 
 	if (dead == true)
 	{
-		//Destroy entity
-		app->entityManager->DestroyEntity(this);
 		//HEKATE
+		//Destroy entity
+		app->entityManager->DestroyEntity(this);	
 		//app->physics->world->DestroyBody(pbody->body);
 		app->audio->PlayFx(powerUpSFX);
 		dead = false;
@@ -112,7 +109,7 @@ bool KidEnemy::Update()
 
 		SDL_Rect rect = currentAnim->GetCurrentFrame();
 		ScaleType scale = app->scaleObj->GetCurrentScale();
-		app->render->DrawTexture(texture, body->pos.x, body->pos.y, &rect, fliped, scale);
+		app->render->DrawTexture(texture, body->pos.x - rect.w / 2, body->pos.y - 50, &rect, fliped, scale);
 		currentAnim->Update();
 
 	return true;

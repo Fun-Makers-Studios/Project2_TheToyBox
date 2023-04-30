@@ -7,6 +7,8 @@
 #include "Collisions.h"
 #include "SDL/include/SDL.h"
 
+#define NPC_BOUNDARY 48.0f
+
 struct SDL_Texture;
 
 class NPC : public Entity
@@ -53,7 +55,7 @@ private:
 
 public:
 
-	SDL_Rect boundaries;
+	Body* boundaries = nullptr;
 
 	int npcid;
 	int dialogueid;

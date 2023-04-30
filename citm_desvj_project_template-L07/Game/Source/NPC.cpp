@@ -32,7 +32,7 @@ NPC::NPC(pugi::xml_node parameters) : Entity(EntityType::NPC)
 	body->type = ColliderType::NPC;
 	body->shape = ColliderShape::CIRCLE;
 	body->pos = { startPos.x, startPos.y };
-	body->r = 16;
+	body->r = 8;
 }
 
 NPC::~NPC()
@@ -61,13 +61,11 @@ bool NPC::Start()
 	idleAnim.PushBack({character * 32, 0, 32, 32 });
 	idleAnim.loop = true;
 	idleAnim.speed = 0.1f;
+	currentAnim = &idleAnim;
 
 	texture = app->tex->Load(texturePath);
 	shadowTexture = app->tex->Load(shadowTexturePath);
 
-	currentAnim = &idleAnim;
-
-	boundaries = { (int)startPos.x, (int)startPos.y,96,96 };
 
 	return true;
 }
@@ -82,15 +80,10 @@ bool NPC::Update()
 {
 	currentAnim = &idleAnim;
 
-	// HEKATE
-
-	boundaries.x = body->pos.x - ((boundaries.w / 2) - (width / 2));
-	boundaries.y = body->pos.y - ((boundaries.h / 2) - (height / 2));
-
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 	ScaleType scale = app->scaleObj->GetCurrentScale();
-	app->render->DrawTexture(shadowTexture, body->pos.x, body->pos.y -30, NULL, fliped, scale);
-	app->render->DrawTexture(texture, body->pos.x, body->pos.y, &rect, SDL_FLIP_NONE, scale);
+	app->render->DrawTexture(shadowTexture, body->pos.x - rect.w / 2, body->pos.y - 54, NULL, fliped, scale);
+	app->render->DrawTexture(texture, body->pos.x - rect.w / 2, body->pos.y - 24, &rect, SDL_FLIP_NONE, scale);
 	currentAnim->Update();
 
 	this->DialogTriggerCheck();
@@ -101,7 +94,7 @@ bool NPC::Update()
 bool NPC::PostUpdate()
 {
 	if (app->debug->debug)
-		app->render->DrawRectangle(boundaries, 255, 0, 0, 255U, false);
+		app->render->DrawCircle(body->pos.x, body->pos.y, NPC_BOUNDARY, 0, 0, 255, 255, false);
 	
 	return true;
 }
@@ -131,14 +124,13 @@ void NPC::OnCollision()
 
 void NPC::DialogTriggerCheck()
 {
-	if ((app->scene->player->body->pos.x + (65 / 2) >= boundaries.x) &&
-		(app->scene->player->body->pos.x + (65 / 2) < boundaries.x + boundaries.w) &&
-		(app->scene->player->body->pos.y + (33 / 2) >= boundaries.y) &&
-		(app->scene->player->body->pos.y + (33 / 2) < boundaries.y + boundaries.h) &&
-		(app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN))
+	Body boundaries = *this->body;
+	boundaries.r = NPC_BOUNDARY;
+
+	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN &&
+		app->collisions->CheckCollision(*app->scene->player->body, boundaries))
 	{
-		if (this->dialogueid != -1) {
+		if (this->dialogueid != -1)
 			app->scene->dialogueManager->Load(this->dialogueid);
-		}
 	}
 }

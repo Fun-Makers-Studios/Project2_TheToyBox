@@ -50,8 +50,6 @@ public:
 	bool dead = false;
 	bool onCollision = false;
 
-	Body* body = nullptr;
-
 private:
 
 	SDL_Texture* texture = nullptr;
@@ -61,9 +59,5 @@ private:
 
 	dPoint startPos;
 
-	int width;
-	int height;
-
 };
 #endif // __ENEMY_H__
-

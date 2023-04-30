@@ -161,7 +161,7 @@ void Debug::DrawDebug()
 
 		//Player x, y
 		app->fonts->BlitText(debugX, debugY + 55, 0, "player.x =");
-		app->fonts->BlitText(debugX + 88, debugY + 55, 0, std::to_string(app->scene->player->body->pos.x).c_str());
+			app->fonts->BlitText(debugX + 88, debugY + 55, 0, std::to_string(app->scene->player->body->pos.x).c_str());
 
 		app->fonts->BlitText(debugX, debugY + 65, 0, "player.y =");
 		app->fonts->BlitText(debugX + 88, debugY + 65, 0, std::to_string(app->scene->player->body->pos.y).c_str());
@@ -255,8 +255,7 @@ void Debug::DrawEntities()
 		{
 		case EntityType::PLAYER:		color = Magenta;	break;
 		case EntityType::NPC:			color = Blue;		break;
-		case EntityType::ENEMY:			color = Red;		break;
-		case EntityType::FLYING_ENEMY:	color = Red;		break;
+		case EntityType::ENEMY_KID:		color = Red;		break;
 		case EntityType::ITEM:			color = Green;		break;
 		default:						color = White;		break;
 		}

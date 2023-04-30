@@ -94,7 +94,7 @@ Entity* EntityManager::CreateEntity(EntityType type, pugi::xml_node itemNode)
 		entity = new NPC(itemNode);
 		break;
 	
-	case EntityType::ENEMY:
+	case EntityType::ENEMY_KID:
 		entity = new KidEnemy(itemNode);
 		break;
 
