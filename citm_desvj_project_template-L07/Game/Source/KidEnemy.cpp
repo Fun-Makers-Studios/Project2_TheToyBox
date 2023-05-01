@@ -107,10 +107,10 @@ bool KidEnemy::Update()
 		//HEKATE position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height));
 	}
 
-		SDL_Rect rect = currentAnim->GetCurrentFrame();
-		ScaleType scale = app->scaleObj->GetCurrentScale();
-		app->render->DrawTexture(texture, body->pos.x - rect.w / 2, body->pos.y - 50, &rect, fliped, scale);
-		currentAnim->Update();
+	SDL_Rect rect = currentAnim->GetCurrentFrame();
+	ScaleType scale = app->scaleObj->GetCurrentScale();
+	app->render->DrawTexture(texture, body->pos.x - rect.w / 2, body->pos.y - 50, &rect, fliped, scale);
+	currentAnim->Update();
 
 	return true;
 }

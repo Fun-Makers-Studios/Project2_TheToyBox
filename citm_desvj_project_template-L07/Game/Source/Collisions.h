@@ -66,6 +66,7 @@ public:
 
 	//Collision Solver
 	bool CheckCollision(const Body& body1, const Body& body2);
+	void SolveCollision(Body* body1, Body* body2);
 
 	void DestroyMapColliders();
 

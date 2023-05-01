@@ -12,6 +12,7 @@
 #include "ModuleFadeToBlack.h"
 #include "EntityManager.h"
 
+#include <math.h>
 
 Player::Player(pugi::xml_node parameters) : Entity(EntityType::PLAYER)
 {
@@ -96,7 +97,8 @@ bool Player::Start()
 	return true;
 }
 
-bool Player::PreUpdate() {
+bool Player::PreUpdate()
+{
 
 	return true;
 }
@@ -104,7 +106,7 @@ bool Player::PreUpdate() {
 bool Player::Update()
 {
 	int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
-	double speed = (6 * app->GetDT() / 16) / scale;
+	double speed = std::min(6 * app->GetDT() / 16 / scale, 18.0f);
 
 	currentAnim = &idlePlayer;
 

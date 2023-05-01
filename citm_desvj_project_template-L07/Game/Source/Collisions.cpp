@@ -12,6 +12,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Pathfinding.h"
+#include "Debug.h"
 
 #include <cmath>
 
@@ -84,7 +85,7 @@ bool Collisions::PostUpdate()
     {
         for (int j = pos.y-1; j <= pos.y+1; j++) //cols
         {
-            if (app->pathfinding->GetTileAt({ i, j }) == 1) //non walkable tiles, 255 invalid walk code
+            if (app->pathfinding->GetTileAt({ i, j }) == 1) //1 non walkable tiles, 255 invalid walk code
             {
                 SDL_Rect rect = { i * tileW, j * tileH, tileW, tileH };
 
@@ -92,16 +93,21 @@ bool Collisions::PostUpdate()
                 app->render->DrawRectangle(rect, 255, 255, 0, 196, false);
 
                 Body tileCollider;
+                tileCollider.type = ColliderType::WALL;
                 tileCollider.shape = ColliderShape::RECTANGLE;
                 iPoint iPos = app->map->MapToWorld(i, j);
-                tileCollider.pos = { (double)iPos.x, (double)iPos.y };
+                tileCollider.pos.x = iPos.x + tileW / 2;
+                tileCollider.pos.y = iPos.y + tileH / 2;
                 tileCollider.w = tileW;
                 tileCollider.h = tileH;
-
+                tileCollider.r = 16;
+                
                 if (CheckCollision(playerBody, tileCollider))
                 {
                     app->render->DrawRectangle(rect, 255, 0, 0, 64);
                     app->render->DrawRectangle(rect, 255, 0, 0, 196, false);
+
+                    SolveCollision(app->scene->player->body, &tileCollider);
                 }
             }
         }
@@ -158,11 +164,11 @@ bool Collisions::CheckCollision(const Body& body1, const Body& body2)
         }
 
         // Calculate distance between circle center and rectangle center
-        double circleDistanceX = std::abs(circle.pos.x - (rectangle.pos.x + rectangle.w / 2));
-        double circleDistanceY = std::abs(circle.pos.y - (rectangle.pos.y + rectangle.h / 2));
+        double circleDistanceX = std::abs(circle.pos.x - rectangle.pos.x);
+        double circleDistanceY = std::abs(circle.pos.y - rectangle.pos.y);
 
         // Check if circle is too far away from rectangle to collide
-        if (circleDistanceX > (rectangle.w / 2.0 + circle.r)) { return false; }
+        if (circleDistanceX > (rectangle.w / 2.0 + circle.r)) { return false; } 
         if (circleDistanceY > (rectangle.h / 2.0 + circle.r)) { return false; }
 
         // Check if circle is close enough to collide with rectangle
@@ -172,5 +178,66 @@ bool Collisions::CheckCollision(const Body& body1, const Body& body2)
         // Check if circle collides with corner of rectangle
         double cornerDistanceSq = pow(circleDistanceX - rectangle.w / 2.0, 2) + pow(circleDistanceY - rectangle.h / 2.0, 2);
         return (cornerDistanceSq <= pow(circle.r, 2));
+    }
+}
+
+void Collisions::SolveCollision(Body* body1, Body* body2)
+{
+    if (app->debug->godMode) { return; }
+
+    switch (body2->type)
+    {
+        case ColliderType::WALL:
+        {
+            // Calculate the vector from the obstacle center to the character center
+            dPoint obstacleToCharacter = body1->pos - body2->pos;
+
+            // Find the closest point on the rectangle to the center of the circle
+            dPoint topLeft = { body2->pos.x - body2->w / 2, body2->pos.y - body2->h / 2 };
+            dPoint botRight = { body2->pos.x + body2->w / 2, body2->pos.y + body2->h / 2 };
+            dPoint closestPoint = body1->pos.Clamp(topLeft, botRight);
+
+            // Calculate the vector from the closest point on the rectangle to the circle center
+            dPoint rectToCircle = body1->pos - closestPoint;
+
+            // Calculate the distance between the closest point and the circle center
+            double distance = body1->pos.DistanceTo(closestPoint);
+
+            // Calculate the overlap distance between the character and the obstacle
+            double overlapDistance = body1->r - distance;
+
+            // Only resolve the collision if the character is actually overlapping the obstacle
+            if (overlapDistance > 0.0)
+            {
+                // Calculate the minimum translation vector to move the character out of the obstacle
+                dPoint mtv = rectToCircle.Normalize();
+                mtv.x *= overlapDistance;
+                mtv.y *= overlapDistance;
+
+                body1->pos += mtv;
+            }
+            break;
+        }
+         
+        case ColliderType::NPC:
+            break;
+
+        case ColliderType::ITEM:
+            break;
+
+        case ColliderType::ENEMY:
+            break; 
+
+        case ColliderType::WIN_ZONE:
+            break;
+
+        case ColliderType::CHECKPOINT:
+            break;
+
+        case ColliderType::UNKNOWN:
+            break;
+
+        default:
+            break;
     }
 }
