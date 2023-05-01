@@ -68,6 +68,10 @@ public:
 	bool CheckCollision(const Body& body1, const Body& body2);
 	void SolveCollision(Body* body1, Body* body2);
 
+	void RectRectCollision(Body* body1, Body* body2);
+	void CirCirCollision(Body* body1, Body* body2);
+	void CirRectCollision(Body* body1, Body* body2);
+
 	void DestroyMapColliders();
 
 private:

@@ -12,6 +12,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Pathfinding.h"
+#include "EntityManager.h"
 #include "Debug.h"
 
 #include <cmath>
@@ -62,7 +63,7 @@ bool Collisions::PostUpdate()
     int tileH = app->map->mapData.tileHeight;
     int tileW = app->map->mapData.tileWidth;
 
-    //Draw map colliders
+    // Draw map colliders
     for (int i = 0; i < app->map->mapData.width; i++) //rows
     {
         for (int j = 0; j < app->map->mapData.height; j++) //cols
@@ -76,11 +77,10 @@ bool Collisions::PostUpdate()
         }
     }
 
-
+    // MAP COLLISIONS
     Body playerBody = *app->scene->player->body;
     iPoint pos = app->map->WorldToMap(playerBody.pos.x, playerBody.pos.y);
 
-    // Check collisions with map colliders
     for (int i = pos.x-1; i <= pos.x+1; i++) //rows
     {
         for (int j = pos.y-1; j <= pos.y+1; j++) //cols
@@ -110,6 +110,18 @@ bool Collisions::PostUpdate()
                     SolveCollision(app->scene->player->body, &tileCollider);
                 }
             }
+        }
+    }
+
+    // ENTITY COLLISIONS
+    ListItem<Entity*>* item;
+    Entity* pEntity = NULL;
+
+    for (item = app->entityManager->entities.start; item != NULL; item = item->next)
+    {
+        if (CheckCollision(*app->scene->player->body, *item->data->body))
+        {
+            SolveCollision(app->scene->player->body, item->data->body);
         }
     }
 
@@ -188,45 +200,20 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
     switch (body2->type)
     {
         case ColliderType::WALL:
-        {
-            // Calculate the vector from the obstacle center to the character center
-            dPoint obstacleToCharacter = body1->pos - body2->pos;
-
-            // Find the closest point on the rectangle to the center of the circle
-            dPoint topLeft = { body2->pos.x - body2->w / 2, body2->pos.y - body2->h / 2 };
-            dPoint botRight = { body2->pos.x + body2->w / 2, body2->pos.y + body2->h / 2 };
-            dPoint closestPoint = body1->pos.Clamp(topLeft, botRight);
-
-            // Calculate the vector from the closest point on the rectangle to the circle center
-            dPoint rectToCircle = body1->pos - closestPoint;
-
-            // Calculate the distance between the closest point and the circle center
-            double distance = body1->pos.DistanceTo(closestPoint);
-
-            // Calculate the overlap distance between the character and the obstacle
-            double overlapDistance = body1->r - distance;
-
-            // Only resolve the collision if the character is actually overlapping the obstacle
-            if (overlapDistance > 0.0)
-            {
-                // Calculate the minimum translation vector to move the character out of the obstacle
-                dPoint mtv = rectToCircle.Normalize();
-                mtv.x *= overlapDistance;
-                mtv.y *= overlapDistance;
-
-                body1->pos += mtv;
-            }
+            CirRectCollision(body1, body2);
             break;
-        }
          
         case ColliderType::NPC:
-            break;
-
-        case ColliderType::ITEM:
+            CirCirCollision(body1, body2);
             break;
 
         case ColliderType::ENEMY:
+            CirCirCollision(body1, body2);
+            app->scene->FightKid();
             break; 
+
+        case ColliderType::ITEM:
+            break;
 
         case ColliderType::WIN_ZONE:
             break;
@@ -239,5 +226,58 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
 
         default:
             break;
+    }
+}
+
+void Collisions::RectRectCollision(Body* body1, Body* body2)
+{
+    // Currently not needed
+}
+
+void Collisions::CirCirCollision(Body* body1, Body* body2)
+{
+    // Vector from player circle center to NPC circle center
+    dPoint collisionVector = body1->pos - body2->pos;
+
+    // Distance between the centers of the two circles
+    double distance = body1->pos.DistanceTo(body2->pos);
+
+    // Sum of the radii of the two circles
+    double totalRadius = body1->r + body2->r;
+
+    // Calculate mtv if the is overlap
+    if (distance <= totalRadius)
+    {
+        dPoint mtv = collisionVector.Normalize();
+        mtv.x *= totalRadius - distance;
+        mtv.y *= totalRadius - distance;
+        body1->pos += mtv;
+    }
+}
+
+void Collisions::CirRectCollision(Body* body1, Body* body2)
+{
+    // Closest point on the rectangle to the circle center
+    dPoint topLeft = { body2->pos.x - body2->w / 2, body2->pos.y - body2->h / 2 };
+    dPoint botRight = { body2->pos.x + body2->w / 2, body2->pos.y + body2->h / 2 };
+    dPoint closestPoint = body1->pos.Clamp(topLeft, botRight);
+
+    // Vector from the closest point on the rectangle to the circle center
+    dPoint rectToCircle = body1->pos - closestPoint;
+
+    // Distance between the closest point and the circle center
+    double distance = body1->pos.DistanceTo(closestPoint);
+
+    // Overlap distance between the player and the obstacle
+    double overlapDistance = body1->r - distance;
+
+    // Calculate mtv if there is overlap
+    if (overlapDistance > 0.0)
+    {
+        dPoint mtv = rectToCircle.Normalize();
+        mtv.x *= overlapDistance;
+        mtv.y *= overlapDistance;
+
+        body1->pos += mtv;
     }
 }

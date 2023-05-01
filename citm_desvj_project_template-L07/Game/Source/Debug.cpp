@@ -158,7 +158,6 @@ void Debug::DrawDebug()
 
 	if (variables)
 	{
-
 		//Player x, y
 		app->fonts->BlitText(debugX, debugY + 55, 0, "player.x =");
 			app->fonts->BlitText(debugX + 88, debugY + 55, 0, std::to_string(app->scene->player->body->pos.x).c_str());
