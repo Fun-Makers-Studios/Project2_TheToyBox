@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "Animation.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
@@ -13,7 +13,7 @@ class Player : public Entity
 {
 public:
 
-	Player();
+	Player(pugi::xml_node parameters);
 	
 	virtual ~Player();
 
@@ -29,7 +29,7 @@ public:
 
 	bool CleanUp();
 
-	void OnCollision(PhysBody* physA, PhysBody* physB);
+	void OnCollision();
 
 	void ResetPlayerPos();
 
@@ -68,13 +68,11 @@ public:
 	bool godMode = false;
 	bool onCollision = false;
 
-	PhysBody* pbody = nullptr;
-
-	b2Vec2 newPos;
+	dPoint newPos;
 
 private:
 
-	//L02: DONE 1: Declare player parameters
+	// Textures
 	SDL_Texture* texture = nullptr;
 	const char* texturePath = nullptr;
 	SDL_Texture* shadowTexture = nullptr;
@@ -82,8 +80,7 @@ private:
 
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 	
-	b2Vec2 velocity;
-	b2Vec2 startPos;
+	dPoint startPos;
 
 	int width;
 	int height;

@@ -14,59 +14,73 @@
 #include "EntityManager.h"
 
 
-KidEnemy::KidEnemy() : Entity(EntityType::FLYING_ENEMY)
+KidEnemy::KidEnemy(pugi::xml_node parameters) : Entity(EntityType::ENEMY_KID)
 {
 	name.Create("Bat");
-}
 
-KidEnemy::~KidEnemy() {
-
-}
-
-bool KidEnemy::Awake() {
-
-	return true;
-}
-
-bool KidEnemy::Start() {
-
+	// Initialize parameters from xml
+	this->parameters = parameters;
 	startPos.x = parameters.attribute("x").as_int();
 	startPos.y = parameters.attribute("y").as_int();
 
 	texturePath = parameters.attribute("texturepath").as_string();
 
-
-	width = 32;
-	height = 32;
-
-	idleAnim.PushBack({ 192, 0, 32, 64 });
-	idleAnim.loop = true;
-	idleAnim.speed = 0.1f;
-
-	texture = app->tex->Load(texturePath);
-
-	stompSFXPath = app->configNode.child("scene").child("slimesfx").attribute("stompSFXPath").as_string();		
-	powerUpSFXPath = app->configNode.child("scene").child("slimesfx").attribute("powerUpSFXPath").as_string();	
+	stompSFXPath = app->configNode.child("scene").child("slimesfx").attribute("stompSFXPath").as_string();
+	powerUpSFXPath = app->configNode.child("scene").child("slimesfx").attribute("powerUpSFXPath").as_string();
 	batHitSFXPath = app->configNode.child("scene").child("batsfx").attribute("batHitSFXPath").as_string();
 
-	stompSFX = app->audio->LoadFx(stompSFXPath);
-	powerUpSFX = app->audio->LoadFx(powerUpSFXPath);
-	batHitSFX = app->audio->LoadFx(batHitSFXPath);
+	// Create collider body
+	body = new Body();
+	body->type = ColliderType::ENEMY;
+	body->shape = ColliderShape::CIRCLE;
+	body->pos = { startPos.x, startPos.y };
+	body->r = 14;
+}
 
-	currentAnim = &idleAnim;
-	dead = false;
+KidEnemy::~KidEnemy()
+{
+	app->tex->UnLoad(texture);
 
-	position.x = startPos.x;
-	position.y = startPos.y;
+	delete body;
+	body = nullptr;
 
-	pbody = app->physics->CreateCircle(position.x, position.y, width/2, bodyType::STATIC, ColliderType::ENEMY);
+	app->entityManager->DestroyEntity(this);
+}
 
-	pbody->listener = this;
+bool KidEnemy::Awake()
+{
 
 	return true;
 }
 
-bool KidEnemy::PreUpdate() {
+bool KidEnemy::Start()
+{
+	//set var
+	dead = false;
+
+	body->pos.x = startPos.x;
+	body->pos.y = startPos.y;
+
+	//Animations
+	idleAnim.PushBack({ 192, 0, 32, 64 });
+	idleAnim.loop = true;
+	idleAnim.speed = 0.1f;
+	currentAnim = &idleAnim;
+
+	// Load texure
+	texture = app->tex->Load(texturePath);
+
+	// Load sfx
+	stompSFX = app->audio->LoadFx(stompSFXPath);
+	powerUpSFX = app->audio->LoadFx(powerUpSFXPath);
+	batHitSFX = app->audio->LoadFx(batHitSFXPath);
+
+
+	return true;
+}
+
+bool KidEnemy::PreUpdate()
+{
 
 	return true;
 }
@@ -79,28 +93,30 @@ bool KidEnemy::Update()
 
 	if (dead == true)
 	{
+		//HEKATE
 		//Destroy entity
-		app->entityManager->DestroyEntity(this);
-		app->physics->world->DestroyBody(pbody->body);
+		app->entityManager->DestroyEntity(this);	
+		//app->physics->world->DestroyBody(pbody->body);
 		app->audio->PlayFx(powerUpSFX);
 		dead = false;
 	}
 
 	if (app->scene->gamePaused != true)
 	{
-		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width/2));
-		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height));
+		//HEKATE position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width/2));
+		//HEKATE position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height));
 	}
 
-		SDL_Rect rect = currentAnim->GetCurrentFrame();
-		ScaleType scale = app->scaleObj->GetCurrentScale();
-		app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, scale);
-		currentAnim->Update();
+	SDL_Rect rect = currentAnim->GetCurrentFrame();
+	ScaleType scale = app->scaleObj->GetCurrentScale();
+	app->render->DrawTexture(texture, body->pos.x - rect.w / 2, body->pos.y - 50, &rect, fliped, scale);
+	currentAnim->Update();
 
 	return true;
 }
 
-bool KidEnemy::PostUpdate() {
+bool KidEnemy::PostUpdate()
+{
 
 
 	return true;
@@ -108,34 +124,25 @@ bool KidEnemy::PostUpdate() {
 
 bool KidEnemy::CleanUp()
 {
-	app->tex->UnLoad(texture);
-
-	pbody->body->DestroyFixture(pbody->body->GetFixtureList());
-	app->physics->world->DestroyBody(this->pbody->body);
-	delete pbody;
-	pbody = nullptr;
-
-	app->entityManager->DestroyEntity(this);
-
 
 	return true;
 }
 
-void KidEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
-
-	switch (physB->cType)
+void KidEnemy::OnCollision()
+{
+	/*switch (physB->cType)
 	{
 	
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
-	}
+	}*/
 
 }
 
-void KidEnemy::ResetBat() {
+void KidEnemy::ResetBat()
+{
 
-	pbody->body->SetSleepingAllowed(false);
-
+	//HEKATE pbody->body->SetSleepingAllowed(false);
 
 }

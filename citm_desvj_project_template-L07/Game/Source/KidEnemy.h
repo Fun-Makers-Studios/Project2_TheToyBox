@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Point.h"
 #include "Animation.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
@@ -13,7 +13,7 @@ class KidEnemy : public Entity
 {
 public:
 
-	KidEnemy();
+	KidEnemy(pugi::xml_node parameters);
 
 	virtual ~KidEnemy();
 
@@ -29,9 +29,7 @@ public:
 
 	bool CleanUp();
 
-	void MovementDirection(const iPoint& origin, const iPoint& destination);
-
-	void OnCollision(PhysBody* physA, PhysBody* physB);
+	void OnCollision();
 
 	void ResetBat();
 
@@ -52,8 +50,6 @@ public:
 	bool dead = false;
 	bool onCollision = false;
 
-	PhysBody* pbody = nullptr;
-
 private:
 
 	SDL_Texture* texture = nullptr;
@@ -61,12 +57,7 @@ private:
 
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 
-	b2Vec2 velocity;
-	b2Vec2 startPos;
-
-	int width;
-	int height;
+	dPoint startPos;
 
 };
 #endif // __ENEMY_H__
-

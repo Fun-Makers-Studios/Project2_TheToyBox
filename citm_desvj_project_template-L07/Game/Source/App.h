@@ -15,28 +15,34 @@
 // Modules
 class Window;
 class Input;
-class Render;
 class Textures;
+class Fonts;
 class Audio;
 class ModuleController;
+
 class ModuleFadeToBlack;
 class LogoScreen;
 class TitleScreen;
 class EndingScreen;
 class SceneFight;
 class Scene;
-class Fonts;
-class UI;
-class EntityManager;
+
 class Map;
-class Physics;
-class PathFinding;
-class Animation;
+class Pathfinding;
+class Collisions;
+
+class EntityManager;
 class PartyManager;
-class GuiManager;
-class Debug;
 class ParticleSystemManager;
 
+class UI;
+class GuiManager;
+class Debug;
+
+class Render;
+
+// Utils
+class Animation;
 class Scale;
 
 class App
@@ -80,7 +86,7 @@ public:
 	void SaveGameRequest();
 	bool LoadFromFile();
 	bool SaveToFile() ;
-	pugi::xml_node LoadConfigFileToVar();
+	pugi::xml_node LoadNode();
 
 private:
 
@@ -107,28 +113,32 @@ public:
 	// Modules
 	Window* win;
 	Input* input;
-	Render* render;
 	Textures* tex;
+	Fonts* fonts;
 	Audio* audio;
 	ModuleController* controller;
+
 	ModuleFadeToBlack* fade;
 	LogoScreen* logoscreen;
 	TitleScreen* titlescreen;
 	SceneFight* sceneFight;
 	Scene* scene;
-	Fonts* fonts;
+
 	UI* ui;
 	EntityManager* entityManager;
 	PartyManager* partyManager;
 	Map* map;
+	Pathfinding* pathfinding;
 	EndingScreen* endingscreen;
-	Physics* physics;
-	PathFinding* pathfinding;
+	Collisions* collisions;
 	GuiManager* guiManager;
 	Debug* debug;
-	ParticleSystemManager* particlesManager;
+	ParticleSystemManager* particleManager;
+
+	Render* render;
 
 	Scale* scaleObj;
+
 
 	// xml_document to store the config file and
 	// xml_node(s) to read specific branches of the xml

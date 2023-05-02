@@ -7,7 +7,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Entity.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "EntityManager.h"
 #include "Scene.h"
 #include "Map.h"
@@ -15,6 +15,7 @@
 #include "GuiManager.h"
 #include "Fonts.h"
 #include "UI.h"
+#include "Debug.h"
 
 #include "SDL/include/SDL_render.h"
 
@@ -65,7 +66,7 @@ bool TitleScreen::Start()
 	titleSFX = app->audio->LoadFx("Assets/Audio/Fx/TitleScreen/title_screen.wav");
 	closemenuSFX = app->audio->LoadFx("Assets/Audio/Fx/TitleScreen/close_menu.wav");
 
-	app->physics->debug = false;
+	app->debug->debug = false;
 	settingMenu = false;
 	creditsMenu = false;
 

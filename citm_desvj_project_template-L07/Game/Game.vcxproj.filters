@@ -19,39 +19,6 @@
     <ClCompile Include="Source\TitleScreen.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Map.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Audio.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Fonts.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Input.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ModuleController.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ModuleFadeToBlack.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Pathfinding.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Physics.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Render.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Textures.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Window.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Source\App.cpp">
       <Filter>App</Filter>
     </ClCompile>
@@ -79,9 +46,6 @@
     <ClCompile Include="Source\PerfTimer.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Debug.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Source\NPC.cpp">
       <Filter>Game\Entities</Filter>
     </ClCompile>
@@ -106,11 +70,47 @@
     <ClCompile Include="Source\ParticleSystemManager.cpp">
       <Filter>Core\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Debug.cpp">
+      <Filter>Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Fonts.cpp">
+      <Filter>Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Input.cpp">
+      <Filter>Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Audio.cpp">
+      <Filter>Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Collisions.cpp">
+      <Filter>Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Map.cpp">
+      <Filter>Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleController.cpp">
+      <Filter>Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleFadeToBlack.cpp">
+      <Filter>Core\Modules</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Particle.cpp">
-      <Filter>Core</Filter>
+      <Filter>Core\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\ParticleSystem.cpp">
-      <Filter>Core</Filter>
+      <Filter>Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Pathfinding.cpp">
+      <Filter>Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Render.cpp">
+      <Filter>Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Textures.cpp">
+      <Filter>Core\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Window.cpp">
+      <Filter>Core\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\Easing.cpp">
       <Filter>Utils</Filter>
@@ -168,40 +168,7 @@
     <ClInclude Include="Source\TitleScreen.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Map.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Audio.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Fonts.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Input.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Module.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ModuleController.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ModuleFadeToBlack.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Pathfinding.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Physics.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Render.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Textures.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Window.h">
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Source\App.h">
@@ -237,9 +204,6 @@
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Debug.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Source\NPC.h">
       <Filter>Game\Entities</Filter>
     </ClInclude>
@@ -267,11 +231,47 @@
     <ClInclude Include="Source\ParticleSystemManager.h">
       <Filter>Core\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Debug.h">
+      <Filter>Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Fonts.h">
+      <Filter>Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input.h">
+      <Filter>Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Audio.h">
+      <Filter>Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Collisions.h">
+      <Filter>Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleController.h">
+      <Filter>Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Map.h">
+      <Filter>Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleFadeToBlack.h">
+      <Filter>Core\Modules</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Particle.h">
-      <Filter>Core</Filter>
+      <Filter>Core\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\ParticleSystem.h">
-      <Filter>Core</Filter>
+      <Filter>Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Pathfinding.h">
+      <Filter>Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Render.h">
+      <Filter>Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Textures.h">
+      <Filter>Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Window.h">
+      <Filter>Core\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\Easing.h">
       <Filter>Utils</Filter>
@@ -329,8 +329,8 @@
     <Filter Include="Core\Managers">
       <UniqueIdentifier>{957f2650-3838-4d07-93d1-3f9517b0e576}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GUI\GUI Controls">
-      <UniqueIdentifier>{eeb52c69-651d-4298-a69d-e69607d99fee}</UniqueIdentifier>
+    <Filter Include="Core\Modules">
+      <UniqueIdentifier>{cca788d4-d709-48bf-b4d7-9284887b58a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

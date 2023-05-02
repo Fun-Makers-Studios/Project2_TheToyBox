@@ -101,14 +101,14 @@ bool UI::CleanUp()
 void UI::BlitPlayerXPos()
 {
 	char playerXPos[25];
-	sprintf_s(playerXPos, 25, "position x: %d", app->scene->player->position.x);
+	sprintf_s(playerXPos, 25, "position x: %d", app->scene->player->body->pos.x);
 	app->fonts->BlitText(20, 65, font2_id, playerXPos);
 }
 
 void UI::BlitPlayerYPos()
 {
 	char playerYPos[25];
-	sprintf_s(playerYPos, 25, "position y: %d", app->scene->player->position.y);
+	sprintf_s(playerYPos, 25, "position y: %d", app->scene->player->body->pos.y);
 	app->fonts->BlitText(20, 85, font2_id, playerYPos);
 }
 

@@ -2,6 +2,7 @@
 #define __MAP_H__
 
 #include "Module.h"
+#include "Collisions.h"
 #include "List.h"
 #include "Point.h"
 
@@ -198,7 +199,8 @@ public:
 
 	//Variable data of the struct MapData
 	MapData mapData;
-	List<PhysBody*> mapColliders;
+	// HEKATE
+	List<Body*> mapColliders;
 	pugi::xml_node node;
 
 private:

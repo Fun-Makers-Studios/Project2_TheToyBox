@@ -7,44 +7,57 @@
 #include "Scene.h"
 #include "Log.h"
 #include "Point.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "EntityManager.h"
 
-Item::Item() : Entity(EntityType::ITEM)
+Item::Item(pugi::xml_node parameters) : Entity(EntityType::ITEM)
 {
 	name.Create("item");
+
+	// Initialize parameters from xml
+	this->parameters = parameters;
+
+	double posX = parameters.attribute("x").as_int();
+	double posY = parameters.attribute("y").as_int();
+	texturePath = parameters.attribute("texturepath").as_string();
+	itemType = parameters.attribute("itemType").as_string();
+
+	// Create collider body
+	body->type = ColliderType::ITEM;
+	body->shape = ColliderShape::CIRCLE;
+	body->pos = { posX, posY };
+	body->r = 8;
 }
 
-Item::~Item() {}
+Item::~Item()
+{
+	app->tex->UnLoad(texture);
+	texture = nullptr;
 
-bool Item::Awake() {
+	delete body;
+	body = nullptr;
 
+	app->entityManager->DestroyEntity(this);
+}
+
+bool Item::Awake()
+{
 	return true;
 }
 
-bool Item::Start() {
-
-	position.x = parameters.attribute("x").as_int();
-	position.y = parameters.attribute("y").as_int();
-	texturePath = parameters.attribute("texturepath").as_string();
-	iType = parameters.attribute("iType").as_string();
-
+bool Item::Start()
+{
 	width = 32;
 	height = 32;
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 	
-	if (iType == "life")
+	if (itemType == "life")
 		lifeRect = {0, 0, 32, 32};
 	
-	if (iType == "potionhp")
+	if (itemType == "potionhp")
 		lifeRect = {0, 0, 16, 16};
-
-	// L07 TODO 4: Add a physics to an item - initialize the physics body
-	pbody = app->physics->CreateCircleSensor(position.x, position.y, width/3, bodyType::KINEMATIC, ColliderType::ITEM);
-
-	pbody->listener = this;
 
 	return true;
 }
@@ -55,7 +68,7 @@ bool Item::Update()
 
 	if (isPicked == true)
 	{
-		app->physics->world->DestroyBody(pbody->body);
+		// HEKATE app->physics->world->DestroyBody(pbody->body);
 		app->entityManager->DestroyEntity(this);
 		
 		//CleanUp();
@@ -63,13 +76,13 @@ bool Item::Update()
 
 	if (app->scene->gamePaused != true)
 	{
-		position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 4));
-		position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 4));
+		// HEKATE position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 4));
+		// HEKATE position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 4));
 	}
 
 	if (isPicked == false) {
 
-		app->render->DrawTexture(texture, position.x, position.y, &lifeRect);
+		app->render->DrawTexture(texture, body->pos.x, body->pos.y, &lifeRect);
 
 	}
 
@@ -85,34 +98,28 @@ bool Item::PostUpdate()
 bool Item::CleanUp()
 {
 
-	app->tex->UnLoad(texture);
-	texture = nullptr;
-
-	app->physics->world->DestroyBody(pbody->body);
-	delete pbody;
-	pbody = nullptr;
-	app->entityManager->DestroyEntity(this);
-
 	return true;
 }
 
-void Item::OnCollision(PhysBody* physA, PhysBody* physB) {
-
-	switch (physB->cType)
-	{
-	case ColliderType::PLAYER:
-		LOG("Collision PLAYER");
-		
-		/*pbody->body->SetActive(false);
-		this->Disable();*/
-		isPicked = true;
-		break;
-	}
+void Item::OnCollision()
+{
+	//switch (physB->cType)
+	//{
+	//case ColliderType::PLAYER:
+	//	LOG("Collision PLAYER");
+	//	
+	//	/*pbody->body->SetActive(false);
+	//	this->Disable();*/
+	//	isPicked = true;
+	//	break;
+	//}
 
 }
 
-void Item::ResetItem() {
-	SDL_SetTextureAlphaMod(texture, 1);
+void Item::ResetItem()
+{
+	// HEKATE
+	/*SDL_SetTextureAlphaMod(texture, 1);
 	pbody->body->SetActive(true);
-	isPicked = false;
+	isPicked = false;*/
 }

@@ -7,7 +7,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "Entity.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "EntityManager.h"
 #include "ModuleFadeToBlack.h"
 #include "Player.h"

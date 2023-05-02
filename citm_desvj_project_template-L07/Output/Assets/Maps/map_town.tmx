@@ -4025,7 +4025,7 @@
    <tile gid="36"/>
   </data>
  </layer>
- <layer id="2" name="Houses" width="55" height="36">
+ <layer id="2" name="Houses" width="55" height="36" visible="0">
   <properties>
    <property name="Draw" type="bool" value="true"/>
    <property name="Navigation" type="bool" value="false"/>
@@ -6013,7 +6013,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="3" name="Trees" width="55" height="36">
+ <layer id="3" name="Trees" width="55" height="36" visible="0">
   <properties>
    <property name="Draw" type="bool" value="true"/>
    <property name="Navigation" type="bool" value="false"/>
@@ -8001,10 +8001,10 @@
    <tile gid="18"/>
   </data>
  </layer>
- <layer id="4" name="Collisions" width="55" height="36" visible="0">
+ <layer id="4" name="Collisions" width="55" height="36">
   <properties>
    <property name="Draw" type="bool" value="false"/>
-   <property name="Navigation" type="bool" value="false"/>
+   <property name="Navigation" type="bool" value="true"/>
   </properties>
   <data>
    <tile gid="17"/>

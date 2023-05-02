@@ -12,24 +12,14 @@
 #include "ModuleFadeToBlack.h"
 #include "EntityManager.h"
 
+#include <math.h>
 
-Player::Player() : Entity(EntityType::PLAYER)
+Player::Player(pugi::xml_node parameters) : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
-}
 
-Player::~Player() {
-
-}
-
-bool Player::Awake() {
-
-	return true;
-}
-
-bool Player::Start() {
-
-	//L02: DONE 1: Initialize Player parameters
+	// Initialize parameters from xml
+	this->parameters = parameters;
 	startPos.x = parameters.attribute("x").as_int();
 	startPos.y = parameters.attribute("y").as_int();
 
@@ -45,6 +35,33 @@ bool Player::Start() {
 	selectSFXPath = app->configNode.child("player").child("SFXset").attribute("selectSFXPath").as_string();
 	shortRangeAttackSFXPath = app->configNode.child("player").child("SFXset").attribute("shortRangeAttackSFXPath").as_string();
 
+	// Create collider body
+	body = new Body();
+	body->type = ColliderType::PLAYER;
+	body->shape = ColliderShape::CIRCLE;
+	body->pos = { startPos.x, startPos.y };
+	body->r = 8;
+}
+
+Player::~Player()
+{
+	app->tex->UnLoad(texture);
+	texture = nullptr;
+
+	delete body;
+	body = nullptr;
+
+	app->entityManager->DestroyEntity(this);
+}
+
+bool Player::Awake()
+{
+
+	return true;
+}
+
+bool Player::Start()
+{
 	width = 32;
 	height = 32;
 
@@ -95,17 +112,15 @@ bool Player::Start() {
 
 	newPos = { 0, 0 };
 
-	//Add physics to the player - initialize physics body
-	pbody = app->physics->CreateCircle(position.x, position.y, width / 3, bodyType::DYNAMIC, ColliderType::PLAYER);
 
-	pbody->mapZone = MapZone::PLAYER;
+	// HEKATE pbody->mapZone = MapZone::PLAYER;
 
-	pbody->listener = this;
 
 	return true;
 }
 
-bool Player::PreUpdate() {
+bool Player::PreUpdate()
+{
 
 	return true;
 }
@@ -113,80 +128,100 @@ bool Player::PreUpdate() {
 bool Player::Update()
 {
 	int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
-	int speed = 6 / scale;
+	double speed = std::min(6 * app->GetDT() / 16 / scale, 18.0f);
 
 	currentAnim = &idle;
 
 	if (app->scene->gamePaused != true) 
 	{
 
-		if (godMode == true) {
-
-			velocity = { 0, 0 };
-			pbody->body->SetGravityScale(0);
+		if (godMode)
+		{
+			body->vel = { 0, 0 };
+			// HEKATE pbody->body->SetGravityScale(0);
 
 			// Fly around the map
 			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-				velocity.y = -5;
+				body->vel.y = -speed;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-				velocity.y = 5;
+				body->vel.y = speed;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 				isFliped = true;
-				velocity.x = -5;
+				body->vel.x = -speed;
 				if (isFliped == true && fliped == SDL_FLIP_NONE) {
 					fliped = SDL_FLIP_HORIZONTAL;
 				}
 			}
 			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				isFliped = false;
-				velocity.x = 5;
+				body->vel.x = speed;
 				if (isFliped == false && fliped == SDL_FLIP_HORIZONTAL) {
 					fliped = SDL_FLIP_NONE;
 				}
 			}
-			pbody->body->SetLinearVelocity(velocity);
+			// HEKATE pbody->body->SetLinearVelocity(velocity);
 
 		}
-		else if (godMode == false && dead == false)
+		else if (!godMode && !dead)
 		{
-			velocity = { 0, 0 };
-			pbody->body->SetGravityScale(0);
+			body->vel = { 0, 0 };
+			// HEKATE pbody->body->SetGravityScale(0);
 
-			// Fly around the map
 			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-				velocity.y = -5;
-				currentAnim = &walkUp;
+				body->vel.y = -speed;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-				velocity.y = 5;
-				currentAnim = &walkDown;
+				body->vel.y = speed;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				velocity.x = -5;
-				currentAnim = &walkLeft;
+				isFliped = true;
+				body->vel.x = -speed;
+				if (isFliped == true && fliped == SDL_FLIP_NONE) {
+					fliped = SDL_FLIP_HORIZONTAL;
+				}
 			}
 			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-				velocity.x = 5;
-				currentAnim = &walkRight;
+				isFliped = false;
+				body->vel.x = speed;
+				if (isFliped == false && fliped == SDL_FLIP_HORIZONTAL) {
+					fliped = SDL_FLIP_NONE;
+				}
 			}
 			
-			pbody->body->SetLinearVelocity(velocity);
+			// HEKATE pbody->body->SetLinearVelocity(velocity);
+			body->pos.x += body->vel.x;
+			body->pos.y += body->vel.y;
 		}
+
+		if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
+			changeTexture = !changeTexture;		
+
 	}
 	else {
-		pbody->body->SetAwake(false);
+		// HEKATE pbody->body->SetAwake(false);
 	}
 
 	//SDL_Rect rect = currentAnim->GetCurrentFrame();
 	ScaleType scaleType = app->scaleObj->GetCurrentScale();
 	
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - width / 2);
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - height / 2);
-	SDL_Rect rect = currentAnim->GetCurrentFrame();
-	app->render->DrawTexture(shadowTexture, position.x, position.y - height / 1.15, NULL, fliped, scaleType);
-	app->render->DrawTexture(texture, position.x, position.y, &rect, fliped, scaleType);
+	// HEKATE
+	if (changeTexture)
+	{
+		//body->pos.x = body->pos.x - width / 2.25;
+		//body->pos.y = body->pos.y - height / 2;
+		SDL_Rect rect = currentAnim->GetCurrentFrame();
+		app->render->DrawTexture(shadowTexture, body->pos.x - 16, body->pos.y - 54, NULL, fliped, scaleType);
+		app->render->DrawTexture(texture, body->pos.x - 16, body->pos.y - 32, &rect, fliped, scaleType);
+	}
+	else
+	{
+		//body->pos.x = body->pos.x - width / 2;
+		//body->pos.y = body->pos.y - height / 3;
+		app->render->DrawTexture(shadowTexture, body->pos.x - 16, body->pos.y - 54, NULL, fliped, scaleType);
+		app->render->DrawTexture(texture2, body->pos.x - 16, body->pos.y - 24, NULL, fliped, scaleType);
+	}
 	
 	currentAnim->Update();
 
@@ -202,21 +237,17 @@ bool Player::PostUpdate() {
 
 bool Player::CleanUp()
 {
-	app->tex->UnLoad(texture);
-	texture = nullptr;
-
-	pbody->body->DestroyFixture(pbody->body->GetFixtureList());
-	app->physics->world->DestroyBody(this->pbody->body);
-	delete pbody;
-	pbody = nullptr;
-	app->entityManager->DestroyEntity(this);
 
 	return true;
 }
 
-void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
+void Player::OnCollision()
+{
+	// HEKATE
+	// DO THIS ON COLLISIONS
+	// Detect the type of collision
 
-	//Detect the type of map
+	/*
 	switch (physB->mapZone)
 	{
 
@@ -308,14 +339,15 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision UNKNOWN");
 		break;
 	}
-
+	*/
 }
 
 
-void Player::ResetPlayerPos() {
-
-	velocity = { 0, 0 };
-	pbody->body->SetTransform(PIXEL_TO_METERS(startPos), 0.0f);
+void Player::ResetPlayerPos()
+{
+	body->vel = { 0, 0 };
+	// HEKATE
+	//pbody->body->SetTransform(PIXEL_TO_METERS(startPos), 0.0f);
 	dead = false;
 	
 	LOG("--RESETING PLAYER--");

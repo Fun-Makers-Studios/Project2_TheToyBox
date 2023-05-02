@@ -12,29 +12,47 @@
 #include "PathFinding.h"
 #include "ModuleFadeToBlack.h"
 #include "EntityManager.h"
+#include "Debug.h"
 
-NPC::NPC() : Entity(EntityType::NPC)
+NPC::NPC(pugi::xml_node parameters) : Entity(EntityType::NPC)
 {
 	name.Create("NPC");
+
+	// Load parameters from xml
+	this->parameters = parameters;
+	startPos.x = parameters.attribute("x").as_int();
+	startPos.y = parameters.attribute("y").as_int();
+	texturePath = parameters.attribute("texturepath").as_string();
+	shadowTexturePath = parameters.attribute("shadowtexturepath").as_string();
+	npcid = parameters.attribute("id").as_int();
+	dialogueid = parameters.attribute("dialogueid").as_int();
+
+	// Create body
+	body = new Body();	// HEKATE cleanup
+	body->type = ColliderType::NPC;
+	body->shape = ColliderShape::CIRCLE;
+	body->pos = { startPos.x, startPos.y };
+	body->r = 8;
 }
 
-NPC::~NPC() {}
+NPC::~NPC()
+{
+	app->tex->UnLoad(texture);
 
-bool NPC::Awake() {
+	delete body;
+	body = nullptr;
+
+	app->entityManager->DestroyEntity(this);
+}
+
+bool NPC::Awake()
+{
 
 	return true;
 }
 
-bool NPC::Start() {
-
-	startPos.x = parameters.attribute("x").as_int();
-	startPos.y = parameters.attribute("y").as_int();
-
-	texturePath = parameters.attribute("texturepath").as_string();
-	shadowTexturePath = parameters.attribute("shadowtexturepath").as_string();
-
-	npcid = parameters.attribute("id").as_int();
-	dialogueid = parameters.attribute("dialogueid").as_int();
+bool NPC::Start()
+{	
 	int character = parameters.attribute("character").as_int();
 
 	width = 32;
@@ -43,22 +61,17 @@ bool NPC::Start() {
 	idleAnim.PushBack({character * 32, 0, 32, 32 });
 	idleAnim.loop = true;
 	idleAnim.speed = 0.1f;
+	currentAnim = &idleAnim;
 
 	texture = app->tex->Load(texturePath);
 	shadowTexture = app->tex->Load(shadowTexturePath);
 
-	currentAnim = &idleAnim;
-
-	pbody = app->physics->CreateCircle(startPos.x+60, startPos.y, width / 3, bodyType::STATIC, ColliderType::NPC);
-
-	pbody->listener = this;
-
-	boundaries = { (int)startPos.x, (int)startPos.y,96,96 };
 
 	return true;
 }
 
-bool NPC::PreUpdate() {
+bool NPC::PreUpdate()
+{
 
 	return true;
 }
@@ -67,16 +80,10 @@ bool NPC::Update()
 {
 	currentAnim = &idleAnim;
 
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 2));
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 2));
-
-	boundaries.x = position.x - ((boundaries.w / 2)-(width/2));
-	boundaries.y = position.y - ((boundaries.h / 2) - (height/2));
-
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 	ScaleType scale = app->scaleObj->GetCurrentScale();
-	app->render->DrawTexture(shadowTexture, position.x, position.y -30, NULL, fliped, scale);
-	app->render->DrawTexture(texture, position.x, position.y, &rect, SDL_FLIP_NONE, scale);
+	app->render->DrawTexture(shadowTexture, body->pos.x - rect.w / 2, body->pos.y - 54, NULL, fliped, scale);
+	app->render->DrawTexture(texture, body->pos.x - rect.w / 2, body->pos.y - 24, &rect, SDL_FLIP_NONE, scale);
 	currentAnim->Update();
 
 	this->DialogTriggerCheck();
@@ -86,28 +93,22 @@ bool NPC::Update()
 
 bool NPC::PostUpdate()
 {
-	if (app->physics->debug) {
-		app->render->DrawRectangle(boundaries, 255, 0, 0, 255U, false);
-	}
+	if (app->debug->debug)
+		app->render->DrawCircle(body->pos.x, body->pos.y, NPC_BOUNDARY, 0, 0, 255, 255, false);
+	
 	return true;
 }
 
 bool NPC::CleanUp()
 {
-	app->tex->UnLoad(texture);
-
-	pbody->body->DestroyFixture(pbody->body->GetFixtureList());
-	app->physics->world->DestroyBody(this->pbody->body);
-	delete pbody;
-	pbody = nullptr;
-	app->entityManager->DestroyEntity(this);
 
 	return true;
 }
 
-void NPC::OnCollision(PhysBody* physA, PhysBody* physB) {
-
-	switch (physB->cType)
+void NPC::OnCollision()
+{
+	// HEKATE
+	/*switch (physB->cType)
 	{
 	
 	case ColliderType::PLAYER:
@@ -117,18 +118,19 @@ void NPC::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
-	}
+	}*/
 
 }
 
-void NPC::DialogTriggerCheck() {
-	if ((app->scene->player->position.x + (65 / 2) >= boundaries.x) &&
-		(app->scene->player->position.x + (65 / 2) < boundaries.x + boundaries.w) &&
-		(app->scene->player->position.y + (33 / 2) >= boundaries.y) &&
-		(app->scene->player->position.y + (33 / 2) < boundaries.y + boundaries.h) &&
-		(app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)) {
-		if (this->dialogueid != -1) {
+void NPC::DialogTriggerCheck()
+{
+	Body boundaries = *this->body;
+	boundaries.r = NPC_BOUNDARY;
+
+	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN &&
+		app->collisions->CheckCollision(*app->scene->player->body, boundaries))
+	{
+		if (this->dialogueid != -1)
 			app->scene->dialogueManager->Load(this->dialogueid);
-		}
 	}
 }

@@ -4,8 +4,10 @@
 #include "Entity.h"
 #include "Point.h"
 #include "Animation.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "SDL/include/SDL.h"
+
+#define NPC_BOUNDARY 48.0f
 
 struct SDL_Texture;
 
@@ -13,7 +15,7 @@ class NPC : public Entity
 {
 public:
 
-	NPC();
+	NPC(pugi::xml_node parameters);
 	virtual ~NPC();
 
 	bool Awake();
@@ -28,7 +30,7 @@ public:
 
 	bool CleanUp();
 
-	void OnCollision(PhysBody* physA, PhysBody* physB);
+	void OnCollision();
 
 	void DialogTriggerCheck();
 
@@ -44,8 +46,7 @@ private:
 
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 
-	b2Vec2 startPos;
-	b2Vec2 velocity;
+	dPoint startPos;
 
 	int width;
 	int height;
@@ -54,9 +55,7 @@ private:
 
 public:
 
-	PhysBody* pbody = nullptr;
-
-	SDL_Rect boundaries;
+	Body* boundaries = nullptr;
 
 	int npcid;
 	int dialogueid;

@@ -7,7 +7,7 @@
 #include "Scene.h"
 #include "EntityManager.h"
 #include "Map.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "PathFinding.h"
 #include "ModuleFadeToBlack.h"
 #include "EndingScreen.h"
@@ -16,13 +16,13 @@
 #include "TitleScreen.h"
 #include "PartyManager.h"
 #include "ParticleSystemManager.h"
+#include "Debug.h"
 
 #include "Defs.h"
 #include "Log.h"
 
 Scene::Scene() : Module()
-{
-	
+{	
 	name.Create("scene");
 	
 }
@@ -34,7 +34,6 @@ Scene::~Scene()
 // Called before render is available
 bool Scene::Awake(pugi::xml_node& config)
 {
-
 	LOG("Loading Scene");
 	bool ret = true;
 
@@ -44,6 +43,8 @@ bool Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Scene::Start()
 {
+	LOG("--STARTS GAME SCENE--");
+
 	dialogueManager = new DialogueManager(this);
 
 	/*STORE INFO FROM XML*/
@@ -64,32 +65,39 @@ bool Scene::Start()
 		livesCollectedList.Add(item);
 	}*/
 
+	// Load Enemies
 	for (pugi::xml_node itemNode = app->configNode.child("scene").child("enemykid"); itemNode; itemNode = itemNode.next_sibling("enemykid"))
 	{
-		kid = (KidEnemy*)app->entityManager->CreateEntity(EntityType::ENEMY);
-		kid->parameters = itemNode;
+		kid = (KidEnemy*)app->entityManager->CreateEntity(EntityType::ENEMY_KID, itemNode);
 	}
 
-	/*INITIALIZE NECESSARY MODULES*/
-	app->physics->Enable();
-	app->pathfinding->Enable();
-	app->entityManager->Enable();
-	app->map->Enable();
-	LOG("--STARTS GAME SCENE--");
-	app->physics->debug = false;
-	exitGame = false;
-
+	
 	//Load First Map NPCs
 	mapName = "town";
 	LoadNPC(mapName);
 
 	//Instantiate and init the player using the entity manager
-	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
-	player->parameters = app->configNode.child("scene").child("player");
-	player->Start();
+	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER, app->configNode.child("scene").child("player"));
 
-	// L03: DONE: Load map
-	app->map->Load();
+	/*INITIALIZE NECESSARY MODULES*/
+	app->pathfinding->Enable();
+	app->map->Enable();
+	app->collisions->Enable();
+	app->entityManager->Enable();
+	app->debug->debug = false;
+	exitGame = false;
+
+	// Load map
+	if (app->map->Load())
+	{
+		int w, h;
+		uchar* buffer = NULL;
+
+		if (app->map->CreateWalkabilityMap(w, h, &buffer))
+			app->pathfinding->SetMap(w, h, buffer);
+
+		RELEASE_ARRAY(buffer);
+	}
 
 	// Play level music
 	app->audio->PlayMusic(musicPath, 1.0f);
@@ -105,6 +113,7 @@ bool Scene::Start()
 	sophieImg = app->tex->Load(sophieImgPath);
 	saveTex = app->tex->Load(saveTexPath);
 
+	// UI
 	uint w, h;
 	app->win->GetWindowSize(w, h);
 	resumeButton14 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "resume", 7, { 515, 295, 252, 76 }, this);
@@ -141,7 +150,7 @@ bool Scene::Update(float dt)
 {
 	SceneMap();
 
-	if (continueGame == true)
+	if (continueGame)
 	{
 		app->LoadGameRequest();
 		app->audio->PlayFx(selectSFX);
@@ -158,11 +167,8 @@ bool Scene::Update(float dt)
 	{
 		if (!dialogueManager->dialogueLoaded && settingSceneMenu == false && partyMenu == false) { gamePaused = !gamePaused; }
 		
-		if (settingSceneMenu == false) {
+		if(settingSceneMenu == false)
 			pauseMenu = !pauseMenu;
-			//easingPause->SetFinished(false);
-		}
-			
 	
 		Mix_PauseMusic();
 	}
@@ -181,15 +187,26 @@ bool Scene::Update(float dt)
 	
 	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && !dialogueManager->dialogueLoaded)
 	{
-		
-			gamePaused = !gamePaused;
-			partyMenu = !partyMenu;
-			app->audio->PlayFx(selectSFX);
-		
+		gamePaused = !gamePaused;
+		partyMenu = !partyMenu;
+		app->audio->PlayFx(selectSFX);
 	}
 
-	// Camera movement related to player's movement
-	FixCamera();
+	// Camera movement
+	if (app->debug->debug && app->debug->freeCam)
+	{
+		//Free camera on debug mode
+		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)	{ app->render->camera.x -= 8 * dt / 16; }
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)	{ app->render->camera.x += 8 * dt / 16; }
+		if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)		{ app->render->camera.y -= 8 * dt / 16; }
+		if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)	{ app->render->camera.y += 8 * dt / 16; }
+	}
+	else
+	{
+		// Camera movement related to player's movement
+		// HEKATE FixCamera() Modified
+		FixCamera();
+	}
 
 	// Draw map
 	app->map->Draw();
@@ -219,9 +236,9 @@ bool Scene::Update(float dt)
 	}
 
 	//Blit UI
-	app->ui->BlitFPS();
+	/*app->ui->BlitFPS();
 
-	if (app->physics->debug)
+	if (app->debug->debug)
 	{
 		app->ui->BlitPlayerXPos();
 		app->ui->BlitPlayerYPos();
@@ -229,7 +246,7 @@ bool Scene::Update(float dt)
 		app->ui->BlitDT();
 		app->ui->BlitTimeSinceStart();
 		app->ui->BlitFrameCount();
-	}
+	}*/
 
 	return true;
 }
@@ -381,7 +398,7 @@ bool Scene::CleanUp()
 	LOG("Freeing GAME SCENE");
 	app->entityManager->Disable();
 	app->pathfinding->Disable();
-	app->physics->Disable();
+	app->collisions->Disable();
 	app->map->Disable();
 	
 	app->guiManager->guiControlsList.Clear();
@@ -542,9 +559,9 @@ void Scene::SaveUI()
 		if (saveTime < 75) {
 			app->render->DrawTexture(saveTex, app->render->camera.x + (app->render->camera.w - 100) , app->render->camera.y + (app->render->camera.h - 100), NULL);
 			saveTime++;
-			LOG("SAVETIME: %d", saveTime);
 		}
-		else {
+		else
+		{
 			showSavingState = false;
 			saveTime = 0;
 		}
@@ -569,16 +586,15 @@ void Scene::ResetScene()
 
 void Scene::SceneMap()
 {
-	if (isMapChanging == true)
-	{
-		
+	if (isMapChanging)
+	{		
 		app->map->ChangeMap(mapName.GetString());
-		player->pbody->body->SetTransform(PIXEL_TO_METERS(player->newPos), 0.0f);
+		
+		//player->pbody->body->SetTransform(PIXEL_TO_METERS(player->newPos), 0.0f);
 		LoadNPC(mapName.GetString());
 
 		isMapChanging = false;
 	}
-
 }
 
 void Scene::LoadNPC(SString mapName_)
@@ -592,8 +608,7 @@ void Scene::LoadNPC(SString mapName_)
 	
 	for (pugi::xml_node itemNode = app->configNode.child("npcs").child(mapName_.GetString()).child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
 	{
-		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC);
-		npc->parameters = itemNode;
+		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC, itemNode);
 		npcList.Add(npc);
 		npc->Start();
 	}
@@ -602,24 +617,26 @@ void Scene::LoadNPC(SString mapName_)
 
 void Scene::FixCamera()
 {
-	if (METERS_TO_PIXELS(app->map->mapData.width) > 1280 && METERS_TO_PIXELS(app->map->mapData.height) > 704)	//SMALL MAP SIZE 1280x704
+	// HEKATE width/height in TILES (townMap 55x36)
+	if (app->map->mapData.width == 55 && app->map->mapData.height == 36)	//SMALL MAP SIZE 1280x704
 	{
 		uint scale = app->scaleObj->ScaleTypeToInt(ScaleType::WORLD);
 
-		app->render->camera.x = (player->position.x * scale + 16) - ((app->win->screenSurface->w) / 2);
-		app->render->camera.y = (player->position.y * scale + 16) - ((app->win->screenSurface->h) / 2);
+		app->render->camera.x = player->body->pos.x * scale - app->win->screenSurface->w / 2;
+		app->render->camera.y = player->body->pos.y * scale - app->win->screenSurface->h / 2;
 
 		if (app->render->camera.x < 0)
 			app->render->camera.x = 0;
 		if (app->render->camera.y < 0)
 			app->render->camera.y = 0;
 
-		if (app->render->camera.x > METERS_TO_PIXELS(app->map->mapData.width) * scale - app->render->camera.w)
-			app->render->camera.x = METERS_TO_PIXELS(app->map->mapData.width) * scale - app->render->camera.w;
-		if (app->render->camera.y > METERS_TO_PIXELS(app->map->mapData.height) * scale - app->render->camera.h)
-			app->render->camera.y = METERS_TO_PIXELS(app->map->mapData.height) * scale - app->render->camera.h;
+		if (app->render->camera.x > app->map->mapData.width * scale - app->render->camera.w)
+			app->render->camera.x = app->map->mapData.width * scale - app->render->camera.w;
+		if (app->render->camera.y > app->map->mapData.height * scale - app->render->camera.h)
+			app->render->camera.y = app->map->mapData.height * scale - app->render->camera.h;
 	}
-	else {
+	else
+	{
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
 	}
@@ -633,9 +650,10 @@ void Scene::FightKid()
 
 bool Scene::LoadState(pugi::xml_node& data)
 {
+	// HEKATE
 	// Load previous saved player position
-	b2Vec2 playerPos = { data.child("playerPosition").attribute("x").as_float(), data.child("playerPosition").attribute("y").as_float() };
-	app->scene->player->pbody->body->SetTransform(playerPos, 0);
+	//iPoint playerpos = { data.child("playerposition").attribute("x").as_float(), data.child("playerposition").attribute("y").as_float() };
+	//app->scene->player->pbody->body->settransform(playerpos, 0);
 
 	ListItem<PartyMember*>* pmemberItem;
 	for (pmemberItem = app->partyManager->party.start; pmemberItem != NULL; pmemberItem = pmemberItem->next)
@@ -657,56 +675,41 @@ bool Scene::LoadState(pugi::xml_node& data)
 	//Load previous saved player number of lives
 	saveEnabled = data.child("checkpointEnabled").attribute("checkpointEnabled").as_bool();
 
-	mapName = data.child("mapName").attribute("mapName").as_string();
+	//mapName = data.child("mapname").attribute("mapname").as_string();
 
-	// Load previous saved bat position
-	b2Vec2 kidPos = { data.child("kidPosition").attribute("x").as_float(), data.child("kidPosition").attribute("y").as_float() };
-	app->scene->kid->pbody->body->SetTransform(kidPos, 0);
+	//// load previous saved bat position
+	//iPoint kidpos = { data.child("kidposition").attribute("x").as_float(), data.child("kidposition").attribute("y").as_float() };
+	//app->scene->kid->pbody->body->settransform(kidpos, 0);
 
 	return true;
 }
 
 bool Scene::SaveState(pugi::xml_node& data)
 {
+	// HEKATE
 	// Save current player position
-	pugi::xml_node playerPos = data.append_child("playerPosition");
-	playerPos.append_attribute("x") = app->scene->player->pbody->body->GetTransform().p.x;
-	playerPos.append_attribute("y") = app->scene->player->pbody->body->GetTransform().p.y;
-	
-	ListItem<PartyMember*>* pmemberItem;
+	//pugi::xml_node playerPos = data.append_child("playerPosition");
+	//playerPos.append_attribute("x") = app->scene->player->pbody->body->GetTransform().p.x;
+	//playerPos.append_attribute("y") = app->scene->player->pbody->body->GetTransform().p.y;
+	//
+	//// Save current player number of coins
+	//pugi::xml_node itemLives = data.append_child("itemLives");
+	//itemLives.append_attribute("itemLives") = itemLives;
+	//
+	//// Save current player number of coins
+	//pugi::xml_node checkpointEnabled = data.append_child("checkpointEnabled");
+	//checkpointEnabled.append_attribute("checkpointEnabled") = checkpointEnabled;
 
-	for (pmemberItem = app->partyManager->party.start; pmemberItem != NULL; pmemberItem = pmemberItem->next)
-	{
-		pugi::xml_node partyMember = data.append_child("partymember");
-		partyMember.append_attribute("name") = pmemberItem->data->name.GetString();
-		partyMember.append_attribute("maxHP") = pmemberItem->data->maxHp;
-		partyMember.append_attribute("maxMana") = pmemberItem->data->maxMana;
-		partyMember.append_attribute("currentHp") = pmemberItem->data->currentHp;
-		partyMember.append_attribute("level") = pmemberItem->data->level;
-		partyMember.append_attribute("attack") = pmemberItem->data->attack;
-		partyMember.append_attribute("defense") = pmemberItem->data->defense;
-		partyMember.append_attribute("speed") = pmemberItem->data->speed;
-		partyMember.append_attribute("critRate") = pmemberItem->data->critRate;
-		partyMember.append_attribute("fightPosX") = pmemberItem->data->fightPosition.x;
-		partyMember.append_attribute("fightPosY") = pmemberItem->data->fightPosition.y;
-	}
-
-	// Save current bat position
-	pugi::xml_node kidPos = data.append_child("kidPosition");
-	kidPos.append_attribute("x") = app->scene->kid->pbody->body->GetTransform().p.x;
-	kidPos.append_attribute("y") = app->scene->kid->pbody->body->GetTransform().p.y;
-	
-	pugi::xml_node checkPoint = data.append_child("checkPoint");
-	checkPoint.append_attribute("checkPoint") = app->scene->saveEnabled;
-
-	// Save current player number of coins
-	pugi::xml_node nightEnabled = data.append_child("nightEnabled");
-	nightEnabled.append_attribute("nightEnabled") = isNight;
-	
-	pugi::xml_node actualMapName = data.append_child("mapName");
-	actualMapName.append_attribute("mapName") = mapName.GetString();
+	//// Save current bat position
+	//pugi::xml_node kidPos = data.append_child("kidPosition");
+	//kidPos.append_attribute("x") = app->scene->kid->pbody->body->GetTransform().p.x;
+	//kidPos.append_attribute("y") = app->scene->kid->pbody->body->GetTransform().p.y;
+	//
+	//pugi::xml_node checkPoint = data.append_child("checkPoint");
+	//checkPoint.append_attribute("checkPoint") = app->scene->saveEnabled;
+	//
+	//pugi::xml_node actualMapName = data.append_child("mapName");
+	//actualMapName.append_attribute("mapName") = mapName.GetString();
 
 	return true;
 }
-
-

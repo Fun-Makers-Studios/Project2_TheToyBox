@@ -16,7 +16,9 @@ EntityManager::EntityManager() : Module()
 
 // Destructor
 EntityManager::~EntityManager()
-{}
+{
+
+}
 
 // Called before render is available
 bool EntityManager::Awake(pugi::xml_node& config)
@@ -40,8 +42,8 @@ bool EntityManager::Awake(pugi::xml_node& config)
 
 }
 
-bool EntityManager::Start() {
-
+bool EntityManager::Start()
+{
 	bool ret = true; 
 
 	//Iterates over the entities and calls Start
@@ -77,7 +79,7 @@ bool EntityManager::CleanUp()
 	return ret;
 }
 
-Entity* EntityManager::CreateEntity(EntityType type)
+Entity* EntityManager::CreateEntity(EntityType type, pugi::xml_node itemNode)
 {
 	Entity* entity = nullptr; 
 
@@ -85,19 +87,19 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	{
 
 	case EntityType::PLAYER:
-		entity = new Player();
+		entity = new Player(itemNode);
 		break;
 	
 	case EntityType::NPC:
-		entity = new NPC();
+		entity = new NPC(itemNode);
 		break;
 	
-	case EntityType::ENEMY:
-		entity = new KidEnemy();
+	case EntityType::ENEMY_KID:
+		entity = new KidEnemy(itemNode);
 		break;
 
 	case EntityType::ITEM:
-		entity = new Item();
+		entity = new Item(itemNode);
 		break;
 
 	default: break;

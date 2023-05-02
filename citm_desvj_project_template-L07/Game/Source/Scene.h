@@ -60,39 +60,32 @@ public:
 
 public:
 
-	Player* player = nullptr;
-	
+	// Entities
+	Player* player = nullptr;	
 	NPC* npc;
 	List<NPC*> npcList;
-
 	KidEnemy* kid = nullptr;
-
 	Item* item = nullptr;
 
 	// Set of SFX
 	uint selectSFX = 0;
 
-	iPoint cameraPos;
-
-	bool playing = false;
-
+	// Save Game
 	SDL_Texture* saveTex = nullptr;
 	const char* saveTexPath;
 	bool saveEnabled = false;
-
 	int saveTime = 0;
 	bool showSavingState = false;
 
+	// Menu states
 	bool gamePaused = false;
-
 	bool partyMenu = false;
 	bool pauseMenu = false;
 	bool settingSceneMenu = false;
 
-	bool continueGame = false;
 
-	List<Item*> livesCollectedList;
-	int itemLivesCount = 0;
+	bool playing = false; //HEKATE not used
+	bool continueGame = false;
 
 	SString mapName;
 	bool isMapChanging = false;
@@ -102,6 +95,13 @@ public:
 	DialogueManager* dialogueManager;
 
 private:
+
+	iPoint startPosition;
+	iPoint mousePos;
+	iPoint cameraPos;
+
+
+	// Textures
 	SDL_Texture* img_pause = nullptr;
 	SDL_Rect pauseRect;
 
@@ -116,10 +116,8 @@ private:
 	
 	const char* sophieImgPath = nullptr;
 	SDL_Texture* sophieImg = nullptr;
-
-	iPoint startPosition;
 	
-	// L12: Debug pathfing
+	// Debug pathfinding
 	iPoint origin;
 	bool originSelected = false;
 
@@ -146,6 +144,7 @@ private:
 	GuiButton* firstPMemberButton27 = nullptr;
 	GuiButton* secondPMemberButton28 = nullptr;
 
+	// Particle system
 	ParticleSystem* smokePS;
 
 	bool isNight = false;

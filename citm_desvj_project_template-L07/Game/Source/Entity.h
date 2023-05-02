@@ -5,15 +5,15 @@
 #include "SString.h"
 #include "Input.h"
 #include "Render.h"
+#include "Collisions.h"
 
-class PhysBody;
+class Body;
 
 enum class EntityType
 {
 	PLAYER,
 	NPC,
-	ENEMY,
-	FLYING_ENEMY,
+	ENEMY_KID,
 	ITEM,
 	UNKNOWN
 };
@@ -82,21 +82,19 @@ public:
 		}
 	}
 
-	virtual void OnCollision(PhysBody* physA, PhysBody* physB) {
-
-	};
-
 
 public:
 
 	SString name;
 	EntityType type;
-	bool active = true;
 	pugi::xml_node parameters;
 
-	iPoint position;             
-	bool renderable = true;
+	// Collider
+	Body* body = nullptr;
 
+	// States
+	bool active = true;
+	bool renderable = true;
 	bool needToDestroy = false;
 };
 

@@ -3,7 +3,7 @@
 
 #include "Entity.h"
 #include "Point.h"
-#include "Physics.h"
+#include "Collisions.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
@@ -12,7 +12,7 @@ class Item : public Entity
 {
 public:
 
-	Item();
+	Item(pugi::xml_node parameters);
 	virtual ~Item();
 
 	bool Awake();
@@ -25,7 +25,7 @@ public:
 
 	bool CleanUp();
 
-	void OnCollision(PhysBody* physA, PhysBody* physB);
+	void OnCollision();
 
 	void ResetItem();
 
@@ -33,9 +33,7 @@ public:
 
 	bool isPicked = false;
 
-	//TODO 4: Add a physics to an item
-	PhysBody* pbody;
-	SString iType;
+	SString itemType;
 
 private:
 
@@ -43,14 +41,11 @@ private:
 	const char* texturePath;
 
 	SDL_Rect lifeRect;
-	
-	b2Vec2 velocity;
 
 	int timeMov = 0;
 
 	int width;
 	int height;
-
 };
 
 #endif // __ITEM_H__

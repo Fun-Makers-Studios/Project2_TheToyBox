@@ -36,9 +36,9 @@ public:
 	}
 
 	// Math ------------------------------------------------
-	Point operator -(const Point &v) const
+	const Point& operator -(const Point &v)
 	{
-		p2Vector2 r;
+		Point r;
 
 		r.x = x - v.x;
 		r.y = y - v.y;
@@ -46,9 +46,9 @@ public:
 		return(r);
 	}
 
-	Point operator + (const Point &v) const
+	const Point& operator +(const Point &v)
 	{
-		p2Vector2 r;
+		Point r;
 
 		r.x = x + v.x;
 		r.y = y + v.y;
@@ -123,9 +123,49 @@ public:
 	{
 		return abs(v.x - x) + abs(v.y - y);
 	}
+
+	// HEKATE additions --------------------------------------
+	Point Clamp(const Point& min_, const Point& max_)
+	{
+		double clamped_x = fmax(min_.x, fmin(x, max_.x));
+		double clamped_y = fmax(min_.y, fmin(y, max_.y));
+
+		return { clamped_x, clamped_y };
+	}
+	
+	// Normalize ---------------------------------------------
+    Point& Normalize()
+    {
+        TYPE magnitude = sqrt(x*x + y*y);
+        if (magnitude > 0)
+        {
+            x /= magnitude;
+            y /= magnitude;
+        }
+        return (*this);
+    }
+
+	// Type conversion ---------------------------------------
+	// HEKATE
+	/*iPoint ConvertToInt(const dPoint& dp)
+	{
+		iPoint ip;
+		ip.x = static_cast<int>(dp.x);
+		ip.y = static_cast<int>(dp.y);
+		return ip;
+	}
+
+	dPoint ConvertToDouble(const iPoint& ip)
+	{
+		dPoint dp;
+		dp.x = static_cast<double>(ip.x);
+		dp.y = static_cast<double>(ip.y);
+		return dp;
+	}*/
 };
 
 typedef Point<int> iPoint;
 typedef Point<float> fPoint;
+typedef Point<double> dPoint;
 
 #endif // __POINT_H__
