@@ -21,6 +21,6 @@
 	<guiManager />
 	<:anonymous />
 	<renderer>
-		<camera x="221" y="970" />
+		<camera x="133" y="966" />
 	</renderer>
 </save_state>
