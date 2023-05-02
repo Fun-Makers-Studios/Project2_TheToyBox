@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "ModuleFadeToBlack.h"
 #include "EntityManager.h"
+#include "ParticleSystemManager.h"
 
 #include <math.h>
 
@@ -171,39 +172,48 @@ bool Player::Update()
 
 			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 				body->vel.y = -speed;
+				currentAnim = &walkUp;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 				body->vel.y = speed;
+				currentAnim = &walkDown;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				isFliped = true;
 				body->vel.x = -speed;
-				if (isFliped == true && fliped == SDL_FLIP_NONE) {
-					fliped = SDL_FLIP_HORIZONTAL;
-				}
+				currentAnim = &walkLeft;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-				isFliped = false;
 				body->vel.x = speed;
-				if (isFliped == false && fliped == SDL_FLIP_HORIZONTAL) {
-					fliped = SDL_FLIP_NONE;
+				currentAnim = &walkRight;
+			}
+			
+			if (currentAnim != &idle)
+			{
+				if (walkParticles == nullptr) {
+					walkParticles = app->particleManager->CreateParticleSystem(body->pos, Blueprint::SAND);
+				}
+				else {
+					walkParticles->TurnOff();
+					walkParticles = nullptr;
 				}
 			}
 			
+
 			// HEKATE pbody->body->SetLinearVelocity(velocity);
 			body->pos.x += body->vel.x;
 			body->pos.y += body->vel.y;
 		}
 
 	}
-	else {
-		// HEKATE pbody->body->SetAwake(false);
+	
+	if (walkParticles != nullptr) {
+		walkParticles->SetPosition(body->pos.x, body->pos.y);
 	}
 	
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 	ScaleType scaleType = app->scaleObj->GetCurrentScale();
 	app->render->DrawTexture(shadowTexture, body->pos.x - 16, body->pos.y - 54, NULL, fliped, scaleType);
-	app->render->DrawTexture(texture, body->pos.x - 16, body->pos.y - 32, &rect, fliped, scaleType);
+	app->render->DrawTexture(texture, body->pos.x - 16, body->pos.y - 24, &rect, fliped, scaleType);
 	
 	currentAnim->Update();
 
