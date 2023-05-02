@@ -1,19 +1,19 @@
-#ifndef __LOGOSCREEN_H__
-#define __LOGOSCREEN_H__
+#ifndef __SCENEENDING_H__
+#define __SCENEENDING_H__
 
 #include "Scene.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
 
-class LogoScreen : public Scene
+class SceneEnding : public Scene
 {
 public:
 
-	LogoScreen();
+	SceneEnding();
 
 	// Destructor
-	virtual ~LogoScreen();
+	virtual ~SceneEnding();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& config);
@@ -34,24 +34,16 @@ public:
 	bool CleanUp();
 
 public:
+	uint startSFX = 0;
 
 private:
 	SDL_Texture* img = nullptr;
-	int time = 0;
 
 	const char* imgPath;
 	const char* musicPath;
+	const char* startSFXPath;
 
-	//FX
-	uint logoFX;
-
-	// A frame count system to handle the fade time and ratio
-	Uint32 frameCount = 250;
-	Uint32 maxFadeFrames = 250;
-	float fadeRatio;
 };
 
 
-#endif // !__LOGOSCREEN_H__
-
-
+#endif // !__SCENEENDING_H__

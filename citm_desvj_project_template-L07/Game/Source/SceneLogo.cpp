@@ -1,4 +1,4 @@
-#include "LogoScreen.h"
+#include "SceneLogo.h"
 
 #include "App.h"
 #include "Input.h"
@@ -9,32 +9,36 @@
 #include "Entity.h"
 #include "Collisions.h"
 #include "EntityManager.h"
+#include "SceneManager.h"
 
 #include "SDL/include/SDL_render.h"
 
 #include "Defs.h"
 #include "Log.h"
 
-LogoScreen::LogoScreen() : Scene()
+SceneLogo::SceneLogo() : Scene()
 {
-	id.Create("LogoScreen");
+	sceneType = SceneType::ALWAYS_ACTIVE;
+	id.Create("SceneLogo");
 }
 
 // Destructor
-LogoScreen::~LogoScreen()
-{}
+SceneLogo::~SceneLogo()
+{
+	app->tex->UnLoad(img);
+}
 
 // Called before render is available
-bool LogoScreen::Awake(pugi::xml_node& config)
+bool SceneLogo::Awake(pugi::xml_node& config)
 {
-	LOG("Loading LogoScreen");
+	LOG("Loading SceneLogo");
 	bool ret = true;
 
 	return ret;
 }
 
 // Called before the first frame
-bool LogoScreen::Start()
+bool SceneLogo::Start()
 {
 	LOG("--STARTS LOGO SCENE--");
 
@@ -42,7 +46,7 @@ bool LogoScreen::Start()
 
 	/*Initialize*/
 	imgPath = app->configNode.child("logo").child("backgroundimage").attribute("texturepath").as_string();
-	logoFX = app->audio->LoadFx("Assets/Audio/Fx/LogoScreen/logo_screen.wav");
+	logoFX = app->audio->LoadFx("Assets/Audio/Fx/SceneLogo/logo_screen.wav");
 
 	/*Load*/
 	img = app->tex->Load(imgPath);
@@ -53,20 +57,21 @@ bool LogoScreen::Start()
 }
 
 // Called each loop iteration
-bool LogoScreen::PreUpdate()
+bool SceneLogo::PreUpdate()
 {
 	return true;
 }
 
 // Called each loop iteration
-bool LogoScreen::Update(float dt)
+bool SceneLogo::Update(float dt)
 {
 	time++;
 	frameCount--;
 
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
 		LOG("PASA A SCENE DIRECTAMENTE");
-		app->fade->FadeToBlack(this, (Module*)app->scene, 0);
+		app->sceneManager->SwitchTo("SceneGame");
+		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 0);
 	}
 
 	fadeRatio = (float)frameCount / (float)maxFadeFrames;
@@ -75,7 +80,8 @@ bool LogoScreen::Update(float dt)
 
 	if (time >= 150) {
 		LOG("PASA A TITLE SCENE");
-		app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
+		app->sceneManager->SwitchTo("SceneTitle");
+		// HEKATE app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
 	}
 
 	app->render->DrawTexture(img, 0, 0, NULL);
@@ -84,7 +90,7 @@ bool LogoScreen::Update(float dt)
 }
 
 // Called each loop iteration
-bool LogoScreen::PostUpdate()
+bool SceneLogo::PostUpdate()
 {
 	bool ret = true;
 
@@ -98,13 +104,10 @@ bool LogoScreen::PostUpdate()
 }
 
 // Called before quitting
-bool LogoScreen::CleanUp()
+bool SceneLogo::CleanUp()
 {
 	LOG("Freeing LOGO SCENE");
 
-	if (img != nullptr) {
-		app->tex->UnLoad(img);
-	}
 
 	return true;
 }

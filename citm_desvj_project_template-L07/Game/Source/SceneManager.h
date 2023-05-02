@@ -1,10 +1,21 @@
 #ifndef __SCENEMANAGER_H__
 #define __SCENEMANAGER_H__
 
-
 #include "Module.h"
-#include "Scene.h"
 #include "List.h"
+#include "SceneLogo.h"
+#include "SceneTitle.h"
+#include "SceneGame.h"
+#include "SceneFight.h"
+#include "SceneEnding.h"
+
+
+//Scenes
+class SceneLogo;
+class SceneTitle;
+class SceneGame;
+class SceneFight;
+class SceneEnding;
 
 class SceneManager : public Module
 {
@@ -22,7 +33,6 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 
-
 	// Adds a scene to the scene manager.
 	bool AddScene(Scene* scene, pugi::xml_node& config);
 
@@ -34,15 +44,19 @@ public:
 
 	ListItem<Scene*>* FindSceneByID(SString id);
 
-private:
-	// Stores all of the scenes associated with this scene manager
-	List<Scene*> scenes;
+public:
 
-	// Stores a reference to the current scene. Used when drawing/updating.
 	Scene* currentScene = nullptr;
 
-	// Total scenes on list. This is incremented whenever a scene is added.
+	List<Scene*> scenes;
 	uint numScenes = 0;
+
+	//Scenes
+	SceneLogo* sceneLogo;
+	SceneTitle* sceneTitle;
+	SceneGame* sceneGame;
+	SceneFight* sceneFight;
+	SceneEnding* sceneEnding;
 };
 
 #endif // __SCENEMANAGER_H__

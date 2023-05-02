@@ -4,7 +4,7 @@
 #include "Fonts.h"
 #include "Input.h"
 #include "App.h"
-#include "Scene.h"
+#include "SceneManager.h"
 #include "Fonts.h"
 
 #include "Log.h"
@@ -37,7 +37,7 @@ void DialogueManager::Load(int dialogueId) {
 	}
 
 	dialogueLoaded = true;
-	app->scene->gamePaused = true;
+	app->sceneManager->sceneGame->gamePaused = true;
 }
 
 void DialogueManager::Update() {
@@ -88,7 +88,7 @@ void DialogueManager::Unload() {
 	RELEASE(currentDialogue);
 
 	dialogueLoaded = false;
-	app->scene->gamePaused = false;
+	app->sceneManager->sceneGame->gamePaused = false;
 }
 
 void DialogueManager::CleanUp() {

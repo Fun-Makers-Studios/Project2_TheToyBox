@@ -7,14 +7,14 @@
 
 struct SDL_Texture;
 
-class TitleScreen : public Scene
+class SceneTitle : public Scene
 {
 public:
 
-	TitleScreen();
+	SceneTitle();
 
 	// Destructor
-	virtual ~TitleScreen();
+	virtual ~SceneTitle();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& config);

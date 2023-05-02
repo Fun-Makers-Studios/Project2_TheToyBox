@@ -1,4 +1,4 @@
-#include "EndingScreen.h"
+#include "SceneEnding.h"
 
 #include "App.h"
 #include "Input.h"
@@ -11,26 +11,27 @@
 #include "EntityManager.h"
 #include "Player.h"
 #include "Map.h"
-#include "Scene.h"
+#include "SceneManager.h"
 
 #include "SDL/include/SDL_render.h"
 
 #include "Defs.h"
 #include "Log.h"
 
-EndingScreen::EndingScreen() : Scene()
+SceneEnding::SceneEnding() : Scene()
 {
-	id.Create("EndingScreen");
+	sceneType = SceneType::ALWAYS_ACTIVE;
+	id.Create("SceneEnding");
 }
 
 // Destructor
-EndingScreen::~EndingScreen()
+SceneEnding::~SceneEnding()
 {}
 
 // Called before render is available
-bool EndingScreen::Awake(pugi::xml_node& config)
+bool SceneEnding::Awake(pugi::xml_node& config)
 {
-	LOG("Loading EndingScreen");
+	LOG("Loading SceneEnding");
 	bool ret = true;
 
 
@@ -38,7 +39,7 @@ bool EndingScreen::Awake(pugi::xml_node& config)
 }
 
 // Called before the first frame
-bool EndingScreen::Start()
+bool SceneEnding::Start()
 {
 	LOG("--STARTS ENDING SCENE--");
 
@@ -56,19 +57,20 @@ bool EndingScreen::Start()
 }
 
 // Called each loop iteration
-bool EndingScreen::PreUpdate()
+bool SceneEnding::PreUpdate()
 {
 	return true;
 }
 
 // Called each loop iteration
-bool EndingScreen::Update(float dt)
+bool SceneEnding::Update(float dt)
 {
 	
 
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 		LOG("PASA A GAME SCENE");
-		app->fade->FadeToBlack(this, (Module*)app->scene, 90);
+		app->sceneManager->SwitchTo("SceneGame");
+		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 90);
 		app->audio->PlayFx(startSFX);
 	}
 
@@ -76,7 +78,7 @@ bool EndingScreen::Update(float dt)
 }
 
 // Called each loop iteration
-bool EndingScreen::PostUpdate()
+bool SceneEnding::PostUpdate()
 {
 	bool ret = true;
 
@@ -89,7 +91,7 @@ bool EndingScreen::PostUpdate()
 }
 
 // Called before quitting
-bool EndingScreen::CleanUp()
+bool SceneEnding::CleanUp()
 {
 	LOG("Freeing ENDING SCENE");
 

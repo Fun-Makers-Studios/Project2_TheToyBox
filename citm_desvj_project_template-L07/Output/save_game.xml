@@ -5,12 +5,7 @@
 	<textures />
 	<Fonts_Module />
 	<audio />
-	<fade />
-	<LogoScreen />
-	<TitleScreen />
-	<EndingScreen />
-	<scene />
-	<sceneFight />
+	<scenemanager />
 	<map />
 	<pathfinding />
 	<:anonymous />
@@ -21,6 +16,6 @@
 	<guiManager />
 	<:anonymous />
 	<renderer>
-		<camera x="133" y="966" />
+		<camera x="2105" y="705" />
 	</renderer>
 </save_state>

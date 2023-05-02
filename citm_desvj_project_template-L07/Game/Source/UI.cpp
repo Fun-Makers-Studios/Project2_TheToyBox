@@ -6,7 +6,7 @@
 #include "Render.h"
 #include "Input.h"
 #include "Player.h"
-#include "Scene.h"
+#include "SceneManager.h"
 #include "Window.h"
 #include "PartyManager.h"
 
@@ -101,14 +101,14 @@ bool UI::CleanUp()
 void UI::BlitPlayerXPos()
 {
 	char playerXPos[25];
-	sprintf_s(playerXPos, 25, "position x: %d", app->scene->player->body->pos.x);
+	sprintf_s(playerXPos, 25, "position x: %d", app->sceneManager->sceneGame->player->body->pos.x);
 	app->fonts->BlitText(20, 65, font2_id, playerXPos);
 }
 
 void UI::BlitPlayerYPos()
 {
 	char playerYPos[25];
-	sprintf_s(playerYPos, 25, "position y: %d", app->scene->player->body->pos.y);
+	sprintf_s(playerYPos, 25, "position y: %d", app->sceneManager->sceneGame->player->body->pos.y);
 	app->fonts->BlitText(20, 85, font2_id, playerYPos);
 }
 
@@ -151,40 +151,40 @@ void UI::BlitFrameCount()
 void UI::BlitPartyStats()
 {
 	
-	app->fonts->BlitText(544, 225, app->ui->font1_id, app->partyManager->party.At(app->scene->partyMemberSelected)->data->name.GetString());
+	app->fonts->BlitText(544, 225, app->ui->font1_id, app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->name.GetString());
 
 	char level[5];
-	sprintf_s(level, 5, "%d", app->partyManager->party.At(app->scene->partyMemberSelected)->data->level);
+	sprintf_s(level, 5, "%d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->level);
 	app->fonts->BlitText(544, 264, app->ui->font1_id, level);
 
 	char currentHP[8];
-	sprintf_s(currentHP, 8, "hp %d/", app->partyManager->party.At(app->scene->partyMemberSelected)->data->currentHp);
+	sprintf_s(currentHP, 8, "hp %d/", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->currentHp);
 	char maxHP[3];
-	sprintf_s(maxHP, 3, "%d", app->partyManager->party.At(app->scene->partyMemberSelected)->data->maxHp);
+	sprintf_s(maxHP, 3, "%d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->maxHp);
 	app->fonts->BlitText(780, 270, app->ui->font1_id, currentHP);
 	app->fonts->BlitText(828, 270, app->ui->font1_id, maxHP);
 
 	char currentMana[10];
-	sprintf_s(currentMana, 10, "mana %d/", app->partyManager->party.At(app->scene->partyMemberSelected)->data->currentMana);
+	sprintf_s(currentMana, 10, "mana %d/", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->currentMana);
 	char maxMana[3];
-	sprintf_s(maxMana, 3, "%d", app->partyManager->party.At(app->scene->partyMemberSelected)->data->maxMana);
+	sprintf_s(maxMana, 3, "%d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->maxMana);
 	app->fonts->BlitText(875, 270, app->ui->font1_id, currentMana);
 	app->fonts->BlitText(940, 270, app->ui->font1_id, maxMana);
 
 	char attack[12];
-	sprintf_s(attack, 12, "attack %d", app->partyManager->party.At(app->scene->partyMemberSelected)->data->attack);
+	sprintf_s(attack, 12, "attack %d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->attack);
 	app->fonts->BlitText(780, 295, app->ui->font1_id, attack);
 
 	char defense[15];
-	sprintf_s(defense, 15, "defense %d", app->partyManager->party.At(app->scene->partyMemberSelected)->data->defense);
+	sprintf_s(defense, 15, "defense %d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->defense);
 	app->fonts->BlitText(875, 295, app->ui->font1_id, defense);
 
 	char speed[10];
-	sprintf_s(speed, 10, "speed %d", app->partyManager->party.At(app->scene->partyMemberSelected)->data->speed);
+	sprintf_s(speed, 10, "speed %d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->speed);
 	app->fonts->BlitText(780, 320, app->ui->font1_id, speed);
 
 	char critRate[15];
-	sprintf_s(critRate, 15, "crit r %d", app->partyManager->party.At(app->scene->partyMemberSelected)->data->critRate);
+	sprintf_s(critRate, 15, "crit r %d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->critRate);
 	app->fonts->BlitText(875, 320, app->ui->font1_id, critRate);
 
 }

@@ -4,7 +4,14 @@
 #include "NPC.h"
 #include "Item.h"
 
-class Scene
+enum class SceneType
+{
+	ALWAYS_ACTIVE,
+	GAME,
+	FIGHT
+};
+
+class Scene : public Module
 {
 public:
 
@@ -17,19 +24,19 @@ public:
 
 	// Called whenever a scene is transitioned into. Can be 
 	// called many times in a typical game cycle.
-	virtual bool Start() {};
+	virtual bool Start() { return true; };
 
 	// Called before all Updates
-	virtual bool PreUpdate() {};
+	virtual bool PreUpdate() { return true; };
 
 	// Called each loop iteration
-	virtual bool Update(float dt) {};
+	virtual bool Update(float dt) { return true; };
 
 	// Called before all Updates
-	virtual bool PostUpdate() {};
+	virtual bool PostUpdate() { return true; };
 
 	// Called before quitting
-	virtual bool CleanUp() {};
+	virtual bool CleanUp() { return true; };
 
 	// Returns the scene's ID
 	virtual SString GetID() { return id; }
@@ -37,8 +44,9 @@ public:
 	// Sets the scene's ID
 	virtual void SetID(SString id) { this->id = id; }
 
-private:
+public:
 
+	SceneType sceneType;
 	SString id;
 	List<NPC*>npcs;
 	List<Item*>items;

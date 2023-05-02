@@ -5,7 +5,7 @@
 #include "Input.h"
 #include "Render.h"
 #include "Window.h"
-#include "Scene.h"
+#include "SceneManager.h"
 #include "Log.h"
 #include "Point.h"
 #include "Map.h"
@@ -132,7 +132,7 @@ bool Player::Update()
 
 	currentAnim = &idle;
 
-	if (app->scene->gamePaused != true) 
+	if (app->sceneManager->sceneGame->gamePaused != true)
 	{
 
 		if (godMode)

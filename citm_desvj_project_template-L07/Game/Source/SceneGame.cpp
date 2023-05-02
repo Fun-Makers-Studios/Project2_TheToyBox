@@ -8,10 +8,9 @@
 #include "Map.h"
 #include "Collisions.h"
 #include "PathFinding.h"
-#include "EndingScreen.h"
 #include "UI.h"
 #include "GuiManager.h"
-#include "TitleScreen.h"
+#include "SceneManager.h"
 #include "PartyManager.h"
 #include "ParticleSystemManager.h"
 #include "Debug.h"
@@ -22,8 +21,8 @@
 
 SceneGame::SceneGame() : Scene()
 {	
-	id.Create("scene");
-	
+	sceneType = SceneType::GAME;
+	id.Create("SceneGame");
 }
 
 // Destructor
@@ -339,7 +338,7 @@ bool SceneGame::PostUpdate()
 			if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 			{
 				settingSceneMenu = !settingSceneMenu;
-				app->audio->PlayFx(app->titlescreen->closemenuSFX);
+				app->audio->PlayFx(app->sceneManager->sceneTitle->closemenuSFX);
 			}
 		}
 
@@ -359,7 +358,7 @@ bool SceneGame::PostUpdate()
 		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		{
 			partyMenu = !partyMenu;
-			app->audio->PlayFx(app->titlescreen->closemenuSFX);
+			app->audio->PlayFx(app->sceneManager->sceneTitle->closemenuSFX);
 		}
 
 		switch (partyMemberSelected)
@@ -448,25 +447,26 @@ bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 	case 14:
 		if (!dialogueManager->dialogueLoaded) { gamePaused = !gamePaused; }
 		pauseMenu = !pauseMenu;
-		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
 		break;
 
 	case 15:
-		app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
-		app->audio->PlayFx(app->titlescreen->startSFX);
+		app->sceneManager->SwitchTo("SceneTitle");
+		// HEKATE app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
+		app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
 		break;
 
 	case 16:
 		//Here goes settings menu
 		settingSceneMenu = !settingSceneMenu;
-		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
 		break;
 	
 	case 17:
 		showSavingState = true;
 		app->SaveGameRequest();
 		//exitGame = !exitGame;
-		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
 		break;
 	
 	case 21:
@@ -477,7 +477,7 @@ bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 		if (app->musicValue >= 100)
 			app->musicValue = 100;
 		Mix_VolumeMusic(app->musicValue);
-		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
 		break;
 
 	case 22:
@@ -488,7 +488,7 @@ bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 		if (app->musicValue >= 100)
 			app->musicValue = 100;
 		Mix_VolumeMusic(app->musicValue);
-		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
 		break;
 
 	case 23:
@@ -499,7 +499,7 @@ bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 		if (app->sfxValue >= 100)
 			app->sfxValue = 100;
 		Mix_Volume(-1, app->sfxValue);
-		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
 		break;
 
 	case 24:
@@ -510,7 +510,7 @@ bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 		if (app->sfxValue >= 100)
 			app->sfxValue = 100;
 		Mix_Volume(-1, app->sfxValue);
-		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
 		break;
 
 	case 25:
@@ -524,25 +524,25 @@ bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 		{
 			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_SHOWN);
 		}
-		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
 		break;
 
 	case 26:
 		// V-Sync button
 		app->render->limitFPS = !app->render->limitFPS;
-		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
 		break;
 	
 	case 27:
 		// Choose First PartyMember
 		partyMemberSelected = 0;
-		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
 		break;
 		
 	case 28:
 		// Choose Second PartyMember
 		partyMemberSelected = 1;
-		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
 		break;
 
 	default:
@@ -644,7 +644,8 @@ void SceneGame::FixCamera()
 void SceneGame::FightKid()
 {
 	app->partyManager->enemyToFight = "enemykid";
-	app->fade->FadeToBlack(this, (Module*)app->sceneFight, 0);
+	app->sceneManager->SwitchTo("SceneFight");
+	// HEKATE app->fade->FadeToBlack(this, (Module*)app->sceneFight, 0);
 }
 
 bool SceneGame::LoadState(pugi::xml_node& data)

@@ -1,4 +1,4 @@
-#include "TitleScreen.h"
+#include "SceneTitle.h"
 
 #include "App.h"
 #include "Input.h"
@@ -9,7 +9,7 @@
 #include "Entity.h"
 #include "Collisions.h"
 #include "EntityManager.h"
-#include "Scene.h"
+#include "SceneManager.h"
 #include "Map.h"
 #include "GuiManager.h"
 #include "Fonts.h"
@@ -21,26 +21,27 @@
 #include "Defs.h"
 #include "Log.h"
 
-TitleScreen::TitleScreen() : Scene()
+SceneTitle::SceneTitle() : Scene()
 {
-	id.Create("TitleScreen");
+	sceneType = SceneType::ALWAYS_ACTIVE;
+	id.Create("SceneTitle");
 }
 
 // Destructor
-TitleScreen::~TitleScreen()
+SceneTitle::~SceneTitle()
 {}
 
 // Called before render is available
-bool TitleScreen::Awake(pugi::xml_node& config)
+bool SceneTitle::Awake(pugi::xml_node& config)
 {
-	LOG("Loading TitleScreen");
+	LOG("Loading SceneTitle");
 	bool ret = true;
 
 	return ret;
 }
 
 // Called before the first frame
-bool TitleScreen::Start()
+bool SceneTitle::Start()
 {
 	app->render->camera.x = 0;
 
@@ -59,11 +60,11 @@ bool TitleScreen::Start()
 	img = app->tex->Load(imgPath);
 	popImg_settings = app->tex->Load(popImgSettingsPath);
 	popImg_credits = app->tex->Load(popImgCreditsPath);
-	startSFX = app->audio->LoadFx("Assets/Audio/Fx/TitleScreen/fx5.wav");
+	startSFX = app->audio->LoadFx("Assets/Audio/Fx/SceneTitle/fx5.wav");
 	menuSelectionSFX = app->audio->LoadFx(selectSFXPath);
 	selectSFX = app->audio->LoadFx(select2SFXPath);
-	titleSFX = app->audio->LoadFx("Assets/Audio/Fx/TitleScreen/title_screen.wav");
-	closemenuSFX = app->audio->LoadFx("Assets/Audio/Fx/TitleScreen/close_menu.wav");
+	titleSFX = app->audio->LoadFx("Assets/Audio/Fx/SceneTitle/title_screen.wav");
+	closemenuSFX = app->audio->LoadFx("Assets/Audio/Fx/SceneTitle/close_menu.wav");
 
 	app->debug->debug = false;
 	settingMenu = false;
@@ -104,13 +105,13 @@ bool TitleScreen::Start()
 }
 
 // Called each loop iteration
-bool TitleScreen::PreUpdate()
+bool SceneTitle::PreUpdate()
 {
 	return true;
 }
 
 // Called each loop iteration
-bool TitleScreen::Update(float dt)
+bool SceneTitle::Update(float dt)
 {
 	//CHECK SAVE GAME
 	pugi::xml_document gameStateFile;
@@ -133,7 +134,9 @@ bool TitleScreen::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 		LOG("PASA A GAME SCENE");
-		app->fade->FadeToBlack(this, (Module*)app->scene, 90);
+		app->sceneManager->SwitchTo("SceneGame");
+
+		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 90);
 		app->audio->PlayFx(startSFX);
 	}
 	
@@ -232,7 +235,7 @@ bool TitleScreen::Update(float dt)
 }
 
 // Called each loop iteration
-bool TitleScreen::PostUpdate()
+bool SceneTitle::PostUpdate()
 {
 	bool ret = true;
 
@@ -246,7 +249,7 @@ bool TitleScreen::PostUpdate()
 }
 
 // Called before quitting
-bool TitleScreen::CleanUp()
+bool SceneTitle::CleanUp()
 {
 	LOG("Freeing TITLE SCENE");
 
@@ -262,7 +265,7 @@ bool TitleScreen::CleanUp()
 	return true;
 }
 
-bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
+bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
 {
 	// L15: TODO 5: Implement the OnGuiMouseClickEvent method
 
@@ -270,14 +273,18 @@ bool TitleScreen::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case 5:
 		// Continue button (only if "save_game.xml" exists)
-		app->fade->FadeToBlack(this, (Module*)app->scene, 90);
-		app->scene->continueGame = true;
+		app->sceneManager->SwitchTo("SceneGame");
+
+		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 90);
+		app->sceneManager->sceneGame->continueGame = true;
 		app->audio->PlayFx(startSFX);
 		break;
 
 	case 1:
 		// Play button
-		app->fade->FadeToBlack(this, (Module*)app->scene, 90);
+		app->sceneManager->SwitchTo("SceneGame");
+
+		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 90);
 		app->audio->PlayFx(startSFX);
 		if (remove("save_game.xml") != 0)
 			LOG("Error at Deleting Save Game");

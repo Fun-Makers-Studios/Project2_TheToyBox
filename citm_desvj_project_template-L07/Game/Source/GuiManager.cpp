@@ -19,7 +19,7 @@ bool GuiManager::Start()
 
 GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, int textSize, SDL_Rect bounds, Module* observer, ButtonType buttonType, SDL_Rect sliderBounds)
 {
-	// L15: TODO1: Create a GUI control and add it to the list of controls
+	// Create a GUI control and add it to the list of controls
 
 	GuiControl* guiControl = nullptr;
 
@@ -63,7 +63,6 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 bool GuiManager::Update(float dt)
 {	
 	
-	
 	return true;
 }
 
@@ -90,8 +89,8 @@ bool GuiManager::PostUpdate()
 	return true;
 }
 
-bool GuiManager::Draw() {
-
+bool GuiManager::Draw()
+{
 	ListItem<GuiControl*>* control = guiControlsList.start;
 
 	while (control != nullptr)
@@ -123,6 +122,3 @@ bool GuiManager::CleanUp()
 
 	return false;
 }
-
-
-

@@ -7,16 +7,16 @@
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
       <Filter>External\PugiXml</Filter>
     </ClCompile>
-    <ClCompile Include="Source\EndingScreen.cpp">
+    <ClCompile Include="Source\SceneEnding.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LogoScreen.cpp">
+    <ClCompile Include="Source\SceneLogo.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneGame.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TitleScreen.cpp">
+    <ClCompile Include="Source\SceneTitle.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\App.cpp">
@@ -156,16 +156,16 @@
     <ClInclude Include="Source\Queue.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\EndingScreen.h">
+    <ClInclude Include="Source\SceneEnding.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\LogoScreen.h">
+    <ClInclude Include="Source\SceneLogo.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneGame.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TitleScreen.h">
+    <ClInclude Include="Source\SceneTitle.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\Module.h">

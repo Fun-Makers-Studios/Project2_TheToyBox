@@ -1,6 +1,10 @@
 #include "App.h"
 #include "SceneManager.h"
+#include "SceneLogo.h"
+#include "SceneTitle.h"
 #include "SceneGame.h"
+#include "SceneFight.h"
+#include "SceneEnding.h"
 
 SceneManager::SceneManager() : Module()
 {
@@ -11,20 +15,24 @@ SceneManager::~SceneManager() {}
 
 bool SceneManager::Awake(pugi::xml_node& config)
 {
-    Scene* sceneGame = new SceneGame();
-    Scene* sceneGame = new SceneGame();
-    Scene* sceneGame = new SceneGame();
-    Scene* sceneGame = new SceneGame();
-    Scene* sceneGame = new SceneGame();
+    sceneLogo    = new SceneLogo();
+    sceneTitle   = new SceneTitle();
+    sceneGame    = new SceneGame();
+    sceneFight   = new SceneFight();
+    sceneEnding  = new SceneEnding();
 
+    AddScene(sceneLogo, config);
+    AddScene(sceneTitle, config);
     AddScene(sceneGame, config);
+    AddScene(sceneFight, config);
+    AddScene(sceneEnding, config);
 
     return true;
 }
 
 bool SceneManager::Start()
 {
-    currentScene = FindSceneByID("sceneGame")->data;
+    currentScene = FindSceneByID("SceneLogo")->data;
 
     return true;
 }
@@ -74,14 +82,20 @@ void SceneManager::SwitchTo(SString id)
 {
     auto scene = FindSceneByID(id);
 
-    if (currentScene)
+    switch (currentScene->sceneType)
     {
-        // If we have a current scene, we call its OnDeactivate method.
-        currentScene->OnDeactivate();
-    }
+    case SceneType::ALWAYS_ACTIVE:
+        currentScene = scene->data;
+        break;
+    case SceneType::GAME:
+        delete currentScene;
 
-    // Setting new current scene
-    currentScene = scene->data;
+        break;
+    case SceneType::FIGHT:
+        break;
+    default:
+        break;
+    }
 
     currentScene->Start();
 }
@@ -90,16 +104,7 @@ void SceneManager::RemoveScene(SString id)
 {
     auto scene = FindSceneByID(id);
 
-    if (currentScene == scene->data)
-    {
-        // If the scene we are removing is the current scene, 
-        // set it to null pointer so the scene is no longer updated.
-        currentScene = nullptr;
-    }
-
-    // We make sure to call the OnDestroy method 
-    // of the scene we are removing.
-    scene->data->OnDestroy();
+    delete scene;
 
     scenes.Del(scene);
 }
