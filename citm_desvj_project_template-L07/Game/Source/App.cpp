@@ -6,17 +6,12 @@
 #include "Audio.h"
 #include "ModuleController.h"
 
-#include "LogoScreen.h"
-#include "TitleScreen.h"
-#include "EndingScreen.h"
-#include "Scene.h"
-#include "SceneFight.h"
+#include "SceneManager.h"
 
 #include "EntityManager.h"
 #include "Map.h"
 #include "Collisions.h"
 #include "Pathfinding.h"
-#include "ModuleFadeToBlack.h"
 
 #include "UI.h"
 #include "ParticleSystemManager.h"
@@ -47,12 +42,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	//controller = new ModuleController();
 
-	fade = new ModuleFadeToBlack();
-	logoscreen = new LogoScreen();
-	titlescreen = new TitleScreen();
-	scene = new Scene();
-	sceneFight = new SceneFight();
-	endingscreen = new EndingScreen();
+	sceneManager = new SceneManager();
 
 	map = new Map();
 	pathfinding = new Pathfinding();
@@ -78,12 +68,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio, true);
 	//AddModule(controller, true);
 
-	AddModule(fade, true);
-	AddModule(logoscreen, true);
-	AddModule(titlescreen, false);
-	AddModule(endingscreen, false);
-	AddModule(scene, false);
-	AddModule(sceneFight, false);
+	AddModule(sceneManager, true);
 
 	AddModule(map, false);
 	AddModule(pathfinding, false);

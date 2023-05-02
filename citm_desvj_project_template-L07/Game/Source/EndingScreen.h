@@ -1,12 +1,12 @@
 #ifndef __ENDINGSCREEN_H__
 #define __ENDINGCREEN_H__
 
-#include "Module.h"
+#include "Scene.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
 
-class EndingScreen : public Module
+class EndingScreen : public Scene
 {
 public:
 

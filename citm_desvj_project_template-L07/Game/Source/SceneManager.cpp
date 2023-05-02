@@ -1,8 +1,8 @@
 #include "App.h"
 #include "SceneManager.h"
-#include "SceneTest.h"
+#include "SceneGame.h"
 
-SceneManager::SceneManager(bool startEnabled) : Module(startEnabled)
+SceneManager::SceneManager() : Module()
 {
     name.Create("scenemanager");
 }
@@ -11,15 +11,20 @@ SceneManager::~SceneManager() {}
 
 bool SceneManager::Awake(pugi::xml_node& config)
 {
-    Scene* sceneTest = new SceneTest();
-    AddScene(sceneTest, config);
+    Scene* sceneGame = new SceneGame();
+    Scene* sceneGame = new SceneGame();
+    Scene* sceneGame = new SceneGame();
+    Scene* sceneGame = new SceneGame();
+    Scene* sceneGame = new SceneGame();
+
+    AddScene(sceneGame, config);
 
     return true;
 }
 
 bool SceneManager::Start()
 {
-    currentScene = FindSceneByID("sceneTest")->data;
+    currentScene = FindSceneByID("sceneGame")->data;
 
     return true;
 }
@@ -60,7 +65,7 @@ bool SceneManager::AddScene(Scene* scene, pugi::xml_node& config)
 
     scenes.Add(scene);
     numScenes++;
-    scene->OnCreate(config);
+    scene->Awake(config);
 
     return true;
 }
@@ -78,7 +83,7 @@ void SceneManager::SwitchTo(SString id)
     // Setting new current scene
     currentScene = scene->data;
 
-    currentScene->OnActivate();
+    currentScene->Start();
 }
 
 void SceneManager::RemoveScene(SString id)

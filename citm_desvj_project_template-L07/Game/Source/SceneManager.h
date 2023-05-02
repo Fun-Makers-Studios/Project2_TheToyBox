@@ -10,7 +10,7 @@ class SceneManager : public Module
 {
 public:
 
-	SceneManager(bool startEnabled);
+	SceneManager();
 
 	virtual ~SceneManager();
 

@@ -10,7 +10,6 @@
 #include "Point.h"
 #include "Map.h"
 #include "PathFinding.h"
-#include "ModuleFadeToBlack.h"
 #include "EntityManager.h"
 
 

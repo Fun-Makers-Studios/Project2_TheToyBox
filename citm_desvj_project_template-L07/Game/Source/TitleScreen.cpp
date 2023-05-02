@@ -11,7 +11,6 @@
 #include "EntityManager.h"
 #include "Scene.h"
 #include "Map.h"
-#include "ModuleFadeToBlack.h"
 #include "GuiManager.h"
 #include "Fonts.h"
 #include "UI.h"
@@ -22,9 +21,9 @@
 #include "Defs.h"
 #include "Log.h"
 
-TitleScreen::TitleScreen() : Module()
+TitleScreen::TitleScreen() : Scene()
 {
-	name.Create("TitleScreen");
+	id.Create("TitleScreen");
 }
 
 // Destructor

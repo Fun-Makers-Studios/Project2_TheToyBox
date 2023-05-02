@@ -1,4 +1,5 @@
 #include "SceneFight.h"
+#include "Scene.h"
 #include "App.h"
 #include "Input.h"
 #include "Render.h"
@@ -7,7 +8,6 @@
 #include "Log.h"
 #include "PartyManager.h"
 #include "TitleScreen.h"
-#include "ModuleFadeToBlack.h"
 #include "UI.h"
 #include "GuiManager.h"
 #include "Debug.h"
@@ -15,9 +15,9 @@
 #include <time.h>
 
 
-SceneFight::SceneFight() : Module()
+SceneFight::SceneFight() : Scene()
 {
-	name.Create("sceneFight");
+	id.Create("sceneFight");
 }
 
 // Destructor

@@ -8,7 +8,6 @@
 #include "EntityManager.h"
 #include "Map.h"
 #include "Collisions.h"
-#include "ModuleFadeToBlack.h"
 #include "Debug.h"
 #include "LogoScreen.h"
 #include "TitleScreen.h"

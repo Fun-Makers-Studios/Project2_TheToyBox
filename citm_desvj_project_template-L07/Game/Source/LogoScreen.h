@@ -1,12 +1,12 @@
 #ifndef __LOGOSCREEN_H__
 #define __LOGOSCREEN_H__
 
-#include "Module.h"
+#include "Scene.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
 
-class LogoScreen : public Module
+class LogoScreen : public Scene
 {
 public:
 

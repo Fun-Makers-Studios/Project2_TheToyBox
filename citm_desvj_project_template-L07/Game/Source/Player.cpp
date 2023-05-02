@@ -9,7 +9,6 @@
 #include "Log.h"
 #include "Point.h"
 #include "Map.h"
-#include "ModuleFadeToBlack.h"
 #include "EntityManager.h"
 #include "ParticleSystemManager.h"
 

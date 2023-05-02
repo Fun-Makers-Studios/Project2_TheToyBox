@@ -9,16 +9,15 @@
 #include "Entity.h"
 #include "Collisions.h"
 #include "EntityManager.h"
-#include "ModuleFadeToBlack.h"
 
 #include "SDL/include/SDL_render.h"
 
 #include "Defs.h"
 #include "Log.h"
 
-LogoScreen::LogoScreen() : Module()
+LogoScreen::LogoScreen() : Scene()
 {
-	name.Create("LogoScreen");
+	id.Create("LogoScreen");
 }
 
 // Destructor

@@ -9,7 +9,6 @@
 #include "Entity.h"
 #include "Collisions.h"
 #include "EntityManager.h"
-#include "ModuleFadeToBlack.h"
 #include "Player.h"
 #include "Map.h"
 #include "Scene.h"
@@ -19,9 +18,9 @@
 #include "Defs.h"
 #include "Log.h"
 
-EndingScreen::EndingScreen() : Module()
+EndingScreen::EndingScreen() : Scene()
 {
-	name.Create("EndingScreen");
+	id.Create("EndingScreen");
 }
 
 // Destructor

@@ -1,13 +1,13 @@
 #ifndef __TITLESCREEN_H__
 #define __TITLESCREEN_H__
 
-#include "Module.h"
+#include "Scene.h"
 #include "SDL/include/SDL.h"
 #include "GuiButton.h"
 
 struct SDL_Texture;
 
-class TitleScreen : public Module
+class TitleScreen : public Scene
 {
 public:
 
