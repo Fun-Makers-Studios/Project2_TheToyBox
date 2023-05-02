@@ -118,14 +118,11 @@
     <ClCompile Include="Source\Spline.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GuiButton.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GuiCheckBox.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GuiSlider.cpp">
-      <Filter>GUI</Filter>
+    <ClCompile Include="Source\GuiCheckBox.cpp" />
+    <ClCompile Include="Source\GuiSlider.cpp" />
+    <ClCompile Include="Source\GuiButton.cpp" />
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Core\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -279,14 +276,11 @@
     <ClInclude Include="Source\Spline.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GuiButton.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GuiCheckBox.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GuiSlider.h">
-      <Filter>GUI</Filter>
+    <ClInclude Include="Source\GuiCheckBox.h" />
+    <ClInclude Include="Source\GuiSlider.h" />
+    <ClInclude Include="Source\GuiButton.h" />
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Core\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
