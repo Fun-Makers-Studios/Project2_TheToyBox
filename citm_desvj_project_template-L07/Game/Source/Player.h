@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "Animation.h"
 #include "Collisions.h"
+#include "ParticleSystem.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
