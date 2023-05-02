@@ -57,7 +57,7 @@ public:
 	bool CleanUp();
 
 
-	ParticleSystem* CreateParticleSystem(iPoint initialPosition, Blueprint blueprint);
+	ParticleSystem* CreateParticleSystem(dPoint initialPosition, Blueprint blueprint);
 
 
 private:

@@ -195,33 +195,15 @@ bool Player::Update()
 			body->pos.y += body->vel.y;
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
-			changeTexture = !changeTexture;		
-
 	}
 	else {
 		// HEKATE pbody->body->SetAwake(false);
 	}
-
-	//SDL_Rect rect = currentAnim->GetCurrentFrame();
-	ScaleType scaleType = app->scaleObj->GetCurrentScale();
 	
-	// HEKATE
-	if (changeTexture)
-	{
-		//body->pos.x = body->pos.x - width / 2.25;
-		//body->pos.y = body->pos.y - height / 2;
-		SDL_Rect rect = currentAnim->GetCurrentFrame();
-		app->render->DrawTexture(shadowTexture, body->pos.x - 16, body->pos.y - 54, NULL, fliped, scaleType);
-		app->render->DrawTexture(texture, body->pos.x - 16, body->pos.y - 32, &rect, fliped, scaleType);
-	}
-	else
-	{
-		//body->pos.x = body->pos.x - width / 2;
-		//body->pos.y = body->pos.y - height / 3;
-		app->render->DrawTexture(shadowTexture, body->pos.x - 16, body->pos.y - 54, NULL, fliped, scaleType);
-		app->render->DrawTexture(texture2, body->pos.x - 16, body->pos.y - 24, NULL, fliped, scaleType);
-	}
+	SDL_Rect rect = currentAnim->GetCurrentFrame();
+	ScaleType scaleType = app->scaleObj->GetCurrentScale();
+	app->render->DrawTexture(shadowTexture, body->pos.x - 16, body->pos.y - 54, NULL, fliped, scaleType);
+	app->render->DrawTexture(texture, body->pos.x - 16, body->pos.y - 32, &rect, fliped, scaleType);
 	
 	currentAnim->Update();
 

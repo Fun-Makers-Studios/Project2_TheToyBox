@@ -15,7 +15,7 @@ public:
 	~ParticleSystem();
 
 	// to delete (put in manager)
-	void SetParticleSystem(iPoint position, iPoint velocity, iPoint acceleration, 
+	void SetParticleSystem(dPoint position, dPoint velocity, dPoint acceleration,
 		char initialR, char initialG, char initialB, char initialAlpha, 
 		float spawnRate, float lifespan, bool isConstant);
 
@@ -61,12 +61,12 @@ private:
 
 	// variables
 public:
-	iPoint initialPosition = iPoint{ 100, 100 };
-	iPoint position = iPoint{ 100, 100 };
-	iPoint objectivePosition = iPoint{ 100, 100 };
+	dPoint initialPosition = dPoint{ 100, 100 };
+	dPoint position = dPoint{ 100, 100 };
+	dPoint objectivePosition = dPoint{ 100, 100 };
 
-	iPoint randomSpawnPositionRangeMin = iPoint{ 0, 0 };
-	iPoint randomSpawnPositionRangeMax = iPoint{ 0, 0 };
+	dPoint randomSpawnPositionRangeMin = dPoint{ 0, 0 };
+	dPoint randomSpawnPositionRangeMax = dPoint{ 0, 0 };
 
 
 	Color initialColor = { (unsigned char)255, (unsigned char)0, (unsigned char)0, (unsigned char)255 };
@@ -77,8 +77,8 @@ public:
 
 	fPoint shootingVelocity = fPoint{ 0, -10 };
 
-	iPoint randomShootingVelocityRangeMin = iPoint{ -2, 0 };
-	iPoint randomShootingVelocityRangeMax = iPoint{ 2, 2 };
+	dPoint randomShootingVelocityRangeMin = dPoint{ -2, 0 };
+	dPoint randomShootingVelocityRangeMax = dPoint{ 2, 2 };
 
 	fPoint shootingAcceleration = fPoint{ 0, 1 };
 

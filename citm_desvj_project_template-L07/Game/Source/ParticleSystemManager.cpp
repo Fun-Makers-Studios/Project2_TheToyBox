@@ -74,7 +74,7 @@ bool ParticleSystemManager::PostUpdate()
 	return true;
 }
 
-ParticleSystem* ParticleSystemManager::CreateParticleSystem(iPoint initialPosition, Blueprint blueprint)
+ParticleSystem* ParticleSystemManager::CreateParticleSystem(dPoint initialPosition, Blueprint blueprint)
 {
 	ParticleSystem* PS = new ParticleSystem();
 	PS->initialPosition = initialPosition;
@@ -93,10 +93,10 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(iPoint initialPositi
 		PS->objectiveColor.Set(255, 0, 0, 0);
 		PS->particleLifespan = 1.3f;
 		PS->shootingAcceleration = fPoint{ 0.0f, -10.0f };
-		PS->randomShootingVelocityRangeMin = iPoint{ -5, -10 };
-		PS->randomShootingVelocityRangeMax = iPoint{ 5, 2 };
-		PS->randomSpawnPositionRangeMin = iPoint{ 0, 0 };
-		PS->randomSpawnPositionRangeMax = iPoint{ 0, 0 };
+		PS->randomShootingVelocityRangeMin = dPoint{ -5, -10 };
+		PS->randomShootingVelocityRangeMax = dPoint{ 5, 2 };
+		PS->randomSpawnPositionRangeMin = dPoint{ 0, 0 };
+		PS->randomSpawnPositionRangeMax = dPoint{ 0, 0 };
 		PS->initialScale = 6.0f;
 		PS->objectiveScale = 1.0f;
 		break;
@@ -110,10 +110,10 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(iPoint initialPositi
 		PS->objectiveColor.Set(255, 0, 0, 0);
 		PS->particleLifespan = 1.3f;
 		PS->shootingAcceleration = fPoint{ 0.0f, -10.0f };
-		PS->randomShootingVelocityRangeMin = iPoint{ -5, -10 };
-		PS->randomShootingVelocityRangeMax = iPoint{ 5, 2 };
-		PS->randomSpawnPositionRangeMin = iPoint{ 0, 0 };
-		PS->randomSpawnPositionRangeMax = iPoint{ 0, 0 };
+		PS->randomShootingVelocityRangeMin = dPoint{ -5, -10 };
+		PS->randomShootingVelocityRangeMax = dPoint{ 5, 2 };
+		PS->randomSpawnPositionRangeMin = dPoint{ 0, 0 };
+		PS->randomSpawnPositionRangeMax = dPoint{ 0, 0 };
 		PS->initialScale = 6.0f;
 		PS->objectiveScale = 1.0f;
 		break;
@@ -126,10 +126,10 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(iPoint initialPositi
 		PS->objectiveColor.SetAlpha(Beige, 0);
 		PS->particleLifespan = 10;
 		PS->shootingAcceleration = fPoint{ 0.0f, 0.5f };
-		PS->randomSpawnPositionRangeMin = iPoint{ -20, 0 };
-		PS->randomSpawnPositionRangeMax = iPoint{ 20, 0 };
-		PS->randomShootingVelocityRangeMin = iPoint{ 2, 0 };
-		PS->randomShootingVelocityRangeMax = iPoint{ 10, 0 };
+		PS->randomSpawnPositionRangeMin = dPoint{ -20, 0 };
+		PS->randomSpawnPositionRangeMax = dPoint{ 20, 0 };
+		PS->randomShootingVelocityRangeMin = dPoint{ 2, 0 };
+		PS->randomShootingVelocityRangeMax = dPoint{ 10, 0 };
 
 		break;
 	case EXPLOSION:
@@ -142,10 +142,10 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(iPoint initialPositi
 		PS->objectiveColor.Set(255, 0, 0, 0);
 		PS->particleLifespan = 0.4f;
 		PS->shootingAcceleration = fPoint{ 0.0f, 100.0f };
-		PS->randomShootingVelocityRangeMin = iPoint{ -100, -300 };
-		PS->randomShootingVelocityRangeMax = iPoint{ 300, 100 };
-		PS->randomSpawnPositionRangeMin = iPoint{ 0, 0 };
-		PS->randomSpawnPositionRangeMax = iPoint{ 0, 0 };
+		PS->randomShootingVelocityRangeMin = dPoint{ -100, -300 };
+		PS->randomShootingVelocityRangeMax = dPoint{ 300, 100 };
+		PS->randomSpawnPositionRangeMin = dPoint{ 0, 0 };
+		PS->randomSpawnPositionRangeMax = dPoint{ 0, 0 };
 		PS->initialScale = 6.0f;
 		PS->objectiveScale = 1.0f;
 		break;
@@ -159,10 +159,10 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(iPoint initialPositi
 		PS->objectiveColor.SetAlpha(Beige, 0);
 		PS->particleLifespan = .75;
 		PS->shootingAcceleration = fPoint{ 0.0f, 0.5f };
-		PS->randomSpawnPositionRangeMin = iPoint{ -20, 0 };
-		PS->randomSpawnPositionRangeMax = iPoint{ 20, 0 };
-		PS->randomShootingVelocityRangeMin = iPoint{ 2, 0 };
-		PS->randomShootingVelocityRangeMax = iPoint{ 10, 0 };
+		PS->randomSpawnPositionRangeMin = dPoint{ -20, 0 };
+		PS->randomSpawnPositionRangeMax = dPoint{ 20, 0 };
+		PS->randomShootingVelocityRangeMin = dPoint{ 2, 0 };
+		PS->randomShootingVelocityRangeMax = dPoint{ 10, 0 };
 
 		break;
 

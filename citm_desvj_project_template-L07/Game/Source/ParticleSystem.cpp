@@ -13,7 +13,7 @@ ParticleSystem::~ParticleSystem()
 {
 }
 
-void ParticleSystem::SetParticleSystem(iPoint position, iPoint velocity, iPoint acceleration,
+void ParticleSystem::SetParticleSystem(dPoint position, dPoint velocity, dPoint acceleration,
 	char initialR, char initialG, char initialB, char initialAlpha,
 	float spawnRate, float lifespan, bool isConstant)
 {
@@ -101,24 +101,24 @@ void ParticleSystem::SpawnParticle(Particle* p)
 	float t = age / PSLifespan;
 
 	// lerp
-	position.x = initialPosition.x + (int)(t * (float)(objectivePosition.x - initialPosition.x));
-	position.y = initialPosition.y + (int)(t * (float)(objectivePosition.y - initialPosition.y));
+	position.x = initialPosition.x + (double)(t * (float)(objectivePosition.x - initialPosition.x));
+	position.y = initialPosition.y + (double)(t * (float)(objectivePosition.y - initialPosition.y));
 
 	if (randomSpawnPositionRangeMin.x - randomSpawnPositionRangeMax.x != 0) {
 		if (randomSpawnPositionRangeMax.x > randomSpawnPositionRangeMin.x) {
-			position.x += (rand() % abs(randomSpawnPositionRangeMax.x - randomSpawnPositionRangeMin.x)) + randomSpawnPositionRangeMin.x;
+			position.x += (rand() % abs((int)(randomSpawnPositionRangeMax.x - randomSpawnPositionRangeMin.x)) + randomSpawnPositionRangeMin.x);
 		}
 		else {
-			position.x += (rand() % abs(randomSpawnPositionRangeMin.x - randomSpawnPositionRangeMax.x)) + randomSpawnPositionRangeMax.x;
+			position.x += (rand() % abs((int)(randomSpawnPositionRangeMin.x - randomSpawnPositionRangeMax.x)) + randomSpawnPositionRangeMax.x);
 		}
 	}
 
 	if (randomSpawnPositionRangeMin.y - randomSpawnPositionRangeMax.y != 0) {
 		if (randomSpawnPositionRangeMax.y > randomSpawnPositionRangeMin.y) {
-			position.y += (rand() % abs(randomSpawnPositionRangeMax.y - randomSpawnPositionRangeMin.y)) + randomSpawnPositionRangeMin.y;
+			position.y += (rand() % abs((int)(randomSpawnPositionRangeMax.y - randomSpawnPositionRangeMin.y)) + randomSpawnPositionRangeMin.y);
 		}
 		else {
-			position.y += (rand() % abs(randomSpawnPositionRangeMin.y - randomSpawnPositionRangeMax.y)) + randomSpawnPositionRangeMax.y;
+			position.y += (rand() % abs((int)(randomSpawnPositionRangeMin.y - randomSpawnPositionRangeMax.y)) + randomSpawnPositionRangeMax.y);
 		}
 	}
 
@@ -126,19 +126,19 @@ void ParticleSystem::SpawnParticle(Particle* p)
 
 	if (randomShootingVelocityRangeMin.x - randomShootingVelocityRangeMax.x != 0) {
 		if (randomShootingVelocityRangeMax.x > randomShootingVelocityRangeMin.x) {
-			velocity.x += (rand() % abs(randomShootingVelocityRangeMax.x - randomShootingVelocityRangeMin.x)) + randomShootingVelocityRangeMin.x;
+			velocity.x += (rand() % abs((int)(randomShootingVelocityRangeMax.x - randomShootingVelocityRangeMin.x)) + randomShootingVelocityRangeMin.x);
 		}
 		else {
-			velocity.x += (rand() % abs(randomShootingVelocityRangeMin.x - randomShootingVelocityRangeMax.x)) + randomShootingVelocityRangeMax.x;
+			velocity.x += (rand() % abs((int)(randomShootingVelocityRangeMin.x - randomShootingVelocityRangeMax.x)) + randomShootingVelocityRangeMax.x);
 		}
 	}
 
 	if (randomShootingVelocityRangeMin.y - randomShootingVelocityRangeMax.y != 0) {
 		if (randomShootingVelocityRangeMax.y > randomShootingVelocityRangeMin.y) {
-			velocity.y += (rand() % abs(randomShootingVelocityRangeMax.y - randomShootingVelocityRangeMin.y)) + randomShootingVelocityRangeMin.y;
+			velocity.y += (rand() % abs((int)(randomShootingVelocityRangeMax.y - randomShootingVelocityRangeMin.y)) + randomShootingVelocityRangeMin.y);
 		}
 		else {
-			velocity.y += (rand() % abs(randomShootingVelocityRangeMin.y - randomShootingVelocityRangeMax.y)) + randomShootingVelocityRangeMax.y;
+			velocity.y += (rand() % abs((int)(randomShootingVelocityRangeMin.y - randomShootingVelocityRangeMax.y)) + randomShootingVelocityRangeMax.y);
 		}
 	}
 

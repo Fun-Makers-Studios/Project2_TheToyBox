@@ -119,13 +119,13 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\GuiButton.cpp">
-      <Filter>GUI\GUI Controls</Filter>
+      <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="Source\GuiCheckBox.cpp">
-      <Filter>GUI\GUI Controls</Filter>
+      <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="Source\GuiSlider.cpp">
-      <Filter>GUI\GUI Controls</Filter>
+      <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -280,13 +280,13 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\GuiButton.h">
-      <Filter>GUI\GUI Controls</Filter>
+      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\GuiCheckBox.h">
-      <Filter>GUI\GUI Controls</Filter>
+      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\GuiSlider.h">
-      <Filter>GUI\GUI Controls</Filter>
+      <Filter>GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
