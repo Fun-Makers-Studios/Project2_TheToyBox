@@ -95,6 +95,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\CollectQuest.cpp" />
     <ClCompile Include="Source\Easing.cpp" />
     <ClCompile Include="Source\GuiCheckBox.cpp" />
     <ClCompile Include="Source\GuiSlider.cpp" />
@@ -103,6 +104,7 @@
     <ClCompile Include="Source\Debug.cpp" />
     <ClCompile Include="Source\DIalogue.cpp" />
     <ClCompile Include="Source\DialogueManager.cpp" />
+    <ClCompile Include="Source\QuestManager.cpp" />
     <ClCompile Include="Source\SceneEnding.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\Fonts.cpp" />
@@ -130,12 +132,14 @@
     <ClCompile Include="Source\SceneFight.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Spline.cpp" />
+    <ClCompile Include="Source\TalkQuest.cpp" />
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\SceneTitle.cpp" />
     <ClCompile Include="Source\UI.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\CollectQuest.h" />
     <ClInclude Include="Source\Easing.h" />
     <ClInclude Include="Source\GuiCheckBox.h" />
     <ClInclude Include="Source\GuiSlider.h" />
@@ -144,6 +148,8 @@
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\Dialogue.h" />
     <ClInclude Include="Source\DialogueManager.h" />
+    <ClInclude Include="Source\Quest.h" />
+    <ClInclude Include="Source\QuestManager.h" />
     <ClInclude Include="Source\SceneEnding.h" />
     <ClInclude Include="Source\Fonts.h" />
     <ClInclude Include="Source\GuiButton.h" />
@@ -176,6 +182,7 @@
     <ClInclude Include="Source\Render.h" />
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\Spline.h" />
+    <ClInclude Include="Source\TalkQuest.h" />
     <ClInclude Include="Source\Textures.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\SceneTitle.h" />

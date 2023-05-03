@@ -127,6 +127,15 @@
     <ClCompile Include="Source\GuiSlider.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CollectQuest.cpp">
+      <Filter>Game\Questing</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\QuestManager.cpp">
+      <Filter>Game\Questing</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TalkQuest.cpp">
+      <Filter>Game\Questing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -291,6 +300,18 @@
     <ClInclude Include="Source\Scene.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CollectQuest.h">
+      <Filter>Game\Questing</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Quest.h">
+      <Filter>Game\Questing</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\QuestManager.h">
+      <Filter>Game\Questing</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TalkQuest.h">
+      <Filter>Game\Questing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -334,6 +355,9 @@
     </Filter>
     <Filter Include="Core\Modules">
       <UniqueIdentifier>{cca788d4-d709-48bf-b4d7-9284887b58a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Questing">
+      <UniqueIdentifier>{5d7a0e4e-fcf4-4953-8f6f-a154aa4463f3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
