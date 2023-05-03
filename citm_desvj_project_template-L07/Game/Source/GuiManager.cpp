@@ -80,11 +80,7 @@ bool GuiManager::PostUpdate()
 			control->data->Update(16);
 		}
 
-		/*for (ListItem<GuiControl*>* control = guiControlsList.start; control != NULL; control = control->next)
-		{
-			control->data->Update(16);
-		}*/
-
+		// HEKATE end of list not set as nullptr, loop runs out of list
 		/*ListItem<GuiControl*>* control = guiControlsList.start;
 
 		while (control != nullptr)
