@@ -34,6 +34,7 @@ bool ParticleSystemManager::Start()
 
 	alphaTextures[2] = app->tex->Load("Assets/Textures/Particles/smoke_shaded.png");
 
+	alphaTextures[3] = app->tex->Load("Assets/Textures/Particles/star.png");
 
 	// adapt it to xml
 	/*for (int i = 0; i < ALPHAS_AVAILABLES; ++i) {
@@ -164,7 +165,26 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(dPoint initialPositi
 		PS->randomSpawnPositionRangeMax = dPoint{ 20, 0 };
 		PS->randomShootingVelocityRangeMin = dPoint{ 2, 0 };
 		PS->randomShootingVelocityRangeMax = dPoint{ 10, 0 };
-
+		PS->initialScale = 1.0f;
+		PS->objectiveScale = .20f;
+		break;
+	
+	case TAKE_ITEM:
+		GiveParticlesToPS(PS, 5);
+		PS->PSLifespan = 1.0f;
+		PS->SetTexture(alphaTextures[STAR]);
+		PS->spawnRate = 0.01f;
+		PS->isConstant = false;
+		PS->initialColor = Yellow;
+		PS->objectiveColor.SetAlpha(Yellow, 0);
+		PS->particleLifespan = 1.0f;
+		PS->shootingAcceleration = fPoint{ 0.0f, 0.5f };
+		PS->randomSpawnPositionRangeMin = dPoint{ -20, 0 };
+		PS->randomSpawnPositionRangeMax = dPoint{ 20, 0 };
+		PS->randomShootingVelocityRangeMin = dPoint{ 2, 0 };
+		PS->randomShootingVelocityRangeMax = dPoint{ 10, 0 };
+		PS->initialScale = 2.0f;
+		PS->objectiveScale = .0f;
 		break;
 
 	case NONE:

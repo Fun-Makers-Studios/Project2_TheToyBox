@@ -225,6 +225,8 @@ bool SceneGame::Update(float dt)
 	if(isNight)
 		app->render->DrawRectangle(app->render->viewport, 0, 0, 255, 100, true, false);
 
+	ActiveParticles();
+
 	SaveUI();
 
 	//Saves game if choosing the option when talkin with MAGE
@@ -544,6 +546,21 @@ bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 	}
 
 	return true;
+}
+
+void SceneGame::ActiveParticles()
+{
+	if (takeItem) {
+		if (takeItemPS == nullptr) {
+			dPoint pos = { player->body->pos.x, player->body->pos.y };
+			takeItemPS = app->particleManager->CreateParticleSystem(pos, Blueprint::TAKE_ITEM);
+		}
+		else {
+			takeItemPS->TurnOff();
+			takeItemPS = nullptr;
+		}
+		takeItem = false;
+	}
 }
 
 void SceneGame::SaveUI()

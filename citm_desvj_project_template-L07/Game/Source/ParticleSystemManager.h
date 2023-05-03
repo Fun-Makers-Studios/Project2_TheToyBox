@@ -14,6 +14,7 @@ enum Blueprint {
 	SMOKE,
 	EXPLOSION,
 	SAND,
+	TAKE_ITEM,
 	NONE
 };
 
@@ -21,6 +22,7 @@ enum AlphasIDs {
 	BASIC = 0,
 	SMOKE_WHITE,
 	SMOKE_SHADED,
+	STAR,
 
 	ALPHAS_AVAILABLES
 };

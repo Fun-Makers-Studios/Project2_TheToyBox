@@ -190,9 +190,9 @@
 	<items>
 		<town>
 			<item x="230" y="400" itemType ="potionhp" texturepath="Assets/Textures/Items/potion_hp.png"/>
-			<item x="1" y="2" itemType ="potionhp" texturepath="Assets/Textures/Items/potion_hp.png"/>
-			<item x="232" y="170" itemType ="potionmana" texturepath="Assets/Textures/Items/potion_mana.png"/>
-			<item x="3000" y="170" itemType ="potionmana" texturepath="Assets/Textures/Items/potion_mana.png"/>
+			<item x="250" y="450" itemType ="potionhp" texturepath="Assets/Textures/Items/potion_hp.png"/>
+			<item x="232" y="300" itemType ="potionmana" texturepath="Assets/Textures/Items/potion_mana.png"/>
+			<item x="250" y="500" itemType ="potionmana" texturepath="Assets/Textures/Items/potion_mana.png"/>
 		</town>
 		<tavern>
 			

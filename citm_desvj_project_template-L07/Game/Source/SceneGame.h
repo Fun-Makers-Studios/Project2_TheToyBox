@@ -51,6 +51,7 @@ public:
 	void LoadNPC();
 	void LoadItems();
 
+	void ActiveParticles();
 	void SaveUI();
 
 	bool LoadState(pugi::xml_node&);
@@ -95,6 +96,10 @@ public:
 	uint partyMemberSelected = 0;
 
 	DialogueManager* dialogueManager;
+
+	/*Particles FX Vars*/
+	ParticleSystem* takeItemPS = nullptr;
+	bool takeItem = false;
 
 private:
 
