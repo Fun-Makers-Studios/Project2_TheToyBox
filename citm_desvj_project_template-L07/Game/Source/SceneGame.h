@@ -48,7 +48,8 @@ public:
 	void FixCamera();
 
 	void SceneMap();
-	void LoadNPC(SString mapName_);
+	void LoadNPC();
+	void LoadItems();
 
 	void SaveUI();
 
@@ -66,6 +67,7 @@ public:
 	List<NPC*> npcList;
 	KidEnemy* kid = nullptr;
 	Item* item = nullptr;
+	List<Item*> itemsList;
 
 	// Set of SFX
 	uint selectSFX = 0;

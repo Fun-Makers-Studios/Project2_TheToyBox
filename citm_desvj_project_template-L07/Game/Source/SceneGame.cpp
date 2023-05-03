@@ -590,7 +590,7 @@ void SceneGame::SceneMap()
 	}
 }
 
-void Scene::LoadNPC()
+void SceneGame::LoadNPC()
 {
 	ListItem<NPC*>* npcItem;
 
@@ -608,7 +608,7 @@ void Scene::LoadNPC()
 	
 }
 
-void Scene::LoadItems()
+void SceneGame::LoadItems()
 {
 	ListItem<Item*>* itemsItem;
 
@@ -627,7 +627,7 @@ void Scene::LoadItems()
 	
 }
 
-void Scene::FixCamera()
+void SceneGame::FixCamera()
 {
 	// HEKATE width/height in TILES (townMap 55x36)
 	if (app->map->mapData.width >= 55 && app->map->mapData.height >= 36)	//SMALL MAP SIZE 1280x704

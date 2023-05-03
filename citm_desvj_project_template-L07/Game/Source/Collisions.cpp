@@ -215,7 +215,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         case ColliderType::ITEM:
 
             ListItem<Item*>* itemsItem;
-            for (itemsItem = app->scene->itemsList.start; itemsItem != NULL; itemsItem = itemsItem->next)
+            for (itemsItem = app->sceneManager->sceneGame->itemsList.start; itemsItem != NULL; itemsItem = itemsItem->next)
             {
                 if (itemsItem->data->body == body2)
                 {
