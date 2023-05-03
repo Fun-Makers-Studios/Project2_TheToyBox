@@ -213,6 +213,16 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
             break; 
 
         case ColliderType::ITEM:
+
+            ListItem<Item*>* itemsItem;
+            for (itemsItem = app->scene->itemsList.start; itemsItem != NULL; itemsItem = itemsItem->next)
+            {
+                if (itemsItem->data->body == body2)
+                {
+                    app->entityManager->DestroyEntity(itemsItem->data);
+                }
+            }
+
             break;
 
         case ColliderType::WIN_ZONE:
