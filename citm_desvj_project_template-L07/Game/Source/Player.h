@@ -40,7 +40,7 @@ public:
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnim = nullptr;
 
-	//Set of animations (JUMP ANIM DDOESN'T EXISTS)
+	//Set of animations
 	Animation idle;
 	Animation walkDown;
 	Animation walkRight;

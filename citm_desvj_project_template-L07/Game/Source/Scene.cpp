@@ -57,14 +57,6 @@ bool Scene::Start()
 	sophieImgPath = app->configNode.child("scene").child("sophieImg").attribute("sophieImgPath").as_string();
 	saveTexPath = app->configNode.child("scene").child("saveTex").attribute("saveTexPath").as_string();
 
-	// Iterate all objects in the scene
-	/*for (pugi::xml_node itemNode = app->configNode.child("scene").child("potionhp"); itemNode; itemNode = itemNode.next_sibling("potionhp"))
-	{
-		item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-		item->parameters = itemNode;
-		livesCollectedList.Add(item);
-	}*/
-
 	// Load Enemies
 	for (pugi::xml_node itemNode = app->configNode.child("scene").child("enemykid"); itemNode; itemNode = itemNode.next_sibling("enemykid"))
 	{
@@ -74,7 +66,8 @@ bool Scene::Start()
 	
 	//Load First Map NPCs
 	mapName = "town";
-	LoadNPC(mapName);
+	LoadNPC();
+	LoadItems();
 
 	//Instantiate and init the player using the entity manager
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER, app->configNode.child("scene").child("player"));
@@ -400,8 +393,7 @@ bool Scene::CleanUp()
 	app->pathfinding->Disable();
 	app->collisions->Disable();
 	app->map->Disable();
-	
-	app->guiManager->guiControlsList.Clear();
+
 	gamePaused = false;
 	pauseMenu = false;
 	partyMenu = false;
@@ -589,15 +581,15 @@ void Scene::SceneMap()
 	if (isMapChanging)
 	{		
 		app->map->ChangeMap(mapName.GetString());
-		
-		//player->pbody->body->SetTransform(PIXEL_TO_METERS(player->newPos), 0.0f);
-		LoadNPC(mapName.GetString());
+		player->body->pos = player->newPos;
+		LoadNPC();
+		LoadItems();
 
 		isMapChanging = false;
 	}
 }
 
-void Scene::LoadNPC(SString mapName_)
+void Scene::LoadNPC()
 {
 	ListItem<NPC*>* npcItem;
 
@@ -606,7 +598,7 @@ void Scene::LoadNPC(SString mapName_)
 		npcItem->data->needToDestroy = true;
 	}
 	
-	for (pugi::xml_node itemNode = app->configNode.child("npcs").child(mapName_.GetString()).child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
+	for (pugi::xml_node itemNode = app->configNode.child("npcs").child(mapName.GetString()).child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
 	{
 		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC, itemNode);
 		npcList.Add(npc);
@@ -615,10 +607,29 @@ void Scene::LoadNPC(SString mapName_)
 	
 }
 
+void Scene::LoadItems()
+{
+	ListItem<Item*>* itemsItem;
+
+	for (itemsItem = itemsList.start; itemsItem != NULL; itemsItem = itemsItem->next)
+	{
+		itemsItem->data->needToDestroy = true;
+	}
+	
+	// Iterate all objects in the scene
+	for (pugi::xml_node itemNode = app->configNode.child("items").child(mapName.GetString()).child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
+	{
+		item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, itemNode);
+		itemsList.Add(item);
+		item->Start();
+	}
+	
+}
+
 void Scene::FixCamera()
 {
 	// HEKATE width/height in TILES (townMap 55x36)
-	if (app->map->mapData.width == 55 && app->map->mapData.height == 36)	//SMALL MAP SIZE 1280x704
+	if (app->map->mapData.width >= 55 && app->map->mapData.height >= 36)	//SMALL MAP SIZE 1280x704
 	{
 		uint scale = app->scaleObj->ScaleTypeToInt(ScaleType::WORLD);
 
@@ -630,9 +641,9 @@ void Scene::FixCamera()
 		if (app->render->camera.y < 0)
 			app->render->camera.y = 0;
 
-		if (app->render->camera.x > app->map->mapData.width * scale - app->render->camera.w)
+		if (app->render->camera.x + app->render->camera.w > app->map->mapData.width * scale)
 			app->render->camera.x = app->map->mapData.width * scale - app->render->camera.w;
-		if (app->render->camera.y > app->map->mapData.height * scale - app->render->camera.h)
+		if (app->render->camera.y + app->render->camera.h > app->map->mapData.height * scale)
 			app->render->camera.y = app->map->mapData.height * scale - app->render->camera.h;
 	}
 	else

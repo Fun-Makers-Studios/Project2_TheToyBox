@@ -190,7 +190,8 @@ bool Player::Update()
 			if (currentAnim != &idle)
 			{
 				if (walkParticles == nullptr) {
-					walkParticles = app->particleManager->CreateParticleSystem(body->pos, Blueprint::SAND);
+					dPoint pos = { body->pos.x, body->pos.y + 10 };
+					walkParticles = app->particleManager->CreateParticleSystem(pos, Blueprint::SAND);
 				}
 				else {
 					walkParticles->TurnOff();
@@ -204,10 +205,6 @@ bool Player::Update()
 			body->pos.y += body->vel.y;
 		}
 
-	}
-	
-	if (walkParticles != nullptr) {
-		walkParticles->SetPosition(body->pos.x, body->pos.y);
 	}
 	
 	SDL_Rect rect = currentAnim->GetCurrentFrame();

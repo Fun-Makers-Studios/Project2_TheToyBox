@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "Point.h"
+#include "Animation.h"
 #include "Collisions.h"
 #include "SDL/include/SDL.h"
 
@@ -40,7 +41,10 @@ private:
 	SDL_Texture* texture;
 	const char* texturePath;
 
-	SDL_Rect lifeRect;
+	Animation* currentAnim = nullptr;
+	Animation itemAnim;
+
+	SDL_Rect rect;
 
 	int timeMov = 0;
 

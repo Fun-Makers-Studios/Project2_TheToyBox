@@ -23,6 +23,7 @@ Item::Item(pugi::xml_node parameters) : Entity(EntityType::ITEM)
 	itemType = parameters.attribute("itemType").as_string();
 
 	// Create collider body
+	body = new Body();	// HEKATE cleanup
 	body->type = ColliderType::ITEM;
 	body->shape = ColliderShape::CIRCLE;
 	body->pos = { posX, posY };
@@ -53,11 +54,7 @@ bool Item::Start()
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 	
-	if (itemType == "life")
-		lifeRect = {0, 0, 32, 32};
-	
-	if (itemType == "potionhp")
-		lifeRect = {0, 0, 16, 16};
+	rect = {0, 0, 16, 16};
 
 	return true;
 }
@@ -82,7 +79,8 @@ bool Item::Update()
 
 	if (isPicked == false) {
 
-		app->render->DrawTexture(texture, body->pos.x, body->pos.y, &lifeRect);
+		ScaleType scale = app->scaleObj->GetCurrentScale();
+		app->render->DrawTexture(texture, body->pos.x, body->pos.y, &rect, SDL_FLIP_NONE, scale);
 
 	}
 

@@ -151,13 +151,14 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(dPoint initialPositi
 		break;
 
 	case SAND:
-		GiveParticlesToPS(PS, 50);
+		GiveParticlesToPS(PS, 5);
+		PS->PSLifespan = 0.1f;
 		PS->SetTexture(alphaTextures[SMOKE_SHADED]);
-		PS->spawnRate = 0.3f;
-		PS->isConstant = true;
+		PS->spawnRate = 0.01f;
+		PS->isConstant = false;
 		PS->initialColor = Beige;
 		PS->objectiveColor.SetAlpha(Beige, 0);
-		PS->particleLifespan = .75;
+		PS->particleLifespan = 0.3f;
 		PS->shootingAcceleration = fPoint{ 0.0f, 0.5f };
 		PS->randomSpawnPositionRangeMin = dPoint{ -20, 0 };
 		PS->randomSpawnPositionRangeMax = dPoint{ 20, 0 };
