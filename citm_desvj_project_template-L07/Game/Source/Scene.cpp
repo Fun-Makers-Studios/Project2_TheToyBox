@@ -640,11 +640,11 @@ void Scene::FixCamera()
 			app->render->camera.x = 0;
 		if (app->render->camera.y < 0)
 			app->render->camera.y = 0;
-
-		if (app->render->camera.x + app->render->camera.w > app->map->mapData.width * scale)
-			app->render->camera.x = app->map->mapData.width * scale - app->render->camera.w;
-		if (app->render->camera.y + app->render->camera.h > app->map->mapData.height * scale)
-			app->render->camera.y = app->map->mapData.height * scale - app->render->camera.h;
+		
+		if (app->render->camera.x + app->render->camera.w > app->map->mapData.width * app->map->mapData.tileWidth * scale)
+			app->render->camera.x = app->map->mapData.width * app->map->mapData.tileWidth * scale - app->render->camera.w;
+		if (app->render->camera.y + app->render->camera.h > app->map->mapData.height * app->map->mapData.tileHeight * scale)
+			app->render->camera.y = app->map->mapData.height * app->map->mapData.tileHeight * scale - app->render->camera.h;
 	}
 	else
 	{
