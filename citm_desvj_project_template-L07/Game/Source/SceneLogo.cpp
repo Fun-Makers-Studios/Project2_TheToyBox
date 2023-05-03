@@ -25,7 +25,6 @@ SceneLogo::SceneLogo() : Scene()
 // Destructor
 SceneLogo::~SceneLogo()
 {
-	app->tex->UnLoad(img);
 }
 
 // Called before render is available
@@ -42,7 +41,7 @@ bool SceneLogo::Start()
 {
 	LOG("--STARTS LOGO SCENE--");
 
-	app->render->SetBackgroundColor({ 0,0,0,255 });
+	app->render->SetBackgroundColor({ 0, 0, 0, 255 });
 
 	/*Initialize*/
 	imgPath = app->configNode.child("logo").child("backgroundimage").attribute("texturepath").as_string();
@@ -68,7 +67,8 @@ bool SceneLogo::Update(float dt)
 	time++;
 	frameCount--;
 
-	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
 		LOG("PASA A SCENE DIRECTAMENTE");
 		app->sceneManager->SwitchTo("SceneGame");
 		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 0);
@@ -76,9 +76,10 @@ bool SceneLogo::Update(float dt)
 
 	fadeRatio = (float)frameCount / (float)maxFadeFrames;
 
-	SDL_RenderFillRect(app->render->renderer, NULL);
+	//SDL_RenderFillRect(app->render->renderer, NULL);
 
-	if (time >= 150) {
+	if (time >= 150)
+	{
 		LOG("PASA A TITLE SCENE");
 		app->sceneManager->SwitchTo("SceneTitle");
 		// HEKATE app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
@@ -107,6 +108,7 @@ bool SceneLogo::PostUpdate()
 bool SceneLogo::CleanUp()
 {
 	LOG("Freeing LOGO SCENE");
+	app->tex->UnLoad(img);
 
 
 	return true;

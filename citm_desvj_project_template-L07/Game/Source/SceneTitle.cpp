@@ -25,6 +25,13 @@ SceneTitle::SceneTitle() : Scene()
 {
 	sceneType = SceneType::ALWAYS_ACTIVE;
 	id.Create("SceneTitle");
+
+	/*Initialize*/
+	imgPath = app->configNode.child("title").child("backgroundimage").attribute("texturepath").as_string();
+	popImgSettingsPath = app->configNode.child("title").child("popImage").attribute("settingtexturepath").as_string();
+	popImgCreditsPath = app->configNode.child("title").child("popImage").attribute("creditstexturepath").as_string();
+	selectSFXPath = app->configNode.child("title").child("selectsfx").attribute("selectSFXPath").as_string();
+	select2SFXPath = app->configNode.child("player").child("SFXset").attribute("selectSFXPath").as_string();
 }
 
 // Destructor
@@ -49,20 +56,14 @@ bool SceneTitle::Start()
 
 	LOG("--STARTS TITLE SCENE--");
 
-	/*Initialize*/
-	imgPath = app->configNode.child("title").child("backgroundimage").attribute("texturepath").as_string();
-	popImgSettingsPath = app->configNode.child("title").child("popImage").attribute("settingtexturepath").as_string();
-	popImgCreditsPath = app->configNode.child("title").child("popImage").attribute("creditstexturepath").as_string();
-	selectSFXPath = app->configNode.child("title").child("selectsfx").attribute("selectSFXPath").as_string();
-	select2SFXPath = app->configNode.child("player").child("SFXset").attribute("selectSFXPath").as_string();
-
+	
 	/*Load*/
 	img = app->tex->Load(imgPath);
 	popImg_settings = app->tex->Load(popImgSettingsPath);
 	popImg_credits = app->tex->Load(popImgCreditsPath);
-	startSFX = app->audio->LoadFx("Assets/Audio/Fx/SceneTitle/fx5.wav");
 	menuSelectionSFX = app->audio->LoadFx(selectSFXPath);
 	selectSFX = app->audio->LoadFx(select2SFXPath);
+	startSFX = app->audio->LoadFx("Assets/Audio/Fx/SceneTitle/fx5.wav");
 	titleSFX = app->audio->LoadFx("Assets/Audio/Fx/SceneTitle/title_screen.wav");
 	closemenuSFX = app->audio->LoadFx("Assets/Audio/Fx/SceneTitle/close_menu.wav");
 
@@ -253,11 +254,10 @@ bool SceneTitle::CleanUp()
 {
 	LOG("Freeing TITLE SCENE");
 
-	if (img != nullptr && popImg_settings != nullptr && popImg_credits != nullptr) {
-		app->tex->UnLoad(img);
-		app->tex->UnLoad(popImg_settings);
-		app->tex->UnLoad(popImg_credits);
-	}
+	app->tex->UnLoad(img);
+	app->tex->UnLoad(popImg_settings);
+	app->tex->UnLoad(popImg_credits);
+
 	
 	//STORE IN A LIST THIS BUTTONS AND THEN CHECK HERE IF NULLPTR TO CLEAN THEM UP
 	app->guiManager->guiControlsList.Clear();
@@ -267,8 +267,6 @@ bool SceneTitle::CleanUp()
 
 bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
 {
-	// L15: TODO 5: Implement the OnGuiMouseClickEvent method
-
 	switch (control->id)
 	{
 	case 5:

@@ -23,6 +23,16 @@ SceneGame::SceneGame() : Scene()
 {	
 	sceneType = SceneType::GAME;
 	id.Create("SceneGame");
+
+	/*STORE INFO FROM XML*/
+	musicPath = app->configNode.child("scene").child("music").attribute("musicPath").as_string();
+	selectSFXPath = app->configNode.child("scene").child("scenesfx").attribute("selectSFXPath").as_string();
+	imgPausePath = app->configNode.child("scene").child("imgPause").attribute("imgPausePath").as_string();
+	popImg_settingsPath = app->configNode.child("title").child("popImage").attribute("settingtexturepath").as_string();
+	partyMenuImgPath = app->configNode.child("scene").child("partyMenuImg").attribute("partyMenuImgPath").as_string();
+	zeroImgPath = app->configNode.child("scene").child("zeroImg").attribute("zeroImgPath").as_string();
+	sophieImgPath = app->configNode.child("scene").child("sophieImg").attribute("sophieImgPath").as_string();
+	saveTexPath = app->configNode.child("scene").child("saveTex").attribute("saveTexPath").as_string();
 }
 
 // Destructor
@@ -45,16 +55,7 @@ bool SceneGame::Start()
 
 	dialogueManager = new DialogueManager(this);
 
-	/*STORE INFO FROM XML*/
-	musicPath = app->configNode.child("scene").child("music").attribute("musicPath").as_string();
-	selectSFXPath = app->configNode.child("scene").child("scenesfx").attribute("selectSFXPath").as_string();
-	imgPausePath = app->configNode.child("scene").child("imgPause").attribute("imgPausePath").as_string();
-	popImg_settingsPath = app->configNode.child("title").child("popImage").attribute("settingtexturepath").as_string();
-	partyMenuImgPath = app->configNode.child("scene").child("partyMenuImg").attribute("partyMenuImgPath").as_string();
-	zeroImgPath = app->configNode.child("scene").child("zeroImg").attribute("zeroImgPath").as_string();
-	sophieImgPath = app->configNode.child("scene").child("sophieImg").attribute("sophieImgPath").as_string();
-	saveTexPath = app->configNode.child("scene").child("saveTex").attribute("saveTexPath").as_string();
-
+	
 	// Iterate all objects in the scene
 	/*for (pugi::xml_node itemNode = app->configNode.child("scene").child("potionhp"); itemNode; itemNode = itemNode.next_sibling("potionhp"))
 	{
@@ -289,20 +290,18 @@ bool SceneGame::PostUpdate()
 
 	if (pauseMenu == true)
 	{
-
-		if (resumeButton14->state == GuiControlState::DISABLED) {
+		if (resumeButton14->state == GuiControlState::DISABLED) 
 			resumeButton14->state = GuiControlState::NORMAL;
-		}
-		if (backToTitleButton15->state == GuiControlState::DISABLED) {
+		
+		if (backToTitleButton15->state == GuiControlState::DISABLED) 
 			backToTitleButton15->state = GuiControlState::NORMAL;
-		}
-		if (settingsButton16->state == GuiControlState::DISABLED) {
+		
+		if (settingsButton16->state == GuiControlState::DISABLED) 
 			settingsButton16->state = GuiControlState::NORMAL;
-		}
-		if (closeButton17->state == GuiControlState::DISABLED) {
+		
+		if (closeButton17->state == GuiControlState::DISABLED) 
 			closeButton17->state = GuiControlState::NORMAL;
-		}
-
+		
 		if (settingSceneMenu == true)
 		{
 			resumeButton14->state = GuiControlState::DISABLED;
@@ -341,20 +340,16 @@ bool SceneGame::PostUpdate()
 				app->audio->PlayFx(app->sceneManager->sceneTitle->closemenuSFX);
 			}
 		}
-
-
 	}
 
 	if (partyMenu == true)
 	{
-
-		if (firstPMemberButton27->state == GuiControlState::DISABLED) {
+		if (firstPMemberButton27->state == GuiControlState::DISABLED) 
 			firstPMemberButton27->state = GuiControlState::NORMAL;
-		}
-		if (secondPMemberButton28->state == GuiControlState::DISABLED) {
+		
+		if (secondPMemberButton28->state == GuiControlState::DISABLED) 
 			secondPMemberButton28->state = GuiControlState::NORMAL;
-		}
-
+		
 		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		{
 			partyMenu = !partyMenu;

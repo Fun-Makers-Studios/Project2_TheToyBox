@@ -33,6 +33,7 @@ bool SceneManager::Awake(pugi::xml_node& config)
 bool SceneManager::Start()
 {
     currentScene = FindSceneByID("SceneLogo")->data;
+    currentScene->Start();
 
     return true;
 }
@@ -85,11 +86,8 @@ void SceneManager::SwitchTo(SString id)
     switch (currentScene->sceneType)
     {
     case SceneType::ALWAYS_ACTIVE:
-        currentScene = scene->data;
         break;
     case SceneType::GAME:
-        delete currentScene;
-
         break;
     case SceneType::FIGHT:
         break;
@@ -97,6 +95,8 @@ void SceneManager::SwitchTo(SString id)
         break;
     }
 
+    currentScene->CleanUp();
+    currentScene = scene->data;
     currentScene->Start();
 }
 
