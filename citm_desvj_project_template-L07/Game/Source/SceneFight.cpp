@@ -1,4 +1,5 @@
 #include "SceneFight.h"
+#include "Scene.h"
 #include "App.h"
 #include "Input.h"
 #include "Render.h"
@@ -6,8 +7,8 @@
 #include "Audio.h"
 #include "Log.h"
 #include "PartyManager.h"
-#include "TitleScreen.h"
-#include "ModuleFadeToBlack.h"
+#include "SceneTitle.h"
+#include "SceneManager.h"
 #include "UI.h"
 #include "GuiManager.h"
 #include "Debug.h"
@@ -15,9 +16,10 @@
 #include <time.h>
 
 
-SceneFight::SceneFight() : Module()
+SceneFight::SceneFight() : Scene()
 {
-	name.Create("sceneFight");
+	sceneType = SceneType::FIGHT;
+	id.Create("sceneFight");
 }
 
 // Destructor
@@ -197,9 +199,12 @@ bool SceneFight::Update(float dt)
 	}
 	
 	if (enemiesAlive <= 0)
-		app->fade->FadeToBlack(this, (Module*)app->scene, 0);
+		app->sceneManager->SwitchTo("SceneGame");
+		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 0);
 	else if (alliesAlive <= 0)
-		app->fade->FadeToBlack(this, (Module*)app->scene, 0);
+		app->sceneManager->SwitchTo("SceneGame");
+
+		// HEKATEapp->fade->FadeToBlack(this, (Module*)app->scene, 0);
 		//app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
 
 	for (size_t i = 0; i < turnList.Count(); i++)
@@ -264,17 +269,17 @@ bool SceneFight::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case 18: //Attack
 		Attack(turnMember, enemyList.At(enemySelected)->data);
-		app->audio->PlayFx(app->titlescreen->menuSelectionSFX);	
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);	
 		break;
 
 	case 19: //Defense
 		turn++;
-		app->audio->PlayFx(app->titlescreen->startSFX);
+		app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
 		break;
 
 	case 20: //Skip turn
 		Escape();
-		app->audio->PlayFx(app->titlescreen->startSFX);
+		app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
 		break;
 
 	default:
@@ -318,7 +323,9 @@ void SceneFight::Escape()
 	
 	if (randomNumber % 2)
 	{
-		app->fade->FadeToBlack(this, (Module*)app->scene, 0);
+		app->sceneManager->SwitchTo("SceneGame");
+
+		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 0);
 	}
 	else {
 		turn++;

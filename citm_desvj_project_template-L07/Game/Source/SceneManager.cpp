@@ -1,110 +1,120 @@
-//#include "App.h"
-//#include "SceneManager.h"
-//#include "Scene.h"
-//
-//SceneManager::SceneManager(bool startEnabled) : Module(startEnabled)
-//{
-//    name.Create("scenemanager");
-//}
-//
-//SceneManager::~SceneManager() {}
-//
-//bool SceneManager::Awake(pugi::xml_node& config)
-//{
-//    Scene* sceneTest = new Scene();
-//    AddScene(sceneTest, config);
-//
-//    return true;
-//}
-//
-//bool SceneManager::Start()
-//{
-//    currentScene = FindSceneByID("sceneTest")->data;
-//
-//    return true;
-//}
-//
-//bool SceneManager::PreUpdate()
-//{
-//    if (currentScene)
-//    {
-//        currentScene->PreUpdate();
-//        return true;
-//    }
-//    return false;
-//}
-//
-//bool SceneManager::Update(float dt)
-//{
-//    if (currentScene)
-//    {
-//        currentScene->Update(dt);
-//        return true;
-//    }
-//    return false;
-//}
-//
-//bool SceneManager::PostUpdate()
-//{
-//    if (currentScene)
-//    {
-//        currentScene->PostUpdate();
-//        return true;
-//    }
-//    return false;
-//}
-//
-//bool SceneManager::AddScene(Scene* scene, pugi::xml_node& config)
-//{
-//    if (scene == nullptr) return false;
-//
-//    scenes.Add(scene);
-//    numScenes++;
-//    scene->OnCreate(config);
-//
-//    return true;
-//}
-//
-//void SceneManager::SwitchTo(SString id)
-//{
-//    auto scene = FindSceneByID(id);
-//
-//    if (currentScene)
-//    {
-//        // If we have a current scene, we call its OnDeactivate method.
-//        currentScene->OnDeactivate();
-//    }
-//
-//    // Setting new current scene
-//    currentScene = scene->data;
-//
-//    currentScene->OnActivate();
-//}
-//
-//void SceneManager::RemoveScene(SString id)
-//{
-//    auto scene = FindSceneByID(id);
-//
-//    if (currentScene == scene->data)
-//    {
-//        // If the scene we are removing is the current scene, 
-//        // set it to null pointer so the scene is no longer updated.
-//        currentScene = nullptr;
-//    }
-//
-//    // We make sure to call the OnDestroy method 
-//    // of the scene we are removing.
-//    scene->data->OnDestroy();
-//
-//    scenes.Del(scene);
-//}
-//
-//ListItem<Scene*>* SceneManager::FindSceneByID(SString id)
-//{
-//    ListItem<Scene*>* scene;
-//
-//    for (scene = scenes.start; scene != NULL; scene = scene->next)
-//    {
-//        if (scene->data->GetID() == id) { return scene; }
-//    }
-//}
+#include "App.h"
+#include "SceneManager.h"
+#include "SceneLogo.h"
+#include "SceneTitle.h"
+#include "SceneGame.h"
+#include "SceneFight.h"
+#include "SceneEnding.h"
+
+SceneManager::SceneManager() : Module()
+{
+    name.Create("scenemanager");
+}
+
+SceneManager::~SceneManager() {}
+
+bool SceneManager::Awake(pugi::xml_node& config)
+{
+    sceneLogo    = new SceneLogo();
+    sceneTitle   = new SceneTitle();
+    sceneGame    = new SceneGame();
+    sceneFight   = new SceneFight();
+    sceneEnding  = new SceneEnding();
+
+    AddScene(sceneLogo, config);
+    AddScene(sceneTitle, config);
+    AddScene(sceneGame, config);
+    AddScene(sceneFight, config);
+    AddScene(sceneEnding, config);
+
+    return true;
+}
+
+bool SceneManager::Start()
+{
+    currentScene = FindSceneByID("SceneLogo")->data;
+    currentScene->Start();
+
+    return true;
+}
+
+bool SceneManager::PreUpdate()
+{
+    if (currentScene)
+    {
+        currentScene->PreUpdate();
+        return true;
+    }
+    return false;
+}
+
+bool SceneManager::Update(float dt)
+{
+    if (currentScene)
+    {
+        currentScene->Update(dt);
+        return true;
+    }
+    return false;
+}
+
+bool SceneManager::PostUpdate()
+{
+    if (currentScene)
+    {
+        currentScene->PostUpdate();
+        return true;
+    }
+    return false;
+}
+
+bool SceneManager::AddScene(Scene* scene, pugi::xml_node& config)
+{
+    if (scene == nullptr) return false;
+
+    scenes.Add(scene);
+    numScenes++;
+    scene->Awake(config);
+
+    return true;
+}
+
+void SceneManager::SwitchTo(SString id)
+{
+    auto scene = FindSceneByID(id);
+
+    switch (currentScene->sceneType)
+    {
+    case SceneType::ALWAYS_ACTIVE:
+        break;
+    case SceneType::GAME:
+        break;
+    case SceneType::FIGHT:
+        break;
+    default:
+        break;
+    }
+
+    currentScene->CleanUp();
+    currentScene = scene->data;
+    currentScene->Start();
+}
+
+void SceneManager::RemoveScene(SString id)
+{
+    auto scene = FindSceneByID(id);
+
+    delete scene;
+
+    scenes.Del(scene);
+}
+
+ListItem<Scene*>* SceneManager::FindSceneByID(SString id)
+{
+    ListItem<Scene*>* scene;
+
+    for (scene = scenes.start; scene != NULL; scene = scene->next)
+    {
+        if (scene->data->GetID() == id) { return scene; }
+    }
+}

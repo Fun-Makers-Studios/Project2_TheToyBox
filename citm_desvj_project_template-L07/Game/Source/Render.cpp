@@ -1,8 +1,8 @@
 #include "App.h"
 #include "Window.h"
 #include "Render.h"
-#include "TitleScreen.h"
-#include "LogoScreen.h"
+#include "SceneTitle.h"
+#include "SceneLogo.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -267,14 +267,15 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 
 	for(uint i = 0; i < 360; ++i)
 	{
-		if (app->titlescreen->active == true || app->logoscreen->active == true) {
+		// HEKATE
+		/*if (app->titlescreen->active == true || app->logoscreen->active == true) {
 			points[i].x = (int)(-camera.x + radius * cos(i * factor) * scale);
 			points[i].y = (int)(-camera.y + radius * sin(i * factor) * scale);
 		}
-		else {
+		else {*/
 			points[i].x = (int)(-camera.x + x * scale + radius * cos(i * factor) * scale);
 			points[i].y = (int)(-camera.y + y * scale + radius * sin(i * factor) * scale);
-		}
+		//}
 	}
 
 	result = SDL_RenderDrawPoints(renderer, points, 360);

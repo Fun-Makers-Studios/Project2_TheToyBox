@@ -5,11 +5,10 @@
 #include "Input.h"
 #include "Render.h"
 #include "Window.h"
-#include "Scene.h"
+#include "SceneManager.h"
 #include "Log.h"
 #include "Point.h"
 #include "Map.h"
-#include "ModuleFadeToBlack.h"
 #include "EntityManager.h"
 #include "ParticleSystemManager.h"
 
@@ -72,24 +71,28 @@ bool Player::Start()
 
 	walkDown.PushBack({ 0, 0, 32, 32 });
 	walkDown.PushBack({ 32, 0, 32, 32 });
+	walkDown.PushBack({ 0, 0, 32, 32 });
 	walkDown.PushBack({ 64, 0, 32, 32 });
 	walkDown.loop = true;
 	walkDown.speed = 0.15f;
 	
 	walkRight.PushBack({ 96, 0, 32, 32 });
 	walkRight.PushBack({ 128, 0, 32, 32 });
+	walkRight.PushBack({ 96, 0, 32, 32 });
 	walkRight.PushBack({ 160, 0, 32, 32 });
 	walkRight.loop = true;
 	walkRight.speed = 0.15f;
 	
 	walkUp.PushBack({ 192, 0, 32, 32 });
 	walkUp.PushBack({ 224, 0, 32, 32 });
+	walkUp.PushBack({ 192, 0, 32, 32 });
 	walkUp.PushBack({ 256, 0, 32, 32 });
 	walkUp.loop = true;
 	walkUp.speed = 0.15f;
 	
 	walkLeft.PushBack({ 288, 0, 32, 32 });
 	walkLeft.PushBack({ 320, 0, 32, 32 });
+	walkLeft.PushBack({ 288, 0, 32, 32 });
 	walkLeft.PushBack({ 352, 0, 32, 32 });
 	walkLeft.loop = true;
 	walkLeft.speed = 0.15f;
@@ -133,7 +136,7 @@ bool Player::Update()
 
 	currentAnim = &idle;
 
-	if (app->scene->gamePaused != true) 
+	if (app->sceneManager->sceneGame->gamePaused != true)
 	{
 
 		if (godMode)

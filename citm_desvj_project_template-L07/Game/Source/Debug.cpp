@@ -8,13 +8,8 @@
 #include "EntityManager.h"
 #include "Map.h"
 #include "Collisions.h"
-#include "ModuleFadeToBlack.h"
 #include "Debug.h"
-#include "LogoScreen.h"
-#include "TitleScreen.h"
-#include "Scene.h"
-#include "SceneFight.h"
-#include "EndingScreen.h"
+#include "SceneManager.h"
 #include "GuiManager.h"
 #include "GuiControl.h"
 #include "Defs.h"
@@ -68,26 +63,26 @@ bool Debug::Update(float dt)
 
 	// F3: Start from the beginning of the current level
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-		app->scene->player->ResetPlayerPos();
-		app->audio->PlayFx(app->scene->player->selectSFX);
+		app->sceneManager->sceneGame->player->ResetPlayerPos();
+		app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
 	}
 
 	// F5: Save the current game state
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
 		app->SaveGameRequest();
-		app->audio->PlayFx(app->scene->player->selectSFX);
+		app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
 	}
 
 	// F6: Load the previous state (even across levels)
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
 		app->LoadGameRequest();
-		app->audio->PlayFx(app->scene->player->selectSFX);
+		app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
 	}
 
 	// F8: View GUI bounds rectangles and state in different colors
 	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
 		app->render->viewGUIbounds = !app->render->viewGUIbounds;
-		app->audio->PlayFx(app->scene->player->selectSFX);
+		app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
 	}
 
 	// F9: View colliders / logic / paths
@@ -160,10 +155,10 @@ void Debug::DrawDebug()
 	{
 		//Player x, y
 		app->fonts->BlitText(debugX, debugY + 55, 0, "player.x =");
-			app->fonts->BlitText(debugX + 88, debugY + 55, 0, std::to_string(app->scene->player->body->pos.x).c_str());
+			app->fonts->BlitText(debugX + 88, debugY + 55, 0, std::to_string(app->sceneManager->sceneGame->player->body->pos.x).c_str());
 
 		app->fonts->BlitText(debugX, debugY + 65, 0, "player.y =");
-		app->fonts->BlitText(debugX + 88, debugY + 65, 0, std::to_string(app->scene->player->body->pos.y).c_str());
+		app->fonts->BlitText(debugX + 88, debugY + 65, 0, std::to_string(app->sceneManager->sceneGame->player->body->pos.y).c_str());
 
 		//Camera x, y
 		app->fonts->BlitText(debugX, debugY + 80, 0, "camera.x =");
@@ -173,15 +168,15 @@ void Debug::DrawDebug()
 		app->fonts->BlitText(debugX + 88, debugY + 90, 0, std::to_string(app->render->camera.y).c_str());
 
 		//Player alive
-		if (!app->scene->player->dead)
+		if (!app->sceneManager->sceneGame->player->dead)
 			app->fonts->BlitText(debugX, debugY + 105, 0, "player.alive = true");
 		else
 			app->fonts->BlitText(debugX, debugY + 105, 0, "player.alive = false");
 
 		//Scene Fight
-		for (size_t i = 0; i < app->sceneFight->turnList.Count(); i++)
+		for (size_t i = 0; i < app->sceneManager->sceneFight->turnList.Count(); i++)
 		{
-			PartyMember* member = app->sceneFight->turnList.At(i)->data;
+			PartyMember* member = app->sceneManager->sceneFight->turnList.At(i)->data;
 
 			std::string status;
 			switch (member->status)
@@ -200,15 +195,15 @@ void Debug::DrawDebug()
 			app->fonts->BlitText(debugX+88, debugY + 125 + i*10, 0, strInfo.c_str());
 		}
 
-		if (app->sceneFight->turnMember != nullptr)
+		if (app->sceneManager->sceneFight->turnMember != nullptr)
 		{
-			app->fonts->BlitText(debugX - 250, debugY, 0, app->sceneFight->turnMember->name.GetString());
+			app->fonts->BlitText(debugX - 250, debugY, 0, app->sceneManager->sceneFight->turnMember->name.GetString());
 		}
 
 
 		//Scale
 		std::string currentScale = app->scaleObj->ScaleTypeToString(app->scaleObj->GetCurrentScale());
-		if (!app->scene->player->dead)
+		if (!app->sceneManager->sceneGame->player->dead)
 			app->fonts->BlitText(debugX, debugY + 200, 0, currentScale.c_str());
 		else
 			app->fonts->BlitText(debugX, debugY + 200, 0, currentScale.c_str());

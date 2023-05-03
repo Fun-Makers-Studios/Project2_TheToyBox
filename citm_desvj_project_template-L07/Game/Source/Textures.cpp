@@ -81,6 +81,9 @@ SDL_Texture* const Textures::Load(const char* path)
 // Unload texture
 bool Textures::UnLoad(SDL_Texture* texture)
 {
+	if (texture == nullptr)
+		return false;
+
 	ListItem<SDL_Texture*>* item;
 
 	for(item = textures.start; item != NULL; item = item->next)

@@ -7,12 +7,12 @@
 #include "SDL/include/SDL.h"
 #include "PugiXml/src/pugixml.hpp"
 
-class Scene;
+class SceneGame;
 
 class DialogueManager
 {
 public:
-	DialogueManager(Scene* scene);
+	DialogueManager(SceneGame* scene);
 	~DialogueManager();
 
 	void Load(int dialogueId);
@@ -25,7 +25,7 @@ public:
 	bool dialogueLoaded;
 
 private:
-	Scene* scene;
+	SceneGame* scene;
 	pugi::xml_node file;
 
 	Dialogue* currentDialogue;

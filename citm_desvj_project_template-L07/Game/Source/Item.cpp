@@ -4,7 +4,7 @@
 #include "Audio.h"
 #include "Input.h"
 #include "Render.h"
-#include "Scene.h"
+#include "SceneManager.h"
 #include "Log.h"
 #include "Point.h"
 #include "Collisions.h"
@@ -71,7 +71,7 @@ bool Item::Update()
 		//CleanUp();
 	}
 
-	if (app->scene->gamePaused != true)
+	if (app->sceneManager->sceneGame->gamePaused != true)
 	{
 		// HEKATE position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 4));
 		// HEKATE position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 4));

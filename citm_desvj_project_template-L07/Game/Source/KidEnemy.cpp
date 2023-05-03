@@ -5,12 +5,11 @@
 #include "Input.h"
 #include "Render.h"
 #include "Window.h"
-#include "Scene.h"
+#include "SceneManager.h"
 #include "Log.h"
 #include "Point.h"
 #include "Map.h"
 #include "PathFinding.h"
-#include "ModuleFadeToBlack.h"
 #include "EntityManager.h"
 
 
@@ -101,7 +100,7 @@ bool KidEnemy::Update()
 		dead = false;
 	}
 
-	if (app->scene->gamePaused != true)
+	if (app->sceneManager->sceneGame->gamePaused != true)
 	{
 		//HEKATE position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width/2));
 		//HEKATE position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height));

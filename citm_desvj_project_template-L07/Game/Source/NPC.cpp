@@ -5,12 +5,11 @@
 #include "Input.h"
 #include "Render.h"
 #include "Window.h"
-#include "Scene.h"
+#include "SceneManager.h"
 #include "Log.h"
 #include "Point.h"
 #include "Map.h"
 #include "PathFinding.h"
-#include "ModuleFadeToBlack.h"
 #include "EntityManager.h"
 #include "Debug.h"
 
@@ -128,9 +127,9 @@ void NPC::DialogTriggerCheck()
 	boundaries.r = NPC_BOUNDARY;
 
 	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN &&
-		app->collisions->CheckCollision(*app->scene->player->body, boundaries))
+		app->collisions->CheckCollision(*app->sceneManager->sceneGame->player->body, boundaries))
 	{
 		if (this->dialogueid != -1)
-			app->scene->dialogueManager->Load(this->dialogueid);
+			app->sceneManager->sceneGame->dialogueManager->Load(this->dialogueid);
 	}
 }

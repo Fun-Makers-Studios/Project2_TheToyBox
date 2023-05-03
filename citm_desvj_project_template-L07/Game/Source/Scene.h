@@ -1,162 +1,59 @@
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
-#include "Module.h"
-#include "Player.h"
 #include "NPC.h"
 #include "Item.h"
-#include "KidEnemy.h"
-#include "GuiButton.h"
-#include "ParticleSystem.h"
-#include "DialogueManager.h"
-#include "Spline.h"
-#include "Easing.h"
 
-struct SDL_Texture;
+class GuiControl;
 
-class Scene : public Module
+enum class SceneType
+{
+	ALWAYS_ACTIVE,
+	GAME,
+	FIGHT
+};
+
+class Scene
 {
 public:
 
-	Scene();
+	Scene() {}
 
-	// Destructor
-	virtual ~Scene();
+	virtual ~Scene() {}
 
-	// Called before render is available
-	bool Awake(pugi::xml_node& config);
+	// Called when scene initially created. Called once.
+	virtual bool Awake(pugi::xml_node& config) = 0;
 
-	// Called before the first frame
-	bool Start();
+	// Called whenever a scene is transitioned into. Can be 
+	// called many times in a typical game cycle.
+	virtual bool Start() { return true; };
 
 	// Called before all Updates
-	bool PreUpdate();
+	virtual bool PreUpdate() { return true; };
 
 	// Called each loop iteration
-	bool Update(float dt);
+	virtual bool Update(float dt) { return true; };
 
 	// Called before all Updates
-	bool PostUpdate();
+	virtual bool PostUpdate() { return true; };
 
 	// Called before quitting
-	bool CleanUp();
+	virtual bool CleanUp() { return true; };
 
-	// Define multiple Gui Event methods
-	bool OnGuiMouseClickEvent(GuiControl* control);
+	virtual bool OnGuiMouseClickEvent(GuiControl* control) { return true; }
 
-	void ResetScene();
-	void FixCamera();
+	// Returns the scene's ID
+	virtual SString GetID() { return id; }
 
-	void SceneMap();
-	void LoadNPC();
-	void LoadItems();
-
-	void SaveUI();
-
-	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&);
-
-	void FightKid();
-
+	// Sets the scene's ID
+	virtual void SetID(SString id) { this->id = id; }
 
 public:
 
-	// Entities
-	Player* player = nullptr;	
-	NPC* npc;
-	List<NPC*> npcList;
-	KidEnemy* kid = nullptr;
-	Item* item = nullptr;
-	List<Item*> itemsList;
-
-	// Set of SFX
-	uint selectSFX = 0;
-
-	// Save Game
-	SDL_Texture* saveTex = nullptr;
-	const char* saveTexPath;
-	bool saveEnabled = false;
-	int saveTime = 0;
-	bool showSavingState = false;
-
-	// Menu states
-	bool gamePaused = false;
-	bool partyMenu = false;
-	bool pauseMenu = false;
-	bool settingSceneMenu = false;
-
-
-	bool playing = false; //HEKATE not used
-	bool continueGame = false;
-
-	SString mapName;
-	bool isMapChanging = false;
-
-	uint partyMemberSelected = 0;
-
-	DialogueManager* dialogueManager = nullptr;
-
-private:
-
-	iPoint startPosition;
-	iPoint mousePos;
-	iPoint cameraPos;
-
-
-	// Textures
-	SDL_Texture* img_pause = nullptr;
-	SDL_Rect pauseRect;
-
-	const char* popImg_settingsPath = nullptr;
-	SDL_Texture* popImg_settings = nullptr;
-
-	const char* partyMenuImgPath = nullptr;
-	SDL_Texture* partyMenuImg = nullptr;
-	
-	const char* zeroImgPath = nullptr;
-	SDL_Texture* zeroImg = nullptr;
-	
-	const char* sophieImgPath = nullptr;
-	SDL_Texture* sophieImg = nullptr;
-	
-	// Debug pathfinding
-	iPoint origin;
-	bool originSelected = false;
-
-	const char* imgPausePath = nullptr;
-	const char* musicPath = nullptr;
-	const char* selectSFXPath = nullptr;
-
-	// Declare a GUI Button and create it using the GuiManager
-	GuiButton* resumeButton14 = nullptr;
-	GuiButton* backToTitleButton15 = nullptr;
-	GuiButton* settingsButton16 = nullptr;
-	GuiButton* closeButton17 = nullptr;
-	
-	// Settings menu on scene game
-	GuiButton* decreaseMusicButton21 = nullptr;
-	GuiButton* increaseMusicButton22 = nullptr;
-
-	GuiButton* decreaseSFXButton23 = nullptr;
-	GuiButton* increaseSFXButton24 = nullptr;
-
-	GuiButton* fullscreenButton25 = nullptr;
-	GuiButton* vsyncButton26 = nullptr;
-
-	GuiButton* firstPMemberButton27 = nullptr;
-	GuiButton* secondPMemberButton28 = nullptr;
-
-	// Particle system
-	ParticleSystem* smokePS = nullptr;
-
-	bool isNight = false;
-
-	//EASINGS
-	Easing* easingPause = nullptr;
-	Easing* easingButton = nullptr;
-
-
-	bool exitGame = false;
+	SceneType sceneType;
+	SString id;
+	List<NPC*>npcs;
+	List<Item*>items;
 };
 
 #endif // __SCENE_H__

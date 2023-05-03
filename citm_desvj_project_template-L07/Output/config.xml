@@ -37,7 +37,7 @@
 	<title>
 		<backgroundimage texturepath="Assets/Textures/SceneTitle/title.png"/>
 		<popImage settingtexturepath="Assets/Textures/UI/SceneTitle/Settings/SettingsMenu.png" creditstexturepath="Assets/Textures/UI/SceneTitle/Credits/CreditsMenu.png"/>
-		<music musicPath="Assets/Audio/Music/title_screen.ogg"/>
+		<music musicPath="Assets/Audio/Music/scene_title.ogg"/>
 		<startsfx startSFXPath="Assets/Audio/Fx/start_game.wav"/>
 		<selectsfx selectSFXPath="Assets/Audio/FX/menu_selection.wav"/>
 	</title>

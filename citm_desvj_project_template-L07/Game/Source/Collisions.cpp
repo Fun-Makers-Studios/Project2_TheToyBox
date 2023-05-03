@@ -9,7 +9,7 @@
 #include "Render.h"
 #include "Player.h"
 #include "Window.h"
-#include "Scene.h"
+#include "SceneManager.h"
 #include "Map.h"
 #include "Pathfinding.h"
 #include "EntityManager.h"
@@ -78,7 +78,7 @@ bool Collisions::PostUpdate()
     }
 
     // MAP COLLISIONS
-    Body playerBody = *app->scene->player->body;
+    Body playerBody = *app->sceneManager->sceneGame->player->body;
     iPoint pos = app->map->WorldToMap(playerBody.pos.x, playerBody.pos.y);
 
     for (int i = pos.x-1; i <= pos.x+1; i++) //rows
@@ -107,7 +107,7 @@ bool Collisions::PostUpdate()
                     app->render->DrawRectangle(rect, 255, 0, 0, 64);
                     app->render->DrawRectangle(rect, 255, 0, 0, 196, false);
 
-                    SolveCollision(app->scene->player->body, &tileCollider);
+                    SolveCollision(app->sceneManager->sceneGame->player->body, &tileCollider);
                 }
             }
         }
@@ -119,9 +119,9 @@ bool Collisions::PostUpdate()
 
     for (item = app->entityManager->entities.start; item != NULL; item = item->next)
     {
-        if (CheckCollision(*app->scene->player->body, *item->data->body))
+        if (CheckCollision(*app->sceneManager->sceneGame->player->body, *item->data->body))
         {
-            SolveCollision(app->scene->player->body, item->data->body);
+            SolveCollision(app->sceneManager->sceneGame->player->body, item->data->body);
         }
     }
 
@@ -209,7 +209,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
 
         case ColliderType::ENEMY:
             CirCirCollision(body1, body2);
-            app->scene->FightKid();
+            app->sceneManager->sceneGame->FightKid();
             break; 
 
         case ColliderType::ITEM:

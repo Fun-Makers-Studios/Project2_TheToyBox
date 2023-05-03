@@ -5,7 +5,7 @@
 #include "GuiButton.h"
 #include "Audio.h"
 
-GuiManager::GuiManager() :Module()
+GuiManager::GuiManager() : Module()
 {
 	name.Create("guiManager");
 }
@@ -17,9 +17,9 @@ bool GuiManager::Start()
 	return true;
 }
 
-GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, int textSize, SDL_Rect bounds, Module* observer, ButtonType buttonType, SDL_Rect sliderBounds)
+GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, int textSize, SDL_Rect bounds, Scene* observer, ButtonType buttonType, SDL_Rect sliderBounds)
 {
-	// L15: TODO1: Create a GUI control and add it to the list of controls
+	// Create a GUI control and add it to the list of controls
 
 	GuiControl* guiControl = nullptr;
 
@@ -63,7 +63,6 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 bool GuiManager::Update(float dt)
 {	
 	
-	
 	return true;
 }
 
@@ -75,13 +74,20 @@ bool GuiManager::PostUpdate()
 	// We control how often the GUI is updated to optimize the performance
 	if (doLogic == true)
 	{
-		ListItem<GuiControl*>* control = guiControlsList.start;
+		for (size_t i = 0; i < guiControlsList.Count(); i++)
+		{
+			ListItem<GuiControl*>* control = guiControlsList.At(i);
+			control->data->Update(16);
+		}
+
+		// HEKATE end of list not set as nullptr, loop runs out of list
+		/*ListItem<GuiControl*>* control = guiControlsList.start;
 
 		while (control != nullptr)
 		{
-			control->data->Update(app->GetDT());
+			control->data->Update(16);
 			control = control->next;
-		}
+		}*/
 
 		accumulatedTime = 0.0f;
 		doLogic = false;
@@ -90,8 +96,8 @@ bool GuiManager::PostUpdate()
 	return true;
 }
 
-bool GuiManager::Draw() {
-
+bool GuiManager::Draw()
+{
 	ListItem<GuiControl*>* control = guiControlsList.start;
 
 	while (control != nullptr)
@@ -123,6 +129,3 @@ bool GuiManager::CleanUp()
 
 	return false;
 }
-
-
-

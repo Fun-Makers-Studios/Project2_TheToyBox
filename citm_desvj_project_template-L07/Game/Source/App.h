@@ -20,12 +20,7 @@ class Fonts;
 class Audio;
 class ModuleController;
 
-class ModuleFadeToBlack;
-class LogoScreen;
-class TitleScreen;
-class EndingScreen;
-class SceneFight;
-class Scene;
+class SceneManager;
 
 class Map;
 class Pathfinding;
@@ -118,18 +113,13 @@ public:
 	Audio* audio;
 	ModuleController* controller;
 
-	ModuleFadeToBlack* fade;
-	LogoScreen* logoscreen;
-	TitleScreen* titlescreen;
-	SceneFight* sceneFight;
-	Scene* scene;
+	SceneManager* sceneManager;
 
 	UI* ui;
 	EntityManager* entityManager;
 	PartyManager* partyManager;
 	Map* map;
 	Pathfinding* pathfinding;
-	EndingScreen* endingscreen;
 	Collisions* collisions;
 	GuiManager* guiManager;
 	Debug* debug;

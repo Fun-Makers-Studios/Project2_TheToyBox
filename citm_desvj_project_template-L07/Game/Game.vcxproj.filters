@@ -7,16 +7,16 @@
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
       <Filter>External\PugiXml</Filter>
     </ClCompile>
-    <ClCompile Include="Source\EndingScreen.cpp">
+    <ClCompile Include="Source\SceneEnding.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\LogoScreen.cpp">
+    <ClCompile Include="Source\SceneLogo.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Scene.cpp">
+    <ClCompile Include="Source\SceneGame.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TitleScreen.cpp">
+    <ClCompile Include="Source\SceneTitle.cpp">
       <Filter>Game\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\App.cpp">
@@ -91,9 +91,6 @@
     <ClCompile Include="Source\ModuleController.cpp">
       <Filter>Core\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ModuleFadeToBlack.cpp">
-      <Filter>Core\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Particle.cpp">
       <Filter>Core\Modules</Filter>
     </ClCompile>
@@ -159,16 +156,16 @@
     <ClInclude Include="Source\Queue.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\EndingScreen.h">
+    <ClInclude Include="Source\SceneEnding.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\LogoScreen.h">
+    <ClInclude Include="Source\SceneLogo.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Scene.h">
+    <ClInclude Include="Source\SceneGame.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TitleScreen.h">
+    <ClInclude Include="Source\SceneTitle.h">
       <Filter>Game\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\Module.h">
@@ -255,9 +252,6 @@
     <ClInclude Include="Source\Map.h">
       <Filter>Core\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ModuleFadeToBlack.h">
-      <Filter>Core\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Particle.h">
       <Filter>Core\Modules</Filter>
     </ClInclude>
@@ -293,6 +287,9 @@
     </ClInclude>
     <ClInclude Include="Source\GuiSlider.h">
       <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Game\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

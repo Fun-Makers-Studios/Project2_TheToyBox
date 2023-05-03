@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Module.h"
+#include "Scene.h"
 #include "PartyManager.h"
 #include "GuiButton.h"
 #include "SDL/include/SDL.h"
 
-class SceneFight : public Module
+class SceneFight : public Scene
 {
 public:
 	SceneFight();
