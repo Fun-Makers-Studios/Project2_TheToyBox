@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Render.h"
 #include "Module.h"
+#include "Scene.h"
 
 #include "Point.h"
 #include "SString.h"
@@ -73,7 +74,7 @@ public:
 		section = { 0, 0, 0, 0 };
 	}
 
-	void SetObserver(Module* module)
+	void SetObserver(Scene* module)
 	{
 		observer = module;
 	}
@@ -99,7 +100,7 @@ public:
 
 	//Fonts font;              // Text font
 
-	Module* observer;        // Observer module (it should probably be an array/list)
+	Scene* observer;        // Observer module (it should probably be an array/list)
 };
 
 #endif // __GUICONTROL_H__

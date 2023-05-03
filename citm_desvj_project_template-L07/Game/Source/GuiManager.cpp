@@ -5,7 +5,7 @@
 #include "GuiButton.h"
 #include "Audio.h"
 
-GuiManager::GuiManager() :Module()
+GuiManager::GuiManager() : Module()
 {
 	name.Create("guiManager");
 }
@@ -17,7 +17,7 @@ bool GuiManager::Start()
 	return true;
 }
 
-GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, int textSize, SDL_Rect bounds, Module* observer, ButtonType buttonType, SDL_Rect sliderBounds)
+GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, int textSize, SDL_Rect bounds, Scene* observer, ButtonType buttonType, SDL_Rect sliderBounds)
 {
 	// Create a GUI control and add it to the list of controls
 
@@ -74,13 +74,24 @@ bool GuiManager::PostUpdate()
 	// We control how often the GUI is updated to optimize the performance
 	if (doLogic == true)
 	{
-		ListItem<GuiControl*>* control = guiControlsList.start;
+		for (size_t i = 0; i < guiControlsList.Count(); i++)
+		{
+			ListItem<GuiControl*>* control = guiControlsList.At(i);
+			control->data->Update(16);
+		}
+
+		/*for (ListItem<GuiControl*>* control = guiControlsList.start; control != NULL; control = control->next)
+		{
+			control->data->Update(16);
+		}*/
+
+		/*ListItem<GuiControl*>* control = guiControlsList.start;
 
 		while (control != nullptr)
 		{
-			control->data->Update(app->GetDT());
+			control->data->Update(16);
 			control = control->next;
-		}
+		}*/
 
 		accumulatedTime = 0.0f;
 		doLogic = false;

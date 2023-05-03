@@ -4,6 +4,8 @@
 #include "NPC.h"
 #include "Item.h"
 
+class GuiControl;
+
 enum class SceneType
 {
 	ALWAYS_ACTIVE,
@@ -11,7 +13,7 @@ enum class SceneType
 	FIGHT
 };
 
-class Scene : public Module
+class Scene
 {
 public:
 
@@ -37,6 +39,8 @@ public:
 
 	// Called before quitting
 	virtual bool CleanUp() { return true; };
+
+	virtual bool OnGuiMouseClickEvent(GuiControl* control) { return true; }
 
 	// Returns the scene's ID
 	virtual SString GetID() { return id; }

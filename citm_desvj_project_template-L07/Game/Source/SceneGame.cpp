@@ -436,7 +436,6 @@ bool SceneGame::CleanUp()
 
 bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 {
-	// L15: TODO 5: Implement the OnGuiMouseClickEvent method
 	switch (control->id)
 	{
 	case 14:
