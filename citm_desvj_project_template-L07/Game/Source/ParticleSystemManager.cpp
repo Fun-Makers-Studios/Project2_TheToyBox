@@ -190,6 +190,7 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(dPoint initialPositi
 	
 	case FIREFLIES:
 	{
+		uint scale = app->scaleObj->ScaleTypeToInt(ScaleType::WORLD);
 		GiveParticlesToPS(PS, 50);
 		PS->SetTexture(alphaTextures[BASIC]);
 		PS->spawnRate = .15f;
@@ -199,7 +200,7 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(dPoint initialPositi
 		PS->particleLifespan = 10.0f;
 		PS->shootingAcceleration = fPoint{ 0.0f, 0.5f };
 		PS->randomSpawnPositionRangeMin = dPoint{ 0, 0 };
-		PS->randomSpawnPositionRangeMax = dPoint{ 1320, 1000 };
+		PS->randomSpawnPositionRangeMax = dPoint{ (double)(app->map->mapData.width * app->map->mapData.tileWidth * scale), (double)(app->map->mapData.height * app->map->mapData.tileHeight * scale) };
 		PS->randomShootingVelocityRangeMin = dPoint{ -10, -10 };
 		PS->randomShootingVelocityRangeMax = dPoint{ 10, 10 };
 		PS->initialScale = .35f;
