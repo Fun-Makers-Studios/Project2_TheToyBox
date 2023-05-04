@@ -3,6 +3,7 @@
 #include "App.h"
 
 #include "Textures.h"
+#include "Map.h"
 
 ParticleSystemManager::ParticleSystemManager()
 {
@@ -123,8 +124,8 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(dPoint initialPositi
 		PS->SetTexture(alphaTextures[SMOKE_SHADED]);
 		PS->spawnRate = 0.3f;
 		PS->isConstant = true;
-		PS->initialColor = Beige;
-		PS->objectiveColor.SetAlpha(Beige, 0);
+		PS->initialColor = White;
+		PS->objectiveColor.SetAlpha(White, 0);
 		PS->particleLifespan = 10;
 		PS->shootingAcceleration = fPoint{ 0.0f, 0.5f };
 		PS->randomSpawnPositionRangeMin = dPoint{ -20, 0 };
@@ -185,6 +186,24 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(dPoint initialPositi
 		PS->randomShootingVelocityRangeMax = dPoint{ 10, 0 };
 		PS->initialScale = 2.0f;
 		PS->objectiveScale = .0f;
+		break;
+	
+	case FIREFLIES:
+		GiveParticlesToPS(PS, 50);
+		//PS->PSLifespan = 10.0f;
+		PS->SetTexture(alphaTextures[BASIC]);
+		PS->spawnRate = .20f;
+		PS->isConstant = true;
+		PS->initialColor = Green;
+		PS->objectiveColor.SetAlpha(Green, 0);
+		PS->particleLifespan = 10.0f;
+		PS->shootingAcceleration = fPoint{ 0.0f, 0.5f };
+		PS->randomSpawnPositionRangeMin = dPoint{ 0, 0 };
+		PS->randomSpawnPositionRangeMax = dPoint{ 1320, 1000 };
+		PS->randomShootingVelocityRangeMin = dPoint{ -10, 0 };
+		PS->randomShootingVelocityRangeMax = dPoint{ 10, 0 };
+		PS->initialScale = .50f;
+		PS->objectiveScale = .10f;
 		break;
 
 	case NONE:

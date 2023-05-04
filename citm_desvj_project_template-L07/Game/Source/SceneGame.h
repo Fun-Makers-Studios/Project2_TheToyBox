@@ -149,6 +149,7 @@ private:
 
 	// Particle system
 	ParticleSystem* smokePS;
+	ParticleSystem* firefliesPS;
 
 	bool isNight = false;
 

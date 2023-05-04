@@ -550,7 +550,24 @@ bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 
 void SceneGame::ActiveParticles()
 {
-	
+	if (isNight)
+	{
+		if (firefliesPS == nullptr) 
+		{
+			firefliesPS = app->particleManager->CreateParticleSystem({0, 0}, Blueprint::FIREFLIES);
+		}
+		
+	}
+	else
+	{
+
+		if (firefliesPS != nullptr)
+		{
+			firefliesPS->TurnOff();
+			firefliesPS = nullptr;
+		}
+
+	}
 }
 
 void SceneGame::SaveUI()

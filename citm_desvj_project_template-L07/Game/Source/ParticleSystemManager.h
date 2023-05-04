@@ -15,6 +15,7 @@ enum Blueprint {
 	EXPLOSION,
 	SAND,
 	TAKE_ITEM,
+	FIREFLIES,
 	NONE
 };
 
