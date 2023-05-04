@@ -97,10 +97,6 @@ public:
 
 	DialogueManager* dialogueManager;
 
-	/*Particles FX Vars*/
-	ParticleSystem* takeItemPS = nullptr;
-	bool takeItem = false;
-
 private:
 
 	iPoint startPosition;

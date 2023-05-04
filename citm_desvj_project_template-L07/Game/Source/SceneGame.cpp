@@ -550,17 +550,7 @@ bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 
 void SceneGame::ActiveParticles()
 {
-	if (takeItem) {
-		if (takeItemPS == nullptr) {
-			dPoint pos = { player->body->pos.x, player->body->pos.y };
-			takeItemPS = app->particleManager->CreateParticleSystem(pos, Blueprint::TAKE_ITEM);
-		}
-		else {
-			takeItemPS->TurnOff();
-			takeItemPS = nullptr;
-		}
-		takeItem = false;
-	}
+	
 }
 
 void SceneGame::SaveUI()

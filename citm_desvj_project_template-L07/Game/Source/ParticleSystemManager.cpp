@@ -159,14 +159,14 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(dPoint initialPositi
 		PS->isConstant = false;
 		PS->initialColor = Beige;
 		PS->objectiveColor.SetAlpha(Beige, 0);
-		PS->particleLifespan = 0.3f;
+		PS->particleLifespan = 0.2f;
 		PS->shootingAcceleration = fPoint{ 0.0f, 0.5f };
 		PS->randomSpawnPositionRangeMin = dPoint{ -20, 0 };
 		PS->randomSpawnPositionRangeMax = dPoint{ 20, 0 };
 		PS->randomShootingVelocityRangeMin = dPoint{ 2, 0 };
 		PS->randomShootingVelocityRangeMax = dPoint{ 10, 0 };
-		PS->initialScale = 1.0f;
-		PS->objectiveScale = .20f;
+		PS->initialScale = .60f;
+		PS->objectiveScale = .0f;
 		break;
 	
 	case TAKE_ITEM:

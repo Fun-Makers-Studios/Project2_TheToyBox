@@ -219,8 +219,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
             {
                 if (itemsItem->data->body == body2)
                 {
-                    app->sceneManager->sceneGame->takeItem = true;
-                    app->entityManager->DestroyEntity(itemsItem->data);
+                    itemsItem->data->takeItem = true;
                 }
             }
 

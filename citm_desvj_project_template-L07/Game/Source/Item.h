@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "Animation.h"
 #include "Collisions.h"
+#include "ParticleSystem.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
@@ -32,7 +33,7 @@ public:
 
 public:
 
-	bool isPicked = false;
+	bool takeItem = false;
 
 	SString itemType;
 
@@ -50,6 +51,8 @@ private:
 
 	int width;
 	int height;
+
+	ParticleSystem* takeItemPS = nullptr;
 };
 
 #endif // __ITEM_H__

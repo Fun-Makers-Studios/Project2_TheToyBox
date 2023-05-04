@@ -9,6 +9,7 @@
 #include "Point.h"
 #include "Collisions.h"
 #include "EntityManager.h"
+#include "ParticleSystemManager.h"
 
 Item::Item(pugi::xml_node parameters) : Entity(EntityType::ITEM)
 {
@@ -61,27 +62,23 @@ bool Item::Start()
 
 bool Item::Update()
 {
-	// Link item's texture with pbody when moving
-
-	if (isPicked == true)
+	if (takeItem)
 	{
-		// HEKATE app->physics->world->DestroyBody(pbody->body);
-		app->entityManager->DestroyEntity(this);
-		
-		//CleanUp();
-	}
+		if (takeItemPS == nullptr) {
+			dPoint pos = { body->pos.x, body->pos.y };
+			takeItemPS = app->particleManager->CreateParticleSystem(pos, Blueprint::TAKE_ITEM);
 
-	if (app->sceneManager->sceneGame->gamePaused != true)
+			app->entityManager->DestroyEntity(this);
+		}
+		else {
+			takeItemPS->TurnOff();
+			takeItemPS = nullptr;
+		}
+	}
+	else 
 	{
-		// HEKATE position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width / 4));
-		// HEKATE position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height / 4));
-	}
-
-	if (isPicked == false) {
-
 		ScaleType scale = app->scaleObj->GetCurrentScale();
 		app->render->DrawTexture(texture, body->pos.x, body->pos.y, &rect, SDL_FLIP_NONE, scale);
-
 	}
 
 	return true;
