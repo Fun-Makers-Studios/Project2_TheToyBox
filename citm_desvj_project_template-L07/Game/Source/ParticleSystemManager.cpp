@@ -180,8 +180,8 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(dPoint initialPositi
 		PS->objectiveColor.SetAlpha(Yellow, 0);
 		PS->particleLifespan = 1.0f;
 		PS->shootingAcceleration = fPoint{ 0.0f, 0.5f };
-		PS->randomSpawnPositionRangeMin = dPoint{ -20, 0 };
-		PS->randomSpawnPositionRangeMax = dPoint{ 20, 0 };
+		PS->randomSpawnPositionRangeMin = dPoint{ -20, -20 };
+		PS->randomSpawnPositionRangeMax = dPoint{ 20, 20 };
 		PS->randomShootingVelocityRangeMin = dPoint{ 2, 0 };
 		PS->randomShootingVelocityRangeMax = dPoint{ 10, 0 };
 		PS->initialScale = 2.0f;
@@ -189,22 +189,23 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(dPoint initialPositi
 		break;
 	
 	case FIREFLIES:
+	{
 		GiveParticlesToPS(PS, 50);
-		//PS->PSLifespan = 10.0f;
 		PS->SetTexture(alphaTextures[BASIC]);
-		PS->spawnRate = .20f;
+		PS->spawnRate = .15f;
 		PS->isConstant = true;
-		PS->initialColor = Green;
-		PS->objectiveColor.SetAlpha(Green, 0);
+		PS->initialColor = Yellow;
+		PS->objectiveColor.SetAlpha(Yellow, 0);
 		PS->particleLifespan = 10.0f;
 		PS->shootingAcceleration = fPoint{ 0.0f, 0.5f };
 		PS->randomSpawnPositionRangeMin = dPoint{ 0, 0 };
 		PS->randomSpawnPositionRangeMax = dPoint{ 1320, 1000 };
-		PS->randomShootingVelocityRangeMin = dPoint{ -10, 0 };
-		PS->randomShootingVelocityRangeMax = dPoint{ 10, 0 };
-		PS->initialScale = .50f;
-		PS->objectiveScale = .10f;
+		PS->randomShootingVelocityRangeMin = dPoint{ -10, -10 };
+		PS->randomShootingVelocityRangeMax = dPoint{ 10, 10 };
+		PS->initialScale = .35f;
+		PS->objectiveScale = .05f;
 		break;
+	}
 
 	case NONE:
 		break;
