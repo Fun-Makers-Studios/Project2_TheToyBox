@@ -19,7 +19,7 @@
 SceneFight::SceneFight() : Scene()
 {
 	sceneType = SceneType::FIGHT;
-	id.Create("sceneFight");
+	id.Create("SceneFight");
 }
 
 // Destructor

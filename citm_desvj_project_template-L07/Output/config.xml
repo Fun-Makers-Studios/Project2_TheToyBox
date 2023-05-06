@@ -83,6 +83,8 @@
 		<inn path="Assets/Maps/inn.tmx"/>
 		<housebasement path="Assets/Maps/housebasement.tmx"/>
 		<housefloor path="Assets/Maps/housefloor.tmx"/>
+		<circusOne path="Assets/Maps/circusOne.tmx"/>
+		<circusTwo path="Assets/Maps/circusTwo.tmx"/>
 	</map>
 
 	<gui>
@@ -185,14 +187,22 @@
 		<housefloor>
 			<npc x="736" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="6" dialogueid="5"/>
 		</housefloor>
+		<circusOne>
+			<npc x="736" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="6" dialogueid="5"/>
+		</circusOne>
+		<circusTwo>
+			<npc x="736" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="6" dialogueid="5"/>
+		</circusTwo>
 	</npcs>
 	
 	<items>
 		<town>
-			<item x="230" y="400" itemType ="potionhp" texturepath="Assets/Textures/Items/potion_hp.png"/>
-			<item x="250" y="450" itemType ="potionhp" texturepath="Assets/Textures/Items/potion_hp.png"/>
-			<item x="232" y="300" itemType ="potionmana" texturepath="Assets/Textures/Items/potion_mana.png"/>
-			<item x="250" y="500" itemType ="potionmana" texturepath="Assets/Textures/Items/potion_mana.png"/>
+			<item x="230" y="400" itemType ="potionhp" isStackable ="true" texturepath="Assets/Textures/Items/potion_hp.png"/>
+			<item x="250" y="450" itemType ="potionhp" isStackable ="true" texturepath="Assets/Textures/Items/potion_hp.png"/>
+			<item x="232" y="300" itemType ="potionmana" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
+			<item x="250" y="500" itemType ="potionmana" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
+			<item x="250" y="525" itemType ="key" isStackable ="false" texturepath="Assets/Textures/Items/key.png"/>
+			<item x="285" y="525" itemType ="key" isStackable ="false" texturepath="Assets/Textures/Items/circus_ticket.png"/>
 		</town>
 		<tavern>
 			
@@ -206,6 +216,12 @@
 		<housefloor>
 			
 		</housefloor>
+		<circusOne>
+			
+		</circusOne>
+		<circusTwo>
+			
+		</circusTwo>
 	</items>
 	
 	
