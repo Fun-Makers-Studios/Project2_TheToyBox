@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Module.h"
+#include "Player.h"
 #include <chrono>
 using namespace std::chrono;
 
@@ -43,5 +44,5 @@ public:
 
 private:
 
-
+	Player* nullPlayer = nullptr;
 };

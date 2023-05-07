@@ -14,6 +14,16 @@
 
 #include <math.h>
 
+Player::Player() : Entity(EntityType::PLAYER)
+{
+	// Create collider body
+	body = new Body();
+	body->type = ColliderType::PLAYER;
+	body->shape = ColliderShape::CIRCLE;
+	body->pos = { NULL, NULL };
+	body->r = NULL;
+};
+
 Player::Player(pugi::xml_node parameters) : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");

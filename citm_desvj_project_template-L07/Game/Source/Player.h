@@ -14,6 +14,7 @@ class Player : public Entity
 {
 public:
 
+	Player();
 	Player(pugi::xml_node parameters);
 	
 	virtual ~Player();

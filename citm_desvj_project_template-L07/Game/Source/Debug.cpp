@@ -19,10 +19,14 @@
 #include <string>
 
 Debug::Debug() : Module() { debug = false; }
-Debug::~Debug() {}
+Debug::~Debug()
+{
+	delete nullPlayer;
+}
 
 bool Debug::Start()
 {
+	nullPlayer = new Player();
 	debug = false;
 	variables = true;
 	desiredFPS = 60;
@@ -153,12 +157,18 @@ void Debug::DrawDebug()
 
 	if (variables)
 	{
+		Player* player;
+		if (app->sceneManager->sceneGame->player == nullptr)
+			player = nullPlayer;
+		else
+			player = app->sceneManager->sceneGame->player;
+
 		//Player x, y
 		app->fonts->BlitText(debugX, debugY + 55, 0, "player.x =");
-			app->fonts->BlitText(debugX + 88, debugY + 55, 0, std::to_string(app->sceneManager->sceneGame->player->body->pos.x).c_str());
+			app->fonts->BlitText(debugX + 88, debugY + 55, 0, std::to_string(player->body->pos.x).c_str());
 
 		app->fonts->BlitText(debugX, debugY + 65, 0, "player.y =");
-		app->fonts->BlitText(debugX + 88, debugY + 65, 0, std::to_string(app->sceneManager->sceneGame->player->body->pos.y).c_str());
+		app->fonts->BlitText(debugX + 88, debugY + 65, 0, std::to_string(player->body->pos.y).c_str());
 
 		//Camera x, y
 		app->fonts->BlitText(debugX, debugY + 80, 0, "camera.x =");
@@ -168,7 +178,7 @@ void Debug::DrawDebug()
 		app->fonts->BlitText(debugX + 88, debugY + 90, 0, std::to_string(app->render->camera.y).c_str());
 
 		//Player alive
-		if (!app->sceneManager->sceneGame->player->dead)
+		if (!player->dead)
 			app->fonts->BlitText(debugX, debugY + 105, 0, "player.alive = true");
 		else
 			app->fonts->BlitText(debugX, debugY + 105, 0, "player.alive = false");
@@ -203,7 +213,7 @@ void Debug::DrawDebug()
 
 		//Scale
 		std::string currentScale = app->scaleObj->ScaleTypeToString(app->scaleObj->GetCurrentScale());
-		if (!app->sceneManager->sceneGame->player->dead)
+		if (!player->dead)
 			app->fonts->BlitText(debugX, debugY + 200, 0, currentScale.c_str());
 		else
 			app->fonts->BlitText(debugX, debugY + 200, 0, currentScale.c_str());

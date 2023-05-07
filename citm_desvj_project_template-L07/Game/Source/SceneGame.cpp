@@ -681,8 +681,8 @@ void SceneGame::FixCamera()
 void SceneGame::FightKid()
 {
 	app->partyManager->enemyToFight = "enemykid";
-	app->sceneManager->SwitchTo("SceneFight");
-	// HEKATE app->fade->FadeToBlack(this, (Module*)app->sceneFight, 0);
+	app->sceneManager->sceneState = SceneState::SWITCH;
+	app->sceneManager->nextScene = "SceneFight";
 }
 
 bool SceneGame::LoadState(pugi::xml_node& data)

@@ -10,6 +10,12 @@
 #include "SceneEnding.h"
 
 
+enum class SceneState
+{
+	CONTINUE,
+	SWITCH
+};
+
 //Scenes
 class SceneLogo;
 class SceneTitle;
@@ -47,6 +53,8 @@ public:
 public:
 
 	Scene* currentScene = nullptr;
+	SceneState sceneState = SceneState::CONTINUE;
+	SString nextScene;
 
 	List<Scene*> scenes;
 	uint numScenes = 0;

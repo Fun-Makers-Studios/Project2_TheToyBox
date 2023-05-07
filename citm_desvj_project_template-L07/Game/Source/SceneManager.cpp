@@ -40,6 +40,12 @@ bool SceneManager::Start()
 
 bool SceneManager::PreUpdate()
 {
+    if (sceneState == SceneState::SWITCH)
+    {
+        SwitchTo(nextScene);
+        sceneState = SceneState::CONTINUE;
+    }
+
     if (currentScene)
     {
         currentScene->PreUpdate();
