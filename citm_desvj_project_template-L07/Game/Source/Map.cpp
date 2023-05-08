@@ -294,7 +294,7 @@ bool Map::Load()
         ret = LoadAllObjectGroups(mapFileXML.child("map"));
     }
 
-     CreateColliders();
+     CreateColliders(mapFileXML.child("map"));
 
     if(ret == true)
     {
@@ -627,183 +627,40 @@ bool Map::Parallax(TileSet* tileset_, iPoint pos, SDL_Rect r, float x) {
 }
 
 
-bool Map::CreateColliders()
+bool Map::CreateColliders(pugi::xml_node mapNode)
 {
     bool ret = true;
 
     // HEKATE
-    /*
-    ListItem<MapLayer*>* mapLayerItem;
-    mapLayerItem = mapData.maplayers.start;
+    pugi::xml_node objectgroup = mapNode.child("objectgroup");
 
-    while (mapLayerItem != NULL)
+    for (pugi::xml_node objectgroup = mapNode.child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
     {
-        if (mapLayerItem->data->name == "Collisions")
+        // TRIGGERS
+        if ((SString)objectgroup.attribute("name").as_string() == "TRIGGERS")
         {
-            int halfTileHeight = mapData.tileHeight / 2;
-            int halfTileWidth = mapData.tileWidth / 2;
-
-            for (int x = 0; x < mapLayerItem->data->width; x++)
+            for (pugi::xml_node object = objectgroup.child("object"); object && ret; object = object.next_sibling("object"))
             {
-                for (int y = 0; y < mapLayerItem->data->height; y++)
-                {
-                    if (mapLayerItem->data->Get(x, y) != 0)
-                    {
-                        iPoint pos = MapToWorld(x, y);
-                        PhysBody* c1 = app->physics->CreateRectangle(pos.x + halfTileHeight, pos.y + halfTileWidth, mapData.tileWidth, mapData.tileHeight, STATIC, ColliderType::UNKNOWN);
-                        
-                        switch (mapLayerItem->data->Get(x, y)) {
-                        
-                        case 17:
-                            c1->cType = ColliderType::WALL;
-                            break;
-                        case 693:
-                            c1->cType = ColliderType::WATER;
-                            break;
-                       
-                        default: break;
-                        }
+                Body* trigger = new Body();
+                // Create list - put body in list
+                // MapZone
 
-                        mapColliders.Add(c1);
-                    }
-                }
+                /*PhysBody* c1 = app->physics->CreateRectangleSensor(
+                    object.attribute("x").as_int() + object.attribute("width").as_int() / 2,
+                    object.attribute("y").as_int() + object.attribute("height").as_int() / 2,
+                    object.attribute("width").as_int(),
+                    object.attribute("height").as_int(), STATIC);
+
+                pugi::xml_node type = object.child("properties").child("property");
+
+
+                if ((SString)type.attribute("value").as_string() == "TRIG_1A") { c1->ctype = ColliderType::TRIG_1A; }
+                else if ((SString)type.attribute("value").as_string() == "TRIG_1R") { c1->ctype = ColliderType::TRIG_1R; }
+                else if ((SString)type.attribute("value").as_string() == "TRIG_2A") { c1->ctype = ColliderType::TRIG_2A; }
+                else if ((SString)type.attribute("value").as_string() == "TRIG_2R") { c1->ctype = ColliderType::TRIG_2R; }*/
             }
-            
         }
-
-        if (mapLayerItem->data->name == "Teleport")
-        {
-            int halfTileHeight = mapData.tileHeight / 2;
-            int halfTileWidth = mapData.tileWidth / 2;
-
-            for (int x = 0; x < mapLayerItem->data->width; x++)
-            {
-                for (int y = 0; y < mapLayerItem->data->height; y++)
-                {
-                    if (mapLayerItem->data->Get(x, y) != 0)
-                    {
-                        iPoint pos = MapToWorld(x, y);
-                        PhysBody* c1 = app->physics->CreateRectangleSensor(pos.x + halfTileHeight, pos.y + halfTileWidth, mapData.tileWidth, mapData.tileHeight, STATIC, ColliderType::UNKNOWN);
-
-                        switch (mapLayerItem->data->Get(x, y)) {
-                        case 16:
-                            c1->mapZone = MapZone::TOWN_TO_HOUSE1;
-                            break;
-                        
-                        case 3:
-                            c1->mapZone = MapZone::HOUSE1_TO_TOWN;
-                            break;
-                        
-                        case 4:
-                            c1->mapZone = MapZone::HOUSEBASE_TO_HOUSEFLOOR;
-                            break;
-
-                        case 5:
-                            c1->mapZone = MapZone::HOUSEFLOOR_TO_HOUSEFBASE;
-                            break;
-
-                        case 17:
-                            c1->mapZone = MapZone::TOWN_TO_TAVERN;
-                            break;
-                        
-                        case 1:
-                            c1->mapZone = MapZone::TAVERN_TO_TOWN;
-                            break;
-                        
-                        case 21:
-                            c1->mapZone = MapZone::TOWN_TO_INN;
-                            break;
-                        
-                        case 2:
-                            c1->mapZone = MapZone::INN_TO_TOWN;
-                            break;
-                       
-
-                        default: break;
-                        }
-
-                        mapColliders.Add(c1);
-                    }
-                }
-            }
-
-        }
-        
-        if (mapLayerItem->data->name == "Checkpoint")
-        {
-            int halfTileHeight = mapData.tileHeight / 2;
-            int halfTileWidth = mapData.tileWidth / 2;
-
-            for (int x = 0; x < mapLayerItem->data->width; x++)
-            {
-                for (int y = 0; y < mapLayerItem->data->height; y++)
-                {
-                    if (mapLayerItem->data->Get(x, y) != 0)
-                    {
-                        iPoint pos = MapToWorld(x, y);
-                        PhysBody* c1 = app->physics->CreateRectangleSensor(pos.x + halfTileHeight, pos.y + halfTileWidth, mapData.tileWidth, mapData.tileHeight, STATIC, ColliderType::CHECKPOINT);
-                        mapColliders.Add(c1);
-                    }
-                }
-            }
-
-        }
-
-
-        mapLayerItem = mapLayerItem->next;
     }
-
-    //CREATE GAMEOBJECT COLLIDERS
-    ListItem<ObjectGroup*>* mapObjectGroupItem;
-    mapObjectGroupItem = mapData.mapObjectGroups.start;
-
-    while (mapObjectGroupItem != NULL)
-    {
-        if (mapObjectGroupItem->data->name == "ChainColliders")
-        {
-            ListItem<Object*>* mapObjectItem;
-            mapObjectItem = mapObjectGroupItem->data->objects.start;
-            while (mapObjectItem != NULL)
-            {
-                PhysBody* c1 = app->physics->CreateChain(mapObjectItem->data->x, mapObjectItem->data->y, mapObjectItem->data->chainPoints, mapObjectItem->data->size, STATIC, ColliderType::PLATFORM);;
-                mapColliders.Add(c1);
-
-                mapObjectItem = mapObjectItem->next;
-            }
-        }
-        if (mapObjectGroupItem->data->name == "CameraFixColliders")
-        {
-            ListItem<Object*>* mapObjectItem;
-            mapObjectItem = mapObjectGroupItem->data->objects.start;
-            while (mapObjectItem != NULL)
-            {
-                
-                PhysBody* c1 = app->physics->CreateSensorChain(mapObjectItem->data->x, mapObjectItem->data->y, mapObjectItem->data->chainPoints, mapObjectItem->data->size, STATIC, ColliderType::UNKNOWN);;
-
-                switch (mapObjectItem->data->id) {
-                case 40:
-                    
-                    break;
-                case 41:
-                    
-                    break;
-                case 42:
-                    
-                    break;
-                case 43:
-                    
-                    break;
-
-                default: break;
-                }
-                mapColliders.Add(c1);
-                mapObjectItem = mapObjectItem->next;
-            }
-        }
-       
-        mapObjectGroupItem = mapObjectGroupItem->next;
-    }
-    */
 
     return ret;
 }

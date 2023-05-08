@@ -193,7 +193,7 @@ private:
 
 	bool Parallax(TileSet* tileset_, iPoint pos, SDL_Rect r, float x);
 
-	bool CreateColliders();
+	bool CreateColliders(pugi::xml_node mapNode);
 
 public: 
 
