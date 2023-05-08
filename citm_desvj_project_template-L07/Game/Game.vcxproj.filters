@@ -357,5 +357,11 @@
     <None Include="..\Output\Assets\Maps\tavern.tmx">
       <Filter>Game\Maps</Filter>
     </None>
+    <None Include="..\Output\Assets\Maps\circusOne.tmx">
+      <Filter>Game\Maps</Filter>
+    </None>
+    <None Include="..\Output\Assets\Maps\circusTwo.tmx">
+      <Filter>Game\Maps</Filter>
+    </None>
   </ItemGroup>
 </Project>

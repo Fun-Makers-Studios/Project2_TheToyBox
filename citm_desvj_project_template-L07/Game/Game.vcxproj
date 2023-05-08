@@ -196,6 +196,8 @@
     <Xml Include="..\Output\config.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Output\Assets\Maps\circusOne.tmx" />
+    <None Include="..\Output\Assets\Maps\circusTwo.tmx" />
     <None Include="..\Output\Assets\Maps\housebasement.tmx" />
     <None Include="..\Output\Assets\Maps\housefloor.tmx" />
     <None Include="..\Output\Assets\Maps\inn.tmx" />
