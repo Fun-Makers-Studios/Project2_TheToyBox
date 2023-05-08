@@ -20,6 +20,10 @@ SceneLogo::SceneLogo() : Scene()
 {
 	sceneType = SceneType::ALWAYS_ACTIVE;
 	id.Create("SceneLogo");
+	/*Initialize*/
+	imgPath = app->configNode.child("logo").child("backgroundimage").attribute("texturepath").as_string();
+	logoFX = app->audio->LoadFx("Assets/Audio/Fx/SceneLogo/logo_screen.wav");
+
 }
 
 // Destructor
@@ -41,12 +45,9 @@ bool SceneLogo::Start()
 {
 	LOG("--STARTS LOGO SCENE--");
 
-	app->render->SetBackgroundColor({ 0, 0, 0, 255 });
+	//app->render->SetBackgroundColor({ 0, 0, 0, 255 });
 
-	/*Initialize*/
-	imgPath = app->configNode.child("logo").child("backgroundimage").attribute("texturepath").as_string();
-	logoFX = app->audio->LoadFx("Assets/Audio/Fx/SceneLogo/logo_screen.wav");
-
+	
 	/*Load*/
 	img = app->tex->Load(imgPath);
 	
@@ -65,7 +66,6 @@ bool SceneLogo::PreUpdate()
 bool SceneLogo::Update(float dt)
 {
 	time++;
-	frameCount--;
 
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
@@ -73,9 +73,6 @@ bool SceneLogo::Update(float dt)
 		app->sceneManager->SwitchTo("SceneGame");
 		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 0);
 	}
-
-	fadeRatio = (float)frameCount / (float)maxFadeFrames;
-
 	//SDL_RenderFillRect(app->render->renderer, NULL);
 
 	if (time >= 150)
@@ -97,9 +94,6 @@ bool SceneLogo::PostUpdate()
 
 	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;*/
-
-	SDL_SetRenderDrawColor(app->render->renderer, 0, 0, 0, 0);
-	SDL_RenderFillRect(app->render->renderer, NULL);
 
 	return ret;
 }
