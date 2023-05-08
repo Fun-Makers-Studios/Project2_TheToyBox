@@ -22,33 +22,34 @@ enum class ColliderType
 	UNKNOWN
 };
 
-struct Body
-{
-	ColliderShape shape;
-	ColliderType type;
-	dPoint pos;
-	dPoint vel;
-	double w, h;
-	double r;
-};
-
 enum class MapZone
 {
 	PLAYER,
 
 	HOUSE1_TO_TOWN,
 	TOWN_TO_HOUSE1,
-	
+
 	HOUSEBASE_TO_HOUSEFLOOR,
 	HOUSEFLOOR_TO_HOUSEFBASE,
-	
+
 	TAVERN_TO_TOWN,
 	TOWN_TO_TAVERN,
-	
+
 	TOWN_TO_INN,
 	INN_TO_TOWN,
 
 	UNKNOWN
+};
+
+struct Body
+{
+	ColliderShape shape;
+	ColliderType type;
+	MapZone mapZone;
+	dPoint pos;
+	dPoint vel;
+	double w, h;
+	double r;
 };
 
 class Collisions : public Module

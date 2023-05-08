@@ -193,14 +193,14 @@ private:
 
 	bool Parallax(TileSet* tileset_, iPoint pos, SDL_Rect r, float x);
 
-	bool CreateColliders(pugi::xml_node mapNode);
+	bool CreateTeleports(pugi::xml_node mapNode);
 
 public: 
 
 	//Variable data of the struct MapData
 	MapData mapData;
 	// HEKATE
-	List<Body*> mapColliders;
+	List<Body*> mapTeleports;
 	pugi::xml_node node;
 
 private:

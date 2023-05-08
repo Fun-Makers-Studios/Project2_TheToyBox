@@ -95,6 +95,7 @@ bool Collisions::PostUpdate()
                 Body tileCollider;
                 tileCollider.type = ColliderType::WALL;
                 tileCollider.shape = ColliderShape::RECTANGLE;
+                tileCollider.mapZone = MapZone::UNKNOWN;
                 iPoint iPos = app->map->MapToWorld(i, j);
                 tileCollider.pos.x = iPos.x + tileW / 2;
                 tileCollider.pos.y = iPos.y + tileH / 2;

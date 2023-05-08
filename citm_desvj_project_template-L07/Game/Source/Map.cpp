@@ -294,8 +294,11 @@ bool Map::Load()
         ret = LoadAllObjectGroups(mapFileXML.child("map"));
     }
 
-     CreateColliders(mapFileXML.child("map"));
-
+    if (ret == true)
+    {
+        ret = CreateTeleports(mapFileXML.child("map"));;
+    }
+  
     if(ret == true)
     {
         // L04: DONE 5: LOG all the data loaded iterate all tilesets and LOG everything
@@ -627,7 +630,7 @@ bool Map::Parallax(TileSet* tileset_, iPoint pos, SDL_Rect r, float x) {
 }
 
 
-bool Map::CreateColliders(pugi::xml_node mapNode)
+bool Map::CreateTeleports(pugi::xml_node mapNode)
 {
     bool ret = true;
 
@@ -642,7 +645,7 @@ bool Map::CreateColliders(pugi::xml_node mapNode)
             for (pugi::xml_node object = objectgroup.child("object"); object && ret; object = object.next_sibling("object"))
             {
                 Body* trigger = new Body();
-                // Create list - put body in list
+                trigger->mapZone = MapZone::HOUSE1_TO_TOWN;
                 // MapZone
 
                 /*PhysBody* c1 = app->physics->CreateRectangleSensor(
@@ -658,6 +661,8 @@ bool Map::CreateColliders(pugi::xml_node mapNode)
                 else if ((SString)type.attribute("value").as_string() == "TRIG_1R") { c1->ctype = ColliderType::TRIG_1R; }
                 else if ((SString)type.attribute("value").as_string() == "TRIG_2A") { c1->ctype = ColliderType::TRIG_2A; }
                 else if ((SString)type.attribute("value").as_string() == "TRIG_2R") { c1->ctype = ColliderType::TRIG_2R; }*/
+
+                mapTeleports.Add(trigger);
             }
         }
     }
