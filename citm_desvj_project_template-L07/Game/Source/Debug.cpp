@@ -325,11 +325,5 @@ void Debug::DrawEntities()
 				pEntity->body->r,
 				color.r, color.g, color.b, 255);
 		}
-		
-
-
-		/*SDL_Rect rect = { pEntity->body->pos.x, pEntity->body->pos.y, 32, 32};
-		app->render->DrawRectangle(rect, color.r, color.g, color.b, 255, false);
-		app->render->DrawRectangle(rect, color.r, color.g, color.b, 64, true);*/
 	}
 }

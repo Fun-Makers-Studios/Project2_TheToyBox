@@ -26,7 +26,6 @@ public:
 	const char* buttonTexPath;
 
 	ButtonType buttonType;
-
 };
 
 #endif // __GUIBUTTON_H__

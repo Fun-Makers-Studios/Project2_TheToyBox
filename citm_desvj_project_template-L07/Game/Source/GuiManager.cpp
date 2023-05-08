@@ -20,7 +20,6 @@ bool GuiManager::Start()
 GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, int textSize, SDL_Rect bounds, Scene* observer, ButtonType buttonType, SDL_Rect sliderBounds)
 {
 	// Create a GUI control and add it to the list of controls
-
 	GuiControl* guiControl = nullptr;
 
 	//Call the constructor according to the GuiControlType

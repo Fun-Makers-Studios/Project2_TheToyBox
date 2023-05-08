@@ -136,8 +136,6 @@ bool SceneTitle::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 		LOG("PASA A GAME SCENE");
 		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
-
-		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 90);
 		app->audio->PlayFx(startSFX);
 	}
 	
