@@ -7,6 +7,7 @@
 #include "Fonts.h"
 #include "EntityManager.h"
 #include "Map.h"
+#include "Pathfinding.h"
 #include "Collisions.h"
 #include "Debug.h"
 #include "SceneManager.h"
@@ -27,8 +28,16 @@ Debug::~Debug()
 bool Debug::Start()
 {
 	nullPlayer = new Player();
+
 	debug = false;
 	variables = true;
+	camLimits = true;
+	godMode = false;
+	freeCam = false;
+	teleport = false;
+	drawColliders = false;
+	controlFPS = false;
+
 	desiredFPS = 60;
 	return true;
 }
@@ -51,11 +60,8 @@ bool Debug::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
 			freeCam = !freeCam;
-
-		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
-			drawEntities = !drawEntities;
-
 	}
+
 	// F1: Add functionality
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 
@@ -112,10 +118,10 @@ bool Debug::PostUpdate()
 	if (debug)
 	{
 		if (drawColliders && app->collisions->active)
+		{
 			DrawColliders();
-
-		if (drawEntities)
 			DrawEntities();
+		}
 
 		DrawDebug();
 	}
@@ -240,8 +246,55 @@ void Debug::DrawDebug()
 
 void Debug::DrawColliders()
 {
-	// HEKATE MUST DRAW COLLIDERS
-	// Currently at Collisions Update()
+	Player* player;
+	if (app->sceneManager->sceneGame->player == nullptr)
+		player = nullPlayer;
+	else
+		player = app->sceneManager->sceneGame->player;
+
+	int tileH = app->map->mapData.tileHeight;
+	int tileW = app->map->mapData.tileWidth;
+
+	iPoint tilePos = app->map->WorldToMap(player->body->pos.x, player->body->pos.y);
+
+	Color colorCollider;
+
+	// Draw map colliders
+	for (int i = 0; i < app->map->mapData.width; i++) //rows
+	{
+		for (int j = 0; j < app->map->mapData.height; j++) //cols
+		{
+			if (app->pathfinding->GetTileAt({ i, j }) == 1) //non walkable tiles, 255 invalid walk code
+			{
+				colorCollider = White;
+
+				// Player proximity 3x3
+				if ((tilePos.x - 1 <= i && i <= tilePos.x + 1) &&
+					(tilePos.y - 1 <= j && j <= tilePos.y + 1))
+				{
+					Body tileCollider;
+					tileCollider.type = ColliderType::WALL;
+					tileCollider.shape = ColliderShape::RECTANGLE;
+					tileCollider.mapZone = MapZone::UNKNOWN;
+					iPoint iPos = app->map->MapToWorld(i, j);
+					tileCollider.pos.x = iPos.x + tileW / 2;
+					tileCollider.pos.y = iPos.y + tileH / 2;
+					tileCollider.w = tileW;
+					tileCollider.h = tileH;
+					tileCollider.r = 16;
+
+					if (app->collisions->CheckCollision(*player->body, tileCollider))
+						colorCollider = Red;
+					else
+						colorCollider = Yellow;
+				}
+
+				SDL_Rect rect = { i * tileW, j * tileH, tileW, tileH };
+				app->render->DrawRectangle(rect, colorCollider.r, colorCollider.g, colorCollider.b, 96);
+				app->render->DrawRectangle(rect, colorCollider.r, colorCollider.g, colorCollider.b, 196, false);
+			}
+		}
+	}
 }
 
 void Debug::DrawEntities()

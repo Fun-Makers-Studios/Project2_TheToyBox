@@ -63,35 +63,18 @@ bool Collisions::PostUpdate()
     int tileH = app->map->mapData.tileHeight;
     int tileW = app->map->mapData.tileWidth;
 
-    // Draw map colliders
-    for (int i = 0; i < app->map->mapData.width; i++) //rows
-    {
-        for (int j = 0; j < app->map->mapData.height; j++) //cols
-        {
-            if (app->pathfinding->GetTileAt({ i, j }) == 1) //non walkable tiles, 255 invalid walk code
-            {
-                SDL_Rect rect = { i * tileW, j * tileH, tileW, tileH };
-                app->render->DrawRectangle(rect, 255, 255, 255, 128);
-                app->render->DrawRectangle(rect, 255, 255, 255, 255, false);
-            }
-        }
-    }
-
     // MAP COLLISIONS
     Body playerBody = *app->sceneManager->sceneGame->player->body;
-    iPoint pos = app->map->WorldToMap(playerBody.pos.x, playerBody.pos.y);
+    iPoint tilePos = app->map->WorldToMap(playerBody.pos.x, playerBody.pos.y);
 
-    for (int i = pos.x-1; i <= pos.x+1; i++) //rows
+    for (int i = tilePos.x-1; i <= tilePos.x+1; i++) //rows
     {
-        for (int j = pos.y-1; j <= pos.y+1; j++) //cols
+        for (int j = tilePos.y-1; j <= tilePos.y+1; j++) //cols
         {
             if (app->pathfinding->GetTileAt({ i, j }) == 1) //1 non walkable tiles, 255 invalid walk code
             {
                 SDL_Rect rect = { i * tileW, j * tileH, tileW, tileH };
-
-                app->render->DrawRectangle(rect, 255, 255, 0, 64);
-                app->render->DrawRectangle(rect, 255, 255, 0, 196, false);
-
+                
                 Body tileCollider;
                 tileCollider.type = ColliderType::WALL;
                 tileCollider.shape = ColliderShape::RECTANGLE;
@@ -104,10 +87,7 @@ bool Collisions::PostUpdate()
                 tileCollider.r = 16;
                 
                 if (CheckCollision(playerBody, tileCollider))
-                {
-                    app->render->DrawRectangle(rect, 255, 0, 0, 64);
-                    app->render->DrawRectangle(rect, 255, 0, 0, 196, false);
-
+                {                    
                     SolveCollision(app->sceneManager->sceneGame->player->body, &tileCollider);
                 }
             }

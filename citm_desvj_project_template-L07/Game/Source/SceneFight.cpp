@@ -321,8 +321,6 @@ void SceneFight::Escape()
 	if (randomNumber % 2)
 	{
 		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
-
-		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 0);
 	}
 	else {
 		turn++;

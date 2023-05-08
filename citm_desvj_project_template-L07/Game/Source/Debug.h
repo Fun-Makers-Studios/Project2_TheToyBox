@@ -30,11 +30,8 @@ public:
 	bool godMode = false;
 	bool freeCam = false;
 	bool teleport = false;
-	bool moveRight = false;
 	bool drawColliders = false;
-	bool drawEntities = false;
 	bool controlFPS = false;
-	bool colourblind = false;
 
 	// FPS
 	microseconds timePerCycle;
