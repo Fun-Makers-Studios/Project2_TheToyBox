@@ -7,7 +7,7 @@
 #include "Defs.h"
 #include "Log.h"
 
-QuestManager::QuestManager(bool active) : Module(active)
+QuestManager::QuestManager() : Module()
 {
 	name.Create("questmanager");
 }

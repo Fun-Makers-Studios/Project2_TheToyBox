@@ -26,6 +26,7 @@ class Map;
 class Pathfinding;
 class Collisions;
 
+class QuestManager;
 class EntityManager;
 class PartyManager;
 class ParticleSystemManager;
@@ -116,6 +117,7 @@ public:
 	SceneManager* sceneManager;
 
 	UI* ui;
+	QuestManager* questManager;
 	EntityManager* entityManager;
 	PartyManager* partyManager;
 	Map* map;

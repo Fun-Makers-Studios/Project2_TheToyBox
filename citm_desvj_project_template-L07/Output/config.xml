@@ -90,6 +90,14 @@
 		<guiButtons smallButtonTexPath="Assets/Textures/UI/ButtonsSprites/Buttons.png"/>
 	</gui>
 
+	<questmanager>
+		<activequests>
+			<quest id="1"></quest>
+		</activequests>
+		<quest type="0" id="1" name="TALK WITH GRANDPA KIKO" description="Search for your grandfather hwo needs your help." nextQuestId="2" npcId="2" reward="700"></quest>
+		<quest type="1" id="2" name="FIND GRANDPA S LOST CHESTS" description="Grandpa's chests disappeared long ago. They have to be somewhere!" nextQuestId="0" itemId="1" reward="0"></quest>
+	</questmanager>
+
 	<dialoguemanager dialoguetext="Assets/Textures/UI/Dialog/Dialog.png" font="Assets/Textures/UI/Fonts/DialogFont.png" lookuptable="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz:?!.,     " rows="6">
 		<dialogue id ="0">
 			<node id="0" text="Greetings traveler.">

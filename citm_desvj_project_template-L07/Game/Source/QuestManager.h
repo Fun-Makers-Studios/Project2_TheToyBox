@@ -9,7 +9,7 @@ class QuestManager : public Module
 {
 public:
 
-	QuestManager(bool startEnabled);
+	QuestManager();
 
 	// Destructor
 	virtual ~QuestManager();

@@ -20,6 +20,7 @@
 #include "GuiControl.h"
 #include "Debug.h"
 #include "PartyManager.h"
+#include "QuestManager.h"
 
 #include "Render.h"
 
@@ -48,6 +49,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	pathfinding = new Pathfinding();
 	collisions = new Collisions();
 
+	questManager = new QuestManager();
 	entityManager = new EntityManager();
 	partyManager = new PartyManager();
 	particleManager = new ParticleSystemManager();
@@ -74,6 +76,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding, false);
 	AddModule(collisions, false);
 
+	AddModule(questManager, true);
 	AddModule(entityManager, false);
 	AddModule(partyManager, true);
 	AddModule(particleManager, true);

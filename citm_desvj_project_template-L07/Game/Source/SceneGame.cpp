@@ -694,6 +694,31 @@ bool SceneGame::LoadState(pugi::xml_node& data)
 	//iPoint kidpos = { data.child("kidposition").attribute("x").as_float(), data.child("kidposition").attribute("y").as_float() };
 	//app->scene->kid->pbody->body->settransform(kidpos, 0);
 
+	//Load NPC
+	/*for (pugi::xml_node itemNode = app->configNode.child("npcs").child(mapName.GetString()).child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
+	{
+		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC, itemNode);
+		npcList.Add(npc);
+		npc->Start();
+	}
+
+	ListItem<NPC*>*npcItem;
+	for (npcItem = npcList.start; npcItem != NULL; npcItem = npcItem->next)
+	{
+		pugi::xml_node partyMember = data.append_child("npc");
+		npcItem->data->name = data.child("partymember").attribute("name").as_string();
+		npcItem->data->maxHp = data.child("partymember").attribute("maxHp").as_uint();
+		npcItem->data->maxMana = data.child("partymember").attribute("maxMana").as_uint();
+		npcItem->data->currentHp = data.child("partymember").attribute("currentHp").as_uint();
+		npcItem->data->level = data.child("partymember").attribute("level").as_uint();
+		npcItem->data->attack = data.child("partymember").attribute("attack").as_uint();
+		npcItem->data->defense = data.child("partymember").attribute("defense").as_uint();
+		npcItem->data->speed = data.child("partymember").attribute("speed").as_uint();
+		npcItem->data->critRate = data.child("partymember").attribute("critRate").as_uint();
+		npcItem->data->fightPosition.x = data.child("partymember").attribute("fightPosX").as_int();
+		npcItem->data->fightPosition.y = data.child("partymember").attribute("fightPosY").as_int();
+	}*/
+
 	return true;
 }
 
