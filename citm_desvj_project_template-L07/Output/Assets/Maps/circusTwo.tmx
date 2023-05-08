@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="right-down" width="56" height="48" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="1">
  <tileset firstgid="1" name="Temp_tiles" tilewidth="32" tileheight="32" tilecount="12" columns="3">
-  <image source="../GitHub/Project2_TheToyBox/citm_desvj_project_template-L07/Output/Assets/Maps/Tilesets/Temp_tiles.png" width="96" height="128"/>
+  <image source="Tilesets/Temp_tiles.png" width="96" height="128"/>
  </tileset>
  <layer id="2" name="Tile Layer 2" width="56" height="48">
   <data encoding="csv">
