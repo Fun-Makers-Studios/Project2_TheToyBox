@@ -20,7 +20,10 @@ SceneLogo::SceneLogo() : Scene()
 {
 	sceneType = SceneType::ALWAYS_ACTIVE;
 	id = SceneID::SCENE_LOGO;
-	/*Initialize*/
+
+	easingLogo = new Easing(2);
+
+	/*Initialize xml*/
 	imgPath = app->configNode.child("logo").child("backgroundimage").attribute("texturepath").as_string();
 	logoFX = app->audio->LoadFx("Assets/Audio/Fx/SceneLogo/logo_screen.wav");
 
@@ -29,7 +32,8 @@ SceneLogo::SceneLogo() : Scene()
 // Destructor
 SceneLogo::~SceneLogo()
 {
-}
+	delete easingLogo;
+}		  
 
 // Called before render is available
 bool SceneLogo::Awake(pugi::xml_node& config)
@@ -46,7 +50,7 @@ bool SceneLogo::Start()
 	LOG("--STARTS LOGO SCENE--");
 
 	//app->render->SetBackgroundColor({ 0, 0, 0, 255 });
-
+	easingLogo->SetFinished(false);
 	
 	/*Load*/
 	img = app->tex->Load(imgPath);
@@ -71,7 +75,6 @@ bool SceneLogo::Update(float dt)
 	{
 		LOG("PASA A SCENE DIRECTAMENTE");
 		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
-		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 0);
 	}
 	//SDL_RenderFillRect(app->render->renderer, NULL);
 
@@ -79,10 +82,24 @@ bool SceneLogo::Update(float dt)
 	{
 		LOG("PASA A TITLE SCENE");
 		app->sceneManager->SwitchTo(SceneID::SCENE_TITLE);
-		// HEKATE app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
 	}
 
-	app->render->DrawTexture(img, 0, 0, NULL);
+	double easedY = 0;
+	// HEKATE must pass dt!
+	if (!easingLogo->GetFinished())
+	{
+		double time = easingLogo->TrackTime(dt);
+		easedY = easingLogo->EasingAnimation(400, 0, time, EasingType::EASE_OUT_ELASTIC);
+	}
+
+
+	app->render->DrawRectangle({ 0, 0, 1280, 720 }, 255, 255, 255, 255);
+
+	SDL_Rect fun = { 0, 0, 480, 720 };
+	app->render->DrawTexture(img, 0, 0 - easedY, &fun);
+
+	SDL_Rect makers = { 480, 0, 800, 720 };
+	app->render->DrawTexture(img, 480, 0 + easedY, &makers);
 
 	return true;
 }

@@ -2,6 +2,7 @@
 #define __SCENELOGO_H__
 
 #include "Scene.h"
+#include "Easing.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
@@ -44,6 +45,8 @@ private:
 
 	//FX
 	uint logoFX;
+
+	Easing* easingLogo;
 };
 
 
