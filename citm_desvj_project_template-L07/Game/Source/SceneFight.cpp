@@ -19,7 +19,7 @@
 SceneFight::SceneFight() : Scene()
 {
 	sceneType = SceneType::FIGHT;
-	id.Create("SceneFight");
+	id = SceneID::SCENE_FIGHT;
 }
 
 // Destructor
@@ -199,13 +199,10 @@ bool SceneFight::Update(float dt)
 	}
 	
 	if (enemiesAlive <= 0)
-		app->sceneManager->SwitchTo("SceneGame");
-		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 0);
+		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
 	else if (alliesAlive <= 0)
-		app->sceneManager->SwitchTo("SceneGame");
+		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
 
-		// HEKATEapp->fade->FadeToBlack(this, (Module*)app->scene, 0);
-		//app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
 
 	for (size_t i = 0; i < turnList.Count(); i++)
 	{
@@ -323,7 +320,7 @@ void SceneFight::Escape()
 	
 	if (randomNumber % 2)
 	{
-		app->sceneManager->SwitchTo("SceneGame");
+		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
 
 		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 0);
 	}

@@ -13,6 +13,15 @@ enum class SceneType
 	FIGHT
 };
 
+enum class SceneID
+{
+	SCENE_LOGO,
+	SCENE_TITLE,
+	SCENE_GAME,
+	SCENE_FIGHT,
+	SCENE_ENDING
+};
+
 class Scene
 {
 public:
@@ -43,15 +52,15 @@ public:
 	virtual bool OnGuiMouseClickEvent(GuiControl* control) { return true; }
 
 	// Returns the scene's ID
-	virtual SString GetID() { return id; }
+	virtual SceneID GetID() { return id; }
 
 	// Sets the scene's ID
-	virtual void SetID(SString id) { this->id = id; }
+	virtual void SetID(SceneID id) { this->id = id; }
 
 public:
 
 	SceneType sceneType;
-	SString id;
+	SceneID id;
 	List<NPC*>npcs;
 	List<Item*>items;
 };

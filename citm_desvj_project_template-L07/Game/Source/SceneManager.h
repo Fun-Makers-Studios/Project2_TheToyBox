@@ -43,18 +43,18 @@ public:
 	bool AddScene(Scene* scene, pugi::xml_node& config);
 
 	// Transitions to a scene.
-	void SwitchTo(SString id);
+	void SwitchTo(SceneID id);
 
 	// Removes scene from scene manager.
-	void RemoveScene(SString id);
+	void RemoveScene(SceneID id);
 
-	ListItem<Scene*>* FindSceneByID(SString id);
+	ListItem<Scene*>* FindSceneByID(SceneID id);
 
 public:
 
 	Scene* currentScene = nullptr;
 	SceneState sceneState = SceneState::CONTINUE;
-	SString nextScene;
+	SceneID nextScene;
 
 	List<Scene*> scenes;
 	uint numScenes = 0;

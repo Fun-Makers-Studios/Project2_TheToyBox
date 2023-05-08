@@ -32,7 +32,7 @@ bool SceneManager::Awake(pugi::xml_node& config)
 
 bool SceneManager::Start()
 {
-    currentScene = FindSceneByID("SceneLogo")->data;
+    currentScene = FindSceneByID(SceneID::SCENE_LOGO)->data;
     currentScene->Start();
 
     return true;
@@ -85,7 +85,7 @@ bool SceneManager::AddScene(Scene* scene, pugi::xml_node& config)
     return true;
 }
 
-void SceneManager::SwitchTo(SString id)
+void SceneManager::SwitchTo(SceneID id)
 {
     auto scene = FindSceneByID(id);
 
@@ -106,7 +106,7 @@ void SceneManager::SwitchTo(SString id)
     currentScene->Start();
 }
 
-void SceneManager::RemoveScene(SString id)
+void SceneManager::RemoveScene(SceneID id)
 {
     auto scene = FindSceneByID(id);
 
@@ -115,7 +115,7 @@ void SceneManager::RemoveScene(SString id)
     scenes.Del(scene);
 }
 
-ListItem<Scene*>* SceneManager::FindSceneByID(SString id)
+ListItem<Scene*>* SceneManager::FindSceneByID(SceneID id)
 {
     ListItem<Scene*>* scene;
 

@@ -24,7 +24,7 @@
 SceneTitle::SceneTitle() : Scene()
 {
 	sceneType = SceneType::ALWAYS_ACTIVE;
-	id.Create("SceneTitle");
+	id = SceneID::SCENE_TITLE;
 
 	/*Initialize*/
 	imgPath = app->configNode.child("title").child("backgroundimage").attribute("texturepath").as_string();
@@ -135,7 +135,7 @@ bool SceneTitle::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
 		LOG("PASA A GAME SCENE");
-		app->sceneManager->SwitchTo("SceneGame");
+		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
 
 		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 90);
 		app->audio->PlayFx(startSFX);
@@ -271,7 +271,7 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case 5:
 		// Continue button (only if "save_game.xml" exists)
-		app->sceneManager->SwitchTo("SceneGame");
+		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
 
 		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 90);
 		app->sceneManager->sceneGame->continueGame = true;
@@ -280,7 +280,7 @@ bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
 
 	case 1:
 		// Play button
-		app->sceneManager->SwitchTo("SceneGame");
+		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
 
 		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 90);
 		app->audio->PlayFx(startSFX);

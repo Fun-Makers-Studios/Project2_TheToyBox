@@ -19,7 +19,7 @@
 SceneLogo::SceneLogo() : Scene()
 {
 	sceneType = SceneType::ALWAYS_ACTIVE;
-	id.Create("SceneLogo");
+	id = SceneID::SCENE_LOGO;
 	/*Initialize*/
 	imgPath = app->configNode.child("logo").child("backgroundimage").attribute("texturepath").as_string();
 	logoFX = app->audio->LoadFx("Assets/Audio/Fx/SceneLogo/logo_screen.wav");
@@ -70,7 +70,7 @@ bool SceneLogo::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
 		LOG("PASA A SCENE DIRECTAMENTE");
-		app->sceneManager->SwitchTo("SceneGame");
+		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
 		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 0);
 	}
 	//SDL_RenderFillRect(app->render->renderer, NULL);
@@ -78,7 +78,7 @@ bool SceneLogo::Update(float dt)
 	if (time >= 150)
 	{
 		LOG("PASA A TITLE SCENE");
-		app->sceneManager->SwitchTo("SceneTitle");
+		app->sceneManager->SwitchTo(SceneID::SCENE_TITLE);
 		// HEKATE app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
 	}
 

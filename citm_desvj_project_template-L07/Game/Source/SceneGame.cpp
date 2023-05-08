@@ -22,7 +22,7 @@
 SceneGame::SceneGame() : Scene()
 {	
 	sceneType = SceneType::GAME;
-	id.Create("SceneGame");
+	id = SceneID::SCENE_GAME;
 
 	/*STORE INFO FROM XML*/
 	musicPath = app->configNode.child("scene").child("music").attribute("musicPath").as_string();
@@ -165,7 +165,7 @@ bool SceneGame::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		if (!dialogueManager->dialogueLoaded && settingSceneMenu == false && partyMenu == false) { gamePaused = !gamePaused; }
+		if (!dialogueManager->dialogueLoaded && !settingSceneMenu && !partyMenu) { gamePaused = !gamePaused; }
 		
 		if(settingSceneMenu == false)
 			pauseMenu = !pauseMenu;
@@ -258,19 +258,19 @@ bool SceneGame::PostUpdate()
 {
 	bool ret = true;
 
-	if (gamePaused == true && pauseMenu == true)
+	if (gamePaused && pauseMenu)
 		app->render->DrawTexture(img_pause, app->render->camera.x + app->render->camera.w / 2 - pauseRect.w / 2, app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
 
-	if(gamePaused == true && partyMenu == true)
+	if(gamePaused && partyMenu)
 		app->render->DrawTexture(partyMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
 
-	if(gamePaused == true && pauseMenu == true && settingSceneMenu == true)
+	if(gamePaused && pauseMenu && settingSceneMenu)
 		app->render->DrawTexture(popImg_settings, app->render->camera.x , app->render->camera.y - 3, NULL);
 
 
-	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) {
+	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) 
 		dialogueManager->Update();
-	}
+
 
 	// Draw GUI
 	app->guiManager->Draw();
@@ -291,7 +291,7 @@ bool SceneGame::PostUpdate()
 	firstPMemberButton27->state = GuiControlState::DISABLED;
 	secondPMemberButton28->state = GuiControlState::DISABLED;
 
-	if (pauseMenu == true)
+	if (pauseMenu)
 	{
 		if (resumeButton14->state == GuiControlState::DISABLED) 
 			resumeButton14->state = GuiControlState::NORMAL;
@@ -305,7 +305,7 @@ bool SceneGame::PostUpdate()
 		if (closeButton17->state == GuiControlState::DISABLED) 
 			closeButton17->state = GuiControlState::NORMAL;
 		
-		if (settingSceneMenu == true)
+		if (settingSceneMenu)
 		{
 			resumeButton14->state = GuiControlState::DISABLED;
 			backToTitleButton15->state = GuiControlState::DISABLED;
@@ -345,7 +345,7 @@ bool SceneGame::PostUpdate()
 		}
 	}
 
-	if (partyMenu == true)
+	if (partyMenu)
 	{
 		if (firstPMemberButton27->state == GuiControlState::DISABLED) 
 			firstPMemberButton27->state = GuiControlState::NORMAL;
@@ -378,11 +378,11 @@ bool SceneGame::PostUpdate()
 
 	}
 
-	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) {
+	if ((gamePaused && dialogueManager->dialogueLoaded) && (!pauseMenu && !partyMenu))
 		dialogueManager->Draw();
-	}
 
-	if (exitGame == true)
+
+	if (exitGame)
 		ret = false;
 
 	return ret;
@@ -446,9 +446,10 @@ bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
 		break;
 
-	case 15:
-		app->sceneManager->SwitchTo("SceneTitle");
-		// HEKATE app->fade->FadeToBlack(this, (Module*)app->titlescreen, 0);
+	case 15: // Back to title
+		pauseMenu = !pauseMenu;
+		app->sceneManager->sceneState = SceneState::SWITCH;
+		app->sceneManager->nextScene = SceneID::SCENE_TITLE;
 		app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
 		break;
 
@@ -682,7 +683,7 @@ void SceneGame::FightKid()
 {
 	app->partyManager->enemyToFight = "enemykid";
 	app->sceneManager->sceneState = SceneState::SWITCH;
-	app->sceneManager->nextScene = "SceneFight";
+	app->sceneManager->nextScene = SceneID::SCENE_FIGHT;
 }
 
 bool SceneGame::LoadState(pugi::xml_node& data)
