@@ -101,6 +101,19 @@ bool SceneTitle::Start()
 	app->audio->PlayFx(titleSFX);
 	app->audio->PlayMusic("Assets/Audio/Music/menu.ogg");
 
+	// Set easing finished on title buttons
+	ListItem<GuiControl*>* control = app->guiManager->guiControlsList.start;
+
+	while (control != nullptr)
+	{
+		if (control->data->id < 5)
+		{
+			control->data->easing->SetFinished(false);
+			control->data->easing->SetTotalTime(1 + 0.2 * control->data->id);
+		}
+
+		control = control->next;
+	}
 
 	return true;
 }

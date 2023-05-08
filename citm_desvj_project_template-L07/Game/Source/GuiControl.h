@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Module.h"
 #include "Scene.h"
+#include "Easing.h"
 
 #include "Point.h"
 #include "SString.h"
@@ -93,14 +94,17 @@ public:
 	const char* text;       // Control text (if required)
 	int textSize;
 	SDL_Rect bounds;        // Position and size
+	SDL_Rect boundsReset;   // Reset Position and size
 	SDL_Color color;        // Tint color
 
 	SDL_Texture* texture;   // Texture atlas reference
 	SDL_Rect section;       // Texture atlas base section
 
-	//Fonts font;              // Text font
+	//Fonts font;           // Text font
 
 	Scene* observer;        // Observer module (it should probably be an array/list)
+
+	Easing* easing;
 };
 
 #endif // __GUICONTROL_H__

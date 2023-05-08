@@ -108,6 +108,9 @@ public:
     double GetTotalTime() const { return totalTime; }
     void SetTotalTime(double totalTime) { this->totalTime = totalTime; }
 
+    double GetDelayTime() const { return delayTime; }
+    void SetDelayTime(double delayTime) { this->delayTime = delayTime; }
+
     bool GetFinished() const { return bFinished; }
     void SetFinished(bool bFinished) { this->bFinished = bFinished; }
 
@@ -115,5 +118,6 @@ private:
 
     double elapsedTime = 0;
     double totalTime = 0;
+    double delayTime = 0;
     bool bFinished = true;
 };

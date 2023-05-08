@@ -6,6 +6,7 @@ Easing::Easing(double totalTime)
 {
     this->totalTime = totalTime;
     this->elapsedTime = 0;
+    this->delayTime = 0;
     this->bFinished = true;
 }
 
@@ -187,37 +188,37 @@ double Easing::EasingAnimation(int start, int end, double time, EasingType easin
     {
         switch (easingType)
         {
-        case EasingType::EASE_IN_SIN:           return EaseInSin(t);
-        case EasingType::EASE_OUT_SIN:          return EaseOutSin(t);    
-        case EasingType::EASE_INOUT_SIN:        return EaseInOutSin(t);
-        case EasingType::EASE_IN_QUAD:          return EaseInQuad(t);
-        case EasingType::EASE_OUT_QUAD:         return EaseOutQuad(t);
-        case EasingType::EASE_INOUT_QUAD:       return EaseInOutQuad(t);
-        case EasingType::EASE_IN_CUBIC:         return EaseInCubic(t);
-        case EasingType::EASE_OUT_CUBIC:        return EaseOutCubic(t);
-        case EasingType::EASE_INOUT_CUBIC:      return EaseInOutCubic(t);
-        case EasingType::EASE_IN_QUART:         return EaseInQuart(t);
-        case EasingType::EASE_OUT_QUART:        return EaseOutQuart(t);
-        case EasingType::EASE_INOUT_QUART:      return EaseInOutQuart(t);
-        case EasingType::EASE_IN_QUINT:         return EaseInQuint(t);
-        case EasingType::EASE_OUT_QUINT:        return EaseOutQuint(t);
-        case EasingType::EASE_INOUT_QUINT:      return EaseInOutQuint(t);
-        case EasingType::EASE_IN_EXP:           return EaseInExp(t);
-        case EasingType::EASE_OUT_EXP:          return EaseOutExp(t);
-        case EasingType::EASE_INOUT_EXP:        return EaseInOutExp(t);
-        case EasingType::EASE_IN_CIRC:          return EaseInCirc(t);
-        case EasingType::EASE_OUT_CIRC:         return EaseOutCirc(t);
-        case EasingType::EASE_INOUT_CIRC:       return EaseInOutCirc(t);
-        case EasingType::EASE_IN_BACK:          return EaseInBack(t);
-        case EasingType::EASE_OUT_BACK:         return EaseOutBack(t);
-        case EasingType::EASE_INOUT_BACK:       return EaseInOutBack(t);
-        case EasingType::EASE_IN_ELASTIC:       return EaseInElastic(t);
-        case EasingType::EASE_OUT_ELASTIC:      return EaseOutElastic(t);
-        case EasingType::EASE_INOUT_ELASTIC:    return EaseInOutElastic(t);
-        case EasingType::EASE_IN_BOUNCE:        return EaseInBounce(t);
-        case EasingType::EASE_OUT_BOUNCE:       return EaseOutBounce(t);
-        case EasingType::EASE_INOUT_BOUNCE:     return EaseInOutBounce(t);
-        default:                                return EaseInSin(t);
+            case EasingType::EASE_IN_SIN:           return EaseInSin(t);
+            case EasingType::EASE_OUT_SIN:          return EaseOutSin(t);    
+            case EasingType::EASE_INOUT_SIN:        return EaseInOutSin(t);
+            case EasingType::EASE_IN_QUAD:          return EaseInQuad(t);
+            case EasingType::EASE_OUT_QUAD:         return EaseOutQuad(t);
+            case EasingType::EASE_INOUT_QUAD:       return EaseInOutQuad(t);
+            case EasingType::EASE_IN_CUBIC:         return EaseInCubic(t);
+            case EasingType::EASE_OUT_CUBIC:        return EaseOutCubic(t);
+            case EasingType::EASE_INOUT_CUBIC:      return EaseInOutCubic(t);
+            case EasingType::EASE_IN_QUART:         return EaseInQuart(t);
+            case EasingType::EASE_OUT_QUART:        return EaseOutQuart(t);
+            case EasingType::EASE_INOUT_QUART:      return EaseInOutQuart(t);
+            case EasingType::EASE_IN_QUINT:         return EaseInQuint(t);
+            case EasingType::EASE_OUT_QUINT:        return EaseOutQuint(t);
+            case EasingType::EASE_INOUT_QUINT:      return EaseInOutQuint(t);
+            case EasingType::EASE_IN_EXP:           return EaseInExp(t);
+            case EasingType::EASE_OUT_EXP:          return EaseOutExp(t);
+            case EasingType::EASE_INOUT_EXP:        return EaseInOutExp(t);
+            case EasingType::EASE_IN_CIRC:          return EaseInCirc(t);
+            case EasingType::EASE_OUT_CIRC:         return EaseOutCirc(t);
+            case EasingType::EASE_INOUT_CIRC:       return EaseInOutCirc(t);
+            case EasingType::EASE_IN_BACK:          return EaseInBack(t);
+            case EasingType::EASE_OUT_BACK:         return EaseOutBack(t);
+            case EasingType::EASE_INOUT_BACK:       return EaseInOutBack(t);
+            case EasingType::EASE_IN_ELASTIC:       return EaseInElastic(t);
+            case EasingType::EASE_OUT_ELASTIC:      return EaseOutElastic(t);
+            case EasingType::EASE_INOUT_ELASTIC:    return EaseInOutElastic(t);
+            case EasingType::EASE_IN_BOUNCE:        return EaseInBounce(t);
+            case EasingType::EASE_OUT_BOUNCE:       return EaseOutBounce(t);
+            case EasingType::EASE_INOUT_BOUNCE:     return EaseInOutBounce(t);
+            default:                                return EaseInSin(t);
         }
     };
 
@@ -227,10 +228,10 @@ double Easing::EasingAnimation(int start, int end, double time, EasingType easin
 
 double Easing::TrackTime(double dt)
 {
-    if (elapsedTime < totalTime)
+    if (elapsedTime < totalTime + delayTime)
     {
         elapsedTime += (dt / 1000);
-        return elapsedTime / totalTime;
+        return elapsedTime / (totalTime + delayTime);
     }
     else
     {

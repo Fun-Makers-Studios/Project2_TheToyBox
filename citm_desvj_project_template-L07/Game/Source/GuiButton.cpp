@@ -9,7 +9,11 @@
 
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, int textSize, ButtonType buttonType_) : GuiControl(GuiControlType::BUTTON, id)
 {
+	easing = new Easing(1);
+	easing->SetFinished(false);
+
 	this->bounds = bounds;
+	this->boundsReset = bounds;
 	this->text = text;
 	this->textSize = textSize;
 
