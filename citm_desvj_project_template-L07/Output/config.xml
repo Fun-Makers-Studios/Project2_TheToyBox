@@ -46,6 +46,7 @@
 		<music musicPath="Assets/Audio/Music/town.ogg" />
 		<imgPause imgPausePath="Assets/Textures/UI/PauseMenu/PauseMenuTemplate.png"/>
 		<partyMenuImg partyMenuImgPath="Assets/Textures/UI/PartyMenu/PartyMenu.png"/>
+		<questMenuImg questMenuImgPath="Assets/Textures/UI/QuestMenu/QuestMenu.png"/>
 		<saveTex saveTexPath="Assets/Textures/UI/save.png"/>
 		<zeroImg zeroImgPath="Assets/Textures/UI/PartyMenu/Characters/ZeroPic.png"/>
 		<sophieImg sophieImgPath="Assets/Textures/UI/PartyMenu/Characters/SophiePic.png"/>
@@ -101,68 +102,68 @@
 	<dialoguemanager dialoguetext="Assets/Textures/UI/Dialog/Dialog.png" font="Assets/Textures/UI/Fonts/DialogFont.png" lookuptable="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz:?!.,     " rows="6">
 		<dialogue id ="0">
 			<node id="0" text="Greetings traveler.">
-				<option id="0" nextNodeId="1" text=""/>
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 			<node id="1" text="Are you lost?">
-				<option id="0" nextNodeId="3" text="What is this place?"/>
-				<option id="1" nextNodeId="2" text="No thanks."/>
+				<option id="0" nextNodeId="3" text="What is this place?" questCompletionId="-1" questTriggerId="-1"/>
+				<option id="1" nextNodeId="2" text="No thanks." questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 			<node id="2" text="Oh, sorry">
-				<option id="0" nextNodeId="-1" text=""/>
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 			<node id="3" text="Place? What a silly cuestion.">
-				<option id="0" nextNodeId="-1" text=""/>
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 		</dialogue>
 		<dialogue id ="1">
 			<node id="0" text="Have you tried the beer they serve here?">
-				<option id="0" nextNodeId="1" text="No."/>
+				<option id="0" nextNodeId="1" text="No." questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 			<node id="1" text="Well then, enter the tabern and get one yourself.">
-				<option id="0" nextNodeId="-1" text=""/>
-				<option id="1" nextNodeId="2" text="No thanks."/>
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+				<option id="1" nextNodeId="2" text="No thanks." questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 			<node id="2" text="O fuck off">
-				<option id="0" nextNodeId="-1" text="Wtf?!"/>
+				<option id="0" nextNodeId="-1" text="Wtf?!" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 		</dialogue>
 		<dialogue id ="2">
 			<node id="0" text="No place like this Inn.">
-				<option id="0" nextNodeId="1" text="Did you say Inn?"/>
+				<option id="0" nextNodeId="1" text="Did you say Inn?" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 			<node id="1" text="Yes, what happens sweety?">
-				<option id="0" nextNodeId="-1" text="Ah, nothing. Thanks."/>
-				<option id="1" nextNodeId="2" text="Thank god, somewhere to rest."/>
+				<option id="0" nextNodeId="-1" text="Ah, nothing. Thanks." questCompletionId="-1" questTriggerId="-1"/>
+				<option id="1" nextNodeId="2" text="Thank god, somewhere to rest." questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 			<node id="2" text="Well, not a cheap place.">
-				<option id="0" nextNodeId="-1" text="Fuck."/>
+				<option id="0" nextNodeId="-1" text="Fuck." questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 		</dialogue>
 		<dialogue id ="3">
 			<node id="0" text="Seems like no market today. Everybody went to the circus.">
-				<option id="0" nextNodeId="-1" text=""/>
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 		</dialogue>
 		<dialogue id ="4">
 			<node id="0" text="O man, all the tickets are sold.">
-				<option id="0" nextNodeId="-1" text=""/>
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 		</dialogue>
 		<dialogue id ="5">
 			<node id="0" text="Fuck off!! Leave me alone.">
-				<option id="0" nextNodeId="-1" text=""/>
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 		</dialogue>
 		<dialogue id ="6">
 			<node id="0" text="Hello, hello! Do you wanna save?.">
-				<option id="0" nextNodeId="1" text="Yes in your mum ass."/>
-				<option id="1" nextNodeId="2" text="No, im not a pussy."/>
+				<option id="0" nextNodeId="1" text="Yes in your mum ass." questCompletionId="-1" questTriggerId="-1"/>
+				<option id="1" nextNodeId="2" text="No, im not a pussy." questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 			<node id="1" text="WOWOWOW! Relax my friend, here you have.">
-				<option id="0" nextNodeId="-1" text="Bye fucking asshole."/>
+				<option id="0" nextNodeId="-1" text="Bye fucking asshole." questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 			<node id="2" text="Dammnnn that is how things work here. Yeah!">
-				<option id="0" nextNodeId="-1" text="Shut up old man."/>
+				<option id="0" nextNodeId="-1" text="Shut up old man." questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 		</dialogue>
 	</dialoguemanager>

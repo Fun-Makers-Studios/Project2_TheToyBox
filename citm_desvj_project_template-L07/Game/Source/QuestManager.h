@@ -24,6 +24,7 @@ public:
 	bool Update(float dt);
 
 	// Additional methods
+	void TriggerQuest(int id);
 
 public:
 

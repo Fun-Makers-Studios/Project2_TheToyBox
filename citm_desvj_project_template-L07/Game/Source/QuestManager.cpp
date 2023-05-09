@@ -77,7 +77,7 @@ bool QuestManager::Update(float dt)
 	{
 		pQuest = item->data;
 
-		if (pQuest->Update() == false) {
+		if (pQuest->Update() == true) {
 			activeQuests.Del(item);
 
 			ListItem<Quest*>* qitem = quests.start;
@@ -97,4 +97,18 @@ bool QuestManager::Update(float dt)
 	}
 
 	return ret;
+}
+
+void QuestManager::TriggerQuest(int id) {
+	ListItem<Quest*>* qitem = quests.start;
+	while (qitem != nullptr)
+	{
+		Quest* item = qitem->data;
+		if (item->id == id) {
+			activeQuests.Add(item);
+			break;
+		}
+
+		qitem = qitem->next;
+	}
 }

@@ -19,7 +19,7 @@ public:
 	Quest() {};
 	Quest(QuestType type) : type(type) {}
 
-	virtual bool Update() { return true; }
+	virtual bool Update() { return false; }
 
 public:
 
@@ -29,6 +29,7 @@ public:
 	int id;
 	int nextQuestId;
 	int reward;
+	bool colleted = false;
 };
 
 #endif // __QUEST_H__

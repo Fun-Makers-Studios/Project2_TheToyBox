@@ -76,7 +76,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding, false);
 	AddModule(collisions, false);
 
-	AddModule(questManager, true);
+	AddModule(questManager, false);
 	AddModule(entityManager, false);
 	AddModule(partyManager, true);
 	AddModule(particleManager, true);

@@ -83,6 +83,7 @@ public:
 	bool gamePaused = false;
 	bool partyMenu = false;
 	bool pauseMenu = false;
+	bool questMenu = false;
 	bool settingSceneMenu = false;
 
 
@@ -93,6 +94,7 @@ public:
 	bool isMapChanging = false;
 
 	uint partyMemberSelected = 0;
+	uint questListSelected = 0;
 
 	DialogueManager* dialogueManager;
 
@@ -112,6 +114,9 @@ private:
 
 	const char* partyMenuImgPath = nullptr;
 	SDL_Texture* partyMenuImg = nullptr;
+
+	const char* questMenuImgPath = nullptr;
+	SDL_Texture* questMenuImg = nullptr;
 	
 	const char* zeroImgPath = nullptr;
 	SDL_Texture* zeroImg = nullptr;
@@ -145,6 +150,9 @@ private:
 
 	GuiButton* firstPMemberButton27 = nullptr;
 	GuiButton* secondPMemberButton28 = nullptr;
+
+	GuiButton* doneQuestsButton29 = nullptr;
+	GuiButton* activeQuestsButton30 = nullptr;
 
 	// Particle system
 	ParticleSystem* smokePS;

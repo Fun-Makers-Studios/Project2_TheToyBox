@@ -17,7 +17,6 @@ public:
 
 public:
 
-	int npcId;
 };
 
 #endif // __TALKQUEST_H__

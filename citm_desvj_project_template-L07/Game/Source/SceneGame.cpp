@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "EntityManager.h"
+#include "QuestManager.h"
 #include "Map.h"
 #include "Collisions.h"
 #include "PathFinding.h"
@@ -30,6 +31,7 @@ SceneGame::SceneGame() : Scene()
 	imgPausePath = app->configNode.child("scene").child("imgPause").attribute("imgPausePath").as_string();
 	popImg_settingsPath = app->configNode.child("title").child("popImage").attribute("settingtexturepath").as_string();
 	partyMenuImgPath = app->configNode.child("scene").child("partyMenuImg").attribute("partyMenuImgPath").as_string();
+	questMenuImgPath = app->configNode.child("scene").child("questMenuImg").attribute("questMenuImgPath").as_string();
 	zeroImgPath = app->configNode.child("scene").child("zeroImg").attribute("zeroImgPath").as_string();
 	sophieImgPath = app->configNode.child("scene").child("sophieImg").attribute("sophieImgPath").as_string();
 	saveTexPath = app->configNode.child("scene").child("saveTex").attribute("saveTexPath").as_string();
@@ -84,6 +86,7 @@ bool SceneGame::Start()
 	app->map->Enable();
 	app->collisions->Enable();
 	app->entityManager->Enable();
+	app->questManager->Enable();
 	app->debug->debug = false;
 	exitGame = false;
 
@@ -109,6 +112,7 @@ bool SceneGame::Start()
 	pauseRect = {35, 69, 310, 555};
 	popImg_settings = app->tex->Load(popImg_settingsPath);
 	partyMenuImg = app->tex->Load(partyMenuImgPath);
+	questMenuImg = app->tex->Load(questMenuImgPath);
 	zeroImg = app->tex->Load(zeroImgPath);
 	sophieImg = app->tex->Load(sophieImgPath);
 	saveTex = app->tex->Load(saveTexPath);
@@ -133,6 +137,9 @@ bool SceneGame::Start()
 
 	firstPMemberButton27 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 27, "z", 2, { 176, 140, 65, 76 }, this, ButtonType::SMALL);
 	secondPMemberButton28 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 28, "s", 2, { 176, 216, 64, 76 }, this, ButtonType::SMALL);
+
+	doneQuestsButton29 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 29, "done", 4, { 176, 140, 65, 76 }, this, ButtonType::SMALL);
+	activeQuestsButton30 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 30, "active", 6, { 176, 216, 64, 76 }, this, ButtonType::SMALL);
 
 	ResetScene();
 
@@ -165,7 +172,7 @@ bool SceneGame::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		if (!dialogueManager->dialogueLoaded && settingSceneMenu == false && partyMenu == false) { gamePaused = !gamePaused; }
+		if (!dialogueManager->dialogueLoaded && settingSceneMenu == false && partyMenu == false && questMenu == false) { gamePaused = !gamePaused; }
 		
 		if(settingSceneMenu == false)
 			pauseMenu = !pauseMenu;
@@ -189,6 +196,13 @@ bool SceneGame::Update(float dt)
 	{
 		gamePaused = !gamePaused;
 		partyMenu = !partyMenu;
+		app->audio->PlayFx(selectSFX);
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && !dialogueManager->dialogueLoaded)
+	{
+		gamePaused = !gamePaused;
+		questMenu = !questMenu;
 		app->audio->PlayFx(selectSFX);
 	}
 
@@ -262,11 +276,14 @@ bool SceneGame::PostUpdate()
 	if(gamePaused == true && partyMenu == true)
 		app->render->DrawTexture(partyMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
 
+	if (gamePaused == true && questMenu == true)
+		app->render->DrawTexture(questMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
+
 	if(gamePaused == true && pauseMenu == true && settingSceneMenu == true)
 		app->render->DrawTexture(popImg_settings, app->render->camera.x , app->render->camera.y - 3, NULL);
 
 
-	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) {
+	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false && questMenu == false)) {
 		dialogueManager->Update();
 	}
 
@@ -288,6 +305,9 @@ bool SceneGame::PostUpdate()
 
 	firstPMemberButton27->state = GuiControlState::DISABLED;
 	secondPMemberButton28->state = GuiControlState::DISABLED;
+
+	doneQuestsButton29->state = GuiControlState::DISABLED;
+	activeQuestsButton30->state = GuiControlState::DISABLED;
 
 	if (pauseMenu == true)
 	{
@@ -376,7 +396,60 @@ bool SceneGame::PostUpdate()
 
 	}
 
-	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) {
+	if (questMenu == true)
+	{
+		if (doneQuestsButton29->state == GuiControlState::DISABLED)
+			doneQuestsButton29->state = GuiControlState::NORMAL;
+
+		if (activeQuestsButton30->state == GuiControlState::DISABLED)
+			activeQuestsButton30->state = GuiControlState::NORMAL;
+
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		{
+			questMenu = !questMenu;
+			app->audio->PlayFx(app->sceneManager->sceneTitle->closemenuSFX);
+		}
+
+		ListItem<Quest*>* qitem = app->questManager->activeQuests.start;
+		switch (questListSelected)
+		{
+		case 0:
+			// Done
+			while (qitem != nullptr)
+			{
+				Quest* item = qitem->data;
+
+				app->fonts->BlitText2(95, 540, dialogueManager->dialogueFontId, (const char*)item->name.GetString(), 8, 1090);
+
+				if (item->id == currentQuestSelected) {
+					app->fonts->BlitText2(95, 540, dialogueManager->dialogueFontId, (const char*)item->description.GetString(), 8, 1090);
+				}
+
+				qitem = qitem->next;
+			}
+			break;
+
+		case 1:
+			// Active
+			while (qitem != nullptr)
+			{
+				Quest* item = qitem->data;
+
+				app->fonts->BlitText2(95, 540, dialogueManager->dialogueFontId, (const char*)item->name.GetString(), 8, 1090);
+
+				if (item->id == currentQuestSelected) {
+					app->fonts->BlitText2(95, 540, dialogueManager->dialogueFontId, (const char*)item->description.GetString(), 8, 1090);
+				}
+
+				qitem = qitem->next;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false && questMenu == false)) {
 		dialogueManager->Draw();
 	}
 
@@ -393,11 +466,13 @@ bool SceneGame::CleanUp()
 	app->entityManager->Disable();
 	app->pathfinding->Disable();
 	app->collisions->Disable();
+	app->questManager->Disable();
 	app->map->Disable();
 
 	gamePaused = false;
 	pauseMenu = false;
 	partyMenu = false;
+	questMenu = false;
 
 	dialogueManager->CleanUp();
 
@@ -414,6 +489,10 @@ bool SceneGame::CleanUp()
 	if (partyMenuImg != nullptr)
 	{
 		app->tex->UnLoad(partyMenuImg);
+	}
+	if (questMenuImg != nullptr)
+	{
+		app->tex->UnLoad(questMenuImg);
 	}
 	if (zeroImg != nullptr)
 	{
@@ -536,6 +615,18 @@ bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 	case 28:
 		// Choose Second PartyMember
 		partyMemberSelected = 1;
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+		break;
+
+	case 29:
+		// Choose Done quests
+		questListSelected = 0;
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+		break;
+
+	case 30:
+		// Choose Active quests
+		questListSelected = 1;
 		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
 		break;
 
