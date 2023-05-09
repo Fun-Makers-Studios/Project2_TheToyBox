@@ -96,13 +96,23 @@ bool Collisions::PostUpdate()
 
     // ENTITY COLLISIONS
     ListItem<Entity*>* item;
-    Entity* pEntity = NULL;
+
 
     for (item = app->entityManager->entities.start; item != NULL; item = item->next)
     {
         if (CheckCollision(*app->sceneManager->sceneGame->player->body, *item->data->body))
         {
             SolveCollision(app->sceneManager->sceneGame->player->body, item->data->body);
+        }
+    }
+    
+    ListItem<Body*>* bodyItem;
+
+    for (bodyItem = app->map->mapTeleports.start; bodyItem != NULL; bodyItem = bodyItem->next)
+    {
+        if (CheckCollision(*app->sceneManager->sceneGame->player->body, *bodyItem->data))
+        {
+            SolveCollision(app->sceneManager->sceneGame->player->body, bodyItem->data);
         }
     }
 
@@ -206,17 +216,80 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
 
             break;
 
-        case ColliderType::WIN_ZONE:
-            break;
-
-        case ColliderType::CHECKPOINT:
-            break;
-
         case ColliderType::UNKNOWN:
             break;
 
         default:
             break;
+    }
+    
+    switch (body2->mapZone)
+    {
+
+    case MapZone::HOUSE1_TO_TOWN:
+        LOG("GO TO TOWN");
+        app->sceneManager->sceneGame->mapName = "town";
+        app->sceneManager->sceneGame->player->newPos = { 192, 256 };
+        app->sceneManager->sceneGame->isMapChanging = true;
+        app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+        break;
+
+    case MapZone::TOWN_TO_HOUSE1:
+        LOG("GO TO HOUSE BASEMENT");
+        app->sceneManager->sceneGame->mapName = "housebasement";
+        app->sceneManager->sceneGame->player->newPos = { 640, 480 };
+        app->sceneManager->sceneGame->isMapChanging = true;
+        app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
+        break;
+
+    case MapZone::HOUSEBASE_TO_HOUSEFLOOR:
+        LOG("GO TO HOUSE FLOOR");
+        app->sceneManager->sceneGame->mapName = "housefloor";
+        app->sceneManager->sceneGame->player->newPos = { 960, 256 };
+        app->sceneManager->sceneGame->isMapChanging = true;
+        app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
+        break;
+
+    case MapZone::HOUSEFLOOR_TO_HOUSEFBASE:
+        LOG("GO TO HOUSE BASEMENT");
+        app->sceneManager->sceneGame->mapName = "housebasement";
+        app->sceneManager->sceneGame->player->newPos = { 672, 176 };
+        app->sceneManager->sceneGame->isMapChanging = true;
+        app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
+        break;
+
+    case MapZone::TOWN_TO_TAVERN:
+        LOG("GO TO TAVERN");
+        app->sceneManager->sceneGame->mapName = "tavern";
+        app->sceneManager->sceneGame->player->newPos = { 640, 500 };
+        app->sceneManager->sceneGame->isMapChanging = true;
+        app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
+        break;
+
+    case MapZone::TAVERN_TO_TOWN:
+        LOG("GO TO TOWN");
+        app->sceneManager->sceneGame->mapName = "town";
+        app->sceneManager->sceneGame->player->newPos = { 800, 352 };
+        app->sceneManager->sceneGame->isMapChanging = true;
+        app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+        break;
+
+    case MapZone::TOWN_TO_INN:
+        LOG("GO TO INN");
+        app->sceneManager->sceneGame->mapName = "inn";
+        app->sceneManager->sceneGame->player->newPos = { 960, 544 };
+        app->sceneManager->sceneGame->isMapChanging = true;
+        app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
+        break;
+
+    case MapZone::INN_TO_TOWN:
+        LOG("GO TO TOWN");
+        app->sceneManager->sceneGame->mapName = "town";
+        app->sceneManager->sceneGame->player->newPos = { 1184, 448 };
+        app->sceneManager->sceneGame->isMapChanging = true;
+        app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+        break;
+
     }
 }
 

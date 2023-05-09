@@ -2,6 +2,11 @@
 <map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="40" height="22" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="1">
  <tileset firstgid="1" name="Temp_tiles" tilewidth="32" tileheight="32" tilecount="12" columns="3">
   <image source="Tilesets/Temp_tiles.png" width="96" height="128"/>
+  <tile id="3">
+   <properties>
+    <property name="Collider" type="bool" value="true"/>
+   </properties>
+  </tile>
  </tileset>
  <layer id="1" name="House" width="40" height="22">
   <properties>
@@ -891,10 +896,10 @@
    <tile/>
   </data>
  </layer>
- <layer id="2" name="Collisions" width="40" height="22">
+ <layer id="2" name="Collisions" width="40" height="22" visible="0">
   <properties>
    <property name="Draw" type="bool" value="false"/>
-   <property name="Navigation" type="bool" value="false"/>
+   <property name="Navigation" type="bool" value="true"/>
   </properties>
   <data>
    <tile/>

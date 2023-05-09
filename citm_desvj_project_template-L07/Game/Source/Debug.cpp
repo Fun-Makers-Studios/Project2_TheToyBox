@@ -295,6 +295,38 @@ void Debug::DrawColliders()
 			}
 		}
 	}
+
+	ListItem<Body*>* bodyItem;
+	
+	for (bodyItem = app->map->mapTeleports.start; bodyItem != NULL; bodyItem = bodyItem->next)
+	{
+		colorCollider = White;
+
+		// Player proximity 3x3
+		if ((player->body->pos.x - bodyItem->data->w <= bodyItem->data->pos.x && bodyItem->data->pos.x <= player->body->pos.x + bodyItem->data->w) &&
+			(player->body->pos.y - bodyItem->data->h <= bodyItem->data->pos.y && bodyItem->data->pos.y <= player->body->pos.y + bodyItem->data->h))
+		{
+			Body tileCollider;
+			tileCollider.type = ColliderType::WALL;
+			tileCollider.shape = ColliderShape::RECTANGLE;
+			tileCollider.mapZone = MapZone::UNKNOWN;
+			tileCollider.pos.x = bodyItem->data->pos.x + bodyItem->data->w / 2;
+			tileCollider.pos.y = bodyItem->data->pos.y + bodyItem->data->h / 2;
+			tileCollider.w = bodyItem->data->w;
+			tileCollider.h = bodyItem->data->h;
+			tileCollider.r = 16;
+
+			if (app->collisions->CheckCollision(*player->body, tileCollider))
+				colorCollider = Red;
+			else
+				colorCollider = Yellow;
+		}
+
+		SDL_Rect rect = { bodyItem->data->pos.x, bodyItem->data->pos.y , bodyItem->data->w, bodyItem->data->h };
+		app->render->DrawRectangle(rect, colorCollider.r, colorCollider.g, colorCollider.b, 96);
+		app->render->DrawRectangle(rect, colorCollider.r, colorCollider.g, colorCollider.b, 196, false);
+	}
+
 }
 
 void Debug::DrawEntities()

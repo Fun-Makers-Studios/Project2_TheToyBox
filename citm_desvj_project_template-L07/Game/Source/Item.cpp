@@ -78,7 +78,7 @@ bool Item::Update()
 	else 
 	{
 		ScaleType scale = app->scaleObj->GetCurrentScale();
-		app->render->DrawTexture(texture, body->pos.x, body->pos.y, &rect, SDL_FLIP_NONE, scale);
+		app->render->DrawTexture(texture, body->pos.x - body->r, body->pos.y - body->r, &rect, SDL_FLIP_NONE, scale);
 	}
 
 	return true;
