@@ -6,6 +6,7 @@
 #include "Collisions.h"
 #include "Player.h"
 #include "Scale.h"
+#include "SceneManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -637,6 +638,9 @@ bool Map::CreateTeleports(pugi::xml_node mapNode)
     // HEKATE
     pugi::xml_node objectgroup = mapNode.child("objectgroup");
 
+    Body* playerBody = app->sceneManager->sceneGame->player->body;
+    iPoint tilePos = app->map->WorldToMap(playerBody->pos.x, playerBody->pos.y);
+
     for (pugi::xml_node objectgroup = mapNode.child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
     {
         // TRIGGERS
@@ -645,22 +649,27 @@ bool Map::CreateTeleports(pugi::xml_node mapNode)
             for (pugi::xml_node object = objectgroup.child("object"); object && ret; object = object.next_sibling("object"))
             {
                 Body* trigger = new Body();
-                trigger->mapZone = MapZone::HOUSE1_TO_TOWN;
-                // MapZone
+                trigger->shape = ColliderShape::RECTANGLE;
+                trigger->type = ColliderType::UNKNOWN;
+                iPoint iPos = app->map->MapToWorld(playerBody->pos.x, playerBody->pos.y);
+                trigger->pos.x = iPos.x + mapData.tileWidth / 2;
+                trigger->pos.y = iPos.y + mapData.tileHeight / 2;
+                trigger->w = mapData.tileWidth;
+                trigger->h = mapData.tileHeight;
+                trigger->r = 16;
 
-                /*PhysBody* c1 = app->physics->CreateRectangleSensor(
-                    object.attribute("x").as_int() + object.attribute("width").as_int() / 2,
-                    object.attribute("y").as_int() + object.attribute("height").as_int() / 2,
-                    object.attribute("width").as_int(),
-                    object.attribute("height").as_int(), STATIC);
-
+                if (app->collisions->CheckCollision(*playerBody, *trigger))
+                {
+                    app->collisions->SolveCollision(app->sceneManager->sceneGame->player->body, trigger);
+                }
+                
                 pugi::xml_node type = object.child("properties").child("property");
 
 
-                if ((SString)type.attribute("value").as_string() == "TRIG_1A") { c1->ctype = ColliderType::TRIG_1A; }
-                else if ((SString)type.attribute("value").as_string() == "TRIG_1R") { c1->ctype = ColliderType::TRIG_1R; }
-                else if ((SString)type.attribute("value").as_string() == "TRIG_2A") { c1->ctype = ColliderType::TRIG_2A; }
-                else if ((SString)type.attribute("value").as_string() == "TRIG_2R") { c1->ctype = ColliderType::TRIG_2R; }*/
+                if ((SString)type.attribute("value").as_string() == "TRIG_1A") { trigger->mapZone = MapZone::TOWN_TO_HOUSE1; }
+                else if ((SString)type.attribute("value").as_string() == "TRIG_1R") { trigger->mapZone = MapZone::HOUSE1_TO_TOWN; }
+                else if ((SString)type.attribute("value").as_string() == "TRIG_2A") { trigger->mapZone = MapZone::HOUSE1_TO_TOWN; }
+                else if ((SString)type.attribute("value").as_string() == "TRIG_2R") { trigger->mapZone = MapZone::HOUSE1_TO_TOWN; }
 
                 mapTeleports.Add(trigger);
             }
