@@ -1,9 +1,9 @@
 #ifndef __GUIMANAGER_H__
 #define __GUIMANAGER_H__
 
+#include "GuiControl.h"
 #include "Module.h"
 #include "Menu.h"
-#include "GuiControl.h"
 
 #include "List.h"
 

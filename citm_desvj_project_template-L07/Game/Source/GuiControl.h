@@ -36,8 +36,8 @@ enum class GuiControlState
 	SELECTED
 };
 
-enum class ButtonType {
-
+enum class ButtonType
+{
 	UNKNOWN,
 	SMALL,
 	BIG

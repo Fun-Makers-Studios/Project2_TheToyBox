@@ -2,6 +2,7 @@
 
 #include "App.h"
 #include "MenuManager.h"
+#include "GuiControl.h"
 #include "GuiButton.h"
 
 #include "Textures.h"

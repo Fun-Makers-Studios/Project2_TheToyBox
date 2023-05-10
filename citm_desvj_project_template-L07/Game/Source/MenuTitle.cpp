@@ -2,6 +2,8 @@
 
 #include "App.h"
 #include "Menu.h"
+#include "SceneManager.h"
+#include "Audio.h"
 #include "Log.h"
 
 
@@ -68,6 +70,7 @@ bool MenuTitle::PreUpdate()
 bool MenuTitle::Update(float dt)
 {
 	//CHECK SAVE GAME
+	/*
 	pugi::xml_document gameStateFile;
 	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
 
@@ -172,7 +175,7 @@ bool MenuTitle::Update(float dt)
 			creditsMenu = !creditsMenu;
 			app->audio->PlayFx(closemenuSFX);
 		}
-	}
+	}*/
 
 	return true;
 }
@@ -202,7 +205,7 @@ bool MenuTitle::CleanUp()
 
 
 	//STORE IN A LIST THIS BUTTONS AND THEN CHECK HERE IF NULLPTR TO CLEAN THEM UP
-	app->guiManager->guiControlsList.Clear();
+	//app->guiManager->guiControlsList.Clear();
 
 	return true;
 }
@@ -215,7 +218,6 @@ bool MenuTitle::OnGuiMouseClickEvent(GuiControl* control)
 		// Continue button (only if "save_game.xml" exists)
 		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
 
-		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 90);
 		app->sceneManager->sceneGame->continueGame = true;
 		app->audio->PlayFx(startSFX);
 		break;
@@ -224,7 +226,6 @@ bool MenuTitle::OnGuiMouseClickEvent(GuiControl* control)
 		// Play button
 		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
 
-		// HEKATE app->fade->FadeToBlack(this, (Module*)app->scene, 90);
 		app->audio->PlayFx(startSFX);
 		if (remove("save_game.xml") != 0)
 			LOG("Error at Deleting Save Game");
@@ -232,108 +233,37 @@ bool MenuTitle::OnGuiMouseClickEvent(GuiControl* control)
 			LOG("Save Game Successfully Deleted");
 		break;
 
-	case 2:
-	case 6:
-		// Settings button
-		settingMenu = !settingMenu;
-		if (settingMenu == false)
-		{
-			if (continueButton5 != nullptr)
-				continueButton5->state = GuiControlState::NORMAL;
-			playButton1->state = GuiControlState::NORMAL;
-			settingsButton2->state = GuiControlState::NORMAL;
-			creditsButton3->state = GuiControlState::NORMAL;
-			exitButton4->state = GuiControlState::NORMAL;
-		}
-		app->audio->PlayFx(menuSelectionSFX);
-		break;
+	//case 2:
+	//case 6:
+	//	// Settings button
+	//	settingMenu = !settingMenu;
+	//	if (settingMenu == false)
+	//	{
+	//		if (continueButton5 != nullptr)
+	//			continueButton5->state = GuiControlState::NORMAL;
+	//		playButton1->state = GuiControlState::NORMAL;
+	//		settingsButton2->state = GuiControlState::NORMAL;
+	//		creditsButton3->state = GuiControlState::NORMAL;
+	//		exitButton4->state = GuiControlState::NORMAL;
+	//	}
+	//	app->audio->PlayFx(menuSelectionSFX);
+	//	break;
 
-	case 3:
-	case 7:
-		// Credits button
-		creditsMenu = !creditsMenu;
-		if (creditsMenu == false)
-		{
-			if (continueButton5 != nullptr)
-				continueButton5->state = GuiControlState::NORMAL;
-			playButton1->state = GuiControlState::NORMAL;
-			settingsButton2->state = GuiControlState::NORMAL;
-			creditsButton3->state = GuiControlState::NORMAL;
-			exitButton4->state = GuiControlState::NORMAL;
-		}
-		app->audio->PlayFx(menuSelectionSFX);
-		break;
-
-	case 8:
-		// Decrease music volume
-		app->musicValue = app->musicValue - 1;
-		if (app->musicValue <= 0)
-			app->musicValue = 0;
-		if (app->musicValue >= 100)
-			app->musicValue = 100;
-		Mix_VolumeMusic(app->musicValue);
-		app->audio->PlayFx(menuSelectionSFX);
-		break;
-
-	case 9:
-		// Increase music volume
-		app->musicValue = app->musicValue + 1;
-		if (app->musicValue <= 0)
-			app->musicValue = 0;
-		if (app->musicValue >= 100)
-			app->musicValue = 100;
-		Mix_VolumeMusic(app->musicValue);
-		app->audio->PlayFx(menuSelectionSFX);
-		break;
-
-	case 10:
-		// Decrease SFX volume
-		app->sfxValue = app->sfxValue - 1;
-		if (app->sfxValue <= 0)
-			app->sfxValue = 0;
-		if (app->sfxValue >= 100)
-			app->sfxValue = 100;
-		Mix_Volume(-1, app->sfxValue);
-		app->audio->PlayFx(menuSelectionSFX);
-		break;
-
-	case 11:
-		// Increase SFX volume
-		app->sfxValue = app->sfxValue + 1;
-		if (app->sfxValue <= 0)
-			app->sfxValue = 0;
-		if (app->sfxValue >= 100)
-			app->sfxValue = 100;
-		Mix_Volume(-1, app->sfxValue);
-		app->audio->PlayFx(menuSelectionSFX);
-		break;
-
-	case 12:
-		// Fullscreen button
-		app->win->fullscreenMode = !app->win->fullscreenMode;
-		if (app->win->fullscreenMode == true)
-		{
-			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
-		}
-		else if (app->win->fullscreenMode == false)
-		{
-			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_SHOWN);
-		}
-		app->audio->PlayFx(menuSelectionSFX);
-		break;
-
-	case 13:
-		// V-Sync button
-		app->render->limitFPS = !app->render->limitFPS;
-		app->audio->PlayFx(menuSelectionSFX);
-		break;
-
-	case 4:
-		// Exit button
-		exitGame = !exitGame;
-		app->audio->PlayFx(menuSelectionSFX);
-		break;
-
+	//case 3:
+	//case 7:
+	//	// Credits button
+	//	creditsMenu = !creditsMenu;
+	//	if (creditsMenu == false)
+	//	{
+	//		if (continueButton5 != nullptr)
+	//			continueButton5->state = GuiControlState::NORMAL;
+	//		playButton1->state = GuiControlState::NORMAL;
+	//		settingsButton2->state = GuiControlState::NORMAL;
+	//		creditsButton3->state = GuiControlState::NORMAL;
+	//		exitButton4->state = GuiControlState::NORMAL;
+	//	}
+	//	app->audio->PlayFx(menuSelectionSFX);
+	//	break;
 
 	default:
 		break;
