@@ -34,9 +34,6 @@
     <ClCompile Include="Source\Item.cpp">
       <Filter>Game\Items</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GuiManager.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\UI.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
@@ -136,17 +133,8 @@
     <ClCompile Include="Source\MenuSettings.cpp">
       <Filter>Game\Menus</Filter>
     </ClCompile>
-    <ClCompile Include="Source\MenuPause.cpp">
-      <Filter>Game\Menus</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\MenuQuest.cpp">
-      <Filter>Game\Menus</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\MenuParty.cpp">
-      <Filter>Game\Menus</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\MenuFight.cpp">
-      <Filter>Game\Menus</Filter>
+    <ClCompile Include="Source\GuiManager.cpp">
+      <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,9 +196,6 @@
       <Filter>Game\Items</Filter>
     </ClInclude>
     <ClInclude Include="Source\GuiControl.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GuiManager.h">
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\UI.h">
@@ -324,17 +309,8 @@
     <ClInclude Include="Source\MenuSettings.h">
       <Filter>Game\Menus</Filter>
     </ClInclude>
-    <ClInclude Include="Source\MenuPause.h">
-      <Filter>Game\Menus</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MenuQuest.h">
-      <Filter>Game\Menus</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MenuParty.h">
-      <Filter>Game\Menus</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\MenuFight.h">
-      <Filter>Game\Menus</Filter>
+    <ClInclude Include="Source\GuiManager.h">
+      <Filter>GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

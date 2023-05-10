@@ -1,7 +1,8 @@
 #ifndef __MENU_H__
 #define __MENU_H__
 
-#include "List.h"
+#include "App.h"
+
 
 enum class MenuID
 {
@@ -49,6 +50,7 @@ public:
 
 	// Sets the scene's ID
 	virtual void SetID(MenuID id) { this->id = id; }
+
 
 public:
 

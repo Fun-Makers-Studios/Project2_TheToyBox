@@ -11,6 +11,8 @@
 
 #include "SDL/include/SDL.h"
 
+class Menu;
+
 enum class GuiControlType
 {
 	BUTTON,
@@ -39,7 +41,7 @@ enum class ButtonType
 {
 	UNKNOWN,
 	SMALL,
-	BIG
+	 BIG
 };
 
 class GuiControl

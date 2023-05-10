@@ -10,6 +10,7 @@
 #include "Collisions.h"
 #include "EntityManager.h"
 #include "SceneManager.h"
+#include "MenuManager.h"
 #include "Map.h"
 #include "GuiManager.h"
 #include "Fonts.h"
@@ -49,11 +50,12 @@ bool SceneTitle::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool SceneTitle::Start()
 {
+	LOG("--STARTS TITLE SCENE--");
+
 	app->render->camera.x = 0;
 
 	app->map->Disable();
-
-	LOG("--STARTS TITLE SCENE--");
+	app->menuManager->Enable();
 
 	
 	/*Load*/
@@ -75,19 +77,6 @@ bool SceneTitle::Start()
 	app->audio->PlayFx(titleSFX);
 	app->audio->PlayMusic("Assets/Audio/Music/menu.ogg");
 
-	// Set easing finished on title buttons
-	/*ListItem<GuiControl*>* control = app->guiManager->guiControlsList.start;
-
-	while (control != nullptr)
-	{
-		if (control->data->id < 5)
-		{
-			control->data->easing->SetFinished(false);
-			control->data->easing->SetTotalTime(1 + 0.2 * control->data->id);
-		}
-
-		control = control->next;
-	}*/
 
 	return true;
 }
@@ -105,66 +94,7 @@ bool SceneTitle::Update(float dt)
 	pugi::xml_document gameStateFile;
 	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
 
-	//if (result == NULL )
-	//{
-	//	if(isSaved != false)
-	//		continueButton5->state = GuiControlState::DISABLED;
-
-	//	isSaved = false;
-	//}
-	//else
-	//{
-	//	if (isSaved != true)
-	//		continueButton5->state = GuiControlState::NORMAL;
-
-	//	isSaved = true;
-	//}
-
-	//if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-	//	LOG("PASA A GAME SCENE");
-	//	app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
-	//	app->audio->PlayFx(startSFX);
-	//}
-	//
-	//if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
-	//{
-	//	app->render->viewGUIbounds = !app->render->viewGUIbounds;
-	//	app->audio->PlayFx(selectSFX);
-	//}
-
-	//app->render->DrawTexture(img, 0, 0, NULL);
-
-	//if (settingMenu == true)
-	//	app->render->DrawTexture(popImg_settings, 0, 0, NULL);
-	//
-	////Draw GUI
-	//app->guiManager->Draw();
-
-	//// Principal buttons
-	//playButton1->state = GuiControlState::ENABLED;
-	//settingsButton2->state = GuiControlState::ENABLED;
-	//creditsButton3->state = GuiControlState::ENABLED;
-	//exitButton4->state = GuiControlState::ENABLED;
-
-	//// Credits Menu
-	//if (creditsMenu == true)
-	//{
-	//	if (continueButton5 != nullptr && continueButton5->state != GuiControlState::DISABLED)
-	//		continueButton5->state = GuiControlState::DISABLED;
-
-	//	playButton1->state = GuiControlState::DISABLED;
-	//	settingsButton2->state = GuiControlState::DISABLED;
-	//	creditsButton3->state = GuiControlState::DISABLED;
-	//	exitButton4->state = GuiControlState::DISABLED;
-
-	//	app->render->DrawTexture(popImg_credits, 0, 0, NULL);
-
-	//	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	//	{ 
-	//		creditsMenu = !creditsMenu;
-	//		app->audio->PlayFx(closemenuSFX);
-	//	}
-	//}
+	app->render->DrawTexture(img, 0, 0, NULL);
 
 	return true;
 }
@@ -173,7 +103,6 @@ bool SceneTitle::Update(float dt)
 bool SceneTitle::PostUpdate()
 {
 	bool ret = true;
-
 
 
 	if (exitGame)

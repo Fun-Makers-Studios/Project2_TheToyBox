@@ -1,4 +1,5 @@
 #include "MenuManager.h"
+
 #include "MenuTitle.h"
 #include "MenuSettings.h"
 #include "MenuPause.h"
@@ -8,6 +9,7 @@
 
 #include "App.h"
 #include "SceneManager.h"
+#include "GuiManager.h"
 
 MenuManager::MenuManager() : Module()
 {
@@ -37,6 +39,14 @@ bool MenuManager::Awake(pugi::xml_node& config)
 
 bool MenuManager::Start()
 {
+	ListItem<Menu*>* control = menus.start;
+
+	while (control != nullptr)
+	{
+		control->data->Start();
+		control = control->next;
+	}
+
 	return true;
 }
 
@@ -45,35 +55,46 @@ bool MenuManager::PreUpdate()
 	switch (app->sceneManager->currentScene->id)
 	{
 		case SceneID::SCENE_LOGO:
+			currentMenu = nullptr;
 			break;
+
 		case SceneID::SCENE_TITLE:
+			currentMenu = FindMenuByID(MenuID::MENU_TITLE)->data;
 			break;
+
 		case SceneID::SCENE_GAME:
+			currentMenu = nullptr;
 			break;
+
 		case SceneID::SCENE_FIGHT:
+			currentMenu = FindMenuByID(MenuID::MENU_FIGHT)->data;
 			break;
+
 		case SceneID::SCENE_ENDING:
 			break;
+
 		default:
 			break;
 	}
 
 	if (currentMenu)
 	{
+		SetControlState(currentMenu, GuiControlState::ENABLED);
+
 		currentMenu->PreUpdate();
-		return true;
 	}
-	return false;
+
+	return true;
 }
 
 bool MenuManager::Update(float dt)
 {
 	if (currentMenu)
 	{
-		currentMenu->Update(dt);
-		return true;
+		currentMenu->Update(dt);		
 	}
-	return false;
+
+	return true;
 }
 
 bool MenuManager::PostUpdate()
@@ -81,9 +102,10 @@ bool MenuManager::PostUpdate()
 	if (currentMenu)
 	{
 		currentMenu->PostUpdate();
-		return true;
+		app->guiManager->Draw();
 	}
-	return false;
+
+	return true;
 }
 
 bool MenuManager::CleanUp() { return true; }
@@ -122,5 +144,16 @@ ListItem<Menu*>* MenuManager::FindMenuByID(MenuID id)
 	for (menu = menus.start; menu != NULL; menu = menu->next)
 	{
 		if (menu->data->GetID() == id) { return menu; }
+	}
+}
+
+void MenuManager::SetControlState(Menu* menu, GuiControlState _state)
+{
+	ListItem<GuiControl*>* control = menu->guiControlsList.start;
+
+	while (control != nullptr)
+	{
+		control->data->state = GuiControlState::ENABLED;
+		control = control->next;
 	}
 }

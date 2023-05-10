@@ -66,24 +66,18 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 
 bool GuiManager::Update(float dt)
 {	
-	
-	return true;
-}
-
-bool GuiManager::PostUpdate()
-{
 	accumulatedTime += app->GetDT();
 
 	if (accumulatedTime >= updateMsCycle)
 		doLogic = true;
 
 	// We control how often the GUI is updated to optimize the performance
-	if (doLogic)
+	if (doLogic && app->menuManager->currentMenu != nullptr)
 	{
 		for (size_t i = 0; i < app->menuManager->currentMenu->guiControlsList.Count(); i++)
 		{
 			ListItem<GuiControl*>* control = app->menuManager->currentMenu->guiControlsList.At(i);
-			control->data->Update(16);
+			control->data->Update(16); // HEKATE dt!!
 		}
 
 		// HEKATE end of list not set as nullptr, loop runs out of list
@@ -98,6 +92,13 @@ bool GuiManager::PostUpdate()
 		accumulatedTime = 0.0f;
 		doLogic = false;
 	}
+
+	return true;
+}
+
+bool GuiManager::PostUpdate()
+{
+	
 
 	return true;
 }

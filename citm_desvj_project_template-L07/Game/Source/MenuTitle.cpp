@@ -3,6 +3,7 @@
 #include "App.h"
 #include "Menu.h"
 #include "SceneManager.h"
+#include "MenuManager.h"
 #include "GuiManager.h"
 #include "Audio.h"
 #include "Log.h"
@@ -30,7 +31,6 @@ bool MenuTitle::Awake(pugi::xml_node& config)
 bool MenuTitle::Start()
 {
 	LOG("--STARTS TITLE MENU--");
-
 
 	// Declare a GUI Button and create it using the GuiManager
 	playButton1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "play", 5, { 965, 350, 252, 76 }, this);
@@ -70,8 +70,9 @@ bool MenuTitle::PreUpdate()
 
 bool MenuTitle::Update(float dt)
 {
+	int fool = 0;
 	//CHECK SAVE GAME
-	/*
+	
 	pugi::xml_document gameStateFile;
 	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
 
@@ -90,25 +91,14 @@ bool MenuTitle::Update(float dt)
 		isSaved = true;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
-		LOG("PASA A GAME SCENE");
-		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
-		app->audio->PlayFx(startSFX);
-	}
+	//Draw GUI
+	
 
-	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
-	{
-		app->render->viewGUIbounds = !app->render->viewGUIbounds;
-		app->audio->PlayFx(selectSFX);
-	}
-
-	app->render->DrawTexture(img, 0, 0, NULL);
-
+	/*
 	if (settingMenu == true)
 		app->render->DrawTexture(popImg_settings, 0, 0, NULL);
 
-	//Draw GUI
-	app->guiManager->Draw();
+	
 
 	// Principal buttons
 	playButton1->state = GuiControlState::ENABLED;
@@ -116,67 +106,8 @@ bool MenuTitle::Update(float dt)
 	creditsButton3->state = GuiControlState::ENABLED;
 	exitButton4->state = GuiControlState::ENABLED;
 
-	if (settingMenu == true)
-	{
-		if (continueButton5 != nullptr && continueButton5->state != GuiControlState::DISABLED)
-			continueButton5->state = GuiControlState::DISABLED;
-
-		playButton1->state = GuiControlState::DISABLED;
-		settingsButton2->state = GuiControlState::DISABLED;
-		creditsButton3->state = GuiControlState::DISABLED;
-		exitButton4->state = GuiControlState::DISABLED;
-
-		decreaseMusicButton8->state = GuiControlState::NORMAL;
-		increaseMusicButton9->state = GuiControlState::NORMAL;
-		decreaseSFXButton10->state = GuiControlState::NORMAL;
-		increaseSFXButton11->state = GuiControlState::NORMAL;
-		fullscreenButton12->state = GuiControlState::NORMAL;
-		vsyncButton13->state = GuiControlState::NORMAL;
-
-		char music[10];
-		sprintf_s(music, 10, "%d", app->musicValue);
-		app->fonts->BlitText(630, 245, app->ui->font1_id, music);
-
-		char sfx[10];
-		sprintf_s(sfx, 10, "%d", app->sfxValue);
-		app->fonts->BlitText(630, 362, app->ui->font1_id, sfx);
-
-		char fullscreen[10];
-		sprintf_s(fullscreen, 10, "%s", app->win->fullscreenMode ? "on" : "off");
-		app->fonts->BlitText(632, 458, app->ui->font1_id, fullscreen);
-
-		char vsync[10];
-		sprintf_s(vsync, 10, "%s", app->render->limitFPS ? "on" : "off");
-		app->fonts->BlitText(632, 565, app->ui->font1_id, vsync);
-
-		//Close settings menu
-		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		{
-			settingMenu = !settingMenu;
-			app->audio->PlayFx(closemenuSFX);
-		}
-
-	}
-
-	// Credits Menu
-	if (creditsMenu == true)
-	{
-		if (continueButton5 != nullptr && continueButton5->state != GuiControlState::DISABLED)
-			continueButton5->state = GuiControlState::DISABLED;
-
-		playButton1->state = GuiControlState::DISABLED;
-		settingsButton2->state = GuiControlState::DISABLED;
-		creditsButton3->state = GuiControlState::DISABLED;
-		exitButton4->state = GuiControlState::DISABLED;
-
-		app->render->DrawTexture(popImg_credits, 0, 0, NULL);
-
-		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		{
-			creditsMenu = !creditsMenu;
-			app->audio->PlayFx(closemenuSFX);
-		}
-	}*/
+	
+	*/
 
 	return true;
 }
@@ -206,7 +137,7 @@ bool MenuTitle::CleanUp()
 
 
 	//STORE IN A LIST THIS BUTTONS AND THEN CHECK HERE IF NULLPTR TO CLEAN THEM UP
-	//app->guiManager->guiControlsList.Clear();
+	guiControlsList.Clear();
 
 	return true;
 }

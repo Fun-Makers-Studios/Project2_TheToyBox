@@ -39,22 +39,17 @@ bool GuiButton::Update(float dt)
 {
 	if (state != GuiControlState::DISABLED)
 	{
-		// L15: TODO 3: Update the state of the GUiButton according to the mouse position
+		// Update the state of the GUiButton according to the mouse position
 		app->input->GetMousePosition(mouseX, mouseY);
 
 		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&
 			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
 		{
-			state = GuiControlState::FOCUSED;
-
-			app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->ui->font3_id, this->text);
+			state = GuiControlState::FOCUSED;			
 
 			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
 			{
 				state = GuiControlState::PRESSED;
-			
-				app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->ui->font3_id, this->text);
-
 			}
 
 			// If mouse button pressed -> Generate event!
@@ -62,13 +57,10 @@ bool GuiButton::Update(float dt)
 			{
 				NotifyObserver();
 			}
-
 		}
-		else {
+		else
+		{
 			state = GuiControlState::NORMAL;
-
-			app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2) - 4, app->ui->font3_id, this->text);
-
 		}
 	}
 
@@ -102,6 +94,7 @@ bool GuiButton::Draw(Render* render)
 			rect = { 0, 233, 64, 76 };
 		
 		render->DrawTexture(buttonTex, rec.x, rec.y, &rect);
+		app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2) - 4, app->ui->font3_id, this->text);
 
 	} break;
 
@@ -118,6 +111,7 @@ bool GuiButton::Draw(Render* render)
 			rect = { 94, 233, 64, 76 };
 
 		render->DrawTexture(buttonTex, rec.x, rec.y, &rect);
+		app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->ui->font3_id, this->text);
 
 	} break;
 	case GuiControlState::PRESSED:
@@ -132,6 +126,7 @@ bool GuiButton::Draw(Render* render)
 			rect = { 188, 233, 64, 76 };
 
 		render->DrawTexture(buttonTex, rec.x, rec.y, &rect);
+		app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->ui->font3_id, this->text);
 
 	} break;
 

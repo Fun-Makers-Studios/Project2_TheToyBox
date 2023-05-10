@@ -81,7 +81,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(partyManager, true);
 	AddModule(particleManager, true);
 
-	AddModule(menuManager, true);
+	AddModule(menuManager, false);
 	AddModule(ui, true);
 	AddModule(guiManager, true);
 	AddModule(debug, true);

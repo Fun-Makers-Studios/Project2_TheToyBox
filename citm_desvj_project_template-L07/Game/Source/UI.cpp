@@ -148,6 +148,7 @@ void UI::BlitFrameCount()
 	app->fonts->BlitText(825, 70, font1_id, frameCount);
 }
 
+
 void UI::BlitPartyStats()
 {
 	
