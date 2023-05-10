@@ -31,15 +31,15 @@ bool MenuSettings::Start()
 {
 	LOG("--STARTS TITLE MENU--");
 
-	decreaseMusicButton8 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "decrease", 9, { 325, 200, 252, 76 }, this);
-	increaseMusicButton9 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "increase", 9, { 700, 200, 252, 76 }, this);
+	decreaseMusicButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "decrease", 9, { 325, 200, 252, 76 }, this);
+	increaseMusicButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "increase", 9, { 700, 200, 252, 76 }, this);
 
-	decreaseSFXButton10 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, "decrease", 9, { 325, 315, 252, 76 }, this);
-	increaseSFXButton11 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "increase", 9, { 700, 315, 252, 76 }, this);
+	decreaseSFXButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, "decrease", 9, { 325, 315, 252, 76 }, this);
+	increaseSFXButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "increase", 9, { 700, 315, 252, 76 }, this);
 
-	fullscreenButton12 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 12, "", 1, { 520, 424, 252, 76 }, this);
+	fullscreenButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 12, "", 1, { 520, 424, 252, 76 }, this);
 
-	vsyncButton13 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 13, "", 1, { 520, 532, 252, 76 }, this);
+	vsyncButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 13, "", 1, { 520, 532, 252, 76 }, this);
 
 	// Set easing finished on title buttons
 	ListItem<GuiControl*>* control =  guiControlsList.start;

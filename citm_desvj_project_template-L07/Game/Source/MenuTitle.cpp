@@ -33,17 +33,17 @@ bool MenuTitle::Start()
 	LOG("--STARTS TITLE MENU--");
 
 	// Declare a GUI Button and create it using the GuiManager
-	playButton1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "play", 5, { 965, 350, 252, 76 }, this);
-	settingsButton2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "settings", 9, { 965, 430, 252, 76 }, this);
-	creditsButton3 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "credits", 8, { 965, 510, 252, 76 }, this);
-	exitButton4 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "exit", 5, { 965, 590, 252, 76 }, this);
+	playButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "play", 5, { 965, 350, 252, 76 }, this);
+	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "settings", 9, { 965, 430, 252, 76 }, this);
+	creditsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "credits", 8, { 965, 510, 252, 76 }, this);
+	exitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "exit", 5, { 965, 590, 252, 76 }, this);
 
 	//CHECK SAVE GAME button
 	pugi::xml_document gameStateFile;
 	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
 	if (result != NULL)
 	{
-		continueButton5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "continue", 9, { 965, 270, 252, 76 }, this);
+		continueButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "continue", 9, { 965, 270, 252, 76 }, this);
 	}
 
 
@@ -79,14 +79,14 @@ bool MenuTitle::Update(float dt)
 	if (result == NULL)
 	{
 		if (isSaved != false)
-			continueButton5->state = GuiControlState::DISABLED;
+			continueButton->state = GuiControlState::DISABLED;
 
 		isSaved = false;
 	}
 	else
 	{
 		if (isSaved != true)
-			continueButton5->state = GuiControlState::NORMAL;
+			continueButton->state = GuiControlState::NORMAL;
 
 		isSaved = true;
 	}
