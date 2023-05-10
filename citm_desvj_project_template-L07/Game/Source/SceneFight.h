@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __SCENEFIGHT_H__
+#define __SCENEFIGHT_H__
 
 #include "Scene.h"
 #include "PartyManager.h"
@@ -65,3 +66,5 @@ private:
 	uint alliesAlive;
 	uint enemiesAlive;
 };
+
+#endif //__SCENEFIGHT_H__

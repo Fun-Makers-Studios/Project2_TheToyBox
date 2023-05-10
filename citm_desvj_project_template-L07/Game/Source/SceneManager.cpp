@@ -1,6 +1,10 @@
 #include "App.h"
 #include "SceneManager.h"
-
+#include "SceneLogo.h"
+#include "SceneTitle.h"
+#include "SceneGame.h"
+#include "SceneFight.h"
+#include "SceneEnding.h"
 
 SceneManager::SceneManager() : Module()
 {

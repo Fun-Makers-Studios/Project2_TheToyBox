@@ -7,7 +7,7 @@
 #include "Render.h"
 #include "Collisions.h"
 
-class Body;
+struct Body;
 
 enum class EntityType
 {

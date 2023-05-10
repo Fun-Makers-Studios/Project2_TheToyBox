@@ -1,4 +1,6 @@
-#pragma once
+#ifndef _PARTICLE_H_
+#define _PARTICLE_H_
+
 #include "Point.h"
 #include "Color.h"
 
@@ -66,3 +68,5 @@ private:
 
 	Particle* next;
 };
+
+#endif //_PARTICLE_H_

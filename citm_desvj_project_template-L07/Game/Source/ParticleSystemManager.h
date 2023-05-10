@@ -1,4 +1,3 @@
-#pragma once
 #ifndef __PARTICLESYSTEMMANAGER_H__
 #define __PARTICLESYSTEMMANAGER_H__
 

@@ -20,7 +20,6 @@
 #include "GuiManager.h"
 #include "MenuManager.h"
 #include "GuiButton.h"
-#include "GuiControl.h"
 
 #include "Debug.h"
 

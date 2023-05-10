@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _PARTICLESYSTEM_H_
+#define _PARTICLESYSTEM_H_
 
 #include "Point.h"
 #include "Textures.h"
@@ -100,3 +101,5 @@ private:
 	SDL_Texture* texture;
 	List<Particle*> particles;
 };
+
+#endif //_PARTICLESYSTEM_H_
