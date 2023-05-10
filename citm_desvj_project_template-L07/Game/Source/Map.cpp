@@ -79,7 +79,7 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
                 if (tileset != NULL)
                 {
                     //According to the mapType use the ID of the tile to set the walkability value
-                    if (mapData.type == MapTypes::MAPTYPE_ORTHOGONAL && tileId == 17) map[i] = 1;
+                    if (mapData.type == MapTypes::MAPTYPE_ORTHOGONAL && tileId != 0) map[i] = 1;
                     else map[i] = 0;
 
                 }
@@ -651,25 +651,19 @@ bool Map::CreateTeleports(pugi::xml_node mapNode)
                 Body* trigger = new Body();
                 trigger->shape = ColliderShape::RECTANGLE;
                 trigger->type = ColliderType::UNKNOWN;
-                iPoint iPos = app->map->MapToWorld(playerBody->pos.x, playerBody->pos.y);
-                trigger->pos.x = iPos.x + mapData.tileWidth / 2;
-                trigger->pos.y = iPos.y + mapData.tileHeight / 2;
-                trigger->w = mapData.tileWidth;
-                trigger->h = mapData.tileHeight;
+                //iPoint iPos = app->map->MapToWorld(playerBody->pos.x, playerBody->pos.y);
+                trigger->pos.x = object.attribute("x").as_double();
+                trigger->pos.y = object.attribute("y").as_double();
+                trigger->w = object.attribute("width").as_double();
+                trigger->h = object.attribute("height").as_double();
                 trigger->r = 16;
 
-                if (app->collisions->CheckCollision(*playerBody, *trigger))
-                {
-                    app->collisions->SolveCollision(app->sceneManager->sceneGame->player->body, trigger);
-                }
-                
                 pugi::xml_node type = object.child("properties").child("property");
 
 
-                if ((SString)type.attribute("value").as_string() == "TRIG_1A") { trigger->mapZone = MapZone::TOWN_TO_HOUSE1; }
-                else if ((SString)type.attribute("value").as_string() == "TRIG_1R") { trigger->mapZone = MapZone::HOUSE1_TO_TOWN; }
-                else if ((SString)type.attribute("value").as_string() == "TRIG_2A") { trigger->mapZone = MapZone::HOUSE1_TO_TOWN; }
-                else if ((SString)type.attribute("value").as_string() == "TRIG_2R") { trigger->mapZone = MapZone::HOUSE1_TO_TOWN; }
+                if ((SString)type.attribute("value").as_string() == "TOWN_TO_HOUSE1") { trigger->mapZone = MapZone::TOWN_TO_HOUSE1; }
+                else if ((SString)type.attribute("value").as_string() == "TOWN_TO_TAVERN") { trigger->mapZone = MapZone::TOWN_TO_TAVERN; }
+                else if ((SString)type.attribute("value").as_string() == "TOWN_TO_INN") { trigger->mapZone = MapZone::TOWN_TO_INN; }
 
                 mapTeleports.Add(trigger);
             }
