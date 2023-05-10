@@ -1,5 +1,6 @@
 #include "App.h"
 #include "SceneManager.h"
+#include "MenuManager.h"
 #include "SceneLogo.h"
 #include "SceneTitle.h"
 #include "SceneGame.h"
@@ -43,6 +44,7 @@ bool SceneManager::PreUpdate()
     if (sceneState == SceneState::SWITCH)
     {
         SwitchTo(nextScene);
+        app->menuManager->SetDefaultMenu();
         sceneState = SceneState::CONTINUE;
     }
 

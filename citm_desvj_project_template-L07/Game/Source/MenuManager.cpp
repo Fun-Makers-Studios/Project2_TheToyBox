@@ -52,31 +52,6 @@ bool MenuManager::Start()
 
 bool MenuManager::PreUpdate()
 {
-	switch (app->sceneManager->currentScene->id)
-	{
-		case SceneID::SCENE_LOGO:
-			currentMenu = nullptr;
-			break;
-
-		case SceneID::SCENE_TITLE:
-			currentMenu = FindMenuByID(MenuID::MENU_TITLE)->data;
-			break;
-
-		case SceneID::SCENE_GAME:
-			currentMenu = nullptr;
-			break;
-
-		case SceneID::SCENE_FIGHT:
-			currentMenu = FindMenuByID(MenuID::MENU_FIGHT)->data;
-			break;
-
-		case SceneID::SCENE_ENDING:
-			break;
-
-		default:
-			break;
-	}
-
 	if (currentMenu)
 	{
 		SetControlState(currentMenu, GuiControlState::ENABLED);
@@ -124,7 +99,11 @@ bool MenuManager::AddMenu(Menu* menu, pugi::xml_node& config)
 
 void MenuManager::SwitchTo(MenuID id)
 {
+	SetControlState(currentMenu, GuiControlState::DISABLED);
 
+	auto menu = FindMenuByID(id);
+	currentMenu = menu->data;
+	currentMenu->Start();
 }
 
 
@@ -155,5 +134,33 @@ void MenuManager::SetControlState(Menu* menu, GuiControlState _state)
 	{
 		control->data->state = GuiControlState::ENABLED;
 		control = control->next;
+	}
+}
+
+void MenuManager::SetDefaultMenu()
+{
+	switch (app->sceneManager->currentScene->id)
+	{
+	case SceneID::SCENE_LOGO:
+		currentMenu = nullptr;
+		break;
+
+	case SceneID::SCENE_TITLE:
+		currentMenu = FindMenuByID(MenuID::MENU_TITLE)->data;
+		break;
+
+	case SceneID::SCENE_GAME:
+		currentMenu = nullptr;
+		break;
+
+	case SceneID::SCENE_FIGHT:
+		currentMenu = FindMenuByID(MenuID::MENU_FIGHT)->data;
+		break;
+
+	case SceneID::SCENE_ENDING:
+		break;
+
+	default:
+		break;
 	}
 }

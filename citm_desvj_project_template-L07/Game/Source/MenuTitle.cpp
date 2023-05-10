@@ -90,23 +90,18 @@ bool MenuTitle::Update(float dt)
 
 		isSaved = true;
 	}
-
-	//Draw GUI
 	
 
 	/*
 	if (settingMenu == true)
 		app->render->DrawTexture(popImg_settings, 0, 0, NULL);
-
 	
 
 	// Principal buttons
 	playButton1->state = GuiControlState::ENABLED;
 	settingsButton2->state = GuiControlState::ENABLED;
 	creditsButton3->state = GuiControlState::ENABLED;
-	exitButton4->state = GuiControlState::ENABLED;
-
-	
+	exitButton4->state = GuiControlState::ENABLED;	
 	*/
 
 	return true;
@@ -148,7 +143,8 @@ bool MenuTitle::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case 5:
 		// Continue button (only if "save_game.xml" exists)
-		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
+		app->sceneManager->sceneState = SceneState::SWITCH;
+		app->sceneManager->nextScene = SceneID::SCENE_GAME;
 
 		app->sceneManager->sceneGame->continueGame = true;
 		app->audio->PlayFx(startSFX);
@@ -156,7 +152,8 @@ bool MenuTitle::OnGuiMouseClickEvent(GuiControl* control)
 
 	case 1:
 		// Play button
-		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
+		app->sceneManager->sceneState = SceneState::SWITCH;
+		app->sceneManager->nextScene = SceneID::SCENE_GAME;
 
 		app->audio->PlayFx(startSFX);
 		if (remove("save_game.xml") != 0)
@@ -165,37 +162,17 @@ bool MenuTitle::OnGuiMouseClickEvent(GuiControl* control)
 			LOG("Save Game Successfully Deleted");
 		break;
 
-	//case 2:
-	//case 6:
-	//	// Settings button
-	//	settingMenu = !settingMenu;
-	//	if (settingMenu == false)
-	//	{
-	//		if (continueButton5 != nullptr)
-	//			continueButton5->state = GuiControlState::NORMAL;
-	//		playButton1->state = GuiControlState::NORMAL;
-	//		settingsButton2->state = GuiControlState::NORMAL;
-	//		creditsButton3->state = GuiControlState::NORMAL;
-	//		exitButton4->state = GuiControlState::NORMAL;
-	//	}
-	//	app->audio->PlayFx(menuSelectionSFX);
-	//	break;
+	case 2:
+		// Settings button
+		
+		app->audio->PlayFx(menuSelectionSFX);
+		break;
 
-	//case 3:
-	//case 7:
-	//	// Credits button
-	//	creditsMenu = !creditsMenu;
-	//	if (creditsMenu == false)
-	//	{
-	//		if (continueButton5 != nullptr)
-	//			continueButton5->state = GuiControlState::NORMAL;
-	//		playButton1->state = GuiControlState::NORMAL;
-	//		settingsButton2->state = GuiControlState::NORMAL;
-	//		creditsButton3->state = GuiControlState::NORMAL;
-	//		exitButton4->state = GuiControlState::NORMAL;
-	//	}
-	//	app->audio->PlayFx(menuSelectionSFX);
-	//	break;
+	case 3:
+		// Credits button
+		
+		app->audio->PlayFx(menuSelectionSFX);
+		break;
 
 	default:
 		break;

@@ -40,6 +40,7 @@ public:
 	ListItem<Menu*>* FindMenuByID(MenuID id);
 
 	void SetControlState(Menu* menu, GuiControlState _state);
+	void SetDefaultMenu();
 
 public:
 

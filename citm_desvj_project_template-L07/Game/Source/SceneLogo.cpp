@@ -73,14 +73,16 @@ bool SceneLogo::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
 		LOG("PASA A SCENE DIRECTAMENTE");
-		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
+		app->sceneManager->sceneState = SceneState::SWITCH;
+		app->sceneManager->nextScene = SceneID::SCENE_GAME;
 	}
 	//SDL_RenderFillRect(app->render->renderer, NULL);
 
 	if (time >= 150)
 	{
 		LOG("PASA A TITLE SCENE");
-		app->sceneManager->SwitchTo(SceneID::SCENE_TITLE);
+		app->sceneManager->sceneState = SceneState::SWITCH;
+		app->sceneManager->nextScene = SceneID::SCENE_TITLE;
 	}
 
 	double easedY = 0;
