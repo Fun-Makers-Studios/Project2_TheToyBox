@@ -1,13 +1,6 @@
 #ifndef __MENU_H__
 #define __MENU_H__
 
-#include "NPC.h"
-#include "Item.h"
-
-#include "UI.h"
-#include "GuiControl.h"
-#include "GuiManager.h"
-
 
 enum class MenuID
 {
@@ -18,6 +11,8 @@ enum class MenuID
 	MENU_PARTY,
 	MENU_FIGHT
 };
+
+class GuiControl;
 
 class Menu
 {
