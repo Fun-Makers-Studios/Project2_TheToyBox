@@ -652,8 +652,8 @@ bool Map::CreateTeleports(pugi::xml_node mapNode)
                 trigger->shape = ColliderShape::RECTANGLE;
                 trigger->type = ColliderType::UNKNOWN;
                 //iPoint iPos = app->map->MapToWorld(playerBody->pos.x, playerBody->pos.y);
-                trigger->pos.x = object.attribute("x").as_double();
-                trigger->pos.y = object.attribute("y").as_double();
+                trigger->pos.x = object.attribute("x").as_double() + object.attribute("width").as_double() /2;
+                trigger->pos.y = object.attribute("y").as_double() + object.attribute("height").as_double() / 2;
                 trigger->w = object.attribute("width").as_double();
                 trigger->h = object.attribute("height").as_double();
                 trigger->r = 16;
@@ -684,10 +684,8 @@ bool Map::ChangeMap(const char* mapFileName_)
 
     mapFileName = app->configNode.child("map").child(mapFileName_).attribute("path").as_string();
 
-    // HEKATE
     mapTeleports.Clear();
     CleanUp();
-    //app->physics->DestroyMapColliders();
 
     if (Load())
     {

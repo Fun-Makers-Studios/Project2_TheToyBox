@@ -310,8 +310,8 @@ void Debug::DrawColliders()
 			tileCollider.type = ColliderType::WALL;
 			tileCollider.shape = ColliderShape::RECTANGLE;
 			tileCollider.mapZone = MapZone::UNKNOWN;
-			tileCollider.pos.x = bodyItem->data->pos.x + bodyItem->data->w / 2;
-			tileCollider.pos.y = bodyItem->data->pos.y + bodyItem->data->h / 2;
+			tileCollider.pos.x = bodyItem->data->pos.x;
+			tileCollider.pos.y = bodyItem->data->pos.y;
 			tileCollider.w = bodyItem->data->w;
 			tileCollider.h = bodyItem->data->h;
 			tileCollider.r = 16;
@@ -322,7 +322,7 @@ void Debug::DrawColliders()
 				colorCollider = Yellow;
 		}
 
-		SDL_Rect rect = { bodyItem->data->pos.x, bodyItem->data->pos.y , bodyItem->data->w, bodyItem->data->h };
+		SDL_Rect rect = { bodyItem->data->pos.x - bodyItem->data->w/2, bodyItem->data->pos.y - bodyItem->data->h / 2, bodyItem->data->w, bodyItem->data->h };
 		app->render->DrawRectangle(rect, colorCollider.r, colorCollider.g, colorCollider.b, 96);
 		app->render->DrawRectangle(rect, colorCollider.r, colorCollider.g, colorCollider.b, 196, false);
 	}
