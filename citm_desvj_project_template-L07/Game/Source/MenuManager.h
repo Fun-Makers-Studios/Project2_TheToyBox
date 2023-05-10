@@ -4,6 +4,11 @@
 #include "App.h"
 #include "Menu.h"
 #include "MenuTitle.h"
+#include "MenuSettings.h"
+#include "MenuPause.h"
+#include "MenuQuest.h"
+#include "MenuParty.h"
+#include "MenuFight.h"
 
 
 class MenuManager : public Module
@@ -43,6 +48,11 @@ public:
 
 	//Menus
 	MenuTitle* menuTitle;
+	MenuSettings* menuSettings;
+	/*MenuPause* menuPause;
+	MenuQuest* menuQuest;
+	MenuParty* menuParty;
+	MenuFight* menuFight;*/
 
 };
 

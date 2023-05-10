@@ -13,8 +13,18 @@ MenuManager::~MenuManager() {}
 bool MenuManager::Awake(pugi::xml_node& config)
 {
 	menuTitle = new MenuTitle();
+	menuSettings = new MenuSettings();
+	/*menuPause = new MenuPause();
+	menuQuest = new MenuQuest();
+	menuParty = new MenuParty();
+	menuFight = new MenuFight();*/
 
 	AddMenu(menuTitle, config);
+	AddMenu(menuSettings, config);
+	/*AddMenu(menuPause, config);
+	AddMenu(menuQuest, config);
+	AddMenu(menuParty, config);
+	AddMenu(menuFight, config);*/
 
 	return true;
 }
@@ -29,7 +39,6 @@ bool MenuManager::PreUpdate()
 	switch (app->sceneManager->currentScene->id)
 	{
 		case SceneID::SCENE_LOGO:
-
 			break;
 		case SceneID::SCENE_TITLE:
 			break;

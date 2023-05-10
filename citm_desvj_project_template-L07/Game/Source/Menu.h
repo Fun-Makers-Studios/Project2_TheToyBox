@@ -57,8 +57,7 @@ public:
 public:
 
 	MenuID id;
-	List<NPC*>npcs;
-	List<Item*>items;
+	List<GuiControl*> guiControlsList;
 };
 
 #endif // __MENU_H__

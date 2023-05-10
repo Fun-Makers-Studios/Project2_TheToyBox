@@ -38,7 +38,7 @@ public:
 
 public:
 
-	List<GuiControl*> guiControlsList;
+	//List<GuiControl*> guiControlsList;
 
 	float accumulatedTime = 0.0f;
 	float updateMsCycle = 0.0f;

@@ -1,8 +1,10 @@
 #include "GuiManager.h"
-#include "App.h"
-#include "Textures.h"
 
+#include "App.h"
+#include "MenuManager.h"
 #include "GuiButton.h"
+
+#include "Textures.h"
 #include "Audio.h"
 
 GuiManager::GuiManager() : Module()
@@ -53,8 +55,8 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	//Set the observer
 	guiControl->SetObserver(observer);
 
-	// Created GuiControls are add it to the list of controls
-	guiControlsList.Add(guiControl);
+	// Created GuiControls are added to the list of its Menu
+	observer->guiControlsList.Add(guiControl);
 
 	return guiControl;
 }
@@ -68,14 +70,16 @@ bool GuiManager::Update(float dt)
 bool GuiManager::PostUpdate()
 {
 	accumulatedTime += app->GetDT();
-	if (accumulatedTime >= updateMsCycle) doLogic = true;
+
+	if (accumulatedTime >= updateMsCycle)
+		doLogic = true;
 
 	// We control how often the GUI is updated to optimize the performance
-	if (doLogic == true)
+	if (doLogic)
 	{
-		for (size_t i = 0; i < guiControlsList.Count(); i++)
+		for (size_t i = 0; i < app->menuManager->currentMenu->guiControlsList.Count(); i++)
 		{
-			ListItem<GuiControl*>* control = guiControlsList.At(i);
+			ListItem<GuiControl*>* control = app->menuManager->currentMenu->guiControlsList.At(i);
 			control->data->Update(16);
 		}
 
@@ -97,7 +101,7 @@ bool GuiManager::PostUpdate()
 
 bool GuiManager::Draw()
 {
-	ListItem<GuiControl*>* control = guiControlsList.start;
+	ListItem<GuiControl*>* control = app->menuManager->currentMenu->guiControlsList.start;
 
 	while (control != nullptr)
 	{
@@ -130,7 +134,8 @@ void GuiManager::DestroyGuiControl(GuiControl* gui)
 
 bool GuiManager::CleanUp()
 {
-	ListItem<GuiControl*>* control = guiControlsList.start;
+	// HEKATE
+	/*ListItem<GuiControl*>* control = guiControlsList.start;
 
 	while (control != nullptr)
 	{
@@ -139,5 +144,5 @@ bool GuiManager::CleanUp()
 
 	return true;
 
-	return false;
+	return false;*/
 }

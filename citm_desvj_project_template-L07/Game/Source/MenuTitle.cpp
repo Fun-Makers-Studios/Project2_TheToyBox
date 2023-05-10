@@ -45,16 +45,13 @@ bool MenuTitle::Start()
 
 
 	// Set easing finished on title buttons
-	ListItem<GuiControl*>* control = app->guiManager->guiControlsList.start;
+	ListItem<GuiControl*>* control = guiControlsList.start;
 
 	while (control != nullptr)
 	{
-		if (control->data->id < 5)
-		{
-			control->data->easing->SetFinished(false);
-			control->data->easing->SetTotalTime(1 + 0.2 * control->data->id);
-		}
-
+		// HEKATE CHECK OUT OF BOUNDS
+		control->data->easing->SetFinished(false);
+		control->data->easing->SetTotalTime(1 + 0.2 * control->data->id);
 		control = control->next;
 	}
 
@@ -114,15 +111,6 @@ bool MenuTitle::Update(float dt)
 	settingsButton2->state = GuiControlState::ENABLED;
 	creditsButton3->state = GuiControlState::ENABLED;
 	exitButton4->state = GuiControlState::ENABLED;
-
-
-	// Setting Menu
-	decreaseMusicButton8->state = GuiControlState::DISABLED;
-	increaseMusicButton9->state = GuiControlState::DISABLED;
-	decreaseSFXButton10->state = GuiControlState::DISABLED;
-	increaseSFXButton11->state = GuiControlState::DISABLED;
-	fullscreenButton12->state = GuiControlState::DISABLED;
-	vsyncButton13->state = GuiControlState::DISABLED;
 
 	if (settingMenu == true)
 	{

@@ -36,12 +36,9 @@ public:
 	// UI
 	GuiButton* decreaseMusicButton8 = nullptr;
 	GuiButton* increaseMusicButton9 = nullptr;
-
 	GuiButton* decreaseSFXButton10 = nullptr;
 	GuiButton* increaseSFXButton11 = nullptr;
-
 	GuiButton* fullscreenButton12 = nullptr;
-
 	GuiButton* vsyncButton13 = nullptr;
 
 
