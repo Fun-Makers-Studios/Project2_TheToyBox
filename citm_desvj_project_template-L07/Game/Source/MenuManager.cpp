@@ -103,7 +103,8 @@ void MenuManager::SwitchTo(MenuID id)
 
 	auto menu = FindMenuByID(id);
 	currentMenu = menu->data;
-	currentMenu->Start();
+
+	SetControlState(currentMenu, GuiControlState::ENABLED);
 }
 
 
@@ -132,7 +133,7 @@ void MenuManager::SetControlState(Menu* menu, GuiControlState _state)
 
 	while (control != nullptr)
 	{
-		control->data->state = GuiControlState::ENABLED;
+		control->data->state = _state;
 		control = control->next;
 	}
 }

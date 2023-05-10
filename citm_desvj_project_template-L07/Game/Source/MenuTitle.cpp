@@ -104,6 +104,25 @@ bool MenuTitle::Update(float dt)
 	exitButton4->state = GuiControlState::ENABLED;	
 	*/
 
+	// Easing
+	ListItem<GuiControl*>* control = app->menuManager->currentMenu->guiControlsList.start;
+
+	while (control != nullptr)
+	{
+		if (!control->data->easing->GetFinished())
+		{
+			// HEKATE must pass dt!
+			double time = control->data->easing->TrackTime(dt);
+			double endPosX = control->data->boundsReset.x;
+			double endPosY = control->data->boundsReset.y;
+			double easedX = control->data->easing->EasingAnimation(endPosX + 200, endPosX, time, EasingType::EASE_OUT_ELASTIC);
+
+			control->data->bounds.x = easedX;
+		}
+		control = control->next;
+	}
+	
+
 	return true;
 }
 
@@ -164,13 +183,13 @@ bool MenuTitle::OnGuiMouseClickEvent(GuiControl* control)
 
 	case 2:
 		// Settings button
-		
+		app->menuManager->SwitchTo(MenuID::MENU_SETTINGS);
 		app->audio->PlayFx(menuSelectionSFX);
 		break;
 
 	case 3:
 		// Credits button
-		
+		app->menuManager->SwitchTo(MenuID::MENU_CREDITS);
 		app->audio->PlayFx(menuSelectionSFX);
 		break;
 

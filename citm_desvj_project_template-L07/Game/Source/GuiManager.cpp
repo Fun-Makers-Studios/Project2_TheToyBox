@@ -105,23 +105,13 @@ bool GuiManager::PostUpdate()
 
 bool GuiManager::Draw()
 {
+	if (app->menuManager->currentMenu == nullptr)
+		return true;
+
 	ListItem<GuiControl*>* control = app->menuManager->currentMenu->guiControlsList.start;
 
 	while (control != nullptr)
 	{
-		// HEKATE Define cases for all scenes (menuManager?)s
-		// Scene Title
-		if (!control->data->easing->GetFinished())
-		{
-			// HEKATE must pass dt!
-			double time = control->data->easing->TrackTime(16);
-			double endPosX = control->data->boundsReset.x;
-			double endPosY = control->data->boundsReset.y;
-			double easedX = control->data->easing->EasingAnimation(endPosX + 200, endPosX, time, EasingType::EASE_OUT_ELASTIC);
-
-			control->data->bounds.x = easedX;
-		}		
-
 		control->data->Draw(app->render);
 		control = control->next;
 	}

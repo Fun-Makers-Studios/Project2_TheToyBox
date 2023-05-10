@@ -35,14 +35,6 @@ public:
 	bool CleanUp();
 
 
-	/* Blit UI graphics funtions */
-	void BlitPlayerXPos();
-	void BlitPlayerYPos();
-	void BlitFPS();
-	void BlitAverageFPS();
-	void BlitDT();
-	void BlitTimeSinceStart();
-	void BlitFrameCount();
 	void BlitPartyStats();
 
 	uint font1_id = -1;

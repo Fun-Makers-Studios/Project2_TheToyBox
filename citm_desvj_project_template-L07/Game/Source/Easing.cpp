@@ -228,9 +228,11 @@ double Easing::EasingAnimation(int start, int end, double time, EasingType easin
 
 double Easing::TrackTime(double dt)
 {
+    double dtCap = fmin(dt, 32);
+
     if (elapsedTime < totalTime + delayTime)
     {
-        elapsedTime += (dt / 1000);
+        elapsedTime += (dtCap / 1000);
         return elapsedTime / (totalTime + delayTime);
     }
     else
