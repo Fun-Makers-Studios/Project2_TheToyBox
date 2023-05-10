@@ -2,6 +2,7 @@
 
 #include "App.h"
 #include "Menu.h"
+#include "SceneManager.h"
 #include "GuiManager.h"
 #include "Audio.h"
 #include "Log.h"
@@ -41,7 +42,7 @@ bool MenuSettings::Start()
 	vsyncButton13 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 13, "", 1, { 520, 532, 252, 76 }, this);
 
 	// Set easing finished on title buttons
-	ListItem<GuiControl*>* control = guiControlsList.start;
+	ListItem<GuiControl*>* control =  guiControlsList.start;
 
 	while (control != nullptr)
 	{
@@ -173,9 +174,9 @@ bool MenuSettings::CleanUp()
 {
 	LOG("Freeing TITLE SCENE");
 
-	app->tex->UnLoad(img);
+	/*app->tex->UnLoad(img);
 	app->tex->UnLoad(popImg_settings);
-	app->tex->UnLoad(popImg_credits);
+	app->tex->UnLoad(popImg_credits);*/
 
 
 	//STORE IN A LIST THIS BUTTONS AND THEN CHECK HERE IF NULLPTR TO CLEAN THEM UP

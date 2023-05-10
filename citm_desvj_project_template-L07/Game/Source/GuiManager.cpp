@@ -1,6 +1,7 @@
 #include "GuiManager.h"
 
 #include "App.h"
+#include "Menu.h"
 #include "MenuManager.h"
 #include "GuiControl.h"
 #include "GuiButton.h"
@@ -147,4 +148,7 @@ bool GuiManager::CleanUp()
 	return true;
 
 	return false;*/
+
+	return true;
+
 }

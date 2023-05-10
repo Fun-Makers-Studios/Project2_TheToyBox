@@ -2,6 +2,7 @@
 #define __MENU_SETTINGS_H__
 
 #include "Menu.h"
+#include "GuiControl.h"
 #include "GuiButton.h"
 
 struct SDL_Texture;

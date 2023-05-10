@@ -1,4 +1,10 @@
 #include "MenuManager.h"
+#include "MenuTitle.h"
+#include "MenuSettings.h"
+#include "MenuPause.h"
+#include "MenuQuest.h"
+#include "MenuParty.h"
+#include "MenuFight.h"
 
 #include "App.h"
 #include "SceneManager.h"

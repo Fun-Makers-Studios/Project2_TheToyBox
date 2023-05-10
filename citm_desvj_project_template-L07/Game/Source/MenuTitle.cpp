@@ -3,6 +3,7 @@
 #include "App.h"
 #include "Menu.h"
 #include "SceneManager.h"
+#include "GuiManager.h"
 #include "Audio.h"
 #include "Log.h"
 

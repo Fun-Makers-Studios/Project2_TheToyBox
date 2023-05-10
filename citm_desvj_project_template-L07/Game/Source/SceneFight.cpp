@@ -123,9 +123,9 @@ bool SceneFight::Start()
 
 	enemySelected = 0;
 
-	attackButton18 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 18, "attack", 7, { 100, 600, 252, 76 }, this);
+	/*attackButton18 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 18, "attack", 7, { 100, 600, 252, 76 }, this);
 	defenseButton19 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 19, "defend", 7, { 510, 600, 252, 76 }, this);
-	escapeButton20 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "escape", 7, { 915, 600, 252, 76 }, this);
+	escapeButton20 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "escape", 7, { 915, 600, 252, 76 }, this);*/
 
 	srand(time(NULL));
 
@@ -251,7 +251,7 @@ bool SceneFight::CleanUp()
 	if (tex_bg != nullptr) { app->tex->UnLoad(tex_bg); }
 	if (tex_arrow != nullptr) { app->tex->UnLoad(tex_arrow); }
 
-	app->guiManager->guiControlsList.Clear();
+	//app->guiManager->guiControlsList.Clear();
 
 	app->scaleObj->SetCurrentScale(ScaleType::WORLD);
 

@@ -48,7 +48,7 @@ public:
 	// Called before quitting
 	virtual bool CleanUp() { return true; };
 
-	virtual bool OnGuiMouseClickEvent(GuiControl* control) { return true; }
+	// HEKATE virtual bool OnGuiMouseClickEvent(GuiControl* control) { return true; }
 
 	// Returns the scene's ID
 	virtual SceneID GetID() { return id; }

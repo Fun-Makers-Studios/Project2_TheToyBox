@@ -16,9 +16,9 @@
 #include "PartyManager.h"
 #include "ParticleSystemManager.h"
 
+#include "MenuManager.h"
 #include "UI.h"
 #include "GuiManager.h"
-#include "MenuManager.h"
 #include "GuiButton.h"
 
 #include "Debug.h"
@@ -54,9 +54,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	partyManager = new PartyManager();
 	particleManager = new ParticleSystemManager();
 
+	menuManager = new MenuManager();
 	ui = new UI();
 	guiManager = new GuiManager();
-	menuManager = new MenuManager();
 	debug = new Debug();
 
 	render = new Render();
@@ -81,9 +81,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(partyManager, true);
 	AddModule(particleManager, true);
 
+	AddModule(menuManager, true);
 	AddModule(ui, true);
 	AddModule(guiManager, true);
-	AddModule(menuManager, true);
 	AddModule(debug, true);
 
 	// Render last to swap buffer

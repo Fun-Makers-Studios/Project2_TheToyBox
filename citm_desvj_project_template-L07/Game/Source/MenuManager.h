@@ -18,7 +18,6 @@ public:
 	MenuManager();
 	~MenuManager();
 
-
 	bool Awake(pugi::xml_node& config);
 
 	bool Start();
