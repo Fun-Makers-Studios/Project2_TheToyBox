@@ -136,6 +136,18 @@
     <ClCompile Include="Source\GuiManager.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\MenuFight.cpp">
+      <Filter>Game\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MenuParty.cpp">
+      <Filter>Game\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MenuPause.cpp">
+      <Filter>Game\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MenuQuest.cpp">
+      <Filter>Game\Menus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -311,6 +323,18 @@
     </ClInclude>
     <ClInclude Include="Source\GuiManager.h">
       <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MenuFight.h">
+      <Filter>Game\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MenuParty.h">
+      <Filter>Game\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MenuPause.h">
+      <Filter>Game\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MenuQuest.h">
+      <Filter>Game\Menus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

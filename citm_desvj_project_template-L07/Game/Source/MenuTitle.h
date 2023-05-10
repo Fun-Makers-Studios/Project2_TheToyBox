@@ -7,6 +7,8 @@
 
 struct SDL_Texture;
 
+
+
 class MenuTitle : public Menu
 {
 public:
@@ -35,12 +37,20 @@ public:
 	uint closemenuSFX = 0;
 
 	// UI
-	GuiButton* playButton1 = nullptr;
-	GuiButton* settingsButton2 = nullptr;
-	GuiButton* creditsButton3 = nullptr;
-	GuiButton* exitButton4 = nullptr;
-	GuiButton* continueButton5 = nullptr; // Show only if there is a saved game in "save_game.xml"
+	GuiButton* continueButton = nullptr; // Show only if there is a saved game in "save_game.xml"
+	GuiButton* playButton = nullptr;
+	GuiButton* settingsButton = nullptr;
+	GuiButton* creditsButton = nullptr;
+	GuiButton* exitButton = nullptr;
 
+	enum class ButtonID
+	{
+		CONTINUE,
+		PLAY,
+		SETTINGS,
+		CREDITS,
+		EXIT,
+	};
 
 private:
 	SDL_Texture* img = nullptr;

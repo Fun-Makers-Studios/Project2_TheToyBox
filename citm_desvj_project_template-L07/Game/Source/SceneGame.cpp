@@ -112,24 +112,7 @@ bool SceneGame::Start()
 	sophieImg = app->tex->Load(sophieImgPath);
 	saveTex = app->tex->Load(saveTexPath);
 
-	// UI
-	/*resumeButton14 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "resume", 7, { 515, 295, 252, 76 }, this);
-	backToTitleButton15 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 15, "back to title", 13, { 515, 375, 252, 76 }, this);
-	settingsButton16 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 16, "settings", 8, { 515, 455, 252, 76 }, this);
-	closeButton17 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 17, "save and exit", 12, { 515, 535, 252, 76 }, this);
-
-	decreaseMusicButton21 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 21, "decrease", 9, { 325, 200, 252, 76 }, this);
-	increaseMusicButton22 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 22, "increase", 9, { 700, 200, 252, 76 }, this);
-
-	decreaseSFXButton23 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 23, "decrease", 9, { 325, 315, 252, 76 }, this);
-	increaseSFXButton24 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 24, "increase", 9, { 700, 315, 252, 76 }, this);
-
-	fullscreenButton25 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 25, "", 1, { 520, 424, 252, 76 }, this);
-
-	vsyncButton26 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 26, "", 1, { 520, 532, 252, 76 }, this);
-
-	firstPMemberButton27 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 27, "z", 2, { 176, 140, 65, 76 }, this, ButtonType::SMALL);
-	secondPMemberButton28 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 28, "s", 2, { 176, 216, 64, 76 }, this, ButtonType::SMALL);*/
+	
 
 	ResetScene();
 
@@ -173,13 +156,6 @@ bool SceneGame::Update(float dt)
 	if (gamePaused != true)
 	{
 		Mix_ResumeMusic();
-
-		// God Mode key
-		/*if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-		{
-			player->godMode = !player->godMode;
-			app->audio->PlayFx(selectSFX);
-		}*/
 	}
 	
 	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && !dialogueManager->dialogueLoaded)
@@ -200,8 +176,6 @@ bool SceneGame::Update(float dt)
 	}
 	else
 	{
-		// Camera movement related to player's movement
-		// HEKATE FixCamera() Modified
 		FixCamera();
 	}
 
@@ -233,19 +207,6 @@ bool SceneGame::Update(float dt)
 		isNight = !isNight;
 		app->SaveGameRequest();
 	}
-
-	//Blit UI
-	/*app->ui->BlitFPS();
-
-	if (app->debug->debug)
-	{
-		app->ui->BlitPlayerXPos();
-		app->ui->BlitPlayerYPos();
-		app->ui->BlitAverageFPS();
-		app->ui->BlitDT();
-		app->ui->BlitTimeSinceStart();
-		app->ui->BlitFrameCount();
-	}*/
 
 	return true;
 }

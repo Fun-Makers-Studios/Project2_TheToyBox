@@ -35,13 +35,18 @@ public:
 	uint closemenuSFX = 0;
 
 	// UI
-	GuiButton* decreaseMusicButton8 = nullptr;
-	GuiButton* increaseMusicButton9 = nullptr;
-	GuiButton* decreaseSFXButton10 = nullptr;
-	GuiButton* increaseSFXButton11 = nullptr;
-	GuiButton* fullscreenButton12 = nullptr;
-	GuiButton* vsyncButton13 = nullptr;
+	GuiButton* decreaseMusicButton = nullptr;
+	GuiButton* increaseMusicButton = nullptr;
+	GuiButton* decreaseSFXButton = nullptr;
+	GuiButton* increaseSFXButton = nullptr;
+	GuiButton* fullscreenButton = nullptr;
+	GuiButton* vsyncButton = nullptr;
 
+	enum class ButtonID
+	{
+		FULL_SCREEN,
+		V_SYNC
+	};
 
 private:
 	SDL_Texture* img = nullptr;
