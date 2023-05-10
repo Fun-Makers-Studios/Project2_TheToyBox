@@ -51,5 +51,3 @@ private:
 
 
 #endif // !__SCENELOGO_H__
-
-

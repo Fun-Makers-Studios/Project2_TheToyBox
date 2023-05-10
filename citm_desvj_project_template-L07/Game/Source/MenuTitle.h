@@ -1,18 +1,17 @@
-#ifndef __SCENE_TITLE_H__
-#define __SCENE_TITLE_H__
+#ifndef __MENU_TITLE_H__
+#define __MENU_TITLE_H__
 
-#include "Scene.h"
-#include "SDL/include/SDL.h"
+#include "Menu.h"
 #include "GuiButton.h"
 
 struct SDL_Texture;
 
-class SceneTitle : public Scene
+class MenuTitle : public Menu
 {
 public:
 
-	SceneTitle();
-	virtual ~SceneTitle();
+	MenuTitle();
+	virtual ~MenuTitle();
 
 	bool Awake(pugi::xml_node& config);
 
@@ -33,10 +32,14 @@ public:
 	uint menuSelectionSFX = 0;
 	uint selectSFX = 0;
 	uint closemenuSFX = 0;
-	
 
-	bool settingMenu = false;
-	bool creditsMenu = false;
+	// UI
+	GuiButton* playButton1 = nullptr;
+	GuiButton* settingsButton2 = nullptr;
+	GuiButton* creditsButton3 = nullptr;
+	GuiButton* exitButton4 = nullptr;
+	GuiButton* continueButton5 = nullptr; // Show only if there is a saved game in "save_game.xml"
+
 
 private:
 	SDL_Texture* img = nullptr;
@@ -57,5 +60,4 @@ private:
 
 };
 
-#endif // __SCENE_TITLE_H__
-
+#endif // __MENU_TITLE_H__

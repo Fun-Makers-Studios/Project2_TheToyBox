@@ -20,7 +20,6 @@
 
 SceneEnding::SceneEnding() : Scene()
 {
-	sceneType = SceneType::ALWAYS_ACTIVE;
 	id = SceneID::SCENE_ENDING;
 }
 

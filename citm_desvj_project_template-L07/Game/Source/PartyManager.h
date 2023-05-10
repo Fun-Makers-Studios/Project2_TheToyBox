@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __PARTY_MANAGER_H__
+#define __PARTY_MANAGER_H__
 
 #include "SString.h"
 #include "List.h"
@@ -50,6 +51,7 @@ enum class MemberStatus
 class PartyMember
 {
 public:
+
 	PartyMember(MemberType type, MemberStatus status, SString name, uint maxHp, uint maxMana, uint level, uint attack, uint defense, uint speed, uint critRate, SDL_Texture* texture, iPoint fightPosition, SDL_Rect textureRect)
 	{
 		this->type = type;
@@ -91,9 +93,10 @@ public:
 	iPoint fightPosition;
 };
 
-class PartyManager: public Module
+class PartyManager : public Module
 {
 public:
+
 	PartyManager();
 
 	~PartyManager();
@@ -107,3 +110,5 @@ public:
 	const char* enemyToFight = nullptr;
 	uint maxPartyMembers = 3;
 };
+
+#endif // __PARTY_MANAGER_H__

@@ -1,5 +1,5 @@
-#ifndef __SCENEGAME_H__
-#define __SCENEGAME_H__
+#ifndef __SCENE_GAME_H__
+#define __SCENE_GAME_H__
 
 #include "Scene.h"
 #include "Player.h"
@@ -161,4 +161,4 @@ private:
 	bool exitGame = false;
 };
 
-#endif // __SCENEGAME_H__
+#endif // __SCENE_GAME_H__

@@ -18,7 +18,6 @@
 
 SceneFight::SceneFight() : Scene()
 {
-	sceneType = SceneType::FIGHT;
 	id = SceneID::SCENE_FIGHT;
 }
 

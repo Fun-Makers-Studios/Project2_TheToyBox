@@ -1,33 +1,31 @@
-#ifndef __SCENE_H__
-#define __SCENE_H__
+#ifndef __MENU_H__
+#define __MENU_H__
 
 #include "NPC.h"
 #include "Item.h"
 
-class GuiControl;
+#include "UI.h"
+#include "GuiControl.h"
+#include "GuiManager.h"
 
-enum class SceneState
+
+enum class MenuID
 {
-	CONTINUE,
-	SWITCH
+	MENU_TITLE,
+	MENU_SETTINGS,
+	MENU_PAUSE,
+	MENU_QUEST,
+	MENU_PARTY,
+	MENU_FIGHT
 };
 
-enum class SceneID
-{
-	SCENE_LOGO,
-	SCENE_TITLE,
-	SCENE_GAME,
-	SCENE_FIGHT,
-	SCENE_ENDING
-};
-
-class Scene
+class Menu
 {
 public:
 
-	Scene() {}
+	Menu() {}
 
-	virtual ~Scene() {}
+	virtual ~Menu() {}
 
 	// Called when scene initially created. Called once.
 	virtual bool Awake(pugi::xml_node& config) = 0;
@@ -51,16 +49,16 @@ public:
 	virtual bool OnGuiMouseClickEvent(GuiControl* control) { return true; }
 
 	// Returns the scene's ID
-	virtual SceneID GetID() { return id; }
+	virtual MenuID GetID() { return id; }
 
 	// Sets the scene's ID
-	virtual void SetID(SceneID id) { this->id = id; }
+	virtual void SetID(MenuID id) { this->id = id; }
 
 public:
 
-	SceneID id;
+	MenuID id;
 	List<NPC*>npcs;
 	List<Item*>items;
 };
 
-#endif // __SCENE_H__
+#endif // __MENU_H__

@@ -1,10 +1,6 @@
 #include "App.h"
 #include "SceneManager.h"
-#include "SceneLogo.h"
-#include "SceneTitle.h"
-#include "SceneGame.h"
-#include "SceneFight.h"
-#include "SceneEnding.h"
+
 
 SceneManager::SceneManager() : Module()
 {
@@ -79,7 +75,6 @@ bool SceneManager::AddScene(Scene* scene, pugi::xml_node& config)
     if (scene == nullptr) return false;
 
     scenes.Add(scene);
-    numScenes++;
     scene->Awake(config);
 
     return true;
@@ -87,21 +82,9 @@ bool SceneManager::AddScene(Scene* scene, pugi::xml_node& config)
 
 void SceneManager::SwitchTo(SceneID id)
 {
-    auto scene = FindSceneByID(id);
-
-    switch (currentScene->sceneType)
-    {
-    case SceneType::ALWAYS_ACTIVE:
-        break;
-    case SceneType::GAME:
-        break;
-    case SceneType::FIGHT:
-        break;
-    default:
-        break;
-    }
-
     currentScene->CleanUp();
+
+    auto scene = FindSceneByID(id);
     currentScene = scene->data;
     currentScene->Start();
 }

@@ -1,18 +1,17 @@
-#ifndef __SCENE_TITLE_H__
-#define __SCENE_TITLE_H__
+#ifndef __MENU_SETTINGS_H__
+#define __MENU_SETTINGS_H__
 
-#include "Scene.h"
-#include "SDL/include/SDL.h"
+#include "Menu.h"
 #include "GuiButton.h"
 
 struct SDL_Texture;
 
-class SceneTitle : public Scene
+class MenuSettings : public Menu
 {
 public:
 
-	SceneTitle();
-	virtual ~SceneTitle();
+	MenuSettings();
+	virtual ~MenuSettings();
 
 	bool Awake(pugi::xml_node& config);
 
@@ -28,15 +27,23 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 public:
-	uint titleSFX = 0;
+
 	uint startSFX = 0;
 	uint menuSelectionSFX = 0;
 	uint selectSFX = 0;
 	uint closemenuSFX = 0;
-	
 
-	bool settingMenu = false;
-	bool creditsMenu = false;
+	// UI
+	GuiButton* decreaseMusicButton8 = nullptr;
+	GuiButton* increaseMusicButton9 = nullptr;
+
+	GuiButton* decreaseSFXButton10 = nullptr;
+	GuiButton* increaseSFXButton11 = nullptr;
+
+	GuiButton* fullscreenButton12 = nullptr;
+
+	GuiButton* vsyncButton13 = nullptr;
+
 
 private:
 	SDL_Texture* img = nullptr;
@@ -57,5 +64,4 @@ private:
 
 };
 
-#endif // __SCENE_TITLE_H__
-
+#endif // __MENU_SETTINGS_H__
