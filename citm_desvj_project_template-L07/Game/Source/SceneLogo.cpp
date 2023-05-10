@@ -18,6 +18,7 @@
 
 SceneLogo::SceneLogo() : Scene()
 {
+	sceneType = SceneType::ALWAYS_ACTIVE;
 	id = SceneID::SCENE_LOGO;
 
 	easingLogo = new Easing(2);

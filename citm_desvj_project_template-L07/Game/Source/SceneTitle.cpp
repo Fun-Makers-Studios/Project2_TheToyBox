@@ -23,6 +23,7 @@
 
 SceneTitle::SceneTitle() : Scene()
 {
+	sceneType = SceneType::ALWAYS_ACTIVE;
 	id = SceneID::SCENE_TITLE;
 
 	/*Initialize*/
@@ -69,7 +70,32 @@ bool SceneTitle::Start()
 	app->debug->debug = false;
 	settingMenu = false;
 	creditsMenu = false;
+
+	// Declare a GUI Button and create it using the GuiManager
+	uint w, h;
+	app->win->GetWindowSize(w, h);
+	playButton1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "play", 5, {965, 350, 252, 76}, this);
+	settingsButton2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "settings", 9, { 965, 430, 252, 76 }, this);
+	creditsButton3 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "credits", 8,{ 965, 510, 252, 76 }, this);
+	exitButton4 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "exit", 5,{ 965, 590, 252, 76 }, this);
 	
+	//CHECK SAVE GAME button
+	pugi::xml_document gameStateFile;
+	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
+	if (result != NULL) 
+	{
+		continueButton5 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "continue", 9, { 965, 270, 252, 76 }, this);
+	}
+
+	decreaseMusicButton8 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "decrease", 9, { 325, 200, 252, 76 }, this);
+	increaseMusicButton9 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "increase", 9, { 700, 200, 252, 76 }, this);
+
+	decreaseSFXButton10 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, "decrease", 9, { 325, 315, 252, 76 }, this);
+	increaseSFXButton11 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "increase", 9, { 700, 315, 252, 76 }, this);
+
+	fullscreenButton12 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 12, "", 1, { 520, 424, 252, 76 }, this);
+
+	vsyncButton13 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 13, "", 1, { 520, 532, 252, 76 }, this);
 
 	// AUDIO
 	app->audio->PlayFx(titleSFX);
@@ -146,6 +172,57 @@ bool SceneTitle::Update(float dt)
 	creditsButton3->state = GuiControlState::ENABLED;
 	exitButton4->state = GuiControlState::ENABLED;
 
+
+	// Setting Menu
+	decreaseMusicButton8->state = GuiControlState::DISABLED;
+	increaseMusicButton9->state = GuiControlState::DISABLED;
+	decreaseSFXButton10->state = GuiControlState::DISABLED;
+	increaseSFXButton11->state = GuiControlState::DISABLED;
+	fullscreenButton12->state = GuiControlState::DISABLED;
+	vsyncButton13->state = GuiControlState::DISABLED;
+
+	if (settingMenu == true)
+	{
+		if(continueButton5 != nullptr && continueButton5->state != GuiControlState::DISABLED)
+			continueButton5->state = GuiControlState::DISABLED;
+
+		playButton1->state = GuiControlState::DISABLED;
+		settingsButton2->state = GuiControlState::DISABLED;
+		creditsButton3->state = GuiControlState::DISABLED;
+		exitButton4->state = GuiControlState::DISABLED;
+
+		decreaseMusicButton8->state = GuiControlState::NORMAL;
+		increaseMusicButton9->state = GuiControlState::NORMAL;
+		decreaseSFXButton10->state = GuiControlState::NORMAL;
+		increaseSFXButton11->state = GuiControlState::NORMAL;
+		fullscreenButton12->state = GuiControlState::NORMAL;
+		vsyncButton13->state = GuiControlState::NORMAL;
+
+		char music[10];
+		sprintf_s(music, 10, "%d", app->musicValue);
+		app->fonts->BlitText(630, 245, app->ui->font1_id, music);
+
+		char sfx[10];
+		sprintf_s(sfx, 10, "%d", app->sfxValue);
+		app->fonts->BlitText(630, 362, app->ui->font1_id, sfx);
+		
+		char fullscreen[10];
+		sprintf_s(fullscreen, 10, "%s", app->win->fullscreenMode ? "on" : "off");
+		app->fonts->BlitText(632, 458, app->ui->font1_id, fullscreen);
+		
+		char vsync[10];
+		sprintf_s(vsync, 10, "%s", app->render->limitFPS ? "on" : "off");
+		app->fonts->BlitText(632, 565, app->ui->font1_id, vsync);
+
+		//Close settings menu
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) 
+		{
+			settingMenu = !settingMenu;
+			app->audio->PlayFx(closemenuSFX);
+		}
+					
+	}
+
 	// Credits Menu
 	if (creditsMenu == true)
 	{
@@ -174,9 +251,10 @@ bool SceneTitle::PostUpdate()
 {
 	bool ret = true;
 
+	//if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	//	ret = false;
 
-
-	if (exitGame)
+	if (exitGame == true)
 		ret = false;
 
 	return ret;

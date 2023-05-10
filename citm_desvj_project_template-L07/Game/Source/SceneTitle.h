@@ -1,5 +1,5 @@
-#ifndef __SCENE_TITLE_H__
-#define __SCENE_TITLE_H__
+#ifndef __TITLESCREEN_H__
+#define __TITLESCREEN_H__
 
 #include "Scene.h"
 #include "SDL/include/SDL.h"
@@ -12,16 +12,26 @@ class SceneTitle : public Scene
 public:
 
 	SceneTitle();
+
+	// Destructor
 	virtual ~SceneTitle();
 
+	// Called before render is available
 	bool Awake(pugi::xml_node& config);
 
+	// Called before the first frame
 	bool Start();
 
+	// Called before all Updates
 	bool PreUpdate();
+
+	// Called each loop iteration
 	bool Update(float dt);
+
+	// Called before all Updates
 	bool PostUpdate();
 
+	// Called before quitting
 	bool CleanUp();
 
 	// Define multiple Gui Event methods
@@ -33,7 +43,24 @@ public:
 	uint menuSelectionSFX = 0;
 	uint selectSFX = 0;
 	uint closemenuSFX = 0;
+
+	// Declare a GUI Button and create it using the GuiManager
+	GuiButton* playButton1 = nullptr;
+	GuiButton* settingsButton2 = nullptr;
+	GuiButton* creditsButton3 = nullptr;
+	GuiButton* exitButton4 = nullptr;
+	GuiButton* continueButton5 = nullptr; // Show only if there is a saved game in "save_game.xml"
 	
+
+	GuiButton* decreaseMusicButton8 = nullptr;
+	GuiButton* increaseMusicButton9 = nullptr;
+
+	GuiButton* decreaseSFXButton10 = nullptr;
+	GuiButton* increaseSFXButton11 = nullptr;
+
+	GuiButton* fullscreenButton12 = nullptr;
+
+	GuiButton* vsyncButton13 = nullptr;
 
 	bool settingMenu = false;
 	bool creditsMenu = false;
@@ -57,5 +84,5 @@ private:
 
 };
 
-#endif // __SCENE_TITLE_H__
+#endif // !__TITLESCREEN_H__
 

@@ -21,6 +21,7 @@
 
 SceneGame::SceneGame() : Scene()
 {	
+	sceneType = SceneType::GAME;
 	id = SceneID::SCENE_GAME;
 
 	/*STORE INFO FROM XML*/

@@ -6,10 +6,11 @@
 
 class GuiControl;
 
-enum class SceneState
+enum class SceneType
 {
-	CONTINUE,
-	SWITCH
+	ALWAYS_ACTIVE,
+	GAME,
+	FIGHT
 };
 
 enum class SceneID
@@ -58,6 +59,7 @@ public:
 
 public:
 
+	SceneType sceneType;
 	SceneID id;
 	List<NPC*>npcs;
 	List<Item*>items;

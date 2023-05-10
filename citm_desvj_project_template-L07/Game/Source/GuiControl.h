@@ -4,7 +4,7 @@
 #include "Input.h"
 #include "Render.h"
 #include "Module.h"
-#include "Menu.h"
+#include "Scene.h"
 #include "Easing.h"
 
 #include "Point.h"
@@ -75,9 +75,9 @@ public:
 		section = { 0, 0, 0, 0 };
 	}
 
-	void SetObserver(Menu* menu)
+	void SetObserver(Scene* module)
 	{
-		observer = menu;
+		observer = module;
 	}
 
 	void NotifyObserver()
@@ -102,7 +102,7 @@ public:
 
 	//Fonts font;           // Text font
 
-	Menu* observer;        // Observer menu (it should probably be an array/list)
+	Scene* observer;        // Observer module (it should probably be an array/list)
 
 	Easing* easing;
 };

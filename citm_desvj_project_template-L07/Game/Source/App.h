@@ -32,7 +32,6 @@ class ParticleSystemManager;
 
 class UI;
 class GuiManager;
-class MenuManager;
 class Debug;
 
 class Render;
@@ -116,18 +115,15 @@ public:
 
 	SceneManager* sceneManager;
 
+	UI* ui;
+	EntityManager* entityManager;
+	PartyManager* partyManager;
 	Map* map;
 	Pathfinding* pathfinding;
 	Collisions* collisions;
-
-	EntityManager* entityManager;
-	PartyManager* partyManager;
-	ParticleSystemManager* particleManager;
-
-	UI* ui;
 	GuiManager* guiManager;
-	MenuManager* menuManager;
 	Debug* debug;
+	ParticleSystemManager* particleManager;
 
 	Render* render;
 

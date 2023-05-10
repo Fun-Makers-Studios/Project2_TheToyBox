@@ -1,5 +1,5 @@
-#ifndef __SCENE_MANAGER_H__
-#define __SCENE_MANAGER_H__
+#ifndef __SCENEMANAGER_H__
+#define __SCENEMANAGER_H__
 
 #include "Module.h"
 #include "List.h"
@@ -10,11 +10,25 @@
 #include "SceneEnding.h"
 
 
+enum class SceneState
+{
+	CONTINUE,
+	SWITCH
+};
+
+//Scenes
+class SceneLogo;
+class SceneTitle;
+class SceneGame;
+class SceneFight;
+class SceneEnding;
+
 class SceneManager : public Module
 {
 public:
 
 	SceneManager();
+
 	virtual ~SceneManager();
 
 	bool Awake(pugi::xml_node& config);
@@ -43,6 +57,7 @@ public:
 	SceneID nextScene;
 
 	List<Scene*> scenes;
+	uint numScenes = 0;
 
 	//Scenes
 	SceneLogo* sceneLogo;
@@ -52,4 +67,4 @@ public:
 	SceneEnding* sceneEnding;
 };
 
-#endif // __SCENE_MANAGER_H__
+#endif // __SCENEMANAGER_H__
