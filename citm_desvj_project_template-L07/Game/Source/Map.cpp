@@ -663,12 +663,21 @@ bool Map::CreateTeleports(pugi::xml_node mapNode)
 
                 if ((SString)type.attribute("value").as_string() == "TOWN_TO_HOUSE1") { trigger->mapZone = MapZone::TOWN_TO_HOUSE1; }
                 else if ((SString)type.attribute("value").as_string() == "TOWN_TO_TAVERN") { trigger->mapZone = MapZone::TOWN_TO_TAVERN; }
+
                 else if ((SString)type.attribute("value").as_string() == "TOWN_TO_INN") { trigger->mapZone = MapZone::TOWN_TO_INN; }
                 else if ((SString)type.attribute("value").as_string() == "HOUSE1_TO_TOWN") { trigger->mapZone = MapZone::HOUSE1_TO_TOWN; }
+
                 else if ((SString)type.attribute("value").as_string() == "HOUSEBASE_TO_HOUSEFLOOR") { trigger->mapZone = MapZone::HOUSEBASE_TO_HOUSEFLOOR; }
                 else if ((SString)type.attribute("value").as_string() == "HOUSEFLOOR_TO_HOUSEFBASE") { trigger->mapZone = MapZone::HOUSEFLOOR_TO_HOUSEFBASE; }
+
                 else if ((SString)type.attribute("value").as_string() == "TAVERN_TO_TOWN") { trigger->mapZone = MapZone::TAVERN_TO_TOWN; }
                 else if ((SString)type.attribute("value").as_string() == "INN_TO_TOWN") { trigger->mapZone = MapZone::INN_TO_TOWN; }
+
+                else if ((SString)type.attribute("value").as_string() == "TOWN_TO_CIRCUS") { trigger->mapZone = MapZone::TOWN_TO_CIRCUS; }
+                else if ((SString)type.attribute("value").as_string() == "CIRCUS_TO_TOWN") { trigger->mapZone = MapZone::CIRCUS_TO_TOWN; }
+
+                else if ((SString)type.attribute("value").as_string() == "CIRCUSONE_TO_CIRCUSTWO") { trigger->mapZone = MapZone::CIRCUSONE_TO_CIRCUSTWO; }
+                else if ((SString)type.attribute("value").as_string() == "CIRCUSONE_TO_CIRCUSTWO") { trigger->mapZone = MapZone::CIRCUSTWO_TO_CIRCUSONE; }
 
                 mapTeleports.Add(trigger);
             }

@@ -289,6 +289,38 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->isMapChanging = true;
         app->scaleObj->SetCurrentScale(ScaleType::WORLD);
         break;
+    
+    case MapZone::TOWN_TO_CIRCUS:
+        LOG("GO TO CIRCUS");
+        app->sceneManager->sceneGame->mapName = "circusOne";
+        app->sceneManager->sceneGame->player->newPos = { 160, 416 };
+        app->sceneManager->sceneGame->isMapChanging = true;
+        app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+        break;
+
+    case MapZone::CIRCUS_TO_TOWN:
+        LOG("GO TO TOWN");
+        app->sceneManager->sceneGame->mapName = "town";
+        app->sceneManager->sceneGame->player->newPos = { 1376, 96 };
+        app->sceneManager->sceneGame->isMapChanging = true;
+        app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+        break;
+    
+    case MapZone::CIRCUSONE_TO_CIRCUSTWO:
+        LOG("GO TO CIRCUS 2");
+        app->sceneManager->sceneGame->mapName = "circusTwo";
+        app->sceneManager->sceneGame->player->newPos = { 288, 1344 };
+        app->sceneManager->sceneGame->isMapChanging = true;
+        app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+        break;
+    
+    case MapZone::CIRCUSTWO_TO_CIRCUSONE:
+        LOG("GO TO CIRCUS");
+        app->sceneManager->sceneGame->mapName = "circusOne";
+        app->sceneManager->sceneGame->player->newPos = { 192, 1216 };
+        app->sceneManager->sceneGame->isMapChanging = true;
+        app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+        break;
 
     }
 }

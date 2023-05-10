@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="55" height="36" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="5">
+<map version="1.8" tiledversion="1.8.5" orientation="orthogonal" renderorder="right-down" width="55" height="36" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="7">
  <tileset firstgid="1" name="ground_tiles" tilewidth="32" tileheight="32" tilecount="15" columns="5">
   <image source="Tilesets/ground_tiles.png" width="160" height="96"/>
   <wangsets>
@@ -57,7 +57,7 @@
  <tileset firstgid="72" name="Torch" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="Tilesets/Torch.png" width="32" height="32"/>
  </tileset>
- <layer id="8" name="Sand" width="55" height="36" visible="0">
+ <layer id="8" name="Sand" width="55" height="36">
   <properties>
    <property name="Draw" type="bool" value="true"/>
    <property name="Navigation" type="bool" value="false"/>
@@ -2045,7 +2045,7 @@
    <tile gid="59"/>
   </data>
  </layer>
- <layer id="1" name="Grass" width="55" height="36" visible="0">
+ <layer id="1" name="Grass" width="55" height="36">
   <properties>
    <property name="Draw" type="bool" value="true"/>
    <property name="Navigation" type="bool" value="false"/>
@@ -4033,7 +4033,7 @@
    <tile gid="36"/>
   </data>
  </layer>
- <layer id="2" name="Houses" width="55" height="36" visible="0">
+ <layer id="2" name="Houses" width="55" height="36">
   <properties>
    <property name="Draw" type="bool" value="true"/>
    <property name="Navigation" type="bool" value="false"/>
@@ -9997,7 +9997,7 @@
    <tile gid="18"/>
   </data>
  </layer>
- <layer id="4" name="Collisions" width="55" height="36">
+ <layer id="4" name="Collisions" width="55" height="36" visible="0">
   <properties>
    <property name="Draw" type="bool" value="false"/>
    <property name="Navigation" type="bool" value="true"/>
@@ -10102,8 +10102,8 @@
    <tile/>
    <tile gid="19"/>
    <tile gid="19"/>
-   <tile gid="19"/>
-   <tile gid="19"/>
+   <tile/>
+   <tile/>
    <tile gid="19"/>
    <tile gid="19"/>
    <tile/>
@@ -12003,6 +12003,11 @@
   <object id="3" name="TOWN_TO_INN" x="1152" y="384" width="64" height="32">
    <properties>
     <property name="value" value="TOWN_TO_INN"/>
+   </properties>
+  </object>
+  <object id="5" name="TOWN_TO_CIRCUS" x="1408" y="32" width="64" height="32">
+   <properties>
+    <property name="value" value="TOWN_TO_CIRCUS"/>
    </properties>
   </object>
  </objectgroup>
