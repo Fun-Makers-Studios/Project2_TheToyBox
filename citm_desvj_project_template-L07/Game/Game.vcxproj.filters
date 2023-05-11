@@ -148,6 +148,9 @@
     <ClCompile Include="Source\MenuQuest.cpp">
       <Filter>Game\Menus</Filter>
     </ClCompile>
+    <ClCompile Include="Source\MenuCredits.cpp">
+      <Filter>Game\Menus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -334,6 +337,9 @@
       <Filter>Game\Menus</Filter>
     </ClInclude>
     <ClInclude Include="Source\MenuQuest.h">
+      <Filter>Game\Menus</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MenuCredits.h">
       <Filter>Game\Menus</Filter>
     </ClInclude>
   </ItemGroup>

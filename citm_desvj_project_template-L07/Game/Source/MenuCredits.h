@@ -1,5 +1,5 @@
-#ifndef __MENU_PAUSE_H__
-#define __MENU_PAUSE_H__
+#ifndef __MENU_CREDITS_H__
+#define __MENU_CREDITS_H__
 
 #include "Menu.h"
 #include "GuiControl.h"
@@ -7,12 +7,12 @@
 
 struct SDL_Texture;
 
-class MenuPause : public Menu
+class MenuCredits : public Menu
 {
 public:
 
-	MenuPause();
-	virtual ~MenuPause();
+	MenuCredits();
+	virtual ~MenuCredits();
 
 	bool Awake(pugi::xml_node& config);
 
@@ -50,4 +50,4 @@ private:
 
 };
 
-#endif // __MENU_PAUSE_H__
+#endif // __MENU_CREDITS_H__

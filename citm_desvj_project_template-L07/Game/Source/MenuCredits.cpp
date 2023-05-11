@@ -1,4 +1,4 @@
-#include "MenuPause.h"
+#include "MenuCredits.h"
 
 #include "App.h"
 #include "Menu.h"
@@ -13,19 +13,19 @@
 #include "Log.h"
 
 
-MenuPause::MenuPause() : Menu()
+MenuCredits::MenuCredits() : Menu()
 {
-	id = MenuID::MENU_PAUSE;
+	id = MenuID::MENU_CREDITS;
 
 	popImgCreditsPath = app->configNode.child("menuManager").child("popImage").attribute("creditstexturepath").as_string();
 }
 
 
-MenuPause::~MenuPause()
+MenuCredits::~MenuCredits()
 {}
 
 
-bool MenuPause::Awake(pugi::xml_node& config)
+bool MenuCredits::Awake(pugi::xml_node& config)
 {
 	LOG("Loading MenuPause");
 	bool ret = true;
@@ -34,7 +34,7 @@ bool MenuPause::Awake(pugi::xml_node& config)
 }
 
 
-bool MenuPause::Start()
+bool MenuCredits::Start()
 {
 	LOG("--STARTS PAUSE MENU--");
 
@@ -59,13 +59,13 @@ bool MenuPause::Start()
 }
 
 
-bool MenuPause::PreUpdate()
+bool MenuCredits::PreUpdate()
 {
 	return true;
 }
 
 
-bool MenuPause::Update(float dt)
+bool MenuCredits::Update(float dt)
 {
 	app->render->DrawTexture(popImg_credits, 0, 0, NULL);
 
@@ -79,7 +79,7 @@ bool MenuPause::Update(float dt)
 }
 
 
-bool MenuPause::PostUpdate()
+bool MenuCredits::PostUpdate()
 {
 	bool ret = true;
 
@@ -93,9 +93,9 @@ bool MenuPause::PostUpdate()
 }
 
 
-bool MenuPause::CleanUp()
+bool MenuCredits::CleanUp()
 {
-	LOG("Freeing TITLE SCENE");
+	LOG("Freeing MenuCredits");
 
 	app->tex->UnLoad(popImg_credits);
 
@@ -105,7 +105,7 @@ bool MenuPause::CleanUp()
 	return true;
 }
 
-bool MenuPause::OnGuiMouseClickEvent(GuiControl* control)
+bool MenuCredits::OnGuiMouseClickEvent(GuiControl* control)
 {
 	switch (control->id)
 	{

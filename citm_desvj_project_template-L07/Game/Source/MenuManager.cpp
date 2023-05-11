@@ -23,6 +23,7 @@ bool MenuManager::Awake(pugi::xml_node& config)
 {
 	menuTitle = new MenuTitle();
 	menuSettings = new MenuSettings();
+	menuCredits = new MenuCredits();
 	/*menuPause = new MenuPause();
 	menuQuest = new MenuQuest();
 	menuParty = new MenuParty();
@@ -30,6 +31,7 @@ bool MenuManager::Awake(pugi::xml_node& config)
 
 	AddMenu(menuTitle, config);
 	AddMenu(menuSettings, config);
+	AddMenu(menuCredits, config);
 	/*AddMenu(menuPause, config);
 	AddMenu(menuQuest, config);
 	AddMenu(menuParty, config);
@@ -47,6 +49,8 @@ bool MenuManager::Awake(pugi::xml_node& config)
 
 bool MenuManager::Start()
 {
+	exitGame = false;
+
 	ListItem<Menu*>* control = menus.start;
 
 	while (control != nullptr)
@@ -88,6 +92,9 @@ bool MenuManager::Update(float dt)
 
 bool MenuManager::PostUpdate()
 {
+	if (exitGame)
+		return false;
+
 	if (currentMenu)
 	{
 		currentMenu->PostUpdate();

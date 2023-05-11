@@ -34,6 +34,8 @@
 		<selectsfx selectSFXPath="Assets/Audio/FX/select.wav"/>
 		<openMenuSFX openMenuSFXPath="Assets/Audio/Fx/Menus/open_menu.wav"/>
 		<closeMenuSFX closeMenuSFXPath="Assets/Audio/Fx/Menus/close_menu.wav"/>
+
+		<popImage settingtexturepath="Assets/Textures/UI/SceneTitle/Settings/SettingsMenu.png" creditstexturepath="Assets/Textures/UI/SceneTitle/Credits/CreditsMenu.png"/>
 	</menuManager>
 	
 	<logo>
@@ -43,7 +45,6 @@
 
 	<title>
 		<backgroundimage texturepath="Assets/Textures/SceneTitle/title.png"/>
-		<popImage settingtexturepath="Assets/Textures/UI/SceneTitle/Settings/SettingsMenu.png" creditstexturepath="Assets/Textures/UI/SceneTitle/Credits/CreditsMenu.png"/>
 		<music musicPath="Assets/Audio/Music/menu.ogg"/>
 	</title>
 

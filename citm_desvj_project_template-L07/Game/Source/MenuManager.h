@@ -5,6 +5,7 @@
 #include "Menu.h"
 #include "MenuTitle.h"
 #include "MenuSettings.h"
+#include "MenuCredits.h"
 #include "MenuPause.h"
 #include "MenuQuest.h"
 #include "MenuParty.h"
@@ -51,10 +52,13 @@ public:
 	//Menus
 	MenuTitle* menuTitle;
 	MenuSettings* menuSettings;
+	MenuCredits* menuCredits;
 	/*MenuPause* menuPause;
 	MenuQuest* menuQuest;
 	MenuParty* menuParty;
 	MenuFight* menuFight;*/
+
+	bool exitGame = false;
 
 	//SFX
 	uint startSFX = 0;
@@ -66,6 +70,7 @@ public:
 	const char* selectSFXPath;
 	const char* openMenuSFXPath;
 	const char* closeMenuSFXPath;
+
 };
 
 

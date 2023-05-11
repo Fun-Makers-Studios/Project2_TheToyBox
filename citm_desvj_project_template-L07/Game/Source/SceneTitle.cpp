@@ -28,9 +28,8 @@ SceneTitle::SceneTitle() : Scene()
 
 	/*Initialize xml*/
 	imgPath = app->configNode.child("title").child("backgroundimage").attribute("texturepath").as_string();
-	//popImgCreditsPath = app->configNode.child("title").child("popImage").attribute("creditstexturepath").as_string();
-	select2SFXPath = app->configNode.child("player").child("SFXset").attribute("selectSFXPath").as_string();
 	musicPath = app->configNode.child("title").child("music").attribute("musicPath").as_string();
+	select2SFXPath = app->configNode.child("player").child("SFXset").attribute("selectSFXPath").as_string();
 }
 
 
@@ -60,7 +59,6 @@ bool SceneTitle::Start()
 	
 	/*Load*/
 	img = app->tex->Load(imgPath);
-	//popImg_credits = app->tex->Load(popImgCreditsPath);
 	titleIntroSFX = app->audio->LoadFx("Assets/Audio/Fx/SceneTitle/scene_title.wav");
 
 	// AUDIO
@@ -107,8 +105,6 @@ bool SceneTitle::CleanUp()
 	LOG("Freeing TITLE SCENE");
 
 	app->tex->UnLoad(img);
-
-	//app->tex->UnLoad(popImg_credits);
 
 	// HEKATE Should check all scene and menu CleanUp
 	 

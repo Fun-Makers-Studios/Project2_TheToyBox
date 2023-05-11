@@ -42,10 +42,8 @@ private:
 	const char* select2SFXPath;
 
 	bool isSaved = false;
-
 	bool exitGame = false;
 
 };
 
 #endif // __SCENE_TITLE_H__
-

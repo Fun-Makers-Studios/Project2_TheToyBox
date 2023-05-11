@@ -17,7 +17,7 @@ MenuSettings::MenuSettings() : Menu()
 {
 	id = MenuID::MENU_SETTINGS;
 
-	popImgSettingsPath = app->configNode.child("title").child("popImage").attribute("settingtexturepath").as_string();
+	popImgSettingsPath = app->configNode.child("menuManager").child("popImage").attribute("settingtexturepath").as_string();
 }
 
 
@@ -78,7 +78,6 @@ bool MenuSettings::PreUpdate()
 
 bool MenuSettings::Update(float dt)
 {
-
 	app->render->DrawTexture(popImg_settings, 0, 0, NULL);
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)

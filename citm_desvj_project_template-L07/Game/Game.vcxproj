@@ -103,6 +103,7 @@
     <ClCompile Include="Source\Debug.cpp" />
     <ClCompile Include="Source\DIalogue.cpp" />
     <ClCompile Include="Source\DialogueManager.cpp" />
+    <ClCompile Include="Source\MenuCredits.cpp" />
     <ClCompile Include="Source\MenuFight.cpp" />
     <ClCompile Include="Source\MenuManager.cpp" />
     <ClCompile Include="Source\MenuParty.cpp" />
@@ -152,6 +153,7 @@
     <ClInclude Include="Source\Dialogue.h" />
     <ClInclude Include="Source\DialogueManager.h" />
     <ClInclude Include="Source\Menu.h" />
+    <ClInclude Include="Source\MenuCredits.h" />
     <ClInclude Include="Source\MenuFight.h" />
     <ClInclude Include="Source\MenuManager.h" />
     <ClInclude Include="Source\MenuParty.h" />

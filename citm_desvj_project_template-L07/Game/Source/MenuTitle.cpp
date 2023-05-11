@@ -117,12 +117,6 @@ bool MenuTitle::PostUpdate()
 {
 	bool ret = true;
 
-	//if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	//	ret = false;
-
-	if (exitGame == true)
-		ret = false;
-
 	return ret;
 }
 
@@ -170,6 +164,10 @@ bool MenuTitle::OnGuiMouseClickEvent(GuiControl* control)
 	case (uint32)ControlID::CREDITS:
 		app->menuManager->SwitchTo(MenuID::MENU_CREDITS);
 		app->audio->PlayFx(app->menuManager->openMenuSFX);
+		break;
+
+	case (uint32)ControlID::EXIT:
+		app->menuManager->exitGame = true;
 		break;
 
 	default:

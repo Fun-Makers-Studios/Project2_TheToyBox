@@ -48,8 +48,6 @@ public:
 private:
 
 	bool isSaved = false;
-	bool exitGame = false;
-
 };
 
 #endif // __MENU_TITLE_H__
