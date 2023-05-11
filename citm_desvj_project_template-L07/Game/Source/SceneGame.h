@@ -148,8 +148,10 @@ private:
 	GuiButton* secondPMemberButton28 = nullptr;
 
 	// Particle system
-	ParticleSystem* smokePS;
-	ParticleSystem* firefliesPS;
+	ParticleSystem* smokePS = nullptr;
+	ParticleSystem* firefliesPS = nullptr;
+	ParticleSystem* fireTorchPS = nullptr;
+	List<ParticleSystem*> particlesList;
 
 	bool isNight = false;
 

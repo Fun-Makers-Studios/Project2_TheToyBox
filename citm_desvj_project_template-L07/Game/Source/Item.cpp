@@ -22,7 +22,8 @@ Item::Item(pugi::xml_node parameters) : Entity(EntityType::ITEM)
 	double posY = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
 	itemType = parameters.attribute("itemType").as_string();
-
+	animable = parameters.attribute("animable").as_bool();
+	frames = parameters.attribute("frames").as_uint();
 	// Create collider body
 	body = new Body();	// HEKATE cleanup
 	body->type = ColliderType::ITEM;
@@ -49,13 +50,21 @@ bool Item::Awake()
 
 bool Item::Start()
 {
-	width = 32;
-	height = 32;
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 	
 	rect = {0, 0, 16, 16};
+
+	if (animable) {
+		for (int i = 0; i < frames; i++)
+		{
+			idle.PushBack({ i * 16, 0, 16, 16 });
+		}
+		idle.loop = true;
+		idle.speed = 0.15f;
+		currentAnim = &idle;
+	}
 
 	return true;
 }
@@ -77,8 +86,18 @@ bool Item::Update()
 	}
 	else 
 	{
-		ScaleType scale = app->scaleObj->GetCurrentScale();
-		app->render->DrawTexture(texture, body->pos.x - body->r, body->pos.y - body->r, &rect, SDL_FLIP_NONE, scale);
+		if (animable)
+		{
+			SDL_Rect rect = currentAnim->GetCurrentFrame();
+			ScaleType scale = app->scaleObj->GetCurrentScale();
+			app->render->DrawTexture(texture, body->pos.x - body->r, body->pos.y - body->r, &rect, SDL_FLIP_NONE, scale);
+			currentAnim->Update();
+		}
+		else {
+			ScaleType scale = app->scaleObj->GetCurrentScale();
+			app->render->DrawTexture(texture, body->pos.x - body->r, body->pos.y - body->r, &rect, SDL_FLIP_NONE, scale);
+		}
+		
 	}
 
 	return true;

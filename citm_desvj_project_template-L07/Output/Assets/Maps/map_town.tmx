@@ -6021,7 +6021,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="9" name="Props" width="55" height="36" visible="0">
+ <layer id="9" name="Props" width="55" height="36">
   <properties>
    <property name="Draw" type="bool" value="true"/>
    <property name="Navigation" type="bool" value="false"/>

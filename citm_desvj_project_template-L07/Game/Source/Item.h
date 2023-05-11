@@ -39,6 +39,11 @@ public:
 
 private:
 
+	bool animable = false;
+	uint frames;
+	Animation* anim = nullptr;
+	Animation idle;
+
 	SDL_Texture* texture;
 	const char* texturePath;
 
@@ -48,9 +53,6 @@ private:
 	SDL_Rect rect;
 
 	int timeMov = 0;
-
-	int width;
-	int height;
 
 	ParticleSystem* takeItemPS = nullptr;
 };

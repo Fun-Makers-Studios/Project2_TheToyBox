@@ -651,7 +651,6 @@ bool Map::CreateTeleports(pugi::xml_node mapNode)
                 Body* trigger = new Body();
                 trigger->shape = ColliderShape::RECTANGLE;
                 trigger->type = ColliderType::UNKNOWN;
-                //iPoint iPos = app->map->MapToWorld(playerBody->pos.x, playerBody->pos.y);
                 trigger->pos.x = object.attribute("x").as_double() + object.attribute("width").as_double() /2;
                 trigger->pos.y = object.attribute("y").as_double() + object.attribute("height").as_double() / 2;
                 trigger->w = object.attribute("width").as_double();

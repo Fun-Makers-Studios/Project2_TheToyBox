@@ -558,6 +558,8 @@ void SceneGame::ActiveParticles()
 			firefliesPS = app->particleManager->CreateParticleSystem({0, 0}, Blueprint::FIREFLIES);
 		}
 		
+		
+		
 	}
 	else
 	{
@@ -567,6 +569,8 @@ void SceneGame::ActiveParticles()
 			firefliesPS->TurnOff();
 			firefliesPS = nullptr;
 		}
+
+		
 
 	}
 }
