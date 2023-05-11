@@ -10,10 +10,11 @@
 #include "App.h"
 #include "SceneManager.h"
 #include "GuiManager.h"
+#include "Audio.h"
 
 MenuManager::MenuManager() : Module()
 {
-	name.Create("menumanager");
+	name.Create("menuManager");
 }
 
 MenuManager::~MenuManager() {}
@@ -34,6 +35,13 @@ bool MenuManager::Awake(pugi::xml_node& config)
 	AddMenu(menuParty, config);
 	AddMenu(menuFight, config);*/
 
+
+	// Properties from xml
+	startSFXPath = app->configNode.child("menuManager").child("startsfx").attribute("startSFXPath").as_string();
+	selectSFXPath = app->configNode.child("menuManager").child("selectsfx").attribute("selectSFXPath").as_string();
+	openMenuSFXPath = app->configNode.child("menuManager").child("openMenuSFX").attribute("openMenuSFXPath").as_string();
+	closeMenuSFXPath = app->configNode.child("menuManager").child("closeMenuSFX").attribute("closeMenuSFXPath").as_string();
+
 	return true;
 }
 
@@ -46,6 +54,12 @@ bool MenuManager::Start()
 		control->data->Start();
 		control = control->next;
 	}
+
+	// Load SFX
+	startSFX = app->audio->LoadFx(startSFXPath);
+	selectSFX = app->audio->LoadFx(selectSFXPath);
+	openMenuSFX = app->audio->LoadFx(openMenuSFXPath);
+	closeMenuSFX = app->audio->LoadFx(closeMenuSFXPath);
 
 	return true;
 }

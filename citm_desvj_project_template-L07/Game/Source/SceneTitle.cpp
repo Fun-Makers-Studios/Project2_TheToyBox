@@ -29,8 +29,8 @@ SceneTitle::SceneTitle() : Scene()
 	/*Initialize xml*/
 	imgPath = app->configNode.child("title").child("backgroundimage").attribute("texturepath").as_string();
 	//popImgCreditsPath = app->configNode.child("title").child("popImage").attribute("creditstexturepath").as_string();
-	selectSFXPath = app->configNode.child("title").child("selectsfx").attribute("selectSFXPath").as_string();
 	select2SFXPath = app->configNode.child("player").child("SFXset").attribute("selectSFXPath").as_string();
+	musicPath = app->configNode.child("title").child("music").attribute("musicPath").as_string();
 }
 
 
@@ -52,6 +52,7 @@ bool SceneTitle::Start()
 	LOG("--STARTS TITLE SCENE--");
 
 	app->render->camera.x = 0;
+	app->debug->debug = false;
 
 	app->map->Disable();
 	app->menuManager->Enable();
@@ -60,20 +61,11 @@ bool SceneTitle::Start()
 	/*Load*/
 	img = app->tex->Load(imgPath);
 	//popImg_credits = app->tex->Load(popImgCreditsPath);
-	menuSelectionSFX = app->audio->LoadFx(selectSFXPath);
-	selectSFX = app->audio->LoadFx(select2SFXPath);
-	startSFX = app->audio->LoadFx("Assets/Audio/Fx/SceneTitle/fx5.wav");
-	titleSFX = app->audio->LoadFx("Assets/Audio/Fx/SceneTitle/title_screen.wav");
-	closemenuSFX = app->audio->LoadFx("Assets/Audio/Fx/SceneTitle/close_menu.wav");
-
-	app->debug->debug = false;
-	settingMenu = false;
-	creditsMenu = false;
-	
+	titleIntroSFX = app->audio->LoadFx("Assets/Audio/Fx/SceneTitle/scene_title.wav");
 
 	// AUDIO
-	app->audio->PlayFx(titleSFX);
-	app->audio->PlayMusic("Assets/Audio/Music/menu.ogg");
+	app->audio->PlayFx(titleIntroSFX);
+	app->audio->PlayMusic(musicPath);
 
 
 	return true;

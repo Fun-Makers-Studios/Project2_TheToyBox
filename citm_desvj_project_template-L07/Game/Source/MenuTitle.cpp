@@ -33,17 +33,17 @@ bool MenuTitle::Start()
 	LOG("--STARTS TITLE MENU--");
 
 	// Declare a GUI Button and create it using the GuiManager
-	playButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "play", 5, { 965, 350, 252, 76 }, this);
-	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 2, "settings", 9, { 965, 430, 252, 76 }, this);
-	creditsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 3, "credits", 8, { 965, 510, 252, 76 }, this);
-	exitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 4, "exit", 5, { 965, 590, 252, 76 }, this);
+	playButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PLAY, "play", 5, { 965, 350, 252, 76 }, this);
+	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SETTINGS, "settings", 9, { 965, 430, 252, 76 }, this);
+	creditsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::CREDITS, "credits", 8, { 965, 510, 252, 76 }, this);
+	exitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::EXIT, "exit", 5, { 965, 590, 252, 76 }, this);
 
 	//CHECK SAVE GAME button
 	pugi::xml_document gameStateFile;
 	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
 	if (result != NULL)
 	{
-		continueButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 5, "continue", 9, { 965, 270, 252, 76 }, this);
+		continueButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::CONTINUE, "continue", 9, { 965, 270, 252, 76 }, this);
 	}
 
 
@@ -70,7 +70,6 @@ bool MenuTitle::PreUpdate()
 
 bool MenuTitle::Update(float dt)
 {
-	int fool = 0;
 	//CHECK SAVE GAME
 	
 	pugi::xml_document gameStateFile;
@@ -90,19 +89,6 @@ bool MenuTitle::Update(float dt)
 
 		isSaved = true;
 	}
-	
-
-	/*
-	if (settingMenu == true)
-		app->render->DrawTexture(popImg_settings, 0, 0, NULL);
-	
-
-	// Principal buttons
-	playButton1->state = GuiControlState::ENABLED;
-	settingsButton2->state = GuiControlState::ENABLED;
-	creditsButton3->state = GuiControlState::ENABLED;
-	exitButton4->state = GuiControlState::ENABLED;	
-	*/
 
 	// Easing
 	ListItem<GuiControl*>* control = app->menuManager->currentMenu->guiControlsList.start;
@@ -156,37 +142,34 @@ bool MenuTitle::OnGuiMouseClickEvent(GuiControl* control)
 {
 	switch (control->id)
 	{
-	case 5:
-		// Continue button (only if "save_game.xml" exists)
+	case (uint32)ControlID::CONTINUE:
+		// Only if "save_game.xml" exists
 		app->sceneManager->sceneState = SceneState::SWITCH;
 		app->sceneManager->nextScene = SceneID::SCENE_GAME;
 
 		app->sceneManager->sceneGame->continueGame = true;
-		app->audio->PlayFx(startSFX);
+		app->audio->PlayFx(app->menuManager->startSFX);
 		break;
 
-	case 1:
-		// Play button
+	case (uint32)ControlID::PLAY:
 		app->sceneManager->sceneState = SceneState::SWITCH;
 		app->sceneManager->nextScene = SceneID::SCENE_GAME;
 
-		app->audio->PlayFx(startSFX);
+		app->audio->PlayFx(app->menuManager->startSFX);
 		if (remove("save_game.xml") != 0)
 			LOG("Error at Deleting Save Game");
 		else
 			LOG("Save Game Successfully Deleted");
 		break;
 
-	case 2:
-		// Settings button
+	case (uint32)ControlID::SETTINGS:
 		app->menuManager->SwitchTo(MenuID::MENU_SETTINGS);
-		app->audio->PlayFx(menuSelectionSFX);
+		app->audio->PlayFx(app->menuManager->openMenuSFX);
 		break;
 
-	case 3:
-		// Credits button
+	case (uint32)ControlID::CREDITS:
 		app->menuManager->SwitchTo(MenuID::MENU_CREDITS);
-		app->audio->PlayFx(menuSelectionSFX);
+		app->audio->PlayFx(app->menuManager->openMenuSFX);
 		break;
 
 	default:

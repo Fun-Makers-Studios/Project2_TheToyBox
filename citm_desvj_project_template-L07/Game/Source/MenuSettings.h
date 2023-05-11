@@ -29,11 +29,6 @@ public:
 
 public:
 
-	uint startSFX = 0;
-	uint menuSelectionSFX = 0;
-	uint selectSFX = 0;
-	uint closemenuSFX = 0;
-
 	// UI
 	GuiButton* decreaseMusicButton = nullptr;
 	GuiButton* increaseMusicButton = nullptr;
@@ -42,7 +37,7 @@ public:
 	GuiButton* fullscreenButton = nullptr;
 	GuiButton* vsyncButton = nullptr;
 
-	enum class ButtonID : uint32
+	enum class ControlID : uint32
 	{
 		FULL_SCREEN,
 		V_SYNC
@@ -51,18 +46,7 @@ public:
 private:
 
 	SDL_Texture* popImg_settings = nullptr;
-
-
 	const char* popImgSettingsPath;
-
-	const char* musicPath;
-	const char* startSFXPath;
-	const char* selectSFXPath;
-	const char* select2SFXPath;
-
-	bool isSaved = false;
-
-	bool exitGame = false;
 
 };
 

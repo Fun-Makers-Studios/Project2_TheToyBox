@@ -7,8 +7,6 @@
 
 struct SDL_Texture;
 
-
-
 class MenuTitle : public Menu
 {
 public:
@@ -30,11 +28,6 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 public:
-	uint titleSFX = 0;
-	uint startSFX = 0;
-	uint menuSelectionSFX = 0;
-	uint selectSFX = 0;
-	uint closemenuSFX = 0;
 
 	// UI
 	GuiButton* continueButton = nullptr; // Show only if there is a saved game in "save_game.xml"
@@ -43,7 +36,7 @@ public:
 	GuiButton* creditsButton = nullptr;
 	GuiButton* exitButton = nullptr;
 
-	enum class ButtonID
+	enum class ControlID
 	{
 		CONTINUE,
 		PLAY,
@@ -54,13 +47,7 @@ public:
 
 private:
 
-	const char* musicPath;
-	const char* startSFXPath;
-	const char* selectSFXPath;
-	const char* select2SFXPath;
-
 	bool isSaved = false;
-
 	bool exitGame = false;
 
 };

@@ -28,12 +28,8 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 public:
-	uint titleSFX = 0;
-	uint startSFX = 0;
-	uint menuSelectionSFX = 0;
-	uint selectSFX = 0;
-	uint closemenuSFX = 0;
-	
+
+	uint titleIntroSFX = 0;	
 
 	bool settingMenu = false;
 	bool creditsMenu = false;
@@ -42,10 +38,7 @@ private:
 	SDL_Texture* img = nullptr;
 
 	const char* imgPath;
-
 	const char* musicPath;
-	const char* startSFXPath;
-	const char* selectSFXPath;
 	const char* select2SFXPath;
 
 	bool isSaved = false;

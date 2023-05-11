@@ -9,7 +9,7 @@
 
 SceneManager::SceneManager() : Module()
 {
-    name.Create("scenemanager");
+    name.Create("sceneManager");
 }
 
 SceneManager::~SceneManager() {}

@@ -56,6 +56,16 @@ public:
 	MenuParty* menuParty;
 	MenuFight* menuFight;*/
 
+	//SFX
+	uint startSFX = 0;
+	uint selectSFX = 0;
+	uint openMenuSFX = 0;
+	uint closeMenuSFX = 0;
+
+	const char* startSFXPath;
+	const char* selectSFXPath;
+	const char* openMenuSFXPath;
+	const char* closeMenuSFXPath;
 };
 
 

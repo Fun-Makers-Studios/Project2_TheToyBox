@@ -29,6 +29,13 @@
 		<font3 texturepath="Assets/Textures/UI/Fonts/font3.png"/>
 	</ui>
 
+	<menuManager>
+		<startsfx startSFXPath="Assets/Audio/Fx/Menus/fx5.wav"/>
+		<selectsfx selectSFXPath="Assets/Audio/FX/select.wav"/>
+		<openMenuSFX openMenuSFXPath="Assets/Audio/Fx/Menus/open_menu.wav"/>
+		<closeMenuSFX closeMenuSFXPath="Assets/Audio/Fx/Menus/close_menu.wav"/>
+	</menuManager>
+	
 	<logo>
 		<backgroundimage texturepath="Assets/Textures/SceneLogo/logo.png"/>
 		<music musicPath="Assets/Audio/Music/logoedit.ogg"/>
@@ -37,9 +44,7 @@
 	<title>
 		<backgroundimage texturepath="Assets/Textures/SceneTitle/title.png"/>
 		<popImage settingtexturepath="Assets/Textures/UI/SceneTitle/Settings/SettingsMenu.png" creditstexturepath="Assets/Textures/UI/SceneTitle/Credits/CreditsMenu.png"/>
-		<music musicPath="Assets/Audio/Music/scene_title.ogg"/>
-		<startsfx startSFXPath="Assets/Audio/Fx/start_game.wav"/>
-		<selectsfx selectSFXPath="Assets/Audio/FX/menu_selection.wav"/>
+		<music musicPath="Assets/Audio/Music/menu.ogg"/>
 	</title>
 
 	<scene>

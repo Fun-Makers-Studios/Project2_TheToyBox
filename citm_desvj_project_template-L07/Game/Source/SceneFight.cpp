@@ -263,23 +263,23 @@ bool SceneFight::OnGuiMouseClickEvent(GuiControl* control)
 	// L15: TODO 5: Implement the OnGuiMouseClickEvent method
 	switch (control->id)
 	{
-	case 18: //Attack
-		Attack(turnMember, enemyList.At(enemySelected)->data);
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);	
-		break;
+	//case 18: //Attack
+	//	Attack(turnMember, enemyList.At(enemySelected)->data);
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);	
+	//	break;
 
-	case 19: //Defense
-		turn++;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
-		break;
+	//case 19: //Defense
+	//	turn++;
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
+	//	break;
 
-	case 20: //Skip turn
-		Escape();
-		app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
-		break;
+	//case 20: //Skip turn
+	//	Escape();
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
+	//	break;
 
-	default:
-		break;
+	//default:
+	//	break;
 	}
 
 	return true;

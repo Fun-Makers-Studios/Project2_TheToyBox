@@ -290,113 +290,113 @@ bool SceneGame::CleanUp()
 
 bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 {
-	switch (control->id)
-	{
-	case 14:
-		if (!dialogueManager->dialogueLoaded) { gamePaused = !gamePaused; }
-		pauseMenu = !pauseMenu;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
+	//switch (control->id)
+	//{
+	//case 14:
+	//	if (!dialogueManager->dialogueLoaded) { gamePaused = !gamePaused; }
+	//	pauseMenu = !pauseMenu;
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+	//	break;
 
-	case 15: // Back to title
-		pauseMenu = !pauseMenu;
-		app->sceneManager->sceneState = SceneState::SWITCH;
-		app->sceneManager->nextScene = SceneID::SCENE_TITLE;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
-		break;
+	//case 15: // Back to title
+	//	pauseMenu = !pauseMenu;
+	//	app->sceneManager->sceneState = SceneState::SWITCH;
+	//	app->sceneManager->nextScene = SceneID::SCENE_TITLE;
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
+	//	break;
 
-	case 16:
-		//Here goes settings menu
-		settingSceneMenu = !settingSceneMenu;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
-	
-	case 17:
-		showSavingState = true;
-		app->SaveGameRequest();
-		//exitGame = !exitGame;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
-	
-	case 21:
-		// Decrease music volume
-		app->musicValue = app->musicValue - 1;
-		if (app->musicValue <= 0)
-			app->musicValue = 0;
-		if (app->musicValue >= 100)
-			app->musicValue = 100;
-		Mix_VolumeMusic(app->musicValue);
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
+	//case 16:
+	//	//Here goes settings menu
+	//	settingSceneMenu = !settingSceneMenu;
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+	//	break;
+	//
+	//case 17:
+	//	showSavingState = true;
+	//	app->SaveGameRequest();
+	//	//exitGame = !exitGame;
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+	//	break;
+	//
+	//case 21:
+	//	// Decrease music volume
+	//	app->musicValue = app->musicValue - 1;
+	//	if (app->musicValue <= 0)
+	//		app->musicValue = 0;
+	//	if (app->musicValue >= 100)
+	//		app->musicValue = 100;
+	//	Mix_VolumeMusic(app->musicValue);
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+	//	break;
 
-	case 22:
-		// Increase music volume
-		app->musicValue = app->musicValue + 1;
-		if (app->musicValue <= 0)
-			app->musicValue = 0;
-		if (app->musicValue >= 100)
-			app->musicValue = 100;
-		Mix_VolumeMusic(app->musicValue);
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
+	//case 22:
+	//	// Increase music volume
+	//	app->musicValue = app->musicValue + 1;
+	//	if (app->musicValue <= 0)
+	//		app->musicValue = 0;
+	//	if (app->musicValue >= 100)
+	//		app->musicValue = 100;
+	//	Mix_VolumeMusic(app->musicValue);
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+	//	break;
 
-	case 23:
-		// Decrease SFX volume
-		app->sfxValue = app->sfxValue - 1;
-		if (app->sfxValue <= 0)
-			app->sfxValue = 0;
-		if (app->sfxValue >= 100)
-			app->sfxValue = 100;
-		Mix_Volume(-1, app->sfxValue);
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
+	//case 23:
+	//	// Decrease SFX volume
+	//	app->sfxValue = app->sfxValue - 1;
+	//	if (app->sfxValue <= 0)
+	//		app->sfxValue = 0;
+	//	if (app->sfxValue >= 100)
+	//		app->sfxValue = 100;
+	//	Mix_Volume(-1, app->sfxValue);
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+	//	break;
 
-	case 24:
-		// Increase SFX volume
-		app->sfxValue = app->sfxValue + 1;
-		if (app->sfxValue <= 0)
-			app->sfxValue = 0;
-		if (app->sfxValue >= 100)
-			app->sfxValue = 100;
-		Mix_Volume(-1, app->sfxValue);
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
+	//case 24:
+	//	// Increase SFX volume
+	//	app->sfxValue = app->sfxValue + 1;
+	//	if (app->sfxValue <= 0)
+	//		app->sfxValue = 0;
+	//	if (app->sfxValue >= 100)
+	//		app->sfxValue = 100;
+	//	Mix_Volume(-1, app->sfxValue);
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+	//	break;
 
-	case 25:
-		// Fullscreen button
-		app->win->fullscreenMode = !app->win->fullscreenMode;
-		if (app->win->fullscreenMode == true)
-		{
-			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
-		}
-		else if (app->win->fullscreenMode == false)
-		{
-			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_SHOWN);
-		}
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
+	//case 25:
+	//	// Fullscreen button
+	//	app->win->fullscreenMode = !app->win->fullscreenMode;
+	//	if (app->win->fullscreenMode == true)
+	//	{
+	//		SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
+	//	}
+	//	else if (app->win->fullscreenMode == false)
+	//	{
+	//		SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_SHOWN);
+	//	}
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+	//	break;
 
-	case 26:
-		// V-Sync button
-		app->render->limitFPS = !app->render->limitFPS;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
-	
-	case 27:
-		// Choose First PartyMember
-		partyMemberSelected = 0;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
-		
-	case 28:
-		// Choose Second PartyMember
-		partyMemberSelected = 1;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
+	//case 26:
+	//	// V-Sync button
+	//	app->render->limitFPS = !app->render->limitFPS;
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+	//	break;
+	//
+	//case 27:
+	//	// Choose First PartyMember
+	//	partyMemberSelected = 0;
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+	//	break;
+	//	
+	//case 28:
+	//	// Choose Second PartyMember
+	//	partyMemberSelected = 1;
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+	//	break;
 
-	default:
-		break;
-	}
+	//default:
+	//	break;
+	//}
 
 	return true;
 }
