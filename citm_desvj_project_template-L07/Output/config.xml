@@ -227,13 +227,13 @@
 	
 	<particles>
 		<town>
-			<item x="230" y="400" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_hp.png"/>
-			<item x="250" y="450" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_hp.png"/>
-			<item x="232" y="300" itemType ="potionmana" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
-			<item x="250" y="500" itemType ="potionmana" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
-			<item x="250" y="525" itemType ="key" animable ="false" frames ="0" isStackable ="false" texturepath="Assets/Textures/Items/key.png"/>
-			<item x="285" y="525" itemType ="key" animable ="false" frames ="0" isStackable ="false" texturepath="Assets/Textures/Items/circus_ticket.png"/>
-			<item x="285" y="560" itemType ="lightupsword" animable ="true" frames ="5" isStackable ="false" texturepath="Assets/Textures/Items/lightup_sword.png"/>
+			<particle x="230" y="400" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_hp.png"/>
+			<particle x="250" y="450" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_hp.png"/>
+			<particle x="232" y="300" itemType ="potionmana" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
+			<particle x="250" y="500" itemType ="potionmana" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
+			<particle x="250" y="525" itemType ="key" animable ="false" frames ="0" isStackable ="false" texturepath="Assets/Textures/Items/key.png"/>
+			<particle x="285" y="525" itemType ="key" animable ="false" frames ="0" isStackable ="false" texturepath="Assets/Textures/Items/circus_ticket.png"/>
+			<particle x="285" y="560" itemType ="lightupsword" animable ="true" frames ="5" isStackable ="false" texturepath="Assets/Textures/Items/lightup_sword.png"/>
 		</town>
 		<tavern>
 			
