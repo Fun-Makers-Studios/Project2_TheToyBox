@@ -42,7 +42,7 @@ public:
 	GuiButton* fullscreenButton = nullptr;
 	GuiButton* vsyncButton = nullptr;
 
-	enum class ButtonID
+	enum class ButtonID : uint32
 	{
 		FULL_SCREEN,
 		V_SYNC

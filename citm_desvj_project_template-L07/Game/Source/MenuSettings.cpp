@@ -3,8 +3,13 @@
 #include "App.h"
 #include "Menu.h"
 #include "SceneManager.h"
+#include "MenuManager.h"
 #include "GuiManager.h"
+#include "UI.h"
+
+#include "Window.h"
 #include "Audio.h"
+#include "Fonts.h"
 #include "Log.h"
 
 
@@ -43,9 +48,9 @@ bool MenuSettings::Start()
 	decreaseSFXButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, "decrease", 9, { 325, 315, 252, 76 }, this);
 	increaseSFXButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "increase", 9, { 700, 315, 252, 76 }, this);
 
-	fullscreenButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 12, "", 1, { 520, 424, 252, 76 }, this);
+	fullscreenButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ButtonID::FULL_SCREEN, "", 1, { 520, 424, 252, 76 }, this);
 
-	vsyncButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 13, "", 1, { 520, 532, 252, 76 }, this);
+	vsyncButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 13, "", (uint32)ButtonID::V_SYNC, { 520, 532, 252, 76 }, this);
 
 	// Set easing finished on title buttons
 	ListItem<GuiControl*>* control =  guiControlsList.start;
@@ -75,29 +80,31 @@ bool MenuSettings::Update(float dt)
 {
 	app->render->DrawTexture(popImg_settings, 0, 0, NULL);
 
+	//Close settings menu
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
+		app->menuManager->SetDefaultMenu();
+	}
+
+
 	// HEKATE
-	//char music[10];
-	//sprintf_s(music, 10, "%d", app->musicValue);
-	//app->fonts->BlitText(630, 245, app->ui->font1_id, music);
+	char music[10];
+	sprintf_s(music, 10, "%d", app->musicValue);
+	app->fonts->BlitText(630, 245, app->ui->font1_id, music);
 
-	//char sfx[10];
-	//sprintf_s(sfx, 10, "%d", app->sfxValue);
-	//app->fonts->BlitText(630, 362, app->ui->font1_id, sfx);
+	char sfx[10];
+	sprintf_s(sfx, 10, "%d", app->sfxValue);
+	app->fonts->BlitText(630, 362, app->ui->font1_id, sfx);
 
-	//char fullscreen[10];
-	//sprintf_s(fullscreen, 10, "%s", app->win->fullscreenMode ? "on" : "off");
-	//app->fonts->BlitText(632, 458, app->ui->font1_id, fullscreen);
+	char fullscreen[10];
+	sprintf_s(fullscreen, 10, "%s", app->win->fullscreenMode ? "on" : "off");
+	app->fonts->BlitText(632, 458, app->ui->font1_id, fullscreen);
 
-	//char vsync[10];
-	//sprintf_s(vsync, 10, "%s", app->render->limitFPS ? "on" : "off");
-	//app->fonts->BlitText(632, 565, app->ui->font1_id, vsync);
+	char vsync[10];
+	sprintf_s(vsync, 10, "%s", app->render->limitFPS ? "on" : "off");
+	app->fonts->BlitText(632, 565, app->ui->font1_id, vsync);
 
-	////Close settings menu
-	//if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	//{
-	//	settingMenu = !settingMenu;
-	//	app->audio->PlayFx(closemenuSFX);
-	//}
+	
 
 	return true;
 }
@@ -135,38 +142,6 @@ bool MenuSettings::OnGuiMouseClickEvent(GuiControl* control)
 {
 	switch (control->id)
 	{
-		/*
-	case 2:
-	case 6:
-		// Settings button
-		settingMenu = !settingMenu;
-		if (settingMenu == false)
-		{
-			if (continueButton5 != nullptr)
-				continueButton5->state = GuiControlState::NORMAL;
-			playButton1->state = GuiControlState::NORMAL;
-			settingsButton2->state = GuiControlState::NORMAL;
-			creditsButton3->state = GuiControlState::NORMAL;
-			exitButton4->state = GuiControlState::NORMAL;
-		}
-		app->audio->PlayFx(menuSelectionSFX);
-		break;
-
-	case 3:
-	case 7:
-		// Credits button
-		creditsMenu = !creditsMenu;
-		if (creditsMenu == false)
-		{
-			if (continueButton5 != nullptr)
-				continueButton5->state = GuiControlState::NORMAL;
-			playButton1->state = GuiControlState::NORMAL;
-			settingsButton2->state = GuiControlState::NORMAL;
-			creditsButton3->state = GuiControlState::NORMAL;
-			exitButton4->state = GuiControlState::NORMAL;
-		}
-		app->audio->PlayFx(menuSelectionSFX);
-		break;
 
 	case 8:
 		// Decrease music volume
@@ -212,7 +187,7 @@ bool MenuSettings::OnGuiMouseClickEvent(GuiControl* control)
 		app->audio->PlayFx(menuSelectionSFX);
 		break;
 
-	case 12:
+	case (uint32)ButtonID::FULL_SCREEN:
 		// Fullscreen button
 		app->win->fullscreenMode = !app->win->fullscreenMode;
 		if (app->win->fullscreenMode == true)
@@ -232,13 +207,6 @@ bool MenuSettings::OnGuiMouseClickEvent(GuiControl* control)
 		app->audio->PlayFx(menuSelectionSFX);
 		break;
 
-	case 4:
-		// Exit button
-		exitGame = !exitGame;
-		app->audio->PlayFx(menuSelectionSFX);
-		break;
-
-		*/
 	default:
 		break;
 		
