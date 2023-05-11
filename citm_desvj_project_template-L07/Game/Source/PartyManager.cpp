@@ -51,7 +51,7 @@ bool PartyManager::Start()
 			position,
 			textureRect);
 
-		app->partyManager->AddMemberToParty(member);
+		AddMemberToParty(member);
 	}
 
 	return true;

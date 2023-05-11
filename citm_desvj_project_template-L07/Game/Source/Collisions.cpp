@@ -301,7 +301,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
     case MapZone::CIRCUS_TO_TOWN:
         LOG("GO TO TOWN");
         app->sceneManager->sceneGame->mapName = "town";
-        app->sceneManager->sceneGame->player->newPos = { 1376, 96 };
+        app->sceneManager->sceneGame->player->newPos = { 1450, 96 };
         app->sceneManager->sceneGame->isMapChanging = true;
         app->scaleObj->SetCurrentScale(ScaleType::WORLD);
         break;

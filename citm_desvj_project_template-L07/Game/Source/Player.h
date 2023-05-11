@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "Animation.h"
 #include "Collisions.h"
+#include "Item.h"
 #include "ParticleSystem.h"
 #include "SDL/include/SDL.h"
 
@@ -30,8 +31,6 @@ public:
 	bool PostUpdate();
 
 	bool CleanUp();
-
-	void OnCollision();
 
 	void ResetPlayerPos();
 
