@@ -138,8 +138,8 @@ bool SceneGame::Start()
 	firstPMemberButton27 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 27, "z", 2, { 176, 140, 65, 76 }, this, ButtonType::SMALL);
 	secondPMemberButton28 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 28, "s", 2, { 176, 216, 64, 76 }, this, ButtonType::SMALL);
 
-	doneQuestsButton29 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 29, "done", 4, { 176, 140, 65, 76 }, this, ButtonType::SMALL);
-	activeQuestsButton30 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 30, "active", 6, { 176, 216, 64, 76 }, this, ButtonType::SMALL);
+	doneQuestsButton29 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 29, "active", 6, { 176, 140, 65, 76 }, this, ButtonType::SMALL);
+	activeQuestsButton30 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 30, "done", 4, { 176, 216, 64, 76 }, this, ButtonType::SMALL);
 
 	ResetScene();
 
@@ -409,39 +409,41 @@ bool SceneGame::PostUpdate()
 			questMenu = !questMenu;
 			app->audio->PlayFx(app->sceneManager->sceneTitle->closemenuSFX);
 		}
+		iPoint displacement = { 270, 120};
+		int lines = 0;
+		int currentQuestSelected = 1;
 
-		ListItem<Quest*>* qitem = app->questManager->activeQuests.start;
 		switch (questListSelected)
 		{
 		case 0:
 			// Done
-			while (qitem != nullptr)
+			for (ListItem<Quest*>* qitem1 = app->questManager->activeQuests.start; qitem1 != nullptr; qitem1 = qitem1->next)
 			{
-				Quest* item = qitem->data;
+				Quest* item = qitem1->data;
 
-				app->fonts->BlitText2(95, 540, dialogueManager->dialogueFontId, (const char*)item->name.GetString(), 8, 1090);
+				lines = app->fonts->BlitText2(displacement.x, displacement.y, dialogueManager->dialogueFontId, (const char*)item->name.GetString(), 8, 215);
 
 				if (item->id == currentQuestSelected) {
-					app->fonts->BlitText2(95, 540, dialogueManager->dialogueFontId, (const char*)item->description.GetString(), 8, 1090);
+					app->fonts->BlitText2(540, 130, dialogueManager->dialogueFontId, (const char*)item->description.GetString(), 8, 460);
 				}
 
-				qitem = qitem->next;
+				displacement.y += (lines * (int)app->fonts->fonts[dialogueManager->dialogueFontId].char_h) + 16;
 			}
 			break;
 
 		case 1:
 			// Active
-			while (qitem != nullptr)
+			for (ListItem<Quest*>* qitem2 = app->questManager->completedQuests.start; qitem2 != nullptr; qitem2 = qitem2->next)
 			{
-				Quest* item = qitem->data;
+				Quest* item = qitem2->data;
 
-				app->fonts->BlitText2(95, 540, dialogueManager->dialogueFontId, (const char*)item->name.GetString(), 8, 1090);
+				lines = app->fonts->BlitText2(displacement.x, displacement.y, dialogueManager->dialogueFontId, (const char*)item->name.GetString(), 8, 215);
 
 				if (item->id == currentQuestSelected) {
-					app->fonts->BlitText2(95, 540, dialogueManager->dialogueFontId, (const char*)item->description.GetString(), 8, 1090);
+					app->fonts->BlitText2(540, 130, dialogueManager->dialogueFontId, (const char*)item->description.GetString(), 8, 460);
 				}
 
-				qitem = qitem->next;
+				displacement.y += (lines * (int)app->fonts->fonts[dialogueManager->dialogueFontId].char_h) + 16;
 			}
 			break;
 		default:
