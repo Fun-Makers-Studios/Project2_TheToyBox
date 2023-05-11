@@ -48,9 +48,9 @@ bool MenuSettings::Start()
 	decreaseSFXButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, "decrease", 9, { 325, 315, 252, 76 }, this);
 	increaseSFXButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "increase", 9, { 700, 315, 252, 76 }, this);
 
-	fullscreenButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ButtonID::FULL_SCREEN, "", 1, { 520, 424, 252, 76 }, this);
+	fullscreenButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ButtonID::FULL_SCREEN, "off", 4, { 520, 424, 252, 76 }, this);
 
-	vsyncButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 13, "", (uint32)ButtonID::V_SYNC, { 520, 532, 252, 76 }, this);
+	vsyncButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ButtonID::V_SYNC, "off", 4, { 520, 532, 252, 76 }, this);
 
 	// Set easing finished on title buttons
 	ListItem<GuiControl*>* control =  guiControlsList.start;
@@ -87,7 +87,7 @@ bool MenuSettings::Update(float dt)
 	}
 
 
-	// HEKATE
+	// HEKATE - GuiControl Label?
 	char music[10];
 	sprintf_s(music, 10, "%d", app->musicValue);
 	app->fonts->BlitText(630, 245, app->ui->font1_id, music);
@@ -96,15 +96,55 @@ bool MenuSettings::Update(float dt)
 	sprintf_s(sfx, 10, "%d", app->sfxValue);
 	app->fonts->BlitText(630, 362, app->ui->font1_id, sfx);
 
-	char fullscreen[10];
-	sprintf_s(fullscreen, 10, "%s", app->win->fullscreenMode ? "on" : "off");
-	app->fonts->BlitText(632, 458, app->ui->font1_id, fullscreen);
 
-	char vsync[10];
-	sprintf_s(vsync, 10, "%s", app->render->limitFPS ? "on" : "off");
-	app->fonts->BlitText(632, 565, app->ui->font1_id, vsync);
+	ListItem<GuiControl*>* control = guiControlsList.start;
 
-	
+	while (control != nullptr)
+	{
+		switch (control->data->id)
+		{
+			case (uint32)ButtonID::FULL_SCREEN:
+			{
+				if (app->win->fullscreenMode)
+				{
+					char fullscreen[3];
+					sprintf_s(fullscreen, 3, "%s", "on");
+					control->data->text = fullscreen;
+				}
+				else
+				{
+					char fullscreen[4];
+					sprintf_s(fullscreen, 4, "%s", "off");
+					control->data->text = fullscreen;
+				}
+
+				break;
+			} 
+
+			case (uint32)ButtonID::V_SYNC:
+			{
+				if (app->render->limitFPS)
+				{
+					char vsync[3];
+					sprintf_s(vsync, 3, "%s", "on");
+					control->data->text = vsync;
+				}
+				else
+				{
+					char vsync[4];
+					sprintf_s(vsync, 4, "%s", "off");
+					control->data->text = vsync;
+				}
+
+				break;
+			}
+
+			default:
+				break;
+		}
+		
+		control = control->next;
+	}
 
 	return true;
 }
@@ -190,18 +230,18 @@ bool MenuSettings::OnGuiMouseClickEvent(GuiControl* control)
 	case (uint32)ButtonID::FULL_SCREEN:
 		// Fullscreen button
 		app->win->fullscreenMode = !app->win->fullscreenMode;
-		if (app->win->fullscreenMode == true)
+		if (app->win->fullscreenMode)
 		{
 			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
 		}
-		else if (app->win->fullscreenMode == false)
+		else if (!app->win->fullscreenMode)
 		{
 			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_SHOWN);
 		}
 		app->audio->PlayFx(menuSelectionSFX);
 		break;
 
-	case 13:
+	case (uint32)ButtonID::V_SYNC:
 		// V-Sync button
 		app->render->limitFPS = !app->render->limitFPS;
 		app->audio->PlayFx(menuSelectionSFX);
