@@ -11,6 +11,8 @@
 MenuSettings::MenuSettings() : Menu()
 {
 	id = MenuID::MENU_SETTINGS;
+
+	popImgSettingsPath = app->configNode.child("title").child("popImage").attribute("settingtexturepath").as_string();
 }
 
 
@@ -31,6 +33,10 @@ bool MenuSettings::Start()
 {
 	LOG("--STARTS TITLE MENU--");
 
+	// Load
+	popImg_settings = app->tex->Load(popImgSettingsPath);
+
+	// Create UI
 	decreaseMusicButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "decrease", 9, { 325, 200, 252, 76 }, this);
 	increaseMusicButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "increase", 9, { 700, 200, 252, 76 }, this);
 
@@ -67,89 +73,30 @@ bool MenuSettings::PreUpdate()
 
 bool MenuSettings::Update(float dt)
 {
-	//if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	app->render->DrawTexture(popImg_settings, 0, 0, NULL);
+
+	// HEKATE
+	//char music[10];
+	//sprintf_s(music, 10, "%d", app->musicValue);
+	//app->fonts->BlitText(630, 245, app->ui->font1_id, music);
+
+	//char sfx[10];
+	//sprintf_s(sfx, 10, "%d", app->sfxValue);
+	//app->fonts->BlitText(630, 362, app->ui->font1_id, sfx);
+
+	//char fullscreen[10];
+	//sprintf_s(fullscreen, 10, "%s", app->win->fullscreenMode ? "on" : "off");
+	//app->fonts->BlitText(632, 458, app->ui->font1_id, fullscreen);
+
+	//char vsync[10];
+	//sprintf_s(vsync, 10, "%s", app->render->limitFPS ? "on" : "off");
+	//app->fonts->BlitText(632, 565, app->ui->font1_id, vsync);
+
+	////Close settings menu
+	//if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	//{
-	//	app->render->viewGUIbounds = !app->render->viewGUIbounds;
-	//	app->audio->PlayFx(selectSFX);
-	//}
-
-	//app->render->DrawTexture(img, 0, 0, NULL);
-
-	//if (settingMenu == true)
-	//	app->render->DrawTexture(popImg_settings, 0, 0, NULL);
-
-	////Draw GUI
-	//app->guiManager->Draw();
-
-
-	//// Setting Menu
-	//decreaseMusicButton8->state = GuiControlState::DISABLED;
-	//increaseMusicButton9->state = GuiControlState::DISABLED;
-	//decreaseSFXButton10->state = GuiControlState::DISABLED;
-	//increaseSFXButton11->state = GuiControlState::DISABLED;
-	//fullscreenButton12->state = GuiControlState::DISABLED;
-	//vsyncButton13->state = GuiControlState::DISABLED;
-
-	//if (settingMenu == true)
-	//{
-	//	if (continueButton5 != nullptr && continueButton5->state != GuiControlState::DISABLED)
-	//		continueButton5->state = GuiControlState::DISABLED;
-
-	//	playButton1->state = GuiControlState::DISABLED;
-	//	settingsButton2->state = GuiControlState::DISABLED;
-	//	creditsButton3->state = GuiControlState::DISABLED;
-	//	exitButton4->state = GuiControlState::DISABLED;
-
-	//	decreaseMusicButton8->state = GuiControlState::NORMAL;
-	//	increaseMusicButton9->state = GuiControlState::NORMAL;
-	//	decreaseSFXButton10->state = GuiControlState::NORMAL;
-	//	increaseSFXButton11->state = GuiControlState::NORMAL;
-	//	fullscreenButton12->state = GuiControlState::NORMAL;
-	//	vsyncButton13->state = GuiControlState::NORMAL;
-
-	//	char music[10];
-	//	sprintf_s(music, 10, "%d", app->musicValue);
-	//	app->fonts->BlitText(630, 245, app->ui->font1_id, music);
-
-	//	char sfx[10];
-	//	sprintf_s(sfx, 10, "%d", app->sfxValue);
-	//	app->fonts->BlitText(630, 362, app->ui->font1_id, sfx);
-
-	//	char fullscreen[10];
-	//	sprintf_s(fullscreen, 10, "%s", app->win->fullscreenMode ? "on" : "off");
-	//	app->fonts->BlitText(632, 458, app->ui->font1_id, fullscreen);
-
-	//	char vsync[10];
-	//	sprintf_s(vsync, 10, "%s", app->render->limitFPS ? "on" : "off");
-	//	app->fonts->BlitText(632, 565, app->ui->font1_id, vsync);
-
-	//	//Close settings menu
-	//	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	//	{
-	//		settingMenu = !settingMenu;
-	//		app->audio->PlayFx(closemenuSFX);
-	//	}
-
-	//}
-
-	//// Credits Menu
-	//if (creditsMenu == true)
-	//{
-	//	if (continueButton5 != nullptr && continueButton5->state != GuiControlState::DISABLED)
-	//		continueButton5->state = GuiControlState::DISABLED;
-
-	//	playButton1->state = GuiControlState::DISABLED;
-	//	settingsButton2->state = GuiControlState::DISABLED;
-	//	creditsButton3->state = GuiControlState::DISABLED;
-	//	exitButton4->state = GuiControlState::DISABLED;
-
-	//	app->render->DrawTexture(popImg_credits, 0, 0, NULL);
-
-	//	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	//	{
-	//		creditsMenu = !creditsMenu;
-	//		app->audio->PlayFx(closemenuSFX);
-	//	}
+	//	settingMenu = !settingMenu;
+	//	app->audio->PlayFx(closemenuSFX);
 	//}
 
 	return true;
@@ -174,9 +121,8 @@ bool MenuSettings::CleanUp()
 {
 	LOG("Freeing TITLE SCENE");
 
-	/*app->tex->UnLoad(img);
 	app->tex->UnLoad(popImg_settings);
-	app->tex->UnLoad(popImg_credits);*/
+
 
 
 	//STORE IN A LIST THIS BUTTONS AND THEN CHECK HERE IF NULLPTR TO CLEAN THEM UP

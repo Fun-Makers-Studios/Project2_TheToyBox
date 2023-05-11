@@ -145,10 +145,6 @@ bool MenuTitle::CleanUp()
 {
 	LOG("Freeing TITLE SCENE");
 
-	app->tex->UnLoad(img);
-	app->tex->UnLoad(popImg_settings);
-	app->tex->UnLoad(popImg_credits);
-
 
 	//STORE IN A LIST THIS BUTTONS AND THEN CHECK HERE IF NULLPTR TO CLEAN THEM UP
 	guiControlsList.Clear();

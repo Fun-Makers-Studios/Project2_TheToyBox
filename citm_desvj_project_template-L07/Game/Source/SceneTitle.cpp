@@ -28,8 +28,7 @@ SceneTitle::SceneTitle() : Scene()
 
 	/*Initialize xml*/
 	imgPath = app->configNode.child("title").child("backgroundimage").attribute("texturepath").as_string();
-	popImgSettingsPath = app->configNode.child("title").child("popImage").attribute("settingtexturepath").as_string();
-	popImgCreditsPath = app->configNode.child("title").child("popImage").attribute("creditstexturepath").as_string();
+	//popImgCreditsPath = app->configNode.child("title").child("popImage").attribute("creditstexturepath").as_string();
 	selectSFXPath = app->configNode.child("title").child("selectsfx").attribute("selectSFXPath").as_string();
 	select2SFXPath = app->configNode.child("player").child("SFXset").attribute("selectSFXPath").as_string();
 }
@@ -60,8 +59,7 @@ bool SceneTitle::Start()
 	
 	/*Load*/
 	img = app->tex->Load(imgPath);
-	popImg_settings = app->tex->Load(popImgSettingsPath);
-	popImg_credits = app->tex->Load(popImgCreditsPath);
+	//popImg_credits = app->tex->Load(popImgCreditsPath);
 	menuSelectionSFX = app->audio->LoadFx(selectSFXPath);
 	selectSFX = app->audio->LoadFx(select2SFXPath);
 	startSFX = app->audio->LoadFx("Assets/Audio/Fx/SceneTitle/fx5.wav");
@@ -117,8 +115,8 @@ bool SceneTitle::CleanUp()
 	LOG("Freeing TITLE SCENE");
 
 	app->tex->UnLoad(img);
-	app->tex->UnLoad(popImg_settings);
-	app->tex->UnLoad(popImg_credits);
+
+	//app->tex->UnLoad(popImg_credits);
 
 	// HEKATE Should check all scene and menu CleanUp
 	 
