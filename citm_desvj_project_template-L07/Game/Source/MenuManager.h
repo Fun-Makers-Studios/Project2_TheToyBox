@@ -62,7 +62,7 @@ public:
 	MenuSettings* menuSettings;
 	MenuCredits* menuCredits;
 	MenuPause* menuPause;
-	//MenuQuest* menuQuest;
+	MenuQuest* menuQuest;
 	//MenuParty* menuParty;
 	//MenuFight* menuFight;
 

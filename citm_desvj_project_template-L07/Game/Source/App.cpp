@@ -53,9 +53,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	pathfinding = new Pathfinding();
 	collisions = new Collisions();
 
-	questManager = new QuestManager();
 	entityManager = new EntityManager();
 	partyManager = new PartyManager();
+	questManager = new QuestManager();
 	particleManager = new ParticleSystemManager();
 
 	menuManager = new MenuManager();
@@ -81,10 +81,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding, false);
 	AddModule(collisions, false);
 
-	AddModule(questManager, false);
 	AddModule(entityManager, false);
 	AddModule(partyManager, true);
 	AddModule(particleManager, true);
+	AddModule(questManager, false);
 
 	AddModule(menuManager, false);
 	AddModule(ui, true);

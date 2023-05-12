@@ -116,17 +116,14 @@ public:
 	ModuleController* controller;
 
 	SceneManager* sceneManager;
-
-	UI* ui;
-	QuestManager* questManager;
-	EntityManager* entityManager;
-	PartyManager* partyManager;
+	
 	Map* map;
 	Pathfinding* pathfinding;
 	Collisions* collisions;
 
 	EntityManager* entityManager;
 	PartyManager* partyManager;
+	QuestManager* questManager;
 	ParticleSystemManager* particleManager;
 
 	UI* ui;

@@ -58,8 +58,8 @@ bool QuestManager::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-bool QuestManager::Start() {
-
+bool QuestManager::Start()
+{
 	LOG("Starting Quest Manager");
 	bool ret = true;
 
@@ -77,14 +77,16 @@ bool QuestManager::Update(float dt)
 	{
 		pQuest = item->data;
 
-		if (pQuest->Update() == true) {
+		if (pQuest->Update() == true)
+		{
 			activeQuests.Del(item);
 
 			ListItem<Quest*>* qitem = quests.start;
 			while (qitem != nullptr)
 			{
 				Quest* item = qitem->data;
-				if (item->id == pQuest->nextQuestId) {
+				if (item->id == pQuest->nextQuestId)
+				{
 					activeQuests.Add(item);
 					break;
 				}
@@ -99,8 +101,10 @@ bool QuestManager::Update(float dt)
 	return ret;
 }
 
-void QuestManager::TriggerQuest(int id) {
+void QuestManager::TriggerQuest(int id)
+{
 	ListItem<Quest*>* qitem = quests.start;
+
 	while (qitem != nullptr)
 	{
 		Quest* item = qitem->data;

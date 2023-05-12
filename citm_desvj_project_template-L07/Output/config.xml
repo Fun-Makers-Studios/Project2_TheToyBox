@@ -37,6 +37,7 @@
 
 		<popImage settingtexturepath="Assets/Textures/UI/SceneTitle/Settings/SettingsMenu.png" creditstexturepath="Assets/Textures/UI/SceneTitle/Credits/CreditsMenu.png"/>
 		<imgPause imgPausePath="Assets/Textures/UI/PauseMenu/PauseMenuTemplate.png"/>
+		<questMenuImg questMenuImgPath="Assets/Textures/UI/QuestMenu/QuestMenu.png"/>
 	</menuManager>
 	
 	<logo>
@@ -52,7 +53,6 @@
 	<scene>
 		<music musicPath="Assets/Audio/Music/town.ogg" />
 		<partyMenuImg partyMenuImgPath="Assets/Textures/UI/PartyMenu/PartyMenu.png"/>
-		<questMenuImg questMenuImgPath="Assets/Textures/UI/QuestMenu/QuestMenu.png"/>
 		<saveTex saveTexPath="Assets/Textures/UI/save.png"/>
 		<zeroImg zeroImgPath="Assets/Textures/UI/PartyMenu/Characters/ZeroPic.png"/>
 		<sophieImg sophieImgPath="Assets/Textures/UI/PartyMenu/Characters/SophiePic.png"/>
@@ -128,7 +128,7 @@
 				<option id="0" nextNodeId="1" text="No." questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 			<node id="1" text="Well then, enter the tabern and get one yourself.">
-				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+				<option id="0" nextNodeId="-1" text="..." questCompletionId="-1" questTriggerId="-1"/>
 				<option id="1" nextNodeId="2" text="No thanks." questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 			<node id="2" text="O fuck off">

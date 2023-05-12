@@ -151,6 +151,15 @@
     <ClCompile Include="Source\MenuCredits.cpp">
       <Filter>Game\Menus</Filter>
     </ClCompile>
+    <ClCompile Include="Source\QuestManager.cpp">
+      <Filter>Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CollectQuest.cpp">
+      <Filter>Game\Quests</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TalkQuest.cpp">
+      <Filter>Game\Quests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -342,6 +351,18 @@
     <ClInclude Include="Source\MenuCredits.h">
       <Filter>Game\Menus</Filter>
     </ClInclude>
+    <ClInclude Include="Source\QuestManager.h">
+      <Filter>Core\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollectQuest.h">
+      <Filter>Game\Quests</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Quest.h">
+      <Filter>Game\Quests</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TalkQuest.h">
+      <Filter>Game\Quests</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -388,6 +409,9 @@
     </Filter>
     <Filter Include="Game\Menus">
       <UniqueIdentifier>{ced0b8b9-3dbc-42ec-bb76-dc2a8cbaaa47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Quests">
+      <UniqueIdentifier>{8b1914a6-9c93-4f3f-8b99-c0b665e410dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -105,16 +105,12 @@ private:
 	iPoint mousePos;
 	iPoint cameraPos;
 
-	bool gamePaused = false;
 	bool isNight = false;
 	bool exitGame = false;
 
 	// Textures
 	const char* partyMenuImgPath = nullptr;
 	SDL_Texture* partyMenuImg = nullptr;
-
-	const char* questMenuImgPath = nullptr;
-	SDL_Texture* questMenuImg = nullptr;
 	
 	const char* zeroImgPath = nullptr;
 	SDL_Texture* zeroImg = nullptr;
