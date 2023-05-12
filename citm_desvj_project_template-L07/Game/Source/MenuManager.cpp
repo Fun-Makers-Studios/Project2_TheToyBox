@@ -26,7 +26,7 @@ bool MenuManager::Awake(pugi::xml_node& config)
 	menuCredits = new MenuCredits();
 	menuPause = new MenuPause();
 	menuQuest = new MenuQuest();
-	//menuParty = new MenuParty();
+	menuParty = new MenuParty();
 	//menuFight = new MenuFight();
 
 	AddMenu(menuTitle, config);
@@ -34,7 +34,7 @@ bool MenuManager::Awake(pugi::xml_node& config)
 	AddMenu(menuCredits, config);
 	AddMenu(menuPause, config);
 	AddMenu(menuQuest, config);
-	//AddMenu(menuParty, config);
+	AddMenu(menuParty, config);
 	//AddMenu(menuFight, config);
 
 
@@ -221,18 +221,18 @@ void MenuManager::SelectMenu()
 				menuState = MenuState::SWITCH;
 				nextMenu = MenuID::MENU_PAUSE;
 			}
-			/*if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+			if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 			{
 				menuState = MenuState::SWITCH;
 				nextMenu = MenuID::MENU_PARTY;
-			}*/
+			}
 			if (app->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
 			{
 				menuState = MenuState::SWITCH;
 				nextMenu = MenuID::MENU_QUEST;
 			}
 		}
-		else if (currentMenu == menuPause || currentMenu == menuQuest)
+		else if (currentMenu == menuPause || currentMenu == menuQuest || currentMenu == menuParty)
 		{
 			if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 			{

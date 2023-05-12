@@ -109,14 +109,7 @@ private:
 	bool exitGame = false;
 
 	// Textures
-	const char* partyMenuImgPath = nullptr;
-	SDL_Texture* partyMenuImg = nullptr;
-	
-	const char* zeroImgPath = nullptr;
-	SDL_Texture* zeroImg = nullptr;
-	
-	const char* sophieImgPath = nullptr;
-	SDL_Texture* sophieImg = nullptr;
+
 	
 	// Audio
 	const char* musicPath = nullptr;
@@ -125,13 +118,6 @@ private:
 	iPoint origin;
 	bool originSelected = false;
 
-	//UI
-
-	GuiButton* firstPMemberButton27 = nullptr;
-	GuiButton* secondPMemberButton28 = nullptr;
-
-	GuiButton* doneQuestsButton29 = nullptr;
-	GuiButton* activeQuestsButton30 = nullptr;
 
 	// Particle system
 	ParticleSystem* smokePS;

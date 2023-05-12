@@ -27,9 +27,6 @@ SceneGame::SceneGame() : Scene()
 
 	/*STORE INFO FROM XML*/
 	musicPath = app->configNode.child("scene").child("music").attribute("musicPath").as_string();
-	partyMenuImgPath = app->configNode.child("scene").child("partyMenuImg").attribute("partyMenuImgPath").as_string();
-	zeroImgPath = app->configNode.child("scene").child("zeroImg").attribute("zeroImgPath").as_string();
-	sophieImgPath = app->configNode.child("scene").child("sophieImg").attribute("sophieImgPath").as_string();
 	saveTexPath = app->configNode.child("scene").child("saveTex").attribute("saveTexPath").as_string();
 }
 
@@ -102,13 +99,9 @@ bool SceneGame::Start()
 	app->audio->PlayMusic(musicPath, 1.0f);
 
 	// Load tex
-	partyMenuImg = app->tex->Load(partyMenuImgPath);
-	zeroImg = app->tex->Load(zeroImgPath);
-	sophieImg = app->tex->Load(sophieImgPath);
 	saveTex = app->tex->Load(saveTexPath);
 
-	// UI
-	
+
 	ResetScene();
 
 	return true;
@@ -132,7 +125,7 @@ bool SceneGame::Update(float dt)
 		continueGame = false;
 	}
 
-	//TEST FIGHT SCENE
+	//TEST FIGHT SCENE - HEKATE!!!
 	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
 		LOG("SWITCHING TO SCENEFIGHT");
 		FightKid();
@@ -216,12 +209,7 @@ bool SceneGame::Update(float dt)
 // Called each loop iteration
 bool SceneGame::PostUpdate()
 {
-	bool ret = true;
-
-
-	/*if(gamePaused && partyMenu)
-		app->render->DrawTexture(partyMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);*/
-	
+	bool ret = true;	
 	
 	// HEKATE
 	if (/*gamePaused &&*/ dialogueManager->dialogueLoaded)
@@ -230,37 +218,6 @@ bool SceneGame::PostUpdate()
 			dialogueManager->Draw();
 	}
 
-	//if (partyMenu == true)
-	//{
-	//	if (firstPMemberButton27->state == GuiControlState::DISABLED) 
-	//		firstPMemberButton27->state = GuiControlState::NORMAL;
-	//	
-	//	if (secondPMemberButton28->state == GuiControlState::DISABLED) 
-	//		secondPMemberButton28->state = GuiControlState::NORMAL;
-	//	
-	//	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	//	{
-	//		partyMenu = !partyMenu;
-	//		app->audio->PlayFx(app->sceneManager->sceneTitle->closemenuSFX);
-	//	}
-
-	//	switch (partyMemberSelected)
-	//	{
-	//	case 0:
-	//		// Zero
-	//		app->render->DrawTexture(zeroImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
-	//		break;
-
-	//	case 1:
-	//		// Sophie
-	//		app->render->DrawTexture(sophieImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
-	//		
-	//		break;
-	//	default:
-	//		break;
-	//	}
-	//	app->ui->BlitPartyStats();
-	//}	
 
 	if (exitGame == true)
 		ret = false;
@@ -288,10 +245,6 @@ bool SceneGame::CleanUp()
 
 	Mix_ResumeMusic();
 
-	app->tex->UnLoad(partyMenuImg);
-	app->tex->UnLoad(zeroImg);
-	app->tex->UnLoad(sophieImg);
-
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 
@@ -304,25 +257,7 @@ bool SceneGame::CleanUp()
 
 bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 {
-	// HEKATE MUST DELETE
-	switch (control->id)
-	{
-	case 27:
-		// Choose First PartyMember
-		partyMemberSelected = 0;
-		app->audio->PlayFx(app->menuManager->selectSFX);
-		break;
-
-	case 28:
-		// Choose Second PartyMember
-		partyMemberSelected = 1;
-		app->audio->PlayFx(app->menuManager->selectSFX);
-		break;
-
-	default:
-		break;
-	}
-	
+	// HEKATE MUST DELETE	
 
 	return true;
 }

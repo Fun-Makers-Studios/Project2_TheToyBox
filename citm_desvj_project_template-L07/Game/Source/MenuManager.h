@@ -63,7 +63,7 @@ public:
 	MenuCredits* menuCredits;
 	MenuPause* menuPause;
 	MenuQuest* menuQuest;
-	//MenuParty* menuParty;
+	MenuParty* menuParty;
 	//MenuFight* menuFight;
 
 	bool exitGame = false;
