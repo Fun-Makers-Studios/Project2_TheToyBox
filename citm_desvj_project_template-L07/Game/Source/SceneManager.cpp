@@ -1,5 +1,6 @@
 #include "App.h"
 #include "SceneManager.h"
+#include "MenuManager.h"
 #include "SceneLogo.h"
 #include "SceneTitle.h"
 #include "SceneGame.h"
@@ -8,7 +9,7 @@
 
 SceneManager::SceneManager() : Module()
 {
-    name.Create("scenemanager");
+    name.Create("sceneManager");
 }
 
 SceneManager::~SceneManager() {}
@@ -32,6 +33,7 @@ bool SceneManager::Awake(pugi::xml_node& config)
 
 bool SceneManager::Start()
 {
+    sceneState = SceneState::CONTINUE;
     currentScene = FindSceneByID(SceneID::SCENE_LOGO)->data;
     currentScene->Start();
 
@@ -43,6 +45,7 @@ bool SceneManager::PreUpdate()
     if (sceneState == SceneState::SWITCH)
     {
         SwitchTo(nextScene);
+        app->menuManager->SetDefaultMenu();
         sceneState = SceneState::CONTINUE;
     }
 
@@ -79,7 +82,6 @@ bool SceneManager::AddScene(Scene* scene, pugi::xml_node& config)
     if (scene == nullptr) return false;
 
     scenes.Add(scene);
-    numScenes++;
     scene->Awake(config);
 
     return true;
@@ -87,21 +89,9 @@ bool SceneManager::AddScene(Scene* scene, pugi::xml_node& config)
 
 void SceneManager::SwitchTo(SceneID id)
 {
-    auto scene = FindSceneByID(id);
-
-    switch (currentScene->sceneType)
-    {
-    case SceneType::ALWAYS_ACTIVE:
-        break;
-    case SceneType::GAME:
-        break;
-    case SceneType::FIGHT:
-        break;
-    default:
-        break;
-    }
-
     currentScene->CleanUp();
+
+    auto scene = FindSceneByID(id);
     currentScene = scene->data;
     currentScene->Start();
 }

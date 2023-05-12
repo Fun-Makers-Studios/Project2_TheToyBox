@@ -8,18 +8,24 @@
 
 #include "SceneManager.h"
 
-#include "EntityManager.h"
 #include "Map.h"
 #include "Collisions.h"
 #include "Pathfinding.h"
 
+#include "EntityManager.h"
+#include "PartyManager.h"
+#include "ParticleSystemManager.h"
+#include "QuestManager.h"
+
+#include "MenuManager.h"
 #include "UI.h"
 #include "ParticleSystemManager.h"
 #include "GuiManager.h"
 #include "GuiButton.h"
-#include "GuiControl.h"
+
 #include "Debug.h"
 #include "PartyManager.h"
+
 
 #include "Render.h"
 
@@ -50,8 +56,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	entityManager = new EntityManager();
 	partyManager = new PartyManager();
+	questManager = new QuestManager();
 	particleManager = new ParticleSystemManager();
 
+	menuManager = new MenuManager();
 	ui = new UI();
 	guiManager = new GuiManager();
 	debug = new Debug();
@@ -77,7 +85,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entityManager, false);
 	AddModule(partyManager, true);
 	AddModule(particleManager, true);
+	AddModule(questManager, false);
 
+	AddModule(menuManager, false);
 	AddModule(ui, true);
 	AddModule(guiManager, true);
 	AddModule(debug, true);

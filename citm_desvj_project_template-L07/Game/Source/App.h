@@ -26,6 +26,7 @@ class Map;
 class Pathfinding;
 class Collisions;
 
+class QuestManager;
 class EntityManager;
 class PartyManager;
 class ParticleSystemManager;
@@ -114,13 +115,17 @@ public:
 	ModuleController* controller;
 
 	SceneManager* sceneManager;
-
-	UI* ui;
-	EntityManager* entityManager;
-	PartyManager* partyManager;
+	
 	Map* map;
 	Pathfinding* pathfinding;
 	Collisions* collisions;
+
+	EntityManager* entityManager;
+	PartyManager* partyManager;
+	QuestManager* questManager;
+	ParticleSystemManager* particleManager;
+
+	UI* ui;
 	GuiManager* guiManager;
 	Debug* debug;
 	ParticleSystemManager* particleManager;

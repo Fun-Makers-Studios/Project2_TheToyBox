@@ -84,6 +84,7 @@ public:
 	bool gamePaused = false;
 	bool partyMenu = false;
 	bool pauseMenu = false;
+	bool questMenu = false;
 	bool settingSceneMenu = false;
 
 
@@ -94,6 +95,7 @@ public:
 	bool isMapChanging = false;
 
 	uint partyMemberSelected = 0;
+	uint questListSelected = 0;
 
 	DialogueManager* dialogueManager;
 
@@ -103,49 +105,19 @@ private:
 	iPoint mousePos;
 	iPoint cameraPos;
 
+	bool isNight = false;
+	bool exitGame = false;
 
 	// Textures
-	SDL_Texture* img_pause = nullptr;
-	SDL_Rect pauseRect;
 
-	const char* popImg_settingsPath = nullptr;
-	SDL_Texture* popImg_settings = nullptr;
+	
+	// Audio
+	const char* musicPath = nullptr;
 
-	const char* partyMenuImgPath = nullptr;
-	SDL_Texture* partyMenuImg = nullptr;
-	
-	const char* zeroImgPath = nullptr;
-	SDL_Texture* zeroImg = nullptr;
-	
-	const char* sophieImgPath = nullptr;
-	SDL_Texture* sophieImg = nullptr;
-	
 	// Debug pathfinding
 	iPoint origin;
 	bool originSelected = false;
 
-	const char* imgPausePath = nullptr;
-	const char* musicPath = nullptr;
-	const char* selectSFXPath = nullptr;
-
-	// Declare a GUI Button and create it using the GuiManager
-	GuiButton* resumeButton14 = nullptr;
-	GuiButton* backToTitleButton15 = nullptr;
-	GuiButton* settingsButton16 = nullptr;
-	GuiButton* closeButton17 = nullptr;
-	
-	// Settings menu on scene game
-	GuiButton* decreaseMusicButton21 = nullptr;
-	GuiButton* increaseMusicButton22 = nullptr;
-
-	GuiButton* decreaseSFXButton23 = nullptr;
-	GuiButton* increaseSFXButton24 = nullptr;
-
-	GuiButton* fullscreenButton25 = nullptr;
-	GuiButton* vsyncButton26 = nullptr;
-
-	GuiButton* firstPMemberButton27 = nullptr;
-	GuiButton* secondPMemberButton28 = nullptr;
 
 	// Particle system
 	ParticleSystem* smokePS = nullptr;
@@ -153,14 +125,9 @@ private:
 	ParticleSystem* fireTorchPS = nullptr;
 	List<ParticleSystem*> particlesList;
 
-	bool isNight = false;
-
 	//EASINGS
 	Easing* easingPause = nullptr;
 	Easing* easingButton = nullptr;
-
-
-	bool exitGame = false;
 };
 
 #endif // __SCENEGAME_H__

@@ -15,6 +15,8 @@ public:
 public:
 	int id;
 	int nextNodeId;
+	int questCompletionId;
+	int questTriggerId;
 	SString text;
 };
 

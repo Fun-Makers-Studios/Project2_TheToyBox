@@ -6,13 +6,6 @@
 
 class GuiControl;
 
-enum class SceneType
-{
-	ALWAYS_ACTIVE,
-	GAME,
-	FIGHT
-};
-
 enum class SceneID
 {
 	SCENE_LOGO,
@@ -49,7 +42,7 @@ public:
 	// Called before quitting
 	virtual bool CleanUp() { return true; };
 
-	virtual bool OnGuiMouseClickEvent(GuiControl* control) { return true; }
+	// HEKATE virtual bool OnGuiMouseClickEvent(GuiControl* control) { return true; }
 
 	// Returns the scene's ID
 	virtual SceneID GetID() { return id; }
@@ -59,7 +52,6 @@ public:
 
 public:
 
-	SceneType sceneType;
 	SceneID id;
 	List<NPC*>npcs;
 	List<Item*>items;

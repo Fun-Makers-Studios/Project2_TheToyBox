@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __COLLISIONS_H__
+#define __COLLISIONS_H__
+
 #include "Module.h"
 #include "Entity.h"
 
@@ -84,3 +86,5 @@ public:
 private:
 
 };
+
+#endif //__COLLISIONS_H__

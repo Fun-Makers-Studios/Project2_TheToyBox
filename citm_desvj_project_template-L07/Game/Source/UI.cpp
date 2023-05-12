@@ -97,60 +97,8 @@ bool UI::CleanUp()
 	return true;
 }
 
-/* UI DEBUG INFO WITH FONT 2 */
-void UI::BlitPlayerXPos()
-{
-	char playerXPos[25];
-	sprintf_s(playerXPos, 25, "position x: %d", app->sceneManager->sceneGame->player->body->pos.x);
-	app->fonts->BlitText(20, 65, font2_id, playerXPos);
-}
-
-void UI::BlitPlayerYPos()
-{
-	char playerYPos[25];
-	sprintf_s(playerYPos, 25, "position y: %d", app->sceneManager->sceneGame->player->body->pos.y);
-	app->fonts->BlitText(20, 85, font2_id, playerYPos);
-}
-
-
-void UI::BlitFPS()
-{
-	char fps[25];
-	sprintf_s(fps, 25, "fps: %d", app->GetFPS());
-	app->fonts->BlitText(870, 15, font2_id, fps);
-}
-
-void UI::BlitAverageFPS()
-{
-	char averageFps[25];
-	sprintf_s(averageFps, 25, "average fps; %.2f", app->GetAverageFPS());
-	app->fonts->BlitText(825, 40, font1_id, averageFps);
-}
-
-void UI::BlitDT()
-{
-	char dt[25];
-	sprintf_s(dt, 25, "delta time; %.2f ms", app->GetDT());
-	app->fonts->BlitText(825, 50, font1_id, dt);
-}
-
-void UI::BlitTimeSinceStart()
-{
-	char timeSinceStart[25];
-	sprintf_s(timeSinceStart, 25, "time since start; %.2f", app->GetTimesSinceStart());
-	app->fonts->BlitText(825, 60, font1_id, timeSinceStart);
-}
-
-void UI::BlitFrameCount()
-{
-	char frameCount[25];
-	sprintf_s(frameCount, 25, "frame count; %d", app->GetFrameCount());
-	app->fonts->BlitText(825, 70, font1_id, frameCount);
-}
-
 void UI::BlitPartyStats()
-{
-	
+{	
 	app->fonts->BlitText(544, 225, app->ui->font1_id, app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->name.GetString());
 
 	char level[5];
@@ -186,5 +134,4 @@ void UI::BlitPartyStats()
 	char critRate[15];
 	sprintf_s(critRate, 15, "crit r %d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->critRate);
 	app->fonts->BlitText(875, 320, app->ui->font1_id, critRate);
-
 }

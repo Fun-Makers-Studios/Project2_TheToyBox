@@ -1,8 +1,12 @@
 #include "GuiManager.h"
-#include "App.h"
-#include "Textures.h"
 
+#include "App.h"
+#include "Menu.h"
+#include "MenuManager.h"
+#include "GuiControl.h"
 #include "GuiButton.h"
+
+#include "Textures.h"
 #include "Audio.h"
 
 GuiManager::GuiManager() : Module()
@@ -17,7 +21,8 @@ bool GuiManager::Start()
 	return true;
 }
 
-GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, int textSize, SDL_Rect bounds, Scene* observer, ButtonType buttonType, SDL_Rect sliderBounds)
+
+GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char* text, int textSize, SDL_Rect bounds, Menu* observer, ButtonType buttonType, SDL_Rect sliderBounds)
 {
 	// Create a GUI control and add it to the list of controls
 	GuiControl* guiControl = nullptr;
@@ -53,30 +58,26 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	//Set the observer
 	guiControl->SetObserver(observer);
 
-	// Created GuiControls are add it to the list of controls
-	guiControlsList.Add(guiControl);
+	// Created GuiControls are added to the list of its Menu
+	observer->guiControlsList.Add(guiControl);
 
 	return guiControl;
 }
 
 bool GuiManager::Update(float dt)
 {	
-	
-	return true;
-}
-
-bool GuiManager::PostUpdate()
-{
 	accumulatedTime += app->GetDT();
-	if (accumulatedTime >= updateMsCycle) doLogic = true;
+
+	if (accumulatedTime >= updateMsCycle)
+		doLogic = true;
 
 	// We control how often the GUI is updated to optimize the performance
-	if (doLogic == true)
+	if (doLogic && app->menuManager->currentMenu != nullptr)
 	{
-		for (size_t i = 0; i < guiControlsList.Count(); i++)
+		for (size_t i = 0; i < app->menuManager->currentMenu->guiControlsList.Count(); i++)
 		{
-			ListItem<GuiControl*>* control = guiControlsList.At(i);
-			control->data->Update(16);
+			ListItem<GuiControl*>* control = app->menuManager->currentMenu->guiControlsList.At(i);
+			control->data->Update(16); // HEKATE dt!!
 		}
 
 		// HEKATE end of list not set as nullptr, loop runs out of list
@@ -95,25 +96,22 @@ bool GuiManager::PostUpdate()
 	return true;
 }
 
+bool GuiManager::PostUpdate()
+{
+	
+
+	return true;
+}
+
 bool GuiManager::Draw()
 {
-	ListItem<GuiControl*>* control = guiControlsList.start;
+	if (app->menuManager->currentMenu == nullptr)
+		return true;
+
+	ListItem<GuiControl*>* control = app->menuManager->currentMenu->guiControlsList.start;
 
 	while (control != nullptr)
 	{
-		// HEKATE Define cases for all scenes (menuManager?)s
-		// Scene Title
-		if (!control->data->easing->GetFinished())
-		{
-			// HEKATE must pass dt!
-			double time = control->data->easing->TrackTime(16);
-			double endPosX = control->data->boundsReset.x;
-			double endPosY = control->data->boundsReset.y;
-			double easedX = control->data->easing->EasingAnimation(endPosX + 200, endPosX, time, EasingType::EASE_OUT_ELASTIC);
-
-			control->data->bounds.x = easedX;
-		}		
-
 		control->data->Draw(app->render);
 		control = control->next;
 	}
@@ -130,7 +128,8 @@ void GuiManager::DestroyGuiControl(GuiControl* gui)
 
 bool GuiManager::CleanUp()
 {
-	ListItem<GuiControl*>* control = guiControlsList.start;
+	// HEKATE
+	/*ListItem<GuiControl*>* control = guiControlsList.start;
 
 	while (control != nullptr)
 	{
@@ -139,5 +138,8 @@ bool GuiManager::CleanUp()
 
 	return true;
 
-	return false;
+	return false;*/
+
+	return true;
+
 }

@@ -18,7 +18,6 @@
 
 SceneFight::SceneFight() : Scene()
 {
-	sceneType = SceneType::FIGHT;
 	id = SceneID::SCENE_FIGHT;
 
 	/*Initialize*/
@@ -36,8 +35,13 @@ SceneFight::~SceneFight()
 // Called before render is available
 bool SceneFight::Awake(pugi::xml_node& config)
 {
-	LOG("Loading LogoScreen");
+	LOG("|| AWAKE SceneFight ||");
 	bool ret = true;
+
+	/*Initialize from xml*/
+	path_bg = app->configNode.child("sceneFight").child("backgroundimage").attribute("texturepath").as_string();
+	path_arrow = app->configNode.child("sceneFight").child("arrowimage").attribute("texturepath").as_string();
+	//musicPath = app->configNode.child("logo").child("music").attribute("musicPath").as_string();
 
 	return ret;
 }
@@ -45,13 +49,12 @@ bool SceneFight::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool SceneFight::Start()
 {
-	LOG("--FORMING PARTY--");
+	LOG("--START SceneFight--");
 
-	
+	// Set rand seed
+	srand(time(NULL));
 
-	// Loading set of SFX
-	selectSFX = app->audio->LoadFx(selectSFXPath);
-
+	// Set Scale
 	app->scaleObj->SetCurrentScale(ScaleType::FIGHT);
 	int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
 
@@ -111,8 +114,7 @@ bool SceneFight::Start()
 		position.y = (offsetY + 96 * i)/scale;
 
 		PartyMember* member = new PartyMember(
-			type,
-			MemberStatus::NORMAL,
+			type, MemberStatus::NORMAL,
 			itemNode.attribute("name").as_string(),
 			itemNode.attribute("maxHp").as_uint(),
 			itemNode.attribute("maxMana").as_uint(),
@@ -121,23 +123,14 @@ bool SceneFight::Start()
 			itemNode.attribute("defense").as_uint(),
 			itemNode.attribute("speed").as_uint(),
 			itemNode.attribute("critRate").as_uint(),
-			tex,
-			position,
-			textureRect);
+			tex, position, textureRect);
 
 		turnList.Add(member);
 		enemyList.Add(member);
 	}
 	
 	enemiesAlive = enemyList.Count();
-
 	enemySelected = 0;
-
-	attackButton18 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 18, "attack", 7, { 100, 600, 252, 76 }, this);
-	defenseButton19 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 19, "defend", 7, { 510, 600, 252, 76 }, this);
-	escapeButton20 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "escape", 7, { 915, 600, 252, 76 }, this);
-
-	srand(time(NULL));
 
 	return true;
 }
@@ -261,7 +254,7 @@ bool SceneFight::CleanUp()
 	if (tex_bg != nullptr) { app->tex->UnLoad(tex_bg); }
 	if (tex_arrow != nullptr) { app->tex->UnLoad(tex_arrow); }
 
-	app->guiManager->guiControlsList.Clear();
+	//app->guiManager->guiControlsList.Clear();
 
 	app->scaleObj->SetCurrentScale(ScaleType::WORLD);
 
@@ -273,23 +266,23 @@ bool SceneFight::OnGuiMouseClickEvent(GuiControl* control)
 	// L15: TODO 5: Implement the OnGuiMouseClickEvent method
 	switch (control->id)
 	{
-	case 18: //Attack
-		Attack(turnMember, enemyList.At(enemySelected)->data);
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);	
-		break;
+	//case 18: //Attack
+	//	Attack(turnMember, enemyList.At(enemySelected)->data);
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);	
+	//	break;
 
-	case 19: //Defense
-		turn++;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
-		break;
+	//case 19: //Defense
+	//	turn++;
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
+	//	break;
 
-	case 20: //Skip turn
-		Escape();
-		app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
-		break;
+	//case 20: //Skip turn
+	//	Escape();
+	//	app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
+	//	break;
 
-	default:
-		break;
+	//default:
+	//	break;
 	}
 
 	return true;

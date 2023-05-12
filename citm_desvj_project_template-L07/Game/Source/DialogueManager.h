@@ -16,7 +16,7 @@ public:
 	~DialogueManager();
 
 	void Load(int dialogueId);
-	void Update();
+	bool Update();
 	void Draw();
 	void Unload();
 	void CleanUp();
@@ -24,14 +24,14 @@ public:
 
 	bool dialogueLoaded;
 
+	uint dialogueFontId;
+
 private:
 	SceneGame* scene;
 	pugi::xml_node file;
 
 	Dialogue* currentDialogue;
 	SDL_Texture* dialoguetext;
-
-	uint dialogueFontId;
 };
 
 #endif // __DIALOGUEMANAGER_H__

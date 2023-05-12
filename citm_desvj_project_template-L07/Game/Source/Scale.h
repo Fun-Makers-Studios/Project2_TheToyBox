@@ -27,7 +27,7 @@ public:
 		case ScaleType::NORMAL: return 1;
 		case ScaleType::WORLD:	return 2; //2
 		case ScaleType::HOUSE:	return 1;
-		case ScaleType::FIGHT:	return 1; //3
+		case ScaleType::FIGHT:	return 2; //3
 		case ScaleType::UI_50:	return 1;
 		case ScaleType::UI_100: return 1;
 		case ScaleType::XAVIDATECUENTA: return 4;

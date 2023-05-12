@@ -5,6 +5,8 @@
 #include "Render.h"
 #include "Window.h"
 #include "EntityManager.h"
+#include "QuestManager.h"
+#include "MenuManager.h"
 #include "Map.h"
 #include "Collisions.h"
 #include "PathFinding.h"
@@ -21,17 +23,10 @@
 
 SceneGame::SceneGame() : Scene()
 {	
-	sceneType = SceneType::GAME;
 	id = SceneID::SCENE_GAME;
 
 	/*STORE INFO FROM XML*/
 	musicPath = app->configNode.child("scene").child("music").attribute("musicPath").as_string();
-	selectSFXPath = app->configNode.child("scene").child("scenesfx").attribute("selectSFXPath").as_string();
-	imgPausePath = app->configNode.child("scene").child("imgPause").attribute("imgPausePath").as_string();
-	popImg_settingsPath = app->configNode.child("title").child("popImage").attribute("settingtexturepath").as_string();
-	partyMenuImgPath = app->configNode.child("scene").child("partyMenuImg").attribute("partyMenuImgPath").as_string();
-	zeroImgPath = app->configNode.child("scene").child("zeroImg").attribute("zeroImgPath").as_string();
-	sophieImgPath = app->configNode.child("scene").child("sophieImg").attribute("sophieImgPath").as_string();
 	saveTexPath = app->configNode.child("scene").child("saveTex").attribute("saveTexPath").as_string();
 }
 
@@ -84,6 +79,7 @@ bool SceneGame::Start()
 	app->map->Enable();
 	app->collisions->Enable();
 	app->entityManager->Enable();
+	app->questManager->Enable();
 	app->debug->debug = false;
 	exitGame = false;
 
@@ -102,37 +98,9 @@ bool SceneGame::Start()
 	// Play level music
 	app->audio->PlayMusic(musicPath, 1.0f);
 
-	// Loading set of SFX
-	selectSFX = app->audio->LoadFx(selectSFXPath);
-
-	img_pause = app->tex->Load(imgPausePath);
-	pauseRect = {35, 69, 310, 555};
-	popImg_settings = app->tex->Load(popImg_settingsPath);
-	partyMenuImg = app->tex->Load(partyMenuImgPath);
-	zeroImg = app->tex->Load(zeroImgPath);
-	sophieImg = app->tex->Load(sophieImgPath);
+	// Load tex
 	saveTex = app->tex->Load(saveTexPath);
 
-	// UI
-	uint w, h;
-	app->win->GetWindowSize(w, h);
-	resumeButton14 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 14, "resume", 7, { 515, 295, 252, 76 }, this);
-	backToTitleButton15 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 15, "back to title", 13, { 515, 375, 252, 76 }, this);
-	settingsButton16 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 16, "settings", 8, { 515, 455, 252, 76 }, this);
-	closeButton17 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 17, "save and exit", 12, { 515, 535, 252, 76 }, this);
-
-	decreaseMusicButton21 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 21, "decrease", 9, { 325, 200, 252, 76 }, this);
-	increaseMusicButton22 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 22, "increase", 9, { 700, 200, 252, 76 }, this);
-
-	decreaseSFXButton23 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 23, "decrease", 9, { 325, 315, 252, 76 }, this);
-	increaseSFXButton24 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 24, "increase", 9, { 700, 315, 252, 76 }, this);
-
-	fullscreenButton25 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 25, "", 1, { 520, 424, 252, 76 }, this);
-
-	vsyncButton26 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 26, "", 1, { 520, 532, 252, 76 }, this);
-
-	firstPMemberButton27 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 27, "z", 2, { 176, 140, 65, 76 }, this, ButtonType::SMALL);
-	secondPMemberButton28 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 28, "s", 2, { 176, 216, 64, 76 }, this, ButtonType::SMALL);
 
 	ResetScene();
 
@@ -157,40 +125,40 @@ bool SceneGame::Update(float dt)
 		continueGame = false;
 	}
 
-	//TEST FIGHT SCENE
+	//TEST FIGHT SCENE - HEKATE!!!
 	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
 		LOG("SWITCHING TO SCENEFIGHT");
 		FightKid();
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	// HEKATE
+	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		if (!dialogueManager->dialogueLoaded && !settingSceneMenu && !partyMenu) { gamePaused = !gamePaused; }
+		if (!dialogueManager->dialogueLoaded && !settingSceneMenu && !partyMenu) { gamePaused != gamePaused; }
 		
-		if(settingSceneMenu == false)
+		if(!settingSceneMenu)
 			pauseMenu = !pauseMenu;
 	
 		Mix_PauseMusic();
 	}
 
-	if (gamePaused != true)
+	if (!gamePaused)
 	{
 		Mix_ResumeMusic();
-
-		// God Mode key
-		/*if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-		{
-			player->godMode = !player->godMode;
-			app->audio->PlayFx(selectSFX);
-		}*/
 	}
 	
 	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && !dialogueManager->dialogueLoaded)
 	{
-		gamePaused = !gamePaused;
-		partyMenu = !partyMenu;
+		gamePaused != gamePaused;
+		partyMenu != partyMenu;
 		app->audio->PlayFx(selectSFX);
-	}
+	}*/
+	/*if (app->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && !dialogueManager->dialogueLoaded)
+	{
+		gamePaused != gamePaused;
+		questMenu != questMenu;
+		app->audio->PlayFx(selectSFX);
+	}*/
 
 	// Camera movement
 	if (app->debug->debug && app->debug->freeCam)
@@ -203,8 +171,6 @@ bool SceneGame::Update(float dt)
 	}
 	else
 	{
-		// Camera movement related to player's movement
-		// HEKATE FixCamera() Modified
 		FixCamera();
 	}
 
@@ -237,152 +203,23 @@ bool SceneGame::Update(float dt)
 		app->SaveGameRequest();
 	}
 
-	//Blit UI
-	/*app->ui->BlitFPS();
-
-	if (app->debug->debug)
-	{
-		app->ui->BlitPlayerXPos();
-		app->ui->BlitPlayerYPos();
-		app->ui->BlitAverageFPS();
-		app->ui->BlitDT();
-		app->ui->BlitTimeSinceStart();
-		app->ui->BlitFrameCount();
-	}*/
-
 	return true;
 }
 
 // Called each loop iteration
 bool SceneGame::PostUpdate()
 {
-	bool ret = true;
-
-	if (gamePaused && pauseMenu)
-		app->render->DrawTexture(img_pause, app->render->camera.x + app->render->camera.w / 2 - pauseRect.w / 2, app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
-
-	if(gamePaused && partyMenu)
-		app->render->DrawTexture(partyMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
-
-	if(gamePaused && pauseMenu && settingSceneMenu)
-		app->render->DrawTexture(popImg_settings, app->render->camera.x , app->render->camera.y - 3, NULL);
-
-
-	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) 
-		dialogueManager->Update();
-
-
-	// Draw GUI
-	app->guiManager->Draw();
-
-	resumeButton14->state = GuiControlState::DISABLED;
-	backToTitleButton15->state = GuiControlState::DISABLED;
-	settingsButton16->state = GuiControlState::DISABLED;
-	closeButton17->state = GuiControlState::DISABLED;
-
-	// Setting Menu
-	decreaseMusicButton21->state = GuiControlState::DISABLED;
-	increaseMusicButton22->state = GuiControlState::DISABLED;
-	decreaseSFXButton23->state = GuiControlState::DISABLED;
-	increaseSFXButton24->state = GuiControlState::DISABLED;
-	fullscreenButton25->state = GuiControlState::DISABLED;
-	vsyncButton26->state = GuiControlState::DISABLED;
-
-	firstPMemberButton27->state = GuiControlState::DISABLED;
-	secondPMemberButton28->state = GuiControlState::DISABLED;
-
-	if (pauseMenu)
+	bool ret = true;	
+	
+	// HEKATE
+	if (/*gamePaused &&*/ dialogueManager->dialogueLoaded)
 	{
-		if (resumeButton14->state == GuiControlState::DISABLED) 
-			resumeButton14->state = GuiControlState::NORMAL;
-		
-		if (backToTitleButton15->state == GuiControlState::DISABLED) 
-			backToTitleButton15->state = GuiControlState::NORMAL;
-		
-		if (settingsButton16->state == GuiControlState::DISABLED) 
-			settingsButton16->state = GuiControlState::NORMAL;
-		
-		if (closeButton17->state == GuiControlState::DISABLED) 
-			closeButton17->state = GuiControlState::NORMAL;
-		
-		if (settingSceneMenu)
-		{
-			resumeButton14->state = GuiControlState::DISABLED;
-			backToTitleButton15->state = GuiControlState::DISABLED;
-			settingsButton16->state = GuiControlState::DISABLED;
-			closeButton17->state = GuiControlState::DISABLED;
-
-		
-			decreaseMusicButton21->state = GuiControlState::NORMAL;
-			increaseMusicButton22->state = GuiControlState::NORMAL;
-			decreaseSFXButton23->state = GuiControlState::NORMAL;
-			increaseSFXButton24->state = GuiControlState::NORMAL;
-			fullscreenButton25->state = GuiControlState::NORMAL;
-			vsyncButton26->state = GuiControlState::NORMAL;
-
-			char music[10];
-			sprintf_s(music, 10, "%d", app->musicValue);
-			app->fonts->BlitText(630, 245, app->ui->font1_id, music);
-
-			char sfx[10];
-			sprintf_s(sfx, 10, "%d", app->sfxValue);
-			app->fonts->BlitText(630, 362, app->ui->font1_id, sfx);
-
-			char fullscreen[10];
-			sprintf_s(fullscreen, 10, "%s", app->win->fullscreenMode ? "on" : "off");
-			app->fonts->BlitText(632, 458, app->ui->font1_id, fullscreen);
-
-			char vsync[10];
-			sprintf_s(vsync, 10, "%s", app->render->limitFPS ? "on" : "off");
-			app->fonts->BlitText(632, 565, app->ui->font1_id, vsync);
-
-
-			if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-			{
-				settingSceneMenu = !settingSceneMenu;
-				app->audio->PlayFx(app->sceneManager->sceneTitle->closemenuSFX);
-			}
-		}
+		if (dialogueManager->Update())
+			dialogueManager->Draw();
 	}
 
-	if (partyMenu)
-	{
-		if (firstPMemberButton27->state == GuiControlState::DISABLED) 
-			firstPMemberButton27->state = GuiControlState::NORMAL;
-		
-		if (secondPMemberButton28->state == GuiControlState::DISABLED) 
-			secondPMemberButton28->state = GuiControlState::NORMAL;
-		
-		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		{
-			partyMenu = !partyMenu;
-			app->audio->PlayFx(app->sceneManager->sceneTitle->closemenuSFX);
-		}
 
-		switch (partyMemberSelected)
-		{
-		case 0:
-			// Zero
-			app->render->DrawTexture(zeroImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
-			break;
-
-		case 1:
-			// Sophie
-			app->render->DrawTexture(sophieImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
-			
-			break;
-		default:
-			break;
-		}
-		app->ui->BlitPartyStats();
-
-	}
-
-	if ((gamePaused && dialogueManager->dialogueLoaded) && (!pauseMenu && !partyMenu))
-		dialogueManager->Draw();
-
-
-	if (exitGame)
+	if (exitGame == true)
 		ret = false;
 
 	return ret;
@@ -392,39 +229,22 @@ bool SceneGame::PostUpdate()
 bool SceneGame::CleanUp()
 {
 	LOG("Freeing GAME SCENE");
+
 	app->entityManager->Disable();
 	app->pathfinding->Disable();
 	app->collisions->Disable();
+	app->questManager->Disable();
 	app->map->Disable();
 
+	//HEKATE
 	gamePaused = false;
 	pauseMenu = false;
 	partyMenu = false;
+	questMenu = false;
 
 	dialogueManager->CleanUp();
 
 	Mix_ResumeMusic();
-
-	if (img_pause != nullptr)
-	{
-		app->tex->UnLoad(img_pause);
-	}
-	if (popImg_settings != nullptr)
-	{
-		app->tex->UnLoad(popImg_settings);
-	}
-	if (partyMenuImg != nullptr)
-	{
-		app->tex->UnLoad(partyMenuImg);
-	}
-	if (zeroImg != nullptr)
-	{
-		app->tex->UnLoad(zeroImg);
-	}
-	if (sophieImg != nullptr)
-	{
-		app->tex->UnLoad(sophieImg);
-	}
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -438,113 +258,7 @@ bool SceneGame::CleanUp()
 
 bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 {
-	switch (control->id)
-	{
-	case 14:
-		if (!dialogueManager->dialogueLoaded) { gamePaused = !gamePaused; }
-		pauseMenu = !pauseMenu;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
-
-	case 15: // Back to title
-		pauseMenu = !pauseMenu;
-		app->sceneManager->sceneState = SceneState::SWITCH;
-		app->sceneManager->nextScene = SceneID::SCENE_TITLE;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
-		break;
-
-	case 16:
-		//Here goes settings menu
-		settingSceneMenu = !settingSceneMenu;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
-	
-	case 17:
-		showSavingState = true;
-		app->SaveGameRequest();
-		//exitGame = !exitGame;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
-	
-	case 21:
-		// Decrease music volume
-		app->musicValue = app->musicValue - 1;
-		if (app->musicValue <= 0)
-			app->musicValue = 0;
-		if (app->musicValue >= 100)
-			app->musicValue = 100;
-		Mix_VolumeMusic(app->musicValue);
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
-
-	case 22:
-		// Increase music volume
-		app->musicValue = app->musicValue + 1;
-		if (app->musicValue <= 0)
-			app->musicValue = 0;
-		if (app->musicValue >= 100)
-			app->musicValue = 100;
-		Mix_VolumeMusic(app->musicValue);
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
-
-	case 23:
-		// Decrease SFX volume
-		app->sfxValue = app->sfxValue - 1;
-		if (app->sfxValue <= 0)
-			app->sfxValue = 0;
-		if (app->sfxValue >= 100)
-			app->sfxValue = 100;
-		Mix_Volume(-1, app->sfxValue);
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
-
-	case 24:
-		// Increase SFX volume
-		app->sfxValue = app->sfxValue + 1;
-		if (app->sfxValue <= 0)
-			app->sfxValue = 0;
-		if (app->sfxValue >= 100)
-			app->sfxValue = 100;
-		Mix_Volume(-1, app->sfxValue);
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
-
-	case 25:
-		// Fullscreen button
-		app->win->fullscreenMode = !app->win->fullscreenMode;
-		if (app->win->fullscreenMode == true)
-		{
-			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
-		}
-		else if (app->win->fullscreenMode == false)
-		{
-			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_SHOWN);
-		}
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
-
-	case 26:
-		// V-Sync button
-		app->render->limitFPS = !app->render->limitFPS;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
-	
-	case 27:
-		// Choose First PartyMember
-		partyMemberSelected = 0;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
-		
-	case 28:
-		// Choose Second PartyMember
-		partyMemberSelected = 1;
-		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-		break;
-
-	default:
-		break;
-	}
+	// HEKATE MUST DELETE	
 
 	return true;
 }
@@ -556,29 +270,24 @@ void SceneGame::ActiveParticles()
 		if (firefliesPS == nullptr) 
 		{
 			firefliesPS = app->particleManager->CreateParticleSystem({0, 0}, Blueprint::FIREFLIES);
-		}
-		
-		
-		
+		}		
 	}
 	else
 	{
-
 		if (firefliesPS != nullptr)
 		{
 			firefliesPS->TurnOff();
 			firefliesPS = nullptr;
 		}
-
-		
-
 	}
 }
 
 void SceneGame::SaveUI()
 {
-	if (showSavingState == true) {
-		if (saveTime < 75) {
+	if (showSavingState == true)
+	{
+		if (saveTime < 75)
+		{
 			app->render->DrawTexture(saveTex, app->render->camera.x + (app->render->camera.w - 100) , app->render->camera.y + (app->render->camera.h - 100), NULL);
 			saveTime++;
 		}
@@ -652,8 +361,7 @@ void SceneGame::LoadItems()
 		item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, itemNode);
 		itemsList.Add(item);
 		item->Start();
-	}
-	
+	}	
 }
 
 void SceneGame::FixCamera()
@@ -722,6 +430,31 @@ bool SceneGame::LoadState(pugi::xml_node& data)
 	//// load previous saved bat position
 	//iPoint kidpos = { data.child("kidposition").attribute("x").as_float(), data.child("kidposition").attribute("y").as_float() };
 	//app->scene->kid->pbody->body->settransform(kidpos, 0);
+
+	//Load NPC
+	/*for (pugi::xml_node itemNode = app->configNode.child("npcs").child(mapName.GetString()).child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
+	{
+		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC, itemNode);
+		npcList.Add(npc);
+		npc->Start();
+	}
+
+	ListItem<NPC*>*npcItem;
+	for (npcItem = npcList.start; npcItem != NULL; npcItem = npcItem->next)
+	{
+		pugi::xml_node partyMember = data.append_child("npc");
+		npcItem->data->name = data.child("partymember").attribute("name").as_string();
+		npcItem->data->maxHp = data.child("partymember").attribute("maxHp").as_uint();
+		npcItem->data->maxMana = data.child("partymember").attribute("maxMana").as_uint();
+		npcItem->data->currentHp = data.child("partymember").attribute("currentHp").as_uint();
+		npcItem->data->level = data.child("partymember").attribute("level").as_uint();
+		npcItem->data->attack = data.child("partymember").attribute("attack").as_uint();
+		npcItem->data->defense = data.child("partymember").attribute("defense").as_uint();
+		npcItem->data->speed = data.child("partymember").attribute("speed").as_uint();
+		npcItem->data->critRate = data.child("partymember").attribute("critRate").as_uint();
+		npcItem->data->fightPosition.x = data.child("partymember").attribute("fightPosX").as_int();
+		npcItem->data->fightPosition.y = data.child("partymember").attribute("fightPosY").as_int();
+	}*/
 
 	return true;
 }

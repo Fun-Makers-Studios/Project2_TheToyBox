@@ -85,11 +85,9 @@ bool KidEnemy::PreUpdate()
 }
 
 bool KidEnemy::Update()
-{
-	
+{	
 	currentAnim = &idleAnim;
 	
-
 	if (dead == true)
 	{
 		//HEKATE
@@ -99,12 +97,9 @@ bool KidEnemy::Update()
 		app->audio->PlayFx(powerUpSFX);
 		dead = false;
 	}
-
-	if (app->sceneManager->sceneGame->gamePaused != true)
-	{
-		//HEKATE position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width/2));
-		//HEKATE position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height));
-	}
+	
+	//HEKATE position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x - (width/2));
+	//HEKATE position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y - (height));	
 
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 	ScaleType scale = app->scaleObj->GetCurrentScale();

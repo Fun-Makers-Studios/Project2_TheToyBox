@@ -9,6 +9,11 @@
 #include "SceneFight.h"
 #include "SceneEnding.h"
 
+enum class SceneState
+{
+	CONTINUE,
+	SWITCH
+};
 
 enum class SceneState
 {
