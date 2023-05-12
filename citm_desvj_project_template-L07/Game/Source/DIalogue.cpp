@@ -4,6 +4,8 @@ Option::Option(pugi::xml_node option) {
 	this->id = option.attribute("id").as_int();
 	this->text = option.attribute("text").as_string();
 	this->nextNodeId = option.attribute("nextNodeId").as_int();
+	this->questCompletionId = option.attribute("questCompletionId").as_int();
+	this->questTriggerId = option.attribute("questTriggerId").as_int();
 }
 
 Node::Node(pugi::xml_node node) {

@@ -8,6 +8,7 @@
 
 #include "SceneManager.h"
 
+#include "EntityManager.h"
 #include "Map.h"
 #include "Collisions.h"
 #include "Pathfinding.h"
@@ -15,6 +16,7 @@
 #include "EntityManager.h"
 #include "PartyManager.h"
 #include "ParticleSystemManager.h"
+#include "QuestManager.h"
 
 #include "MenuManager.h"
 #include "UI.h"
@@ -22,6 +24,7 @@
 #include "GuiButton.h"
 
 #include "Debug.h"
+
 
 #include "Render.h"
 
@@ -50,6 +53,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	pathfinding = new Pathfinding();
 	collisions = new Collisions();
 
+	questManager = new QuestManager();
 	entityManager = new EntityManager();
 	partyManager = new PartyManager();
 	particleManager = new ParticleSystemManager();
@@ -77,6 +81,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding, false);
 	AddModule(collisions, false);
 
+	AddModule(questManager, false);
 	AddModule(entityManager, false);
 	AddModule(partyManager, true);
 	AddModule(particleManager, true);

@@ -81,6 +81,13 @@ public:
 	bool showSavingState = false;
 
 	// Menu states
+	bool gamePaused = false;
+	bool partyMenu = false;
+	bool pauseMenu = false;
+	bool questMenu = false;
+	bool settingSceneMenu = false;
+
+
 	bool playing = false; //HEKATE not used
 	bool continueGame = false;
 
@@ -88,6 +95,7 @@ public:
 	bool isMapChanging = false;
 
 	uint partyMemberSelected = 0;
+	uint questListSelected = 0;
 
 	DialogueManager* dialogueManager;
 
@@ -104,6 +112,9 @@ private:
 	// Textures
 	const char* partyMenuImgPath = nullptr;
 	SDL_Texture* partyMenuImg = nullptr;
+
+	const char* questMenuImgPath = nullptr;
+	SDL_Texture* questMenuImg = nullptr;
 	
 	const char* zeroImgPath = nullptr;
 	SDL_Texture* zeroImg = nullptr;
@@ -117,6 +128,14 @@ private:
 	// Debug pathfinding
 	iPoint origin;
 	bool originSelected = false;
+
+	//UI
+
+	GuiButton* firstPMemberButton27 = nullptr;
+	GuiButton* secondPMemberButton28 = nullptr;
+
+	GuiButton* doneQuestsButton29 = nullptr;
+	GuiButton* activeQuestsButton30 = nullptr;
 
 	// Particle system
 	ParticleSystem* smokePS;

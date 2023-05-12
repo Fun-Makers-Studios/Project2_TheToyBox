@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "App.h"
 #include "SceneManager.h"
+#include "QuestManager.h"
 #include "Fonts.h"
 
 #include "Log.h"
@@ -58,8 +59,8 @@ bool DialogueManager::Update()
 			currentDialogue->currentNode->currentOption = op;
 	
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-	{
+	else if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+		app->questManager->TriggerQuest(currentDialogue->currentNode->currentOption->questTriggerId);
 		currentDialogue->currentNode = currentDialogue->SetCurrentNode(currentDialogue->currentNode->currentOption->nextNodeId);
 
 		if (currentDialogue->currentNode == nullptr)

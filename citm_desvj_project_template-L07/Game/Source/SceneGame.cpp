@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "EntityManager.h"
+#include "QuestManager.h"
 #include "Map.h"
 #include "Collisions.h"
 #include "PathFinding.h"
@@ -26,6 +27,7 @@ SceneGame::SceneGame() : Scene()
 	/*STORE INFO FROM XML*/
 	musicPath = app->configNode.child("scene").child("music").attribute("musicPath").as_string();
 	partyMenuImgPath = app->configNode.child("scene").child("partyMenuImg").attribute("partyMenuImgPath").as_string();
+	questMenuImgPath = app->configNode.child("scene").child("questMenuImg").attribute("questMenuImgPath").as_string();
 	zeroImgPath = app->configNode.child("scene").child("zeroImg").attribute("zeroImgPath").as_string();
 	sophieImgPath = app->configNode.child("scene").child("sophieImg").attribute("sophieImgPath").as_string();
 	saveTexPath = app->configNode.child("scene").child("saveTex").attribute("saveTexPath").as_string();
@@ -80,6 +82,7 @@ bool SceneGame::Start()
 	app->map->Enable();
 	app->collisions->Enable();
 	app->entityManager->Enable();
+	app->questManager->Enable();
 	app->debug->debug = false;
 	exitGame = false;
 
@@ -100,11 +103,16 @@ bool SceneGame::Start()
 
 	// Load tex
 	partyMenuImg = app->tex->Load(partyMenuImgPath);
+	questMenuImg = app->tex->Load(questMenuImgPath);
 	zeroImg = app->tex->Load(zeroImgPath);
 	sophieImg = app->tex->Load(sophieImgPath);
 	saveTex = app->tex->Load(saveTexPath);
 
-	
+	// UI
+
+	doneQuestsButton29 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 29, "done", 4, { 176, 140, 65, 76 }, this, ButtonType::SMALL);
+	activeQuestsButton30 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 30, "active", 6, { 176, 216, 64, 76 }, this, ButtonType::SMALL);
+
 	ResetScene();
 
 	return true;
@@ -156,6 +164,13 @@ bool SceneGame::Update(float dt)
 		partyMenu != partyMenu;
 		app->audio->PlayFx(selectSFX);
 	}*/
+
+	if (app->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && !dialogueManager->dialogueLoaded)
+	{
+		gamePaused = !gamePaused;
+		questMenu = !questMenu;
+		app->audio->PlayFx(selectSFX);
+	}
 
 	// Camera movement
 	if (app->debug->debug && app->debug->freeCam)
@@ -219,6 +234,8 @@ bool SceneGame::PostUpdate()
 		app->render->DrawTexture(popImg_settings, app->render->camera.x , app->render->camera.y - 3, NULL);
 	*/
 
+	
+	
 	// HEKATE
 	if (/*gamePaused &&*/ dialogueManager->dialogueLoaded)
 	{
@@ -226,8 +243,97 @@ bool SceneGame::PostUpdate()
 			dialogueManager->Draw();
 	}
 
+	if (partyMenu == true)
+	{
+		if (firstPMemberButton27->state == GuiControlState::DISABLED) 
+			firstPMemberButton27->state = GuiControlState::NORMAL;
+		
+		if (secondPMemberButton28->state == GuiControlState::DISABLED) 
+			secondPMemberButton28->state = GuiControlState::NORMAL;
+		
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		{
+			partyMenu = !partyMenu;
+			app->audio->PlayFx(app->sceneManager->sceneTitle->closemenuSFX);
+		}
 
-	if (exitGame)
+		switch (partyMemberSelected)
+		{
+		case 0:
+			// Zero
+			app->render->DrawTexture(zeroImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
+			break;
+
+		case 1:
+			// Sophie
+			app->render->DrawTexture(sophieImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
+			
+			break;
+		default:
+			break;
+		}
+		app->ui->BlitPartyStats();
+
+	}
+
+	if (questMenu == true)
+	{
+		if (doneQuestsButton29->state == GuiControlState::DISABLED)
+			doneQuestsButton29->state = GuiControlState::NORMAL;
+
+		if (activeQuestsButton30->state == GuiControlState::DISABLED)
+			activeQuestsButton30->state = GuiControlState::NORMAL;
+
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		{
+			questMenu = !questMenu;
+			app->audio->PlayFx(app->sceneManager->sceneTitle->closemenuSFX);
+		}
+
+		ListItem<Quest*>* qitem = app->questManager->activeQuests.start;
+		switch (questListSelected)
+		{
+		case 0:
+			// Done
+			while (qitem != nullptr)
+			{
+				Quest* item = qitem->data;
+
+				app->fonts->BlitText2(95, 540, dialogueManager->dialogueFontId, (const char*)item->name.GetString(), 8, 1090);
+
+				if (item->id == currentQuestSelected) {
+					app->fonts->BlitText2(95, 540, dialogueManager->dialogueFontId, (const char*)item->description.GetString(), 8, 1090);
+				}
+
+				qitem = qitem->next;
+			}
+			break;
+
+		case 1:
+			// Active
+			while (qitem != nullptr)
+			{
+				Quest* item = qitem->data;
+
+				app->fonts->BlitText2(95, 540, dialogueManager->dialogueFontId, (const char*)item->name.GetString(), 8, 1090);
+
+				if (item->id == currentQuestSelected) {
+					app->fonts->BlitText2(95, 540, dialogueManager->dialogueFontId, (const char*)item->description.GetString(), 8, 1090);
+				}
+
+				qitem = qitem->next;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false && questMenu == false)) {
+		dialogueManager->Draw();
+	}
+
+	if (exitGame == true)
 		ret = false;
 
 	return ret;
@@ -241,7 +347,13 @@ bool SceneGame::CleanUp()
 	app->entityManager->Disable();
 	app->pathfinding->Disable();
 	app->collisions->Disable();
+	app->questManager->Disable();
 	app->map->Disable();
+
+	gamePaused = false;
+	pauseMenu = false;
+	partyMenu = false;
+	questMenu = false;
 
 	dialogueManager->CleanUp();
 
@@ -250,6 +362,7 @@ bool SceneGame::CleanUp()
 	app->tex->UnLoad(partyMenuImg);
 	app->tex->UnLoad(zeroImg);
 	app->tex->UnLoad(sophieImg);
+	app->tex->UnLoad(questMenuImg);
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -264,6 +377,31 @@ bool SceneGame::CleanUp()
 bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 {
 	// HEKATE MUST DELETE
+
+	case 27:
+		// Choose First PartyMember
+		partyMemberSelected = 0;
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+		break;
+
+	case 28:
+		// Choose Second PartyMember
+		partyMemberSelected = 1;
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+		break;
+
+	case 29:
+		// Choose Done quests
+		questListSelected = 0;
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+		break;
+
+	case 30:
+		// Choose Active quests
+		questListSelected = 1;
+		app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
+		break;
+
 	return true;
 }
 
@@ -434,6 +572,31 @@ bool SceneGame::LoadState(pugi::xml_node& data)
 	//// load previous saved bat position
 	//iPoint kidpos = { data.child("kidposition").attribute("x").as_float(), data.child("kidposition").attribute("y").as_float() };
 	//app->scene->kid->pbody->body->settransform(kidpos, 0);
+
+	//Load NPC
+	/*for (pugi::xml_node itemNode = app->configNode.child("npcs").child(mapName.GetString()).child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
+	{
+		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC, itemNode);
+		npcList.Add(npc);
+		npc->Start();
+	}
+
+	ListItem<NPC*>*npcItem;
+	for (npcItem = npcList.start; npcItem != NULL; npcItem = npcItem->next)
+	{
+		pugi::xml_node partyMember = data.append_child("npc");
+		npcItem->data->name = data.child("partymember").attribute("name").as_string();
+		npcItem->data->maxHp = data.child("partymember").attribute("maxHp").as_uint();
+		npcItem->data->maxMana = data.child("partymember").attribute("maxMana").as_uint();
+		npcItem->data->currentHp = data.child("partymember").attribute("currentHp").as_uint();
+		npcItem->data->level = data.child("partymember").attribute("level").as_uint();
+		npcItem->data->attack = data.child("partymember").attribute("attack").as_uint();
+		npcItem->data->defense = data.child("partymember").attribute("defense").as_uint();
+		npcItem->data->speed = data.child("partymember").attribute("speed").as_uint();
+		npcItem->data->critRate = data.child("partymember").attribute("critRate").as_uint();
+		npcItem->data->fightPosition.x = data.child("partymember").attribute("fightPosX").as_int();
+		npcItem->data->fightPosition.y = data.child("partymember").attribute("fightPosY").as_int();
+	}*/
 
 	return true;
 }
