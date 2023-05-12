@@ -30,10 +30,9 @@ public:
 public:
 
 	// UI
-	GuiButton* resumeButton = nullptr;
-	GuiButton* backToTitleButton = nullptr;
-	GuiButton* settingsButton = nullptr;
-	GuiButton* saveExitButton = nullptr;
+	GuiButton* attackButton = nullptr;
+	GuiButton* defenseButton = nullptr;
+	GuiButton* escapeButton = nullptr;
 
 	enum class ControlID : uint32
 	{

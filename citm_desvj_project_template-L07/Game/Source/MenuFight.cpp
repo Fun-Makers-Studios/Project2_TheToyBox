@@ -43,9 +43,9 @@ bool MenuFight::Start()
 	pauseRect = { 35, 69, 310, 555 };
 
 	//UI
-	attackButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 18, "attack", 7, { 100, 600, 252, 76 }, this);
-	defenseButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 19, "defend", 7, { 510, 600, 252, 76 }, this);
-	escapeButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "escape", 7, { 915, 600, 252, 76 }, this);
+	//attackButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 18, "attack", 7, { 100, 600, 252, 76 }, this);
+	//defenseButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 19, "defend", 7, { 510, 600, 252, 76 }, this);
+	//escapeButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "escape", 7, { 915, 600, 252, 76 }, this);
 
 	resumeButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::RESUME, "resume", 7, { 515, 295, 252, 76 }, this);
 	backToTitleButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::BACK_TO_TITLE, "back to title", 13, { 515, 375, 252, 76 }, this);
