@@ -29,25 +29,28 @@ public:
 
 public:
 
+	bool active = false;
+
 	// UI
-	GuiButton* decreaseMusicButton = nullptr;
-	GuiButton* increaseMusicButton = nullptr;
-	GuiButton* decreaseSFXButton = nullptr;
-	GuiButton* increaseSFXButton = nullptr;
-	GuiButton* fullscreenButton = nullptr;
-	GuiButton* vsyncButton = nullptr;
+	GuiButton* resumeButton = nullptr;
+	GuiButton* backToTitleButton = nullptr;
+	GuiButton* settingsButton = nullptr;
+	GuiButton* saveExitButton = nullptr;
 
 	enum class ControlID : uint32
 	{
-		FULL_SCREEN,
-		V_SYNC
+		RESUME,
+		BACK_TO_TITLE,
+		SETTINGS,
+		SAVE_EXIT
 	};
 
 private:
 
-	SDL_Texture* popImg_credits = nullptr;
-	const char* popImgCreditsPath;
+	SDL_Texture* imgPause = nullptr;
+	const char* imgPausePath = nullptr;
 
+	SDL_Rect pauseRect;
 };
 
 #endif // __MENU_PAUSE_H__

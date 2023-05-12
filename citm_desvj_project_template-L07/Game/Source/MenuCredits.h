@@ -27,22 +27,6 @@ public:
 	// Define multiple Gui Event methods
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
-public:
-
-	// UI
-	GuiButton* decreaseMusicButton = nullptr;
-	GuiButton* increaseMusicButton = nullptr;
-	GuiButton* decreaseSFXButton = nullptr;
-	GuiButton* increaseSFXButton = nullptr;
-	GuiButton* fullscreenButton = nullptr;
-	GuiButton* vsyncButton = nullptr;
-
-	enum class ControlID : uint32
-	{
-		FULL_SCREEN,
-		V_SYNC
-	};
-
 private:
 
 	SDL_Texture* popImg_credits = nullptr;

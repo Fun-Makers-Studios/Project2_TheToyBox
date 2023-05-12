@@ -36,6 +36,7 @@
 		<closeMenuSFX closeMenuSFXPath="Assets/Audio/Fx/Menus/close_menu.wav"/>
 
 		<popImage settingtexturepath="Assets/Textures/UI/SceneTitle/Settings/SettingsMenu.png" creditstexturepath="Assets/Textures/UI/SceneTitle/Credits/CreditsMenu.png"/>
+		<imgPause imgPausePath="Assets/Textures/UI/PauseMenu/PauseMenuTemplate.png"/>
 	</menuManager>
 	
 	<logo>
@@ -50,7 +51,6 @@
 
 	<scene>
 		<music musicPath="Assets/Audio/Music/town.ogg" />
-		<imgPause imgPausePath="Assets/Textures/UI/PauseMenu/PauseMenuTemplate.png"/>
 		<partyMenuImg partyMenuImgPath="Assets/Textures/UI/PartyMenu/PartyMenu.png"/>
 		<saveTex saveTexPath="Assets/Textures/UI/save.png"/>
 		<zeroImg zeroImgPath="Assets/Textures/UI/PartyMenu/Characters/ZeroPic.png"/>

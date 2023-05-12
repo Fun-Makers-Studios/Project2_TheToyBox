@@ -48,6 +48,9 @@ private:
 	SDL_Texture* popImg_settings = nullptr;
 	const char* popImgSettingsPath;
 
+	const char* on = "on";
+	const char* off = "off";
+
 };
 
 #endif // __MENU_SETTINGS_H__

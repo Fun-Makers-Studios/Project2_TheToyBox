@@ -32,20 +32,12 @@ bool MenuTitle::Start()
 {
 	LOG("--STARTS TITLE MENU--");
 
-	// Declare a GUI Button and create it using the GuiManager
+	// UI
+	continueButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::CONTINUE, "continue", 9, { 965, 270, 252, 76 }, this);
 	playButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PLAY, "play", 5, { 965, 350, 252, 76 }, this);
 	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SETTINGS, "settings", 9, { 965, 430, 252, 76 }, this);
 	creditsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::CREDITS, "credits", 8, { 965, 510, 252, 76 }, this);
 	exitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::EXIT, "exit", 5, { 965, 590, 252, 76 }, this);
-
-	//CHECK SAVE GAME button
-	pugi::xml_document gameStateFile;
-	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
-	if (result != NULL)
-	{
-		continueButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::CONTINUE, "continue", 9, { 965, 270, 252, 76 }, this);
-	}
-
 
 	// Set easing finished on title buttons
 	ListItem<GuiControl*>* control = guiControlsList.start;
@@ -64,32 +56,27 @@ bool MenuTitle::Start()
 
 bool MenuTitle::PreUpdate()
 {
+	//CHECK SAVE GAME
+	pugi::xml_document gameStateFile;
+	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
+
+	if (result == NULL)
+	{
+		continueButton->state = GuiControlState::DISABLED;
+		isSaved = false;
+	}
+	else
+	{
+		continueButton->state = GuiControlState::NORMAL;
+		isSaved = true;
+	}
+
 	return true;
 }
 
 
 bool MenuTitle::Update(float dt)
 {
-	//CHECK SAVE GAME
-	
-	pugi::xml_document gameStateFile;
-	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
-
-	if (result == NULL)
-	{
-		if (isSaved != false)
-			continueButton->state = GuiControlState::DISABLED;
-
-		isSaved = false;
-	}
-	else
-	{
-		if (isSaved != true)
-			continueButton->state = GuiControlState::NORMAL;
-
-		isSaved = true;
-	}
-
 	// Easing
 	ListItem<GuiControl*>* control = app->menuManager->currentMenu->guiControlsList.start;
 

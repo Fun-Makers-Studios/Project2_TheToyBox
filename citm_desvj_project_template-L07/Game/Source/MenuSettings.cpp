@@ -49,7 +49,6 @@ bool MenuSettings::Start()
 	increaseSFXButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "increase", 9, { 700, 315, 252, 76 }, this);
 
 	fullscreenButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::FULL_SCREEN, "off", 4, { 520, 424, 252, 76 }, this);
-
 	vsyncButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::V_SYNC, "off", 4, { 520, 532, 252, 76 }, this);
 
 	// Set easing finished on title buttons
@@ -78,7 +77,6 @@ bool MenuSettings::PreUpdate()
 
 bool MenuSettings::Update(float dt)
 {
-	app->render->DrawTexture(popImg_settings, 0, 0, NULL);
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
@@ -106,15 +104,13 @@ bool MenuSettings::Update(float dt)
 			{
 				if (app->win->fullscreenMode)
 				{
-					char fullscreen[3];
-					sprintf_s(fullscreen, 3, "%s", "on");
-					control->data->text = fullscreen;
+					control->data->textSize = 3;
+					control->data->text = on;
 				}
 				else
 				{
-					char fullscreen[4];
-					sprintf_s(fullscreen, 4, "%s", "off");
-					control->data->text = fullscreen;
+					control->data->textSize = 4;
+					control->data->text = off;
 				}
 
 				break;
@@ -124,15 +120,13 @@ bool MenuSettings::Update(float dt)
 			{
 				if (app->render->limitFPS)
 				{
-					char vsync[3];
-					sprintf_s(vsync, 3, "%s", "on");
-					control->data->text = vsync;
+					control->data->textSize = 3;
+					control->data->text = on;
 				}
 				else
 				{
-					char vsync[4];
-					sprintf_s(vsync, 4, "%s", "off");
-					control->data->text = vsync;
+					control->data->textSize = 4;
+					control->data->text = off;
 				}
 
 				break;
@@ -152,6 +146,8 @@ bool MenuSettings::Update(float dt)
 bool MenuSettings::PostUpdate()
 {
 	bool ret = true;
+
+	app->render->DrawTexture(popImg_settings, app->render->camera.x, app->render->camera.y - 3, NULL);
 
 	//if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	//	ret = false;
@@ -203,7 +199,7 @@ bool MenuSettings::OnGuiMouseClickEvent(GuiControl* control)
 
 		case 10:
 			// Decrease SFX volume
-			app->sfxValue = app->sfxValue - 1;
+			app->sfxValue -= 1;
 			if (app->sfxValue <= 0)
 				app->sfxValue = 0;
 			if (app->sfxValue >= 100)
@@ -214,7 +210,7 @@ bool MenuSettings::OnGuiMouseClickEvent(GuiControl* control)
 
 		case 11:
 			// Increase SFX volume
-			app->sfxValue = app->sfxValue + 1;
+			app->sfxValue += 1;
 			if (app->sfxValue <= 0)
 				app->sfxValue = 0;
 			if (app->sfxValue >= 100)

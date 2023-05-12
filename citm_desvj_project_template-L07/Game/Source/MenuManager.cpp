@@ -24,18 +24,18 @@ bool MenuManager::Awake(pugi::xml_node& config)
 	menuTitle = new MenuTitle();
 	menuSettings = new MenuSettings();
 	menuCredits = new MenuCredits();
-	/*menuPause = new MenuPause();
-	menuQuest = new MenuQuest();
-	menuParty = new MenuParty();
-	menuFight = new MenuFight();*/
+	menuPause = new MenuPause();
+	//menuQuest = new MenuQuest();
+	//menuParty = new MenuParty();
+	//menuFight = new MenuFight();
 
 	AddMenu(menuTitle, config);
 	AddMenu(menuSettings, config);
 	AddMenu(menuCredits, config);
-	/*AddMenu(menuPause, config);
-	AddMenu(menuQuest, config);
-	AddMenu(menuParty, config);
-	AddMenu(menuFight, config);*/
+	AddMenu(menuPause, config);
+	//AddMenu(menuQuest, config);
+	//AddMenu(menuParty, config);
+	//AddMenu(menuFight, config);
 
 
 	// Properties from xml
@@ -70,12 +70,20 @@ bool MenuManager::Start()
 
 bool MenuManager::PreUpdate()
 {
-	if (currentMenu)
+	if (menuState == MenuState::SWITCH)
 	{
-		SetControlState(currentMenu, GuiControlState::ENABLED);
-
-		currentMenu->PreUpdate();
+		SwitchTo(nextMenu);
+		menuState = MenuState::CONTINUE;
 	}
+
+	if (currentMenu == nullptr)
+	{
+		SelectMenu();
+		return true;
+	}
+	
+	SetControlState(currentMenu, GuiControlState::ENABLED);
+	currentMenu->PreUpdate();
 
 	return true;
 }
@@ -122,6 +130,11 @@ void MenuManager::SwitchTo(MenuID id)
 {
 	SetControlState(currentMenu, GuiControlState::DISABLED);
 
+	if (id == MenuID::MENU_NULL)
+	{
+		currentMenu = nullptr;
+		return;
+	}
 	auto menu = FindMenuByID(id);
 	currentMenu = menu->data;
 
@@ -150,6 +163,9 @@ ListItem<Menu*>* MenuManager::FindMenuByID(MenuID id)
 
 void MenuManager::SetControlState(Menu* menu, GuiControlState _state)
 {
+	if (menu == nullptr)
+		return;
+
 	ListItem<GuiControl*>* control = menu->guiControlsList.start;
 
 	while (control != nullptr)
@@ -159,27 +175,68 @@ void MenuManager::SetControlState(Menu* menu, GuiControlState _state)
 	}
 }
 
+// Sets a default menu after Switching Scene
 void MenuManager::SetDefaultMenu()
+{
+	if (currentMenu != nullptr)
+		SetControlState(currentMenu, GuiControlState::DISABLED);
+
+	switch (app->sceneManager->currentScene->id)
+	{
+		case SceneID::SCENE_LOGO:
+			currentMenu = nullptr;
+			break;
+
+		case SceneID::SCENE_TITLE:
+			currentMenu = menuTitle;
+			break;
+
+		case SceneID::SCENE_GAME:
+			currentMenu = nullptr;
+			break;
+
+		case SceneID::SCENE_FIGHT:
+			//currentMenu = menuFight;
+			break;
+
+		case SceneID::SCENE_ENDING:
+			break;
+
+		default:
+			break;
+	}
+}
+
+// Sets menu after user imput
+void MenuManager::SelectMenu()
 {
 	switch (app->sceneManager->currentScene->id)
 	{
-	case SceneID::SCENE_LOGO:
-		currentMenu = nullptr;
-		break;
-
-	case SceneID::SCENE_TITLE:
-		currentMenu = FindMenuByID(MenuID::MENU_TITLE)->data;
-		break;
-
 	case SceneID::SCENE_GAME:
-		currentMenu = nullptr;
-		break;
 
-	case SceneID::SCENE_FIGHT:
-		currentMenu = FindMenuByID(MenuID::MENU_FIGHT)->data;
-		break;
-
-	case SceneID::SCENE_ENDING:
+		if (currentMenu == nullptr)
+		{
+			if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+			{
+				menuState = MenuState::SWITCH;
+				nextMenu = MenuID::MENU_PAUSE;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+			{
+				menuState = MenuState::SWITCH;
+				nextMenu = MenuID::MENU_PARTY;
+			}
+		}
+		else if (currentMenu == menuPause)
+		{
+			if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+			{
+				menuState = MenuState::SWITCH;
+				nextMenu = MenuID::MENU_NULL;
+			}
+		}
+		
+		
 		break;
 
 	default:

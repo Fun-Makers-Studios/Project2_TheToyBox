@@ -200,21 +200,26 @@ bool Render::DrawParticleAlpha(SDL_Texture* texture, int x, int y, Uint8 r, Uint
 	return ret;
 }
 
-bool Render::DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const
+bool Render::DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera, bool noScale) const
 {
 	bool ret = true;
-	uint scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
+
+	uint scale = noScale == true ? 1 : app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 
 	SDL_Rect rec(rect);
+
+	rec.x = (int)(rect.x * scale);
+	rec.y = (int)(rect.y * scale);
+	rec.w *= scale;
+	rec.h *= scale;
+
 	if(use_camera)
 	{
-		rec.x = (int)(-camera.x + rect.x * scale);
-		rec.y = (int)(-camera.y + rect.y * scale);
-		rec.w *= scale;
-		rec.h *= scale;
+		rec.x -= camera.x;
+		rec.y -= camera.y;
 	}
 
 	int result = (filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);

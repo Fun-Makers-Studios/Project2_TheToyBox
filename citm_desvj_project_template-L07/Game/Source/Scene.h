@@ -6,12 +6,6 @@
 
 class GuiControl;
 
-enum class SceneState
-{
-	CONTINUE,
-	SWITCH
-};
-
 enum class SceneID
 {
 	SCENE_LOGO,

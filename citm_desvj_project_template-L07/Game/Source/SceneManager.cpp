@@ -33,6 +33,7 @@ bool SceneManager::Awake(pugi::xml_node& config)
 
 bool SceneManager::Start()
 {
+    sceneState = SceneState::CONTINUE;
     currentScene = FindSceneByID(SceneID::SCENE_LOGO)->data;
     currentScene->Start();
 

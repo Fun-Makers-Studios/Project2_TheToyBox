@@ -11,6 +11,11 @@
 #include "MenuParty.h"
 #include "MenuFight.h"
 
+enum class MenuState
+{
+	CONTINUE,
+	SWITCH
+};
 
 class MenuManager : public Module
 {
@@ -42,21 +47,24 @@ public:
 
 	void SetControlState(Menu* menu, GuiControlState _state);
 	void SetDefaultMenu();
+	void SelectMenu();
 
 public:
 
 	Menu* currentMenu = nullptr;
-
 	List<Menu*> menus;
+
+	MenuState menuState = MenuState::CONTINUE;
+	MenuID nextMenu;
 
 	//Menus
 	MenuTitle* menuTitle;
 	MenuSettings* menuSettings;
 	MenuCredits* menuCredits;
-	/*MenuPause* menuPause;
-	MenuQuest* menuQuest;
-	MenuParty* menuParty;
-	MenuFight* menuFight;*/
+	MenuPause* menuPause;
+	//MenuQuest* menuQuest;
+	//MenuParty* menuParty;
+	//MenuFight* menuFight;
 
 	bool exitGame = false;
 

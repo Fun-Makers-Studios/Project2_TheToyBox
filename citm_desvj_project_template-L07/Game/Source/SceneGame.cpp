@@ -25,9 +25,6 @@ SceneGame::SceneGame() : Scene()
 
 	/*STORE INFO FROM XML*/
 	musicPath = app->configNode.child("scene").child("music").attribute("musicPath").as_string();
-	selectSFXPath = app->configNode.child("scene").child("scenesfx").attribute("selectSFXPath").as_string();
-	imgPausePath = app->configNode.child("scene").child("imgPause").attribute("imgPausePath").as_string();
-	popImg_settingsPath = app->configNode.child("title").child("popImage").attribute("settingtexturepath").as_string();
 	partyMenuImgPath = app->configNode.child("scene").child("partyMenuImg").attribute("partyMenuImgPath").as_string();
 	zeroImgPath = app->configNode.child("scene").child("zeroImg").attribute("zeroImgPath").as_string();
 	sophieImgPath = app->configNode.child("scene").child("sophieImg").attribute("sophieImgPath").as_string();
@@ -101,19 +98,13 @@ bool SceneGame::Start()
 	// Play level music
 	app->audio->PlayMusic(musicPath, 1.0f);
 
-	// Loading set of SFX
-	selectSFX = app->audio->LoadFx(selectSFXPath);
-
-	img_pause = app->tex->Load(imgPausePath);
-	pauseRect = {35, 69, 310, 555};
-	popImg_settings = app->tex->Load(popImg_settingsPath);
+	// Load tex
 	partyMenuImg = app->tex->Load(partyMenuImgPath);
 	zeroImg = app->tex->Load(zeroImgPath);
 	sophieImg = app->tex->Load(sophieImgPath);
 	saveTex = app->tex->Load(saveTexPath);
 
 	
-
 	ResetScene();
 
 	return true;
@@ -143,27 +134,28 @@ bool SceneGame::Update(float dt)
 		FightKid();
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	// HEKATE
+	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		if (!dialogueManager->dialogueLoaded && !settingSceneMenu && !partyMenu) { gamePaused = !gamePaused; }
+		if (!dialogueManager->dialogueLoaded && !settingSceneMenu && !partyMenu) { gamePaused != gamePaused; }
 		
-		if(settingSceneMenu == false)
+		if(!settingSceneMenu)
 			pauseMenu = !pauseMenu;
 	
 		Mix_PauseMusic();
 	}
 
-	if (gamePaused != true)
+	if (!gamePaused)
 	{
 		Mix_ResumeMusic();
 	}
 	
 	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && !dialogueManager->dialogueLoaded)
 	{
-		gamePaused = !gamePaused;
-		partyMenu = !partyMenu;
+		gamePaused != gamePaused;
+		partyMenu != partyMenu;
 		app->audio->PlayFx(selectSFX);
-	}
+	}*/
 
 	// Camera movement
 	if (app->debug->debug && app->debug->freeCam)
@@ -216,6 +208,7 @@ bool SceneGame::PostUpdate()
 {
 	bool ret = true;
 
+	/*
 	if (gamePaused && pauseMenu)
 		app->render->DrawTexture(img_pause, app->render->camera.x + app->render->camera.w / 2 - pauseRect.w / 2, app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
 
@@ -224,14 +217,14 @@ bool SceneGame::PostUpdate()
 
 	if(gamePaused && pauseMenu && settingSceneMenu)
 		app->render->DrawTexture(popImg_settings, app->render->camera.x , app->render->camera.y - 3, NULL);
+	*/
 
-
-	if ((gamePaused && dialogueManager->dialogueLoaded) && (pauseMenu == false && partyMenu == false)) 
-		dialogueManager->Update();
-
-
-	if ((gamePaused && dialogueManager->dialogueLoaded) && (!pauseMenu && !partyMenu))
-		dialogueManager->Draw();
+	// HEKATE
+	if (/*gamePaused &&*/ dialogueManager->dialogueLoaded)
+	{
+		if (dialogueManager->Update())
+			dialogueManager->Draw();
+	}
 
 
 	if (exitGame)
@@ -244,39 +237,19 @@ bool SceneGame::PostUpdate()
 bool SceneGame::CleanUp()
 {
 	LOG("Freeing GAME SCENE");
+
 	app->entityManager->Disable();
 	app->pathfinding->Disable();
 	app->collisions->Disable();
 	app->map->Disable();
 
-	gamePaused = false;
-	pauseMenu = false;
-	partyMenu = false;
-
 	dialogueManager->CleanUp();
 
 	Mix_ResumeMusic();
 
-	if (img_pause != nullptr)
-	{
-		app->tex->UnLoad(img_pause);
-	}
-	if (popImg_settings != nullptr)
-	{
-		app->tex->UnLoad(popImg_settings);
-	}
-	if (partyMenuImg != nullptr)
-	{
-		app->tex->UnLoad(partyMenuImg);
-	}
-	if (zeroImg != nullptr)
-	{
-		app->tex->UnLoad(zeroImg);
-	}
-	if (sophieImg != nullptr)
-	{
-		app->tex->UnLoad(sophieImg);
-	}
+	app->tex->UnLoad(partyMenuImg);
+	app->tex->UnLoad(zeroImg);
+	app->tex->UnLoad(sophieImg);
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -290,114 +263,7 @@ bool SceneGame::CleanUp()
 
 bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 {
-	//switch (control->id)
-	//{
-	//case 14:
-	//	if (!dialogueManager->dialogueLoaded) { gamePaused = !gamePaused; }
-	//	pauseMenu = !pauseMenu;
-	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-	//	break;
-
-	//case 15: // Back to title
-	//	pauseMenu = !pauseMenu;
-	//	app->sceneManager->sceneState = SceneState::SWITCH;
-	//	app->sceneManager->nextScene = SceneID::SCENE_TITLE;
-	//	app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
-	//	break;
-
-	//case 16:
-	//	//Here goes settings menu
-	//	settingSceneMenu = !settingSceneMenu;
-	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-	//	break;
-	//
-	//case 17:
-	//	showSavingState = true;
-	//	app->SaveGameRequest();
-	//	//exitGame = !exitGame;
-	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-	//	break;
-	//
-	//case 21:
-	//	// Decrease music volume
-	//	app->musicValue = app->musicValue - 1;
-	//	if (app->musicValue <= 0)
-	//		app->musicValue = 0;
-	//	if (app->musicValue >= 100)
-	//		app->musicValue = 100;
-	//	Mix_VolumeMusic(app->musicValue);
-	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-	//	break;
-
-	//case 22:
-	//	// Increase music volume
-	//	app->musicValue = app->musicValue + 1;
-	//	if (app->musicValue <= 0)
-	//		app->musicValue = 0;
-	//	if (app->musicValue >= 100)
-	//		app->musicValue = 100;
-	//	Mix_VolumeMusic(app->musicValue);
-	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-	//	break;
-
-	//case 23:
-	//	// Decrease SFX volume
-	//	app->sfxValue = app->sfxValue - 1;
-	//	if (app->sfxValue <= 0)
-	//		app->sfxValue = 0;
-	//	if (app->sfxValue >= 100)
-	//		app->sfxValue = 100;
-	//	Mix_Volume(-1, app->sfxValue);
-	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-	//	break;
-
-	//case 24:
-	//	// Increase SFX volume
-	//	app->sfxValue = app->sfxValue + 1;
-	//	if (app->sfxValue <= 0)
-	//		app->sfxValue = 0;
-	//	if (app->sfxValue >= 100)
-	//		app->sfxValue = 100;
-	//	Mix_Volume(-1, app->sfxValue);
-	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-	//	break;
-
-	//case 25:
-	//	// Fullscreen button
-	//	app->win->fullscreenMode = !app->win->fullscreenMode;
-	//	if (app->win->fullscreenMode == true)
-	//	{
-	//		SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
-	//	}
-	//	else if (app->win->fullscreenMode == false)
-	//	{
-	//		SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_SHOWN);
-	//	}
-	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-	//	break;
-
-	//case 26:
-	//	// V-Sync button
-	//	app->render->limitFPS = !app->render->limitFPS;
-	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-	//	break;
-	//
-	//case 27:
-	//	// Choose First PartyMember
-	//	partyMemberSelected = 0;
-	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-	//	break;
-	//	
-	//case 28:
-	//	// Choose Second PartyMember
-	//	partyMemberSelected = 1;
-	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);
-	//	break;
-
-	//default:
-	//	break;
-	//}
-
+	// HEKATE MUST DELETE
 	return true;
 }
 
@@ -408,25 +274,24 @@ void SceneGame::ActiveParticles()
 		if (firefliesPS == nullptr) 
 		{
 			firefliesPS = app->particleManager->CreateParticleSystem({0, 0}, Blueprint::FIREFLIES);
-		}
-		
+		}		
 	}
 	else
 	{
-
 		if (firefliesPS != nullptr)
 		{
 			firefliesPS->TurnOff();
 			firefliesPS = nullptr;
 		}
-
 	}
 }
 
 void SceneGame::SaveUI()
 {
-	if (showSavingState == true) {
-		if (saveTime < 75) {
+	if (showSavingState == true)
+	{
+		if (saveTime < 75)
+		{
 			app->render->DrawTexture(saveTex, app->render->camera.x + (app->render->camera.w - 100) , app->render->camera.y + (app->render->camera.h - 100), NULL);
 			saveTime++;
 		}
@@ -500,8 +365,7 @@ void SceneGame::LoadItems()
 		item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, itemNode);
 		itemsList.Add(item);
 		item->Start();
-	}
-	
+	}	
 }
 
 void SceneGame::FixCamera()

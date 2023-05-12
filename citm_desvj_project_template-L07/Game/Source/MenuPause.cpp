@@ -17,7 +17,7 @@ MenuPause::MenuPause() : Menu()
 {
 	id = MenuID::MENU_PAUSE;
 
-	popImgCreditsPath = app->configNode.child("menuManager").child("popImage").attribute("creditstexturepath").as_string();
+	imgPausePath = app->configNode.child("menuManager").child("imgPause").attribute("imgPausePath").as_string();
 }
 
 
@@ -38,8 +38,17 @@ bool MenuPause::Start()
 {
 	LOG("--STARTS PAUSE MENU--");
 
+	active = false;
+
 	// Load
-	popImg_credits = app->tex->Load(popImgCreditsPath);
+	imgPause = app->tex->Load(imgPausePath);
+	pauseRect = { 35, 69, 310, 555 };
+
+	//UI
+	resumeButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::RESUME, "resume", 7, { 515, 295, 252, 76 }, this);
+	backToTitleButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::BACK_TO_TITLE, "back to title", 13, { 515, 375, 252, 76 }, this);
+	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SETTINGS, "settings", 8, { 515, 455, 252, 76 }, this);
+	saveExitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SAVE_EXIT, "save and exit", 12, { 515, 535, 252, 76 }, this);
 
 	// Set easing finished on title buttons
 	ListItem<GuiControl*>* control = guiControlsList.start;
@@ -61,19 +70,22 @@ bool MenuPause::Start()
 
 bool MenuPause::PreUpdate()
 {
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
+		app->audio->PlayFx(app->menuManager->closeMenuSFX);
+		app->menuManager->SelectMenu();
+	}
 	return true;
 }
 
 
 bool MenuPause::Update(float dt)
 {
-	app->render->DrawTexture(popImg_credits, 0, 0, NULL);
+	app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	{
-		app->audio->PlayFx(app->menuManager->closeMenuSFX);
-		app->menuManager->SetDefaultMenu();
-	}
+	app->render->DrawTexture(imgPause,
+		app->render->camera.x + app->render->camera.w / 2 - pauseRect.w / 2,
+		app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
 
 	return true;
 }
@@ -83,12 +95,6 @@ bool MenuPause::PostUpdate()
 {
 	bool ret = true;
 
-	//if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	//	ret = false;
-
-	/*if (exitGame == true)
-		ret = false;*/
-
 	return ret;
 }
 
@@ -97,7 +103,7 @@ bool MenuPause::CleanUp()
 {
 	LOG("Freeing TITLE SCENE");
 
-	app->tex->UnLoad(popImg_credits);
+	app->tex->UnLoad(imgPause);
 
 	//STORE IN A LIST THIS BUTTONS AND THEN CHECK HERE IF NULLPTR TO CLEAN THEM UP
 	//guiControlsList.Clear();
@@ -109,67 +115,33 @@ bool MenuPause::OnGuiMouseClickEvent(GuiControl* control)
 {
 	switch (control->id)
 	{
-	case 8:
-		// Decrease music volume
-		app->musicValue = app->musicValue - 1;
-		if (app->musicValue <= 0)
-			app->musicValue = 0;
-		if (app->musicValue >= 100)
-			app->musicValue = 100;
-		Mix_VolumeMusic(app->musicValue);
+	case (uint32)ControlID::RESUME:
+		// HEKATE
+		/*if (!app->sceneManager->sceneGame->dialogueManager->dialogueLoaded)
+			app->sceneManager->sceneGame->gamePaused != app->sceneManager->sceneGame->gamePaused;*/
+
+		//app->sceneManager->sceneGame->pauseMenu != app->sceneManager->sceneGame->pauseMenu;
+		app->menuManager->menuState = MenuState::SWITCH;
+		app->menuManager->nextMenu = MenuID::MENU_NULL;
 		app->audio->PlayFx(app->menuManager->selectSFX);
 		break;
 
-	case 9:
-		// Increase music volume
-		app->musicValue = app->musicValue + 1;
-		if (app->musicValue <= 0)
-			app->musicValue = 0;
-		if (app->musicValue >= 100)
-			app->musicValue = 100;
-		Mix_VolumeMusic(app->musicValue);
-		app->audio->PlayFx(app->menuManager->selectSFX);
+	case (uint32)ControlID::BACK_TO_TITLE:
+		app->sceneManager->sceneState = SceneState::SWITCH;
+		app->sceneManager->nextScene = SceneID::SCENE_TITLE;
+		app->audio->PlayFx(app->menuManager->startSFX);
 		break;
 
-	case 10:
-		// Decrease SFX volume
-		app->sfxValue = app->sfxValue - 1;
-		if (app->sfxValue <= 0)
-			app->sfxValue = 0;
-		if (app->sfxValue >= 100)
-			app->sfxValue = 100;
-		Mix_Volume(-1, app->sfxValue);
-		app->audio->PlayFx(app->menuManager->selectSFX);
+	case (uint32)ControlID::SETTINGS:
+		app->menuManager->menuState = MenuState::SWITCH;
+		app->menuManager->nextMenu = MenuID::MENU_SETTINGS;
+		app->audio->PlayFx(app->menuManager->openMenuSFX);
 		break;
 
-	case 11:
-		// Increase SFX volume
-		app->sfxValue = app->sfxValue + 1;
-		if (app->sfxValue <= 0)
-			app->sfxValue = 0;
-		if (app->sfxValue >= 100)
-			app->sfxValue = 100;
-		Mix_Volume(-1, app->sfxValue);
-		app->audio->PlayFx(app->menuManager->selectSFX);
-		break;
-
-	case (uint32)ControlID::FULL_SCREEN:
-		// Fullscreen button
-		app->win->fullscreenMode = !app->win->fullscreenMode;
-		if (app->win->fullscreenMode)
-		{
-			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN);
-		}
-		else if (!app->win->fullscreenMode)
-		{
-			SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_SHOWN);
-		}
-		app->audio->PlayFx(app->menuManager->selectSFX);
-		break;
-
-	case (uint32)ControlID::V_SYNC:
-		// V-Sync button
-		app->render->limitFPS = !app->render->limitFPS;
+	case (uint32)ControlID::SAVE_EXIT:
+		//showSavingState = true;
+		app->SaveGameRequest();
+		//exitGame = !exitGame;
 		app->audio->PlayFx(app->menuManager->selectSFX);
 		break;
 

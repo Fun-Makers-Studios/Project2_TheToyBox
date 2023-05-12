@@ -146,78 +146,71 @@ bool Player::Update()
 
 	currentAnim = &idle;
 
-	if (app->sceneManager->sceneGame->gamePaused != true)
+	if (godMode)
 	{
+		body->vel = { 0, 0 };
+		// HEKATE pbody->body->SetGravityScale(0);
 
-		if (godMode)
-		{
-			body->vel = { 0, 0 };
-			// HEKATE pbody->body->SetGravityScale(0);
-
-			// Fly around the map
-			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-				body->vel.y = -speed;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-				body->vel.y = speed;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				isFliped = true;
-				body->vel.x = -speed;
-				if (isFliped == true && fliped == SDL_FLIP_NONE) {
-					fliped = SDL_FLIP_HORIZONTAL;
-				}
-			}
-			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-				isFliped = false;
-				body->vel.x = speed;
-				if (isFliped == false && fliped == SDL_FLIP_HORIZONTAL) {
-					fliped = SDL_FLIP_NONE;
-				}
-			}
-			// HEKATE pbody->body->SetLinearVelocity(velocity);
-
+		// Fly around the map
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+			body->vel.y = -speed;
 		}
-		else if (!godMode && !dead)
-		{
-			body->vel = { 0, 0 };
-			// HEKATE pbody->body->SetGravityScale(0);
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			body->vel.y = speed;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			isFliped = true;
+			body->vel.x = -speed;
+			if (isFliped == true && fliped == SDL_FLIP_NONE) {
+				fliped = SDL_FLIP_HORIZONTAL;
+			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			isFliped = false;
+			body->vel.x = speed;
+			if (isFliped == false && fliped == SDL_FLIP_HORIZONTAL) {
+				fliped = SDL_FLIP_NONE;
+			}
+		}
+		// HEKATE pbody->body->SetLinearVelocity(velocity);
 
-			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-				body->vel.y = -speed;
-				currentAnim = &walkUp;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-				body->vel.y = speed;
-				currentAnim = &walkDown;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				body->vel.x = -speed;
-				currentAnim = &walkLeft;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-				body->vel.x = speed;
-				currentAnim = &walkRight;
-			}
-			
-			if (currentAnim != &idle)
-			{
-				if (walkParticles == nullptr) {
-					dPoint pos = { body->pos.x, body->pos.y + 10 };
-					walkParticles = app->particleManager->CreateParticleSystem(pos, Blueprint::SAND);
-				}
-				else {
-					walkParticles->TurnOff();
-					walkParticles = nullptr;
-				}
-			}
-			
+	}
+	else if (!godMode && !dead)
+	{
+		body->vel = { 0, 0 };
+		// HEKATE pbody->body->SetGravityScale(0);
 
-			// HEKATE pbody->body->SetLinearVelocity(velocity);
-			body->pos.x += body->vel.x;
-			body->pos.y += body->vel.y;
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+			body->vel.y = -speed;
+			currentAnim = &walkUp;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			body->vel.y = speed;
+			currentAnim = &walkDown;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+			body->vel.x = -speed;
+			currentAnim = &walkLeft;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+			body->vel.x = speed;
+			currentAnim = &walkRight;
 		}
 
+		if (currentAnim != &idle)
+		{
+			if (walkParticles == nullptr) {
+				dPoint pos = { body->pos.x, body->pos.y + 10 };
+				walkParticles = app->particleManager->CreateParticleSystem(pos, Blueprint::SAND);
+			}
+			else {
+				walkParticles->TurnOff();
+				walkParticles = nullptr;
+			}
+		}
+
+		body->pos.x += body->vel.x;
+		body->pos.y += body->vel.y;
 	}
 	
 	SDL_Rect rect = currentAnim->GetCurrentFrame();

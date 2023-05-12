@@ -9,7 +9,8 @@
 
 #include "Log.h"
 
-DialogueManager::DialogueManager(SceneGame* scene) {
+DialogueManager::DialogueManager(SceneGame* scene)
+{
 	LOG("Loading Dialogue Manager");
 
 	this->scene = scene;
@@ -21,47 +22,58 @@ DialogueManager::DialogueManager(SceneGame* scene) {
 	dialogueLoaded = false;
 }
 
-DialogueManager::~DialogueManager(){
-	
-}
+DialogueManager::~DialogueManager() {}
 
-void DialogueManager::Load(int dialogueId) {
+void DialogueManager::Load(int dialogueId)
+{
 	LOG("Loading Dialog");
 
 	for (pugi::xml_node node = file.child("dialogue"); node; node = node.next_sibling("dialogue"))
 	{
-		if (node.attribute("id").as_int() == dialogueId) {
+		if (node.attribute("id").as_int() == dialogueId)
+		{
 			Dialogue* dialogue = new Dialogue(node);
 			currentDialogue = dialogue;
 		}
 	}
 
 	dialogueLoaded = true;
-	app->sceneManager->sceneGame->gamePaused = true;
+	// HEKATE app->sceneManager->sceneGame->gamePaused = true;
 }
 
-void DialogueManager::Update() {
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+bool DialogueManager::Update()
+{
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	{
 		Option* op = currentDialogue->currentNode->SetCurrentOption(currentDialogue->currentNode->currentOption->id - 1);
-		if (op != nullptr) {
+
+		if (op != nullptr)
 			currentDialogue->currentNode->currentOption = op;
-		}
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+	else if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	{
 		Option* op = currentDialogue->currentNode->SetCurrentOption(currentDialogue->currentNode->currentOption->id + 1);
-		if (op != nullptr) {
+
+		if (op != nullptr)
 			currentDialogue->currentNode->currentOption = op;
-		}
+	
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN) {
+	else if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	{
 		currentDialogue->currentNode = currentDialogue->SetCurrentNode(currentDialogue->currentNode->currentOption->nextNodeId);
-		if (currentDialogue->currentNode == nullptr) {
+
+		if (currentDialogue->currentNode == nullptr)
+		{
 			this->Unload();
+			return false;
 		}
 	}
+
+	return true;
 }
 
-void DialogueManager::Draw() {
+void DialogueManager::Draw()
+{
 	SDL_Rect rect = {0,0,1182,196};
 	app->render->DrawTexture(dialoguetext, 49 + app->render->camera.x, 505 + app->render->camera.y, &rect);
 
@@ -71,7 +83,8 @@ void DialogueManager::Draw() {
 	ListItem<Option*>* op = this->currentDialogue->currentNode->options.start;
 	while (op != nullptr)
 	{
-		if (currentDialogue->currentNode->currentOption->id == op->data->id) {
+		if (currentDialogue->currentNode->currentOption->id == op->data->id)
+		{
 			rect = { 1182,0,15,21 };
 			app->render->DrawTexture(dialoguetext, 175 + app->render->camera.x, displacement.y + app->render->camera.y, &rect);
 		}
@@ -81,17 +94,19 @@ void DialogueManager::Draw() {
 	}
 }
 
-void DialogueManager::Unload() {
+void DialogueManager::Unload()
+{
 	LOG("Unloading Dialog");
 
 	currentDialogue->nodes.Clear();
 	RELEASE(currentDialogue);
 
 	dialogueLoaded = false;
-	app->sceneManager->sceneGame->gamePaused = false;
+	// HEKATE app->sceneManager->sceneGame->gamePaused = false;
 }
 
-void DialogueManager::CleanUp() {
+void DialogueManager::CleanUp()
+{
 	app->fonts->UnLoad(dialogueFontId);
 	app->tex->UnLoad(dialoguetext);
-}	
+}

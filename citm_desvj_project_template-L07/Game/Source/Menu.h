@@ -12,7 +12,8 @@ enum class MenuID
 	MENU_PAUSE,
 	MENU_QUEST,
 	MENU_PARTY,
-	MENU_FIGHT
+	MENU_FIGHT,
+	MENU_NULL
 };
 
 class GuiControl;

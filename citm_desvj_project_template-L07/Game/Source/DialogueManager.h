@@ -16,7 +16,7 @@ public:
 	~DialogueManager();
 
 	void Load(int dialogueId);
-	void Update();
+	bool Update();
 	void Draw();
 	void Unload();
 	void CleanUp();
