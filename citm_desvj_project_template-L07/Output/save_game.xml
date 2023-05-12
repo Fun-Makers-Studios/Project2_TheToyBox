@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<save_state>
+	<input />
+	<window />
+	<textures />
+	<Fonts_Module />
+	<audio />
+	<scenemanager />
+	<map />
+	<pathfinding />
+	<:anonymous />
+	<questmanager />
+	<entitymanager />
+	<:anonymous />
+	<psmanager />
+	<UI_Module />
+	<guiManager />
+	<:anonymous />
+	<renderer>
+		<camera x="0" y="1584" />
+	</renderer>
+</save_state>
