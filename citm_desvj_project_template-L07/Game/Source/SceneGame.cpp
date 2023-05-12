@@ -647,7 +647,7 @@ void SceneGame::LoadItems()
 	}
 	
 	// Iterate all objects in the scene
-	for (pugi::xml_node itemNode = app->configNode.child("items").child(mapName.GetString()).child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
+	for (pugi::xml_node itemNode = app->configNode.child("itemsMap").child(mapName.GetString()).child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
 	{
 		item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, itemNode);
 		itemsList.Add(item);

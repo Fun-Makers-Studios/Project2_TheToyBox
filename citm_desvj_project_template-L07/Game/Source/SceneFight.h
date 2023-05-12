@@ -57,6 +57,12 @@ private:
 	const char* path_arrow;
 	const char* path_startsSfx;
 
+	const char* musicPath = nullptr;
+	const char* selectSFXPath = nullptr;
+
+	// Set of SFX
+	uint selectSFX = 0;
+
 	// Declare a GUI Button and create it using the GuiManager
 	GuiButton* attackButton18;
 	GuiButton* defenseButton19;

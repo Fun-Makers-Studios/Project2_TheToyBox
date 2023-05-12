@@ -20,6 +20,13 @@ SceneFight::SceneFight() : Scene()
 {
 	sceneType = SceneType::FIGHT;
 	id = SceneID::SCENE_FIGHT;
+
+	/*Initialize*/
+	musicPath = app->configNode.child("sceneFight").child("music").attribute("musicPath").as_string();
+	selectSFXPath = app->configNode.child("scene").child("scenesfx").attribute("selectSFXPath").as_string();
+
+	path_bg = app->configNode.child("sceneFight").child("backgroundimage").attribute("texturepath").as_string();
+	path_arrow = app->configNode.child("sceneFight").child("arrowimage").attribute("texturepath").as_string();
 }
 
 // Destructor
@@ -40,18 +47,20 @@ bool SceneFight::Start()
 {
 	LOG("--FORMING PARTY--");
 
+	
+
+	// Loading set of SFX
+	selectSFX = app->audio->LoadFx(selectSFXPath);
+
 	app->scaleObj->SetCurrentScale(ScaleType::FIGHT);
 	int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
-	/*Initialize*/
-	path_bg = app->configNode.child("sceneFight").child("backgroundimage").attribute("texturepath").as_string();
-	path_arrow = app->configNode.child("sceneFight").child("arrowimage").attribute("texturepath").as_string();
-	//musicPath = app->configNode.child("logo").child("music").attribute("musicPath").as_string();
+
+	// Play level music
+	app->audio->PlayMusic(musicPath, 1.0f);
 
 	/*Load*/
 	tex_bg = app->tex->Load(path_bg);
 	tex_arrow = app->tex->Load(path_arrow);
-	//app->audio->PlayMusic(musicPath);
-
 
 	// ======== CREATE TURN LIST ========
 

@@ -73,6 +73,7 @@ bool Item::Update()
 {
 	if (takeItem)
 	{
+		app->partyManager->inventory.Add(this);
 		if (takeItemPS == nullptr) {
 			dPoint pos = { body->pos.x, body->pos.y };
 			takeItemPS = app->particleManager->CreateParticleSystem(pos, Blueprint::TAKE_ITEM);

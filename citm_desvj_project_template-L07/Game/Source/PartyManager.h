@@ -4,6 +4,7 @@
 #include "List.h"
 #include "App.h"
 #include "Point.h"
+#include "Item.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
@@ -104,6 +105,7 @@ public:
 
 public:
 	List<PartyMember*> party;
+	List<Item*> inventory;
 	const char* enemyToFight = nullptr;
 	uint maxPartyMembers = 3;
 };

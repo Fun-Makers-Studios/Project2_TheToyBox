@@ -55,6 +55,7 @@
 	</scene>
 
 	<sceneFight>
+		<music musicPath="Assets/Audio/Music/battle.ogg" />
 		<backgroundimage texturepath="Assets/Textures/SceneCombat/combat.png"/>
 		<arrowimage texturepath="Assets/Textures/SceneCombat/cursedArrow.png"/>
 		<partymember type="ally" name="zero" maxHp="25" maxMana="20" level ="23" attack="8" defense="30" speed="40" critRate="10" texturepath="Assets/Textures/characters.png"/>
@@ -195,7 +196,17 @@
 		</circusTwo>
 	</npcs>
 	
-	<items>
+	<itemsData>
+		<item x="230" y="400" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/peanut_bag.png"/>
+		<item x="250" y="450" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/peanut_bag.png"/>
+		<item x="232" y="300" itemType ="potionmana" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
+		<item x="250" y="500" itemType ="potionmana" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
+		<item x="250" y="525" itemType ="key" animable ="false" frames ="0" isStackable ="false" texturepath="Assets/Textures/Items/key.png"/>
+		<item x="285" y="525" itemType ="key" animable ="false" frames ="0" isStackable ="false" texturepath="Assets/Textures/Items/circus_ticket.png"/>
+		<item x="285" y="560" itemType ="lightupsword" animable ="true" frames ="5" isStackable ="false" texturepath="Assets/Textures/Items/lightup_sword.png"/>
+	</itemsData>
+	
+	<itemsMap>
 		<town>
 			<item x="230" y="400" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/peanut_bag.png"/>
 			<item x="250" y="450" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/peanut_bag.png"/>
@@ -223,7 +234,7 @@
 		<circusTwo>
 			
 		</circusTwo>
-	</items>
+	</itemsMap>
 	
 	<particles>
 		<town>
