@@ -15,11 +15,6 @@ enum class SceneState
 	SWITCH
 };
 
-enum class SceneState
-{
-	CONTINUE,
-	SWITCH
-};
 
 //Scenes
 class SceneLogo;

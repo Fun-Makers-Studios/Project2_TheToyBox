@@ -31,6 +31,7 @@ class EntityManager;
 class PartyManager;
 class ParticleSystemManager;
 
+class MenuManager;
 class UI;
 class GuiManager;
 class Debug;
@@ -125,10 +126,10 @@ public:
 	QuestManager* questManager;
 	ParticleSystemManager* particleManager;
 
+	MenuManager* menuManager;
 	UI* ui;
 	GuiManager* guiManager;
 	Debug* debug;
-	ParticleSystemManager* particleManager;
 
 	Render* render;
 
