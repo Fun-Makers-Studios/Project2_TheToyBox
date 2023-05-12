@@ -29,8 +29,6 @@ public:
 
 public:
 
-	bool active = false;
-
 	// UI
 	GuiButton* resumeButton = nullptr;
 	GuiButton* backToTitleButton = nullptr;

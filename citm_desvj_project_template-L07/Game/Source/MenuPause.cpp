@@ -38,8 +38,6 @@ bool MenuPause::Start()
 {
 	LOG("--STARTS PAUSE MENU--");
 
-	active = false;
-
 	// Load
 	imgPause = app->tex->Load(imgPausePath);
 	pauseRect = { 35, 69, 310, 555 };

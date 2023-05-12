@@ -28,8 +28,13 @@ SceneFight::~SceneFight()
 // Called before render is available
 bool SceneFight::Awake(pugi::xml_node& config)
 {
-	LOG("Loading LogoScreen");
+	LOG("|| AWAKE SceneFight ||");
 	bool ret = true;
+
+	/*Initialize from xml*/
+	path_bg = app->configNode.child("sceneFight").child("backgroundimage").attribute("texturepath").as_string();
+	path_arrow = app->configNode.child("sceneFight").child("arrowimage").attribute("texturepath").as_string();
+	//musicPath = app->configNode.child("logo").child("music").attribute("musicPath").as_string();
 
 	return ret;
 }
@@ -37,15 +42,15 @@ bool SceneFight::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool SceneFight::Start()
 {
-	LOG("--FORMING PARTY--");
+	LOG("--START SceneFight--");
 
+	// Set rand seed
+	srand(time(NULL));
+
+	// Set Scale
 	app->scaleObj->SetCurrentScale(ScaleType::FIGHT);
 	int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
-	/*Initialize*/
-	path_bg = app->configNode.child("sceneFight").child("backgroundimage").attribute("texturepath").as_string();
-	path_arrow = app->configNode.child("sceneFight").child("arrowimage").attribute("texturepath").as_string();
-	//musicPath = app->configNode.child("logo").child("music").attribute("musicPath").as_string();
-
+	
 	/*Load*/
 	tex_bg = app->tex->Load(path_bg);
 	tex_arrow = app->tex->Load(path_arrow);
@@ -101,8 +106,7 @@ bool SceneFight::Start()
 		position.y = (offsetY + 96 * i)/scale;
 
 		PartyMember* member = new PartyMember(
-			type,
-			MemberStatus::NORMAL,
+			type, MemberStatus::NORMAL,
 			itemNode.attribute("name").as_string(),
 			itemNode.attribute("maxHp").as_uint(),
 			itemNode.attribute("maxMana").as_uint(),
@@ -111,23 +115,14 @@ bool SceneFight::Start()
 			itemNode.attribute("defense").as_uint(),
 			itemNode.attribute("speed").as_uint(),
 			itemNode.attribute("critRate").as_uint(),
-			tex,
-			position,
-			textureRect);
+			tex, position, textureRect);
 
 		turnList.Add(member);
 		enemyList.Add(member);
 	}
 	
 	enemiesAlive = enemyList.Count();
-
 	enemySelected = 0;
-
-	/*attackButton18 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 18, "attack", 7, { 100, 600, 252, 76 }, this);
-	defenseButton19 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 19, "defend", 7, { 510, 600, 252, 76 }, this);
-	escapeButton20 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "escape", 7, { 915, 600, 252, 76 }, this);*/
-
-	srand(time(NULL));
 
 	return true;
 }
