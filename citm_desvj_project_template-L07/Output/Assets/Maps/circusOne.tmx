@@ -4,7 +4,7 @@
   <image source="Tilesets/Temp_tiles.png" width="96" height="128"/>
  </tileset>
  <tileset firstgid="13" name="CIrcusOneSprites" tilewidth="32" tileheight="32" tilecount="80" columns="10">
-  <image source="../../../../../../Universidad/4th semester/Project 2/CIrcusOneSprites.png" width="320" height="256"/>
+  <image source="Tilesets/CIrcusOneSprites.png" width="320" height="256"/>
  </tileset>
  <tileset firstgid="93" name="Grass" tilewidth="32" tileheight="32" tilecount="24" columns="4">
   <image source="Tilesets/Grass.png" width="128" height="192"/>
