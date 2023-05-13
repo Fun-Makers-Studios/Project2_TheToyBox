@@ -78,9 +78,11 @@ public:
 
 	GameController controllers[MAX_CONTROLLERS];
 
+	KeyState* keyboard;
+
 private:
 	bool windowEvents[WE_COUNT];
-	KeyState*	keyboard;
+	
 	KeyState mouseButtons[NUM_MOUSE_BUTTONS];
 	int	mouseMotionX;
 	int mouseMotionY;
