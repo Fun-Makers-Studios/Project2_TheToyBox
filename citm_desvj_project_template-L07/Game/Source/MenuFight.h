@@ -36,10 +36,9 @@ public:
 
 	enum class ControlID : uint32
 	{
-		RESUME,
-		BACK_TO_TITLE,
-		SETTINGS,
-		SAVE_EXIT
+		ATTACK,
+		DEFENSE,
+		SPECIAL
 	};
 
 private:

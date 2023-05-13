@@ -22,7 +22,6 @@ SceneFight::SceneFight() : Scene()
 
 	/*Initialize*/
 	musicPath = app->configNode.child("sceneFight").child("music").attribute("musicPath").as_string();
-	selectSFXPath = app->configNode.child("scene").child("scenesfx").attribute("selectSFXPath").as_string();
 
 	path_bg = app->configNode.child("sceneFight").child("backgroundimage").attribute("texturepath").as_string();
 	path_arrow = app->configNode.child("sceneFight").child("arrowimage").attribute("texturepath").as_string();
@@ -210,20 +209,24 @@ bool SceneFight::Update(float dt)
 	{
 		if (turnList.At(i)->data->status == MemberStatus::DEAD)
 		{
-			if (turnList.At(i)->data->type == MemberType::ENEMY) {
+			if (turnList.At(i)->data->type == MemberType::ENEMY)
+			{
 				enemyList.Del(enemyList.At(enemySelected));
+
 				if (enemySelected >= enemyList.Count())
 					enemySelected = 0;
-
 			}
-			turnList.Del(turnList.At(i));
-			
+
+			turnList.Del(turnList.At(i));			
 		}
 		else 
 		{
-
-			app->render->DrawTexture(turnList.At(i)->data->texture, turnList.At(i)->data->fightPosition.x, turnList.At(i)->data->fightPosition.y, &turnList.At(i)->data->textureRect, SDL_FLIP_NONE, ScaleType::FIGHT);
-			
+			app->render->DrawTexture(
+				turnList.At(i)->data->texture,
+				turnList.At(i)->data->fightPosition.x,
+				turnList.At(i)->data->fightPosition.y,
+				&turnList.At(i)->data->textureRect,
+				SDL_FLIP_NONE, ScaleType::FIGHT);			
 		}
 			
 	}

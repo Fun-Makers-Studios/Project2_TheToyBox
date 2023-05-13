@@ -37,12 +37,6 @@
     <ClCompile Include="Source\UI.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Timer.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\PerfTimer.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Source\NPC.cpp">
       <Filter>Game\Entities</Filter>
     </ClCompile>
@@ -106,12 +100,6 @@
     <ClCompile Include="Source\Window.cpp">
       <Filter>Core\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Easing.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Spline.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SceneManager.cpp">
       <Filter>Core\Managers</Filter>
     </ClCompile>
@@ -159,6 +147,18 @@
     </ClCompile>
     <ClCompile Include="Source\TalkQuest.cpp">
       <Filter>Game\Quests</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Timer.cpp">
+      <Filter>Utils\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PerfTimer.cpp">
+      <Filter>Utils\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Spline.cpp">
+      <Filter>Utils\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Easing.cpp">
+      <Filter>Utils\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -224,15 +224,6 @@
     </ClInclude>
     <ClInclude Include="Source\UI.h">
       <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Timer.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\PerfTimer.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Animation.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\NPC.h">
       <Filter>Game\Entities</Filter>
@@ -300,12 +291,6 @@
     <ClInclude Include="Source\Window.h">
       <Filter>Core\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Easing.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Spline.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\SceneManager.h">
       <Filter>Core\Managers</Filter>
     </ClInclude>
@@ -363,6 +348,21 @@
     <ClInclude Include="Source\TalkQuest.h">
       <Filter>Game\Quests</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>Utils\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PerfTimer.h">
+      <Filter>Utils\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Spline.h">
+      <Filter>Utils\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Easing.h">
+      <Filter>Utils\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Utils\Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -412,6 +412,12 @@
     </Filter>
     <Filter Include="Game\Quests">
       <UniqueIdentifier>{8b1914a6-9c93-4f3f-8b99-c0b665e410dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\Timer">
+      <UniqueIdentifier>{b359c1e2-dd6f-495d-ab3c-cb492ca9285a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\Animation">
+      <UniqueIdentifier>{0f6dd01c-3a1d-4dbb-8456-f1fcd2ca4200}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

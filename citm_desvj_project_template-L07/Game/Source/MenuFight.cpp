@@ -112,35 +112,35 @@ bool MenuFight::OnGuiMouseClickEvent(GuiControl* control)
 {
 	switch (control->id)
 	{
-	case (uint32)ControlID::RESUME:
-		// HEKATE
-		/*if (!app->sceneManager->sceneGame->dialogueManager->dialogueLoaded)
-			app->sceneManager->sceneGame->gamePaused != app->sceneManager->sceneGame->gamePaused;*/
+	//case (uint32)ControlID::RESUME:
+	//	// HEKATE
+	//	/*if (!app->sceneManager->sceneGame->dialogueManager->dialogueLoaded)
+	//		app->sceneManager->sceneGame->gamePaused != app->sceneManager->sceneGame->gamePaused;*/
 
-			//app->sceneManager->sceneGame->pauseMenu != app->sceneManager->sceneGame->pauseMenu;
-		app->menuManager->menuState = MenuState::SWITCH;
-		app->menuManager->nextMenu = MenuID::MENU_NULL;
-		app->audio->PlayFx(app->menuManager->selectSFX);
-		break;
+	//		//app->sceneManager->sceneGame->pauseMenu != app->sceneManager->sceneGame->pauseMenu;
+	//	app->menuManager->menuState = MenuState::SWITCH;
+	//	app->menuManager->nextMenu = MenuID::MENU_NULL;
+	//	app->audio->PlayFx(app->menuManager->selectSFX);
+	//	break;
 
-	case (uint32)ControlID::BACK_TO_TITLE:
-		app->sceneManager->sceneState = SceneState::SWITCH;
-		app->sceneManager->nextScene = SceneID::SCENE_TITLE;
-		app->audio->PlayFx(app->menuManager->startSFX);
-		break;
+	//case (uint32)ControlID::BACK_TO_TITLE:
+	//	app->sceneManager->sceneState = SceneState::SWITCH;
+	//	app->sceneManager->nextScene = SceneID::SCENE_TITLE;
+	//	app->audio->PlayFx(app->menuManager->startSFX);
+	//	break;
 
-	case (uint32)ControlID::SETTINGS:
-		app->menuManager->menuState = MenuState::SWITCH;
-		app->menuManager->nextMenu = MenuID::MENU_SETTINGS;
-		app->audio->PlayFx(app->menuManager->openMenuSFX);
-		break;
+	//case (uint32)ControlID::SETTINGS:
+	//	app->menuManager->menuState = MenuState::SWITCH;
+	//	app->menuManager->nextMenu = MenuID::MENU_SETTINGS;
+	//	app->audio->PlayFx(app->menuManager->openMenuSFX);
+	//	break;
 
-	case (uint32)ControlID::SAVE_EXIT:
-		//showSavingState = true;
-		app->SaveGameRequest();
-		//exitGame = !exitGame;
-		app->audio->PlayFx(app->menuManager->selectSFX);
-		break;
+	//case (uint32)ControlID::SAVE_EXIT:
+	//	//showSavingState = true;
+	//	app->SaveGameRequest();
+	//	//exitGame = !exitGame;
+	//	app->audio->PlayFx(app->menuManager->selectSFX);
+	//	break;
 
 	default:
 		break;
