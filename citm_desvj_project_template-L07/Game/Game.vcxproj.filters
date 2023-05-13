@@ -160,6 +160,42 @@
     <ClCompile Include="Source\Easing.cpp">
       <Filter>Utils\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CameraToMouse.cpp">
+      <Filter>Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Cut.cpp">
+      <Filter>Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FadeToColour.cpp">
+      <Filter>Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Slide.cpp">
+      <Filter>Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Transition.cpp">
+      <Filter>Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Wipe.cpp">
+      <Filter>Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ZoomToMouse.cpp">
+      <Filter>Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AlternatingBars.cpp">
+      <Filter>Transitions\Bars</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ExpandingBars.cpp">
+      <Filter>Transitions\Bars</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Dissolve.cpp">
+      <Filter>Transitions\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ZoomToTexture.cpp">
+      <Filter>Transitions\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TransitionManager.cpp">
+      <Filter>Core\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -363,6 +399,45 @@
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CameraToMouse.h">
+      <Filter>Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Cut.h">
+      <Filter>Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FadeToColour.h">
+      <Filter>Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Slide.h">
+      <Filter>Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Transition.h">
+      <Filter>Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Wipe.h">
+      <Filter>Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ZoomToMouse.h">
+      <Filter>Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AlternatingBars.h">
+      <Filter>Transitions\Bars</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Bar.h">
+      <Filter>Transitions\Bars</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ExpandingBars.h">
+      <Filter>Transitions\Bars</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Dissolve.h">
+      <Filter>Transitions\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ZoomToTexture.h">
+      <Filter>Transitions\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TransitionManager.h">
+      <Filter>Core\Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -418,6 +493,15 @@
     </Filter>
     <Filter Include="Utils\Animation">
       <UniqueIdentifier>{0f6dd01c-3a1d-4dbb-8456-f1fcd2ca4200}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Transitions">
+      <UniqueIdentifier>{692fee70-a268-4bd4-9c95-db73adacef7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Transitions\Bars">
+      <UniqueIdentifier>{7c4093c9-4155-4f58-abfe-be3235e866d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Transitions\Texture">
+      <UniqueIdentifier>{177c4d57-a516-4f47-a123-0663ab0f47de}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
