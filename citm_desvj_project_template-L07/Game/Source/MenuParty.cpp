@@ -23,6 +23,7 @@ MenuParty::MenuParty() : Menu()
 	partyMenuImgPath = app->configNode.child("menuManager").child("partyMenuImg").attribute("partyMenuImgPath").as_string();
 	zeroImgPath = app->configNode.child("menuManager").child("zeroImg").attribute("zeroImgPath").as_string();
 	sophieImgPath = app->configNode.child("menuManager").child("sophieImg").attribute("sophieImgPath").as_string();
+	//sophieImgPath = app->configNode.child("menuManager").child("sophieImg").attribute("sophieImgPath").as_string();
 }
 
 
@@ -85,25 +86,7 @@ bool MenuParty::PreUpdate()
 
 bool MenuParty::Update(float dt)
 {
-	app->render->DrawTexture(partyMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
-
-	switch (partyMemberSelected)
-	{
-	case ControlID::PARTY_1:
-		// Zero
-		app->render->DrawTexture(zeroImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
-		break;
-
-	case ControlID::PARTY_2:
-		// Sophie
-		app->render->DrawTexture(sophieImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
-
-		break;
-	default:
-		break;
-	}
-	app->ui->BlitPartyStats();
-
+	
 	return true;
 }
 
@@ -111,6 +94,26 @@ bool MenuParty::Update(float dt)
 bool MenuParty::PostUpdate()
 {
 	bool ret = true;
+
+	app->render->DrawTexture(partyMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
+
+	switch (partyMemberSelected)
+	{
+	case ControlID::PARTY_1:
+		// Zero
+		app->render->DrawTexture(zeroImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
+		app->sceneManager->sceneGame->partyMemberSelected = 0;
+		break;
+
+	case ControlID::PARTY_2:
+		// Sophie
+		app->render->DrawTexture(sophieImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
+		app->sceneManager->sceneGame->partyMemberSelected = 1;
+		break;
+	default:
+		break;
+	}
+	app->ui->BlitPartyStats();
 
 	return ret;
 }

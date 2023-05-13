@@ -31,6 +31,9 @@ public:
 
 	bool CleanUp();
 
+	uint GetInventoryPos() { return inventoryPos; }
+	void SetInventoryPos(uint id) { inventoryPos = id; }
+
 public:
 
 	bool takeItem = false;
@@ -57,6 +60,7 @@ private:
 
 	ParticleSystem* takeItemPS = nullptr;
 
+	uint inventoryPos = 0;
 };
 
 #endif // __ITEM_H__

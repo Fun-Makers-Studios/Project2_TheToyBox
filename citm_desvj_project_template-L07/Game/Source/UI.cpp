@@ -99,7 +99,7 @@ bool UI::CleanUp()
 
 void UI::BlitPartyStats()
 {	
-	app->fonts->BlitText(544, 225, app->ui->font1_id, app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->name.GetString());
+	app->fonts->BlitText(445, 240, app->ui->font1_id, app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->name.GetString());
 
 	char level[5];
 	sprintf_s(level, 5, "%d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->level);

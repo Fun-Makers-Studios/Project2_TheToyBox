@@ -4,6 +4,9 @@
 #include "Menu.h"
 #include "GuiControl.h"
 #include "GuiButton.h"
+#include "Item.h"
+
+#define MAX_INVENTORY_SLOTS 30
 
 struct SDL_Texture;
 
@@ -53,6 +56,8 @@ private:
 	const char* sophieImgPath = nullptr;
 	SDL_Texture* sophieImg = nullptr;
 
+	List<Item*> inventorySlots;
+	uint margin = 10;
 };
 
 #endif // __MENU_PARTY_H__

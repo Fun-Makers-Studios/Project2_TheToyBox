@@ -102,13 +102,13 @@ bool ModuleController::PreUpdate()
 	}
 
 	//Check controller player 1 buttons
-	if (controller_player1_A_pressed == true && app->input->keyboard[SDL_SCANCODE_SPACE] == KeyState::KEY_IDLE)
+	if (controller_player1_A_pressed == true && app->input->keyboard[SDL_SCANCODE_T] == KeyState::KEY_IDLE)
 	{
-		app->input->keyboard[SDL_SCANCODE_SPACE] = KeyState::KEY_DOWN;
+		app->input->keyboard[SDL_SCANCODE_T] = KeyState::KEY_DOWN;
 	}
 	else if (controller_player1_A_pressed == true)
 	{
-		app->input->keyboard[SDL_SCANCODE_SPACE] = KeyState::KEY_REPEAT;
+		app->input->keyboard[SDL_SCANCODE_T] = KeyState::KEY_REPEAT;
 	}
 
 	if (controller_player1_Start_pressed == true && app->input->keyboard[SDL_SCANCODE_C] == KeyState::KEY_IDLE)

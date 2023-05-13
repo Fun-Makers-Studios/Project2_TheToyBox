@@ -10,7 +10,7 @@
 #include "Collisions.h"
 #include "EntityManager.h"
 #include "SceneManager.h"
-
+#include "MenuManager.h"
 #include "SDL/include/SDL_render.h"
 
 #include "Defs.h"
@@ -73,6 +73,7 @@ bool SceneLogo::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
 		LOG("PASA A SCENE DIRECTAMENTE");
+		app->menuManager->Enable();
 		app->sceneManager->sceneState = SceneState::SWITCH;
 		app->sceneManager->nextScene = SceneID::SCENE_GAME;
 	}

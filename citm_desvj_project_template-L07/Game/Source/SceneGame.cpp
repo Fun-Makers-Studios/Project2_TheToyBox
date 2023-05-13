@@ -80,6 +80,7 @@ bool SceneGame::Start()
 	app->collisions->Enable();
 	app->entityManager->Enable();
 	app->questManager->Enable();
+	app->particleManager->Enable();
 	app->debug->debug = false;
 	exitGame = false;
 
