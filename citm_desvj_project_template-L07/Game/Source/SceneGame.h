@@ -68,6 +68,8 @@ public:
 	List<NPC*> npcList;
 	KidEnemy* kid = nullptr;
 	Item* item = nullptr;
+
+	//Items that appears in the map
 	List<Item*> itemsList;
 
 	// Set of SFX
@@ -97,7 +99,7 @@ public:
 	uint partyMemberSelected = 0;
 	uint questListSelected = 0;
 
-	DialogueManager* dialogueManager;
+	DialogueManager* dialogueManager = nullptr;
 
 private:
 

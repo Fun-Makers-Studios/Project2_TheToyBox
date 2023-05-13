@@ -178,7 +178,7 @@ bool SceneGame::Update(float dt)
 	app->map->Draw();
 
 	//Changes to Night Mode
-	if(isNight)
+	if(mapName == "town" && isNight)
 		app->render->DrawRectangle(app->render->viewport, 0, 0, 255, 100, true, false);
 
 	ActiveParticles();
@@ -186,7 +186,10 @@ bool SceneGame::Update(float dt)
 	SaveUI();
 
 	//Saves game if choosing the option when talkin with MAGE
-	if (dialogueManager->GetCurrentDialogue() != nullptr && dialogueManager->GetCurrentDialogue()->id == 6 && dialogueManager->GetCurrentDialogue()->currentNode->id == 1 && app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	if (dialogueManager->GetCurrentDialogue() != nullptr 
+		&& dialogueManager->GetCurrentDialogue()->id == 6 
+		&& dialogueManager->GetCurrentDialogue()->currentNode->id == 1 
+		&& app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		showSavingState = true;
 		isNight = !isNight;
@@ -245,7 +248,6 @@ bool SceneGame::CleanUp()
 	return true;
 }
 
-
 bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 {
 	// HEKATE MUST DELETE	
@@ -255,7 +257,7 @@ bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 
 void SceneGame::ActiveParticles()
 {
-	if (isNight)
+	if (mapName == "town" && isNight)
 	{
 		if (firefliesPS == nullptr) 
 		{

@@ -186,7 +186,7 @@ bool SceneFight::Update(float dt)
 	// Draw GUI
 	app->guiManager->Draw();
 
-	attackButton18->state = GuiControlState::DISABLED;
+	/*attackButton18->state = GuiControlState::DISABLED;
 	defenseButton19->state = GuiControlState::DISABLED;
 	escapeButton20->state = GuiControlState::DISABLED;
 
@@ -198,7 +198,7 @@ bool SceneFight::Update(float dt)
 	}
 	if (escapeButton20->state == GuiControlState::DISABLED) {
 		escapeButton20->state = GuiControlState::NORMAL;
-	}
+	}*/
 	
 	if (enemiesAlive <= 0)
 		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);

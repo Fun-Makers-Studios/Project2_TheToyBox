@@ -101,7 +101,7 @@ bool PartyManager::SaveState(pugi::xml_node& data)
 	{
 		pugi::xml_node item = inventory.append_child("item");
 		item.append_attribute("name") = inventoryItem->data->name.GetString();
-		item.append_attribute("itemType") = inventoryItem->data->itemType.GetString();
+		item.append_attribute("quantity") = inventoryItem->data->itemStackQuantity;
 	}
 
 	return true;

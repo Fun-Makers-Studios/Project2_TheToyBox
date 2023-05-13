@@ -115,26 +115,3 @@ bool Item::CleanUp()
 
 	return true;
 }
-
-void Item::OnCollision()
-{
-	//switch (physB->cType)
-	//{
-	//case ColliderType::PLAYER:
-	//	LOG("Collision PLAYER");
-	//	
-	//	/*pbody->body->SetActive(false);
-	//	this->Disable();*/
-	//	isPicked = true;
-	//	break;
-	//}
-
-}
-
-void Item::ResetItem()
-{
-	// HEKATE
-	/*SDL_SetTextureAlphaMod(texture, 1);
-	pbody->body->SetActive(true);
-	isPicked = false;*/
-}

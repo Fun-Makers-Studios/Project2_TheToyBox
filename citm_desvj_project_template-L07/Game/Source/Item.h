@@ -31,16 +31,13 @@ public:
 
 	bool CleanUp();
 
-	void OnCollision();
-
-	void ResetItem();
-
 public:
 
 	bool takeItem = false;
 
 	SString itemType;
 
+	uint itemStackQuantity = 1;
 private:
 
 	bool animable = false;
@@ -59,6 +56,7 @@ private:
 	int timeMov = 0;
 
 	ParticleSystem* takeItemPS = nullptr;
+
 };
 
 #endif // __ITEM_H__

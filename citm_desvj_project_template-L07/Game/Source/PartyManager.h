@@ -14,8 +14,7 @@ enum class GearType
 	HEAD,
 	CHEST,
 	PANTS,
-	WEAPON,
-	RING
+	WEAPON
 };
 
 enum class StatType
@@ -31,7 +30,10 @@ enum class StatType
 
 struct Gear
 {
-
+	Item* helmet = nullptr;
+	Item* chest = nullptr;
+	Item* pants = nullptr;
+	Item* weapon = nullptr;
 };
 
 enum class MemberType
@@ -73,6 +75,7 @@ public:
 	~PartyMember() {};
 
 	MemberType type;
+	Gear gear;
 	MemberStatus status;
 	SString name;
 
