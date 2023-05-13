@@ -8,6 +8,9 @@
 #include "Collisions.h"
 #include "Fonts.h"
 #include "UI.h"
+#include "Player.h"
+#include "EntityManager.h"
+#include "SceneManager.h"
 
 #include <SDL/include/SDL.h>
 
@@ -50,11 +53,13 @@ bool ModuleController::PreUpdate()
 {
 	//Controller inputs
 
+	uint numJoystics = SDL_NumJoysticks();
+
 	for (int i = 0; i < SDL_NumJoysticks(); ++i)
 	{
 		if (SDL_IsGameController(i))
 		{
-			if (i == 0)
+			if (i == 0 || i == 1 || i == 2 || i == 3)
 			{
 				Controller_player1 = SDL_GameControllerOpen(i);
 				//Checking if the controller is attached
@@ -67,7 +72,7 @@ bool ModuleController::PreUpdate()
 
 					//Assign the boolean value to the  bools defined  
 					controller_player1_A_pressed = SDL_GameControllerGetButton(Controller_player1, SDL_CONTROLLER_BUTTON_A);
-					//controller_player1_RightShoulder_pressed = SDL_GameControllerGetButton(Controller_player1, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
+					controller_player1_RightShoulder_pressed = SDL_GameControllerGetButton(Controller_player1, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
 					controller_player1_Start_pressed = SDL_GameControllerGetButton(Controller_player1, SDL_CONTROLLER_BUTTON_START);
 					controller_player1_B_pressed = SDL_GameControllerGetButton(Controller_player1, SDL_CONTROLLER_BUTTON_B); ;
 					controller_player1_UPArrow_pressed = SDL_GameControllerGetButton(Controller_player1, SDL_CONTROLLER_BUTTON_DPAD_UP);
@@ -79,56 +84,42 @@ bool ModuleController::PreUpdate()
 				}
 				else
 				{
+					SDL_GetError();
 					SDL_GameControllerClose(Controller_player1);
 					Controller_player1 = nullptr;
 					Controller_player1_Connected = false;
-				}
-			}
-			else if (i < 1)
-			{
-				Controller_player2_Connected = false;
-				SDL_GameControllerClose(Controller_player2);
-				Controller_player2 = nullptr;
-
-			}
-			else if (i == 1 || i == 0 && Controller_player1_Connected == false)
-			{
-				Controller_player2 = SDL_GameControllerOpen(i);
-				if (SDL_GameControllerGetAttached(Controller_player2)) {
-
-					Controller_player2_LAxisX = SDL_GameControllerGetAxis(Controller_player2, SDL_CONTROLLER_AXIS_LEFTX);
-					Controller_player2_LAxisY = SDL_GameControllerGetAxis(Controller_player2, SDL_CONTROLLER_AXIS_LEFTY);
-
-					//Assign the boolean value to the  bools defined  
-
-					controller_player2_A_pressed = SDL_GameControllerGetButton(Controller_player2, SDL_CONTROLLER_BUTTON_A);
-
-					/*	controller_player2_RightShoulder_pressed = SDL_GameControllerGetButton(Controller_player2, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);*/
-					controller_player2_Start_pressed = SDL_GameControllerGetButton(Controller_player2, SDL_CONTROLLER_BUTTON_START);
-					controller_player2_B_pressed = SDL_GameControllerGetButton(Controller_player2, SDL_CONTROLLER_BUTTON_B);
-					controller_player2_UPArrow_pressed = SDL_GameControllerGetButton(Controller_player2, SDL_CONTROLLER_BUTTON_DPAD_UP);
-					controller_player2_DOWNArrow_pressed = SDL_GameControllerGetButton(Controller_player2, SDL_CONTROLLER_BUTTON_DPAD_DOWN);
-					controller_player2_LEFTArrow_pressed = SDL_GameControllerGetButton(Controller_player2, SDL_CONTROLLER_BUTTON_DPAD_LEFT);
-					controller_player2_RIGHTArrow_pressed = SDL_GameControllerGetButton(Controller_player2, SDL_CONTROLLER_BUTTON_DPAD_RIGHT);
-
-					Controller_player2_Connected = true;
-					break;
-				}
-				else
-				{
-					SDL_GameControllerClose(Controller_player2);
-					Controller_player2 = nullptr;
-					Controller_player2_Connected = false;
 				}
 			}
 		}
 	}
 	//if (App->input->keys[SDL_SCANCODE_LEFT] == Key_State::KEY_REPEAT) { block.inputX = -1; }
 
+	
+	return true;
+}
+
+bool ModuleController::Update()
+{
+	
+
+	return true;
+}
+
+bool ModuleController::PostUpdate()
+{
+	LOG("ModuleController PostUpdate");
+	
+	//CHECK GAMEPAD INPUT
+
 	//Check player 1 Left Axis X & Y
-	if (Controller_player1_LAxisX > 6400)
+ 	if (Controller_player1_LAxisX > 6400)
 	{
 		app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT; // HEKATE All of this should probably be '=' not '=='
+		
+		
+
+	
+
 	}
 	else if (Controller_player1_LAxisX < -DEATHZONE)
 	{
@@ -144,15 +135,21 @@ bool ModuleController::PreUpdate()
 		app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT;
 	}
 
+
+
 	//Check controller player 1 buttons
-	if (controller_player1_A_pressed == true && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
+	if (controller_player1_A_pressed == true)
 	{
-		app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN;
-	}
-	else if (controller_player1_A_pressed == true)
-	{
-		app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT;
-	}
+
+		app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
+
+		app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN;
+
+		
+
+
+	}    
+	
 
 	if (controller_player1_Start_pressed == true && app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_IDLE)
 	{
@@ -208,100 +205,6 @@ bool ModuleController::PreUpdate()
 		app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
 	}
 
-	//Check player 2 axes
-	if (Controller_player2_LAxisX > DEATHZONE)
-	{
-		app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT;
-	}
-	else if (Controller_player2_LAxisX < -DEATHZONE)
-	{
-		app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT;
-	}
-
-	if (Controller_player2_LAxisY < -DEATHZONE)
-	{
-		app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT;
-	}
-	else if (Controller_player2_LAxisY > DEATHZONE)
-	{
-		app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT;
-	}
-
-	//Check controller player 2 buttons
-	if (controller_player2_A_pressed == true && app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
-	{
-		app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN;
-	}
-	else if (controller_player2_A_pressed == true)
-	{
-		app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT;
-	}
-
-	if (controller_player2_Start_pressed == true && app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_IDLE)
-	{
-		app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN;
-	}
-	else if (controller_player2_Start_pressed == true)
-	{
-		app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_REPEAT;
-	}
-
-	if (controller_player2_B_pressed == true && app->input->GetKey(SDL_SCANCODE_N) == KEY_IDLE)
-	{
-		app->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN;
-	}
-	else if (controller_player2_B_pressed == true)
-	{
-		app->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT;
-	}
-
-	if (controller_player2_UPArrow_pressed == true && app->input->GetKey(SDL_SCANCODE_UP) == KEY_IDLE)
-	{
-		app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN;
-	}
-	else if (controller_player2_UPArrow_pressed == true)
-	{
-		app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT;
-	}
-
-	if (controller_player2_DOWNArrow_pressed == true && app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_IDLE)
-	{
-		app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN;
-	}
-	else if (controller_player2_DOWNArrow_pressed == true)
-	{
-		app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT;
-	}
-
-	if (controller_player2_LEFTArrow_pressed == true && app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_IDLE)
-	{
-		app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN;
-	}
-	else if (controller_player2_LEFTArrow_pressed == true)
-	{
-		app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT;
-	}
-
-	if (controller_player2_RIGHTArrow_pressed == true && app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_IDLE)
-	{
-		app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN;
-	}
-	else if (controller_player2_RIGHTArrow_pressed == true)
-	{
-		app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT;
-	}
-
-	return true;
-}
-
-bool ModuleController::Update()
-{
-	
-	return true;
-}
-
-bool ModuleController::PostUpdate()
-{
 
 	return true;
 }
@@ -312,11 +215,11 @@ bool  ModuleController::CleanUp()
 	LOG("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 
+
 	SDL_GameControllerClose(Controller_player1);
-	SDL_GameControllerClose(Controller_player2);
 
 	Controller_player1 = nullptr;
-	Controller_player2 = nullptr;
+
 
 	return true;
 }
