@@ -19,6 +19,7 @@
 
 Collisions::Collisions() : Module()
 {
+    name.Create("collisions");
 }
 
 // Destructor

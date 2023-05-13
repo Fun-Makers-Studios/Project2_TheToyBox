@@ -114,3 +114,30 @@ ListItem<Scene*>* SceneManager::FindSceneByID(SceneID id)
         if (scene->data->GetID() == id) { return scene; }
     }
 }
+
+bool SceneManager::LoadState(pugi::xml_node& data)
+{
+
+    ListItem<Scene*>* scene;
+
+    for (scene = scenes.start; scene != NULL; scene = scene->next)
+    {
+        scene->data->LoadState(data);
+    }
+
+    return true;
+}
+
+bool SceneManager::SaveState(pugi::xml_node& data)
+{
+
+    ListItem<Scene*>* scene;
+
+    for (scene = scenes.start; scene != NULL; scene = scene->next)
+    {
+        scene->data->SaveState(data);
+    }
+
+    return true;
+}
+

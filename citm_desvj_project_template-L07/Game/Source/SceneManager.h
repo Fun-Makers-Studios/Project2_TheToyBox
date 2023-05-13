@@ -50,6 +50,9 @@ public:
 
 	ListItem<Scene*>* FindSceneByID(SceneID id);
 
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&);
+
 public:
 
 	Scene* currentScene = nullptr;

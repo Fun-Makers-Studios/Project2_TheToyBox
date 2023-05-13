@@ -177,16 +177,6 @@ bool SceneGame::Update(float dt)
 	// Draw map
 	app->map->Draw();
 
-	if (app->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
-		if (smokePS == nullptr) {
-			smokePS = app->particleManager->CreateParticleSystem(player->body->pos, Blueprint::SAND);
-		}
-		else {
-			smokePS->TurnOff();
-			smokePS = nullptr;
-		}
-	}
-
 	//Changes to Night Mode
 	if(isNight)
 		app->render->DrawRectangle(app->render->viewport, 0, 0, 255, 100, true, false);
@@ -431,7 +421,7 @@ bool SceneGame::LoadState(pugi::xml_node& data)
 	//iPoint kidpos = { data.child("kidposition").attribute("x").as_float(), data.child("kidposition").attribute("y").as_float() };
 	//app->scene->kid->pbody->body->settransform(kidpos, 0);
 
-	//Load NPC
+	//Load NPC States
 	/*for (pugi::xml_node itemNode = app->configNode.child("npcs").child(mapName.GetString()).child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
 	{
 		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC, itemNode);
@@ -461,25 +451,12 @@ bool SceneGame::LoadState(pugi::xml_node& data)
 
 bool SceneGame::SaveState(pugi::xml_node& data)
 {
+	pugi::xml_node sceneGame = data.append_child("scene");
 
-	ListItem<PartyMember*>* pmemberItem;
+	pugi::xml_node mapname = sceneGame.append_child("mapName");
+	mapname.append_attribute("actualMap") = mapName.GetString();
 
-	for (pmemberItem = app->partyManager->party.start; pmemberItem != NULL; pmemberItem = pmemberItem->next)
-	{
-		pugi::xml_node partyMember = data.append_child("partymember");
-		partyMember.append_attribute("name") = pmemberItem->data->name.GetString();
-		partyMember.append_attribute("maxHP") = pmemberItem->data->maxHp;
-		partyMember.append_attribute("maxMana") = pmemberItem->data->maxMana;
-		partyMember.append_attribute("currentHp") = pmemberItem->data->currentHp;
-		partyMember.append_attribute("level") = pmemberItem->data->level;
-		partyMember.append_attribute("attack") = pmemberItem->data->attack;
-		partyMember.append_attribute("defense") = pmemberItem->data->defense;
-		partyMember.append_attribute("speed") = pmemberItem->data->speed;
-		partyMember.append_attribute("critRate") = pmemberItem->data->critRate;
-		partyMember.append_attribute("fightPosX") = pmemberItem->data->fightPosition.x;
-		partyMember.append_attribute("fightPosY") = pmemberItem->data->fightPosition.y;
-	}
-
+	
 	// HEKATE
 	// Save current player position
 	//pugi::xml_node playerPos = data.append_child("playerPosition");
