@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "EntityManager.h"
 #include "ParticleSystemManager.h"
+#include "ModuleController.h"
 
 #include <math.h>
 
@@ -180,7 +181,7 @@ bool Player::Update()
 		body->vel = { 0, 0 };
 		// HEKATE pbody->body->SetGravityScale(0);
 
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT ) {
 			body->vel.y = -speed;
 			currentAnim = &walkUp;
 		}
@@ -192,7 +193,7 @@ bool Player::Update()
 			body->vel.x = -speed;
 			currentAnim = &walkLeft;
 		}
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || app->controller->Controller_player1_LAxisX > 6400) {
 			body->vel.x = speed;
 			currentAnim = &walkRight;
 		}
