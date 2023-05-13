@@ -178,7 +178,6 @@
 		</dialogue>
 	</dialoguemanager>
 
-
 	<npcs>
 		<town>
 			<npc x="928" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="1" character="3" dialogueid="0"/>

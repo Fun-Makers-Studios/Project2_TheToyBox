@@ -50,6 +50,9 @@ public:
 	// Sets the scene's ID
 	virtual void SetID(SceneID id) { this->id = id; }
 
+	virtual bool LoadState(pugi::xml_node&) { return true; }
+	virtual bool SaveState(pugi::xml_node&) { return true; }
+
 public:
 
 	SceneID id;

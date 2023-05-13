@@ -19,7 +19,12 @@
 
 #include <string>
 
-Debug::Debug() : Module() { debug = false; }
+Debug::Debug() : Module() 
+{
+	name.Create("debug");
+	debug = false; 
+}
+
 Debug::~Debug()
 {
 	delete nullPlayer;

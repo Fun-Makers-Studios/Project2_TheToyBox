@@ -103,6 +103,9 @@ public:
 
 	void AddMemberToParty(PartyMember* member);
 
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&);
+
 public:
 	List<PartyMember*> party;
 	List<Item*> inventory;

@@ -1,7 +1,10 @@
 #include "PartyManager.h"
 #include "Textures.h"
 
-PartyManager::PartyManager(){}
+PartyManager::PartyManager() : Module() 
+{
+	name.Create("partymanager");
+}
 
 PartyManager::~PartyManager(){}
 
@@ -61,4 +64,45 @@ bool PartyManager::Start()
 void PartyManager::AddMemberToParty(PartyMember* member)
 {
 	party.Add(member);	 
+}
+
+bool PartyManager::LoadState(pugi::xml_node& data)
+{
+
+	
+
+	return true;
+}
+
+bool PartyManager::SaveState(pugi::xml_node& data)
+{
+
+	ListItem<PartyMember*>* pmemberItem;
+
+	for (pmemberItem = party.start; pmemberItem != NULL; pmemberItem = pmemberItem->next)
+	{
+		pugi::xml_node partyMember = data.append_child("partymember");
+		partyMember.append_attribute("name") = pmemberItem->data->name.GetString();
+		partyMember.append_attribute("maxHP") = pmemberItem->data->maxHp;
+		partyMember.append_attribute("maxMana") = pmemberItem->data->maxMana;
+		partyMember.append_attribute("currentHp") = pmemberItem->data->currentHp;
+		partyMember.append_attribute("level") = pmemberItem->data->level;
+		partyMember.append_attribute("attack") = pmemberItem->data->attack;
+		partyMember.append_attribute("defense") = pmemberItem->data->defense;
+		partyMember.append_attribute("speed") = pmemberItem->data->speed;
+		partyMember.append_attribute("critRate") = pmemberItem->data->critRate;
+		partyMember.append_attribute("fightPosX") = pmemberItem->data->fightPosition.x;
+		partyMember.append_attribute("fightPosY") = pmemberItem->data->fightPosition.y;
+	}
+
+	ListItem<Item*>* inventoryItem;
+	pugi::xml_node inventory = data.append_child("inventory");
+	for (inventoryItem = app->partyManager->inventory.start; inventoryItem != NULL; inventoryItem = inventoryItem->next)
+	{
+		pugi::xml_node item = inventory.append_child("item");
+		item.append_attribute("name") = inventoryItem->data->name.GetString();
+		item.append_attribute("itemType") = inventoryItem->data->itemType.GetString();
+	}
+
+	return true;
 }

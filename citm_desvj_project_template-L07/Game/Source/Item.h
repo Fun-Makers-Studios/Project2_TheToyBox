@@ -10,6 +10,10 @@
 
 struct SDL_Texture;
 
+struct ItemData {
+
+};
+
 class Item : public Entity
 {
 public:
