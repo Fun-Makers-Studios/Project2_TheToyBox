@@ -7,17 +7,14 @@
 class ExpandingBars : public Transition
 {
 public:
-	ExpandingBars(SceneID next_scene, float step_duration, bool non_lerp, int bar_number, bool horizontal, bool random_colours, Color even_color, Color odd_color);
+	ExpandingBars(float step_duration, bool non_lerp, int bar_number, bool horizontal, bool random_colours, Color even_color, Color odd_color);
 	~ExpandingBars();
 
-	void StepTransition();
 
 public:
-	void Entering();
-	void Changing();
-	void Exiting();
 
-	void ExpandBars();
+	void DoTransition();
+
 	void ExpandHorizontalBars();
 	void ExpandVerticalBars();
 	void DrawBars();

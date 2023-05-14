@@ -1,8 +1,8 @@
 #include "ExpandingBars.h"
 #include "TransitionManager.h"
 
-ExpandingBars::ExpandingBars(SceneID next_scene, float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color) 
-	: Transition(next_scene, step_duration, non_lerp)
+ExpandingBars::ExpandingBars(float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color) 
+	: Transition(step_duration, non_lerp)
 	, bar_number(bar_number)
 	, random_colours(random_colours)
 	, even_color(even_color)
@@ -14,69 +14,10 @@ ExpandingBars::ExpandingBars(SceneID next_scene, float step_duration, bool non_l
 
 ExpandingBars::~ExpandingBars()
 {
-
+	bars.Clear();
 }
 
-void ExpandingBars::StepTransition()
-{
-	switch (step)
-	{
-	case TransitionStep::ENTERING:
-
-		Entering();
-
-		break;
-
-	case TransitionStep::CHANGING:
-
-		Changing();
-
-		break;
-
-	case TransitionStep::EXITING:
-
-		Exiting();
-
-		break;
-	}
-
-	ExpandBars();
-}
-
-void ExpandingBars::Entering()
-{
-	current_cutoff += GetCutoffRate(step_duration);
-
-	if (current_cutoff >= MAX_CUTOFF)
-	{
-		current_cutoff = MAX_CUTOFF;
-		
-		step = TransitionStep::CHANGING;
-	}
-}
-
-void ExpandingBars::Changing()
-{
-	app->sceneManager->SwitchTo(next_scene);
-
-	step = TransitionStep::EXITING;
-}
-
-void ExpandingBars::Exiting()
-{
-	current_cutoff -= GetCutoffRate(step_duration);
-	
-	if (current_cutoff <= MIN_CUTOFF)
-	{
-		step = TransitionStep::NONE;
-
-		bars.Clear();
-
-		app->transitionManager->DeleteActiveTransition();
-	}
-}
-
-void ExpandingBars::ExpandBars()
+void ExpandingBars::DoTransition()
 {
 	if (!vertical)
 	{
@@ -92,7 +33,7 @@ void ExpandingBars::ExpandBars()
 
 void ExpandingBars::ExpandHorizontalBars()
 {
-	if (step == TransitionStep::ENTERING)
+	if (app->transitionManager->step == TransitionStep::IN)
 	{
 		if (!non_lerp)
 		{
@@ -120,7 +61,7 @@ void ExpandingBars::ExpandHorizontalBars()
 		}
 	}
 
-	if (step == TransitionStep::EXITING)
+	if (app->transitionManager->step == TransitionStep::OUT)
 	{
 		for (int i = 0; i < bars.Count(); ++i)												// As in the exiting step all bars will be at the same position/size, we need Lerp().
 		{																					// By using Lerp(), non_lerp and even/odd bar distinction is not needed.
@@ -132,7 +73,7 @@ void ExpandingBars::ExpandHorizontalBars()
 
 void ExpandingBars::ExpandVerticalBars()
 {
-	if (step == TransitionStep::ENTERING)
+	if (app->transitionManager->step == TransitionStep::IN)
 	{
 		if (!non_lerp)
 		{
@@ -160,7 +101,7 @@ void ExpandingBars::ExpandVerticalBars()
 		}
 	}
 
-	if (step == TransitionStep::EXITING)
+	if (app->transitionManager->step == TransitionStep::OUT)
 	{
 		for (int i = 0; i < bars.Count(); ++i)													// cutoff goes from 0 to 1 to 0, so there would be no need to									
 		{																						// separate expansion and reduction in different steps.
@@ -209,7 +150,7 @@ void ExpandingBars::InitExpandingBars()
 		bars.Add(new_bar);
 	}
 
-	step = TransitionStep::ENTERING;
+	app->transitionManager->step = TransitionStep::IN;
 }
 
 void ExpandingBars::AssignHorizontalBar(Bar& new_bar, const int& win_width, const int& win_height, const int& index)

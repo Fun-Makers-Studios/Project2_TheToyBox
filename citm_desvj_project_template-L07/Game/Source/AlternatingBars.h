@@ -7,17 +7,14 @@
 class AlternatingBars : public Transition
 {
 public:
-	AlternatingBars(SceneID next_scene, float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color);
+
+	AlternatingBars(float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color);
 	~AlternatingBars();
 
-	void StepTransition();
-
 public:
-	void Entering();
-	void Changing();
-	void Exiting();
 
-	void AlternateBars();
+	void DoTransition();
+
 	void TranslateHorizontalBars();
 	void TranslateVerticalBars();
 	void DrawBars();

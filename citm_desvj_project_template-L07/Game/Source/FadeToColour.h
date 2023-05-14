@@ -7,23 +7,20 @@
 class FadeToColour : public Transition
 {
 public:
-	FadeToColour(SceneID next_scene, float step_duration, Color colour);
+
+	FadeToColour(float step_duration, Color colour);
 	~FadeToColour();
 
-	void StepTransition();
+	// Update the alpha value of the fade.
+	void DoTransition();
 
-public:
-	void Entering();														// Method that will be used to execute the ENTERING transition step.
-	void Changing();														// Method that will be used to execute the CHANGING transition step.
-	void Exiting();															// Method that will be used to execute the EXITING transition step.
-	
-	void ApplyFade();														// Method that will be used to update the alpha value of the fade.
-
-	void InitFadeToColour();												// Method that will be used to initialize all the variables related with the FadeToColour.
+	// Initialize all the variables related with the FadeToColour.
+	void InitFadeToColour();												
 
 private:
-	SDL_Rect	screen;
-	Color		fade_colour;
+
+	SDL_Rect screen;
+	Color fade_colour;
 };
 
 #endif // !__FADE_TO_COLOUR_H__

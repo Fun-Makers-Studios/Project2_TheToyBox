@@ -50,7 +50,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	controller = new ModuleController();
 
 	sceneManager = new SceneManager();
-	transitionManager = new TransitionManager();
 	
 	map = new Map();
 	pathfinding = new Pathfinding();
@@ -64,6 +63,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	menuManager = new MenuManager();
 	ui = new UI();
 	guiManager = new GuiManager();
+
+	transitionManager = new TransitionManager();
 	debug = new Debug();
 
 	render = new Render();
@@ -79,7 +80,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(controller, true);
 
 	AddModule(sceneManager, true);
-	AddModule(transitionManager, true);
 	
 	AddModule(map, false);
 	AddModule(pathfinding, false);
@@ -93,6 +93,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(menuManager, false);
 	AddModule(ui, true);
 	AddModule(guiManager, true);
+
+	AddModule(transitionManager, true);
 	AddModule(debug, true);
 
 	// Render last to swap buffer

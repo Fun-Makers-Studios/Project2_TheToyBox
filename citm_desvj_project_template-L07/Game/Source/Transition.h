@@ -11,44 +11,26 @@
 #include "Color.h"
 #include "SceneManager.h"
 
-enum class TransitionStep
-{
-	NONE,
-	ENTERING,
-	CHANGING,
-	EXITING
-};
+enum class TransitionStep;
 
 class Transition
 {
 public:
-	Transition(SceneID next_scene, float step_duration, bool non_lerp = false);
+	Transition(float step_duration, bool non_lerp = false);
 	virtual ~Transition();
 
 	virtual void Start();
-	virtual void StepTransition();
-	virtual void CleanUp();
-
-	// Executes the ENTERING transition step.
-	virtual void Entering();
-
-	// Executes the CHANGING transition step.
-	virtual void Changing();
-
-	// Executes the EXITING transition step.
-	virtual void Exiting();															
+	virtual void CleanUp();														
 	
+	// Executes the transition
+	virtual void DoTransition();
+
 	float Lerp(float start, float end, float rate);									// Method that will be used to linearly interpolate the speed of a given transition.
 	float N_Lerp(float start, float end, float rate, bool smash_in = false);		// Method that will be used to non-linearly interpolate the speed of a given transition.
 	float GetCutoffRate(float step_duration, float dt = app->GetDT());				// Method that returns the cutoff rate for a given transition. Will use dt as the standard increase.
 
 public:
-	// All the steps that a given transition will go through.
-	TransitionStep step;
-
-	// The scene that will be transitioned to.
-	SceneID	next_scene;														
-
+															
 	// The duration of each transtion step in seconds.
 	float step_duration;
 

@@ -1,49 +1,18 @@
 #include "Transition.h"
 
-Transition::Transition(SceneID next_scene, float step_duration, bool non_lerp ) : 
-	next_scene(next_scene), 
+Transition::Transition(float step_duration, bool non_lerp ) : 
 	step_duration(step_duration), 
 	non_lerp(non_lerp),
 	cutoff_rate(0.0f),
-	current_cutoff(0.0f)
-{
+	current_cutoff(0.0f) {}
 
-}
+Transition::~Transition() {}
 
-Transition::~Transition()
-{
+void Transition::Start() {}
 
-}
+void Transition::CleanUp() {}
 
-void Transition::Start()
-{
-
-}
-
-void Transition::StepTransition()
-{
-
-}
-
-void Transition::CleanUp()
-{
-
-}
-
-void Transition::Entering()
-{
-	
-}
-
-void Transition::Changing()
-{
-
-}
-
-void Transition::Exiting()
-{
-
-}
+void Transition::DoTransition() {}
 
 float Transition::Lerp(float start, float end, float rate)								// Rate goes from 0.0f (0 %) to 1.0f (100 %) advancement per frame.
 {																						// If Lerp(0.0f, 10.0f, 1.0f), then the advancement per frame will be of 10.0f.

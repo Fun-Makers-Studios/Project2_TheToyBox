@@ -1,8 +1,8 @@
 #include "AlternatingBars.h"
 #include "TransitionManager.h"
 
-AlternatingBars::AlternatingBars(SceneID next_scene, float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color) :
-	Transition(next_scene, step_duration, non_lerp),
+AlternatingBars::AlternatingBars(float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color) :
+	Transition(step_duration, non_lerp),
 	bar_number(bar_number),
 	win_width(0.0f),
 	win_height(0.0f),
@@ -16,67 +16,10 @@ AlternatingBars::AlternatingBars(SceneID next_scene, float step_duration, bool n
 
 AlternatingBars::~AlternatingBars()
 {
-
+	bars.Clear();
 }
 
-void AlternatingBars::StepTransition()
-{
-	current_cutoff += GetCutoffRate(step_duration);
-
-	switch (step)
-	{
-	case TransitionStep::ENTERING:
-
-		Entering();
-
-		break;
-
-	case TransitionStep::CHANGING:
-
-		Changing();
-
-		break;
-
-	case TransitionStep::EXITING:
-
-		Exiting();
-
-		break;
-	}
-
-	AlternateBars();
-}
-
-void AlternatingBars::Entering()
-{
-	if (current_cutoff >= MAX_CUTOFF)
-	{
-		current_cutoff = MIN_CUTOFF;
-		
-		step = TransitionStep::CHANGING;
-	}
-}
-
-void AlternatingBars::Changing()
-{
-	app->sceneManager->SwitchTo(next_scene);
-
-	step = TransitionStep::EXITING;
-}
-
-void AlternatingBars::Exiting()
-{	
-	if (current_cutoff >= MAX_CUTOFF)
-	{
-		step = TransitionStep::NONE;
-
-		bars.Clear();
-		
-		app->transitionManager->DeleteActiveTransition();
-	}
-}
-
-void AlternatingBars::AlternateBars()
+void AlternatingBars::DoTransition()
 {
 	if (!vertical)
 	{
@@ -92,7 +35,7 @@ void AlternatingBars::AlternateBars()
 
 void AlternatingBars::TranslateHorizontalBars()
 {
-	if (step == TransitionStep::ENTERING)
+	if (app->transitionManager->step == TransitionStep::IN)
 	{
 		if (!non_lerp)
 		{
@@ -126,7 +69,7 @@ void AlternatingBars::TranslateHorizontalBars()
 		}
 	}
 
-	if (step == TransitionStep::EXITING)
+	if (app->transitionManager->step == TransitionStep::OUT)
 	{
 		if (!non_lerp)
 		{
@@ -163,7 +106,7 @@ void AlternatingBars::TranslateHorizontalBars()
 
 void AlternatingBars::TranslateVerticalBars()
 {	
-	if (step == TransitionStep::ENTERING)
+	if (app->transitionManager->step == TransitionStep::IN)
 	{
 		if (!non_lerp)
 		{
@@ -197,7 +140,7 @@ void AlternatingBars::TranslateVerticalBars()
 		}
 	}
 
-	if (step == TransitionStep::EXITING)
+	if (app->transitionManager->step == TransitionStep::OUT)
 	{
 		if (!non_lerp)
 		{
@@ -269,7 +212,7 @@ void AlternatingBars::InitAlternatingBars()
 		bars.Add(new_bar);
 	}
 
-	step = TransitionStep::ENTERING;
+	app->transitionManager->step = TransitionStep::IN;
 }
 
 void AlternatingBars::AssignHorizontalBar(Bar& new_bar, const int& win_width, const int& win_height, const int& index)

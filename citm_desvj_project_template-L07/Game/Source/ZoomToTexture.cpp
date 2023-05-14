@@ -2,80 +2,16 @@
 #include "TransitionManager.h"
 #include "Map.h"
 
-ZoomToTexture::ZoomToTexture(SceneID next_scene, iPoint mouse_position, float step_duration, float zoom_scale) : Transition(next_scene, step_duration)
+ZoomToTexture::ZoomToTexture(iPoint mouse_position, float step_duration, float zoom_scale) : Transition(step_duration)
 , zoom_scale(zoom_scale)
 , mouse_position(mouse_position)
 {
 	InitZoomToTexture(mouse_position);
 }
 
-ZoomToTexture::~ZoomToTexture()
-{
+ZoomToTexture::~ZoomToTexture() {}
 
-}
-
-void ZoomToTexture::StepTransition()
-{
-	//current_cutoff += GetCutoffRate(step_duration);
-	
-	switch (step)
-	{
-	case TransitionStep::ENTERING:
-
-		Entering();
-
-		break;
-
-	case TransitionStep::CHANGING:
-		
-		Changing();
-
-		break;
-
-	case TransitionStep::EXITING:
-
-		Exiting();
-
-		break;
-	}
-
-	ApplyZoom();
-}
-
-void ZoomToTexture::Entering()
-{
-	current_cutoff += GetCutoffRate(step_duration);
-	
-	if (current_cutoff >= MAX_CUTOFF)
-	{
-		current_cutoff = MAX_CUTOFF;
-
-		step = TransitionStep::CHANGING;
-	}
-}
-
-void ZoomToTexture::Changing()
-{
-	app->sceneManager->SwitchTo(next_scene);
-
-	//target_to_zoom = app->sceneManager->currentScene->scene_texture;
-
-	step = TransitionStep::EXITING;
-}
-
-void ZoomToTexture::Exiting()
-{
-	current_cutoff -= GetCutoffRate(step_duration);
-	
-	if (current_cutoff <= MIN_CUTOFF)
-	{	
-		step = TransitionStep::NONE;
-
-		app->transitionManager->DeleteActiveTransition();
-	}
-}
-
-void ZoomToTexture::ApplyZoom()
+void ZoomToTexture::DoTransition()
 {
 	zoom_rate = original_scale + current_cutoff * zoom_scale;															// If current_cutoff == 0.0f, then scale == original_scale.
 
@@ -105,5 +41,5 @@ void ZoomToTexture::InitZoomToTexture(iPoint mouse_position)
 	//y_increase_rate			= -mouse_position.y + y_increment - y_offset;
 	//
 	//
-	//step = TransitionStep::ENTERING;
+	//step = TransitionStep::IN;
 }

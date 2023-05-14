@@ -1,6 +1,9 @@
 #include "App.h"
+
 #include "SceneManager.h"
 #include "MenuManager.h"
+#include "TransitionManager.h"
+
 #include "SceneLogo.h"
 #include "SceneTitle.h"
 #include "SceneGame.h"
@@ -44,9 +47,20 @@ bool SceneManager::PreUpdate()
 {
     if (sceneState == SceneState::SWITCH)
     {
-        SwitchTo(nextScene);
-        app->menuManager->SetDefaultMenu();
-        sceneState = SceneState::CONTINUE;
+        if (app->transitionManager->step == TransitionStep::NONE)
+        {
+            app->transitionManager->CreateFadeToColour();
+        }
+        else if (app->transitionManager->step == TransitionStep::SWITCH)
+        {
+            SwitchTo(nextScene);
+            app->menuManager->SetDefaultMenu();
+        }
+        else if (app->transitionManager->step == TransitionStep::FINISHED)
+        {
+            sceneState = SceneState::CONTINUE;
+            app->transitionManager->step = TransitionStep::NONE;
+        }       
     }
 
     if (currentScene)

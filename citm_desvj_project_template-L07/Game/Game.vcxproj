@@ -97,7 +97,6 @@
   <ItemGroup>
     <ClCompile Include="Source\AlternatingBars.cpp" />
     <ClCompile Include="Source\CollectQuest.cpp" />
-    <ClCompile Include="Source\Cut.cpp" />
     <ClCompile Include="Source\Dissolve.cpp" />
     <ClCompile Include="Source\Easing.cpp" />
     <ClCompile Include="Source\ExpandingBars.cpp" />
@@ -160,7 +159,6 @@
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Bar.h" />
     <ClInclude Include="Source\CollectQuest.h" />
-    <ClInclude Include="Source\Cut.h" />
     <ClInclude Include="Source\Dissolve.h" />
     <ClInclude Include="Source\Easing.h" />
     <ClInclude Include="Source\ExpandingBars.h" />

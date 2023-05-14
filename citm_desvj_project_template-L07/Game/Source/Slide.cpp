@@ -1,8 +1,8 @@
 #include "Slide.h"
 #include "TransitionManager.h"
 
-Slide::Slide(SceneID next_scene, float step_duration, bool non_lerp, bool vertical, bool slide_from_right, bool slide_from_bottom, Color slide_colour)
-	: Transition(next_scene, step_duration, non_lerp)
+Slide::Slide(float step_duration, bool non_lerp, bool vertical, bool slide_from_right, bool slide_from_bottom, Color slide_colour)
+	: Transition(step_duration, non_lerp)
 	, vertical(vertical)
 	, slide_from_right(slide_from_right)
 	, slide_from_bottom(slide_from_bottom)
@@ -16,66 +16,7 @@ Slide::~Slide()
 
 }
 
-void Slide::StepTransition()
-{
-	switch (step)
-	{
-	case TransitionStep::ENTERING:
-
-		Entering();
-
-		break;
-
-	case TransitionStep::CHANGING:
-
-		Changing();
-
-		break;
-
-	case TransitionStep::EXITING:
-
-		Exiting();
-
-		break;
-	}
-
-	TranslateSlide();
-}
-
-void Slide::Entering()
-{
-	current_cutoff += GetCutoffRate(step_duration);
-
-	if (current_cutoff >= MAX_CUTOFF)
-	{
-		current_cutoff = MAX_CUTOFF;
-
-		step = TransitionStep::CHANGING;
-	}
-}
-
-void Slide::Changing()
-{
-	app->sceneManager->SwitchTo(next_scene);
-
-	step = TransitionStep::EXITING;
-}
-
-void Slide::Exiting()
-{
-	current_cutoff -= GetCutoffRate(step_duration);
-
-	if (current_cutoff <= MIN_CUTOFF)
-	{
-		current_cutoff = MIN_CUTOFF;
-		
-		step = TransitionStep::NONE;
-
-		app->transitionManager->DeleteActiveTransition();
-	}
-}
-
-void Slide::TranslateSlide()
+void Slide::DoTransition()
 {
 	if (!vertical)
 	{
@@ -157,5 +98,5 @@ void Slide::InitSlide()
 
 	SDL_SetRenderDrawBlendMode(app->render->renderer, SDL_BLENDMODE_BLEND);
 
-	step = TransitionStep::ENTERING;
+	app->transitionManager->step = TransitionStep::IN;
 }
