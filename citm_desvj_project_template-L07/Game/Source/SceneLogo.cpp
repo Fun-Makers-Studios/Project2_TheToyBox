@@ -24,7 +24,7 @@ SceneLogo::SceneLogo() : Scene()
 
 	/*Initialize xml*/
 	imgPath = app->configNode.child("logo").child("backgroundimage").attribute("texturepath").as_string();
-	logoFX = app->audio->LoadFx("Assets/Audio/Fx/SceneLogo/logo_screen.wav");
+	logoFX = app->audio->LoadFx("Assets/Audio/Fx/SceneLogo/scene_logo.wav");
 
 }
 
