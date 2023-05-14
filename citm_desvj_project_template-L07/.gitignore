@@ -35,6 +35,7 @@
 !Game/Source/External/Optick/lib/debugLib/OptickCore.lib
 !Game/Source/External/Optick/lib/releaseLib/OptickCore.lib
 !Game/Source/External/SDL_ttf/libx86/SDL2_ttf.lib
+!Game/Source/External/PhysFS/libx86/physfs.lib
 
 # Executables
 *.exe
