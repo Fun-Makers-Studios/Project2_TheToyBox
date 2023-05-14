@@ -193,6 +193,7 @@ bool SceneGame::Update(float dt)
 		&& app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		Item* addItem = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, app->configNode.child("itemsMap").child(mapName.GetString()).child("item"));
+		addItem->takeItem = true;
 		showSavingState = true;
 		isNight = !isNight;
 		app->SaveGameRequest();

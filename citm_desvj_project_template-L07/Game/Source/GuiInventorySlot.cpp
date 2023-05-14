@@ -53,8 +53,9 @@ bool GuiInventorySlot::Update(float dt)
 				// If mouse button pressed -> Generate event!
 				if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP && slotItem != nullptr)
 				{
-					NotifyObserver();
 					selected = !selected;
+					state = GuiControlState::SELECTED;
+					NotifyObserver();
 				}
 			}
 			else
@@ -62,8 +63,8 @@ bool GuiInventorySlot::Update(float dt)
 				state = GuiControlState::SELECTED;
 				if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
 				{
-					NotifyObserver();
 					selected = !selected;
+					NotifyObserver();
 				}
 			}
 			

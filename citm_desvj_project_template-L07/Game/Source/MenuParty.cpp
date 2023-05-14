@@ -160,7 +160,7 @@ bool MenuParty::OnGuiMouseClickEvent(GuiControl* control)
 	
 	case (uint32)ControlID::I_SLOT:
 	{
-		control->state = GuiControlState::SELECTED;
+		//control->state = GuiControlState::SELECTED;
 		app->audio->PlayFx(app->menuManager->closeMenuSFX);
 
 	}break;
