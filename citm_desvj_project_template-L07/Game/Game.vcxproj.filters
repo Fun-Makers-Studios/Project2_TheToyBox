@@ -160,9 +160,6 @@
     <ClCompile Include="Source\Easing.cpp">
       <Filter>Utils\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CameraToMouse.cpp">
-      <Filter>Transitions</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Cut.cpp">
       <Filter>Transitions</Filter>
     </ClCompile>
@@ -176,9 +173,6 @@
       <Filter>Transitions</Filter>
     </ClCompile>
     <ClCompile Include="Source\Wipe.cpp">
-      <Filter>Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ZoomToMouse.cpp">
       <Filter>Transitions</Filter>
     </ClCompile>
     <ClCompile Include="Source\AlternatingBars.cpp">
@@ -399,9 +393,6 @@
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CameraToMouse.h">
-      <Filter>Transitions</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Cut.h">
       <Filter>Transitions</Filter>
     </ClInclude>
@@ -415,9 +406,6 @@
       <Filter>Transitions</Filter>
     </ClInclude>
     <ClInclude Include="Source\Wipe.h">
-      <Filter>Transitions</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ZoomToMouse.h">
       <Filter>Transitions</Filter>
     </ClInclude>
     <ClInclude Include="Source\AlternatingBars.h">

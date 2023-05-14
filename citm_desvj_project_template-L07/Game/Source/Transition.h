@@ -5,13 +5,13 @@
 #define MIN_CUTOFF 0.0f
 
 #include "SDL/include/SDL.h"
-#include "Application.h"
+#include "App.h"
 #include "Window.h"
 #include "Render.h"
 #include "Color.h"
 #include "SceneManager.h"
 
-enum class TRANSITION_STEP
+enum class TransitionStep
 {
 	NONE,
 	ENTERING,
@@ -22,33 +22,46 @@ enum class TRANSITION_STEP
 class Transition
 {
 public:
-	Transition(SCENES next_scene, float step_duration, bool non_lerp = false);
+	Transition(SceneID next_scene, float step_duration, bool non_lerp = false);
 	virtual ~Transition();
 
 	virtual void Start();
 	virtual void StepTransition();
 	virtual void CleanUp();
 
-public:
-	virtual void Entering();														// Method that will be used to execute the ENTERING transition step.
-	virtual void Changing();														// Method that will be used to execute the CHANGING transition step.
-	virtual void Exiting();															// Method that will be used to execute the EXITING transition step.
+	// Executes the ENTERING transition step.
+	virtual void Entering();
+
+	// Executes the CHANGING transition step.
+	virtual void Changing();
+
+	// Executes the EXITING transition step.
+	virtual void Exiting();															
 	
 	float Lerp(float start, float end, float rate);									// Method that will be used to linearly interpolate the speed of a given transition.
 	float N_Lerp(float start, float end, float rate, bool smash_in = false);		// Method that will be used to non-linearly interpolate the speed of a given transition.
-	float GetCutoffRate(float step_duration, float dt = App->GetDT());				// Method that returns the cutoff rate for a given transition. Will use dt as the standard increase.
+	float GetCutoffRate(float step_duration, float dt = app->GetDT());				// Method that returns the cutoff rate for a given transition. Will use dt as the standard increase.
 
 public:
-	TRANSITION_STEP step;															// All the steps that a given transition will go through.
-	SCENES			next_scene;														// The scene that will be transitioned to.
+	// All the steps that a given transition will go through.
+	TransitionStep step;
 
-	float			step_duration;													// The duration of each transtion step in seconds.
-	float			current_cutoff;													// The current amount of accumulated cutoff. Ranges from 0.0f to 1.0f. (0.0 = step start & 1.0f = step end)
+	// The scene that will be transitioned to.
+	SceneID	next_scene;														
 
-	bool			non_lerp;														// Bool that defines whether or not a transition is linearly or non-linearly interpolated.
+	// The duration of each transtion step in seconds.
+	float step_duration;
+
+	// The current amount of accumulated cutoff.
+	// Ranges from 0.0f to 1.0f. (0.0 = step start, 1.0f = step end)
+	float current_cutoff;													
+
+	// linearly or non-linearly interpolated.
+	bool non_lerp;														
 
 private:
-	float			cutoff_rate;													// The rate at which transition will elapse. See GetCutoffRate().
+	// The rate at which transition will elapse. See GetCutoffRate().
+	float cutoff_rate;													
 																					
 };
 

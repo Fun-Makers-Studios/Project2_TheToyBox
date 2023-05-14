@@ -7,7 +7,7 @@
 class ExpandingBars : public Transition
 {
 public:
-	ExpandingBars(SCENES next_scene, float step_duration, bool non_lerp, int bar_number, bool horizontal, bool random_colours, Color even_colour, Color odd_colour);
+	ExpandingBars(SceneID next_scene, float step_duration, bool non_lerp, int bar_number, bool horizontal, bool random_colours, Color even_color, Color odd_color);
 	~ExpandingBars();
 
 	void StepTransition();
@@ -28,19 +28,20 @@ public:
 	void AssignBarColour(Bar& new_bar, const int& index);
 
 private:
-	std::vector<Bar>	bars;
 	
-	fPoint				screen_center;
+	List<Bar> bars;
 
-	bool				vertical;
-	bool				random_colours;
+	fPoint screen_center;
 
-	int					bar_number;
-	int					win_width;
-	int					win_height;
+	bool vertical;
+	bool random_colours;
 
-	Color				even_colour;
-	Color				odd_colour;;
+	int	bar_number;
+	int	win_width;
+	int	win_height;
+
+	Color even_color;
+	Color odd_color;;
 };
 
 #endif // !__EXPANDING_BARS_H__

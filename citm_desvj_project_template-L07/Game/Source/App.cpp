@@ -7,6 +7,7 @@
 #include "ModuleController.h"
 
 #include "SceneManager.h"
+#include "TransitionManager.h"
 
 #include "Map.h"
 #include "Collisions.h"
@@ -49,7 +50,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	controller = new ModuleController();
 
 	sceneManager = new SceneManager();
-
+	transitionManager = new TransitionManager();
+	
 	map = new Map();
 	pathfinding = new Pathfinding();
 	collisions = new Collisions();
@@ -77,7 +79,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(controller, true);
 
 	AddModule(sceneManager, true);
-
+	AddModule(transitionManager, true);
+	
 	AddModule(map, false);
 	AddModule(pathfinding, false);
 	AddModule(collisions, false);

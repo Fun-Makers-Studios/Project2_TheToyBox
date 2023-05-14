@@ -21,6 +21,7 @@ class Audio;
 class ModuleController;
 
 class SceneManager;
+class TransitionManager;
 
 class Map;
 class Pathfinding;
@@ -116,6 +117,7 @@ public:
 	ModuleController* controller;
 
 	SceneManager* sceneManager;
+	TransitionManager* transitionManager;
 	
 	Map* map;
 	Pathfinding* pathfinding;

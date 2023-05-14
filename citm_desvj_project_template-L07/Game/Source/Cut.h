@@ -6,7 +6,7 @@
 class Cut : public Transition
 {
 public:
-	Cut(SCENES next_scene);
+	Cut(SceneID next_scene);
 	~Cut();
 
 	void StepTransition();

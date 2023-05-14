@@ -5,6 +5,7 @@
 
 struct SDL_Window;
 struct SDL_Surface;
+struct SDL_Rect;
 
 class Window : public Module
 {
@@ -26,6 +27,8 @@ public:
 
 	// Retrive window size
 	void GetWindowSize(uint& width, uint& height) const;
+
+	void GetWindowRect(SDL_Rect& rect) const;
 
 	// Retrieve window scale
 	uint GetScale() const;

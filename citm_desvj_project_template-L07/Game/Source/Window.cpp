@@ -93,6 +93,11 @@ void Window::GetWindowSize(uint& width, uint& height) const
 	height = this->height;
 }
 
+void Window::GetWindowRect(SDL_Rect& rect) const
+{
+	rect = { 0, 0, (int)width, (int)height };
+}
+
 uint Window::GetScale() const
 {
 	return scale;

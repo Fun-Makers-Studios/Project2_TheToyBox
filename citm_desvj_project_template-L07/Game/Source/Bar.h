@@ -5,8 +5,8 @@
 
 struct Bar
 {
-	SDL_Rect	bar;
-	Color		colour;
+	SDL_Rect bar;
+	Color colour;
 };
 
 #endif // !__BAR_H__

@@ -1,7 +1,7 @@
 #include "FadeToColour.h"
 #include "TransitionManager.h"
 
-FadeToColour::FadeToColour(SCENES next_scene, float step_duration, Color fade_colour) : Transition(next_scene, step_duration)
+FadeToColour::FadeToColour(SceneID next_scene, float step_duration, Color fade_colour) : Transition(next_scene, step_duration)
 , fade_colour(fade_colour)
 {	
 	InitFadeToColour();
@@ -16,19 +16,19 @@ void FadeToColour::StepTransition()
 {
 	switch (step)
 	{
-	case TRANSITION_STEP::ENTERING:
+	case TransitionStep::ENTERING:
 		
 		Entering();
 		
 		break;
 
-	case TRANSITION_STEP::CHANGING:
+	case TransitionStep::CHANGING:
 
 		Changing();
 
 		break;
 
-	case TRANSITION_STEP::EXITING:
+	case TransitionStep::EXITING:
 		
 		Exiting();
 		
@@ -46,15 +46,15 @@ void FadeToColour::Entering()
 	{
 		current_cutoff = MAX_CUTOFF;
 
-		step = TRANSITION_STEP::CHANGING;
+		step = TransitionStep::CHANGING;
 	}
 }
 
 void FadeToColour::Changing()
 {
-	App->scene_manager->SwitchScene(next_scene);
+	app->sceneManager->SwitchTo(next_scene);
 
-	step = TRANSITION_STEP::EXITING;
+	step = TransitionStep::EXITING;
 }
 
 void FadeToColour::Exiting()
@@ -65,24 +65,24 @@ void FadeToColour::Exiting()
 	{
 		current_cutoff = MIN_CUTOFF;
 
-		step = TRANSITION_STEP::NONE;
+		step = TransitionStep::NONE;
 
-		App->transition_manager->DeleteActiveTransition();
+		app->transitionManager->DeleteActiveTransition();
 	}
 }
 
 void FadeToColour::ApplyFade()
 {
-	SDL_SetRenderDrawColor(App->render->renderer, fade_colour.r, fade_colour.g, fade_colour.b, current_cutoff * 255.0f);
+	SDL_SetRenderDrawColor(app->render->renderer, fade_colour.r, fade_colour.g, fade_colour.b, current_cutoff * 255.0f);
 
-	SDL_RenderFillRect(App->render->renderer, &screen);
+	SDL_RenderFillRect(app->render->renderer, &screen);
 }
 
 void FadeToColour::InitFadeToColour()
 {
-	App->win->GetWindowRect(screen);
+	app->win->GetWindowRect(screen);
 
-	SDL_SetRenderDrawBlendMode(App->render->renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawBlendMode(app->render->renderer, SDL_BLENDMODE_BLEND);
 
-	step = TRANSITION_STEP::ENTERING;
+	step = TransitionStep::ENTERING;
 }

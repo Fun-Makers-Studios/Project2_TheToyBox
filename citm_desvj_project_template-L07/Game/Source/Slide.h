@@ -7,7 +7,7 @@
 class Slide : public Transition
 {
 public:
-	Slide(SCENES next_scene, float step_duration, bool non_lerp, bool vertical, bool slide_from_right, bool slide_from_bottom, Color slide_colour);
+	Slide(SceneID next_scene, float step_duration, bool non_lerp, bool vertical, bool slide_from_right, bool slide_from_bottom, Color slide_colour);
 	~Slide();
 
 	void StepTransition();

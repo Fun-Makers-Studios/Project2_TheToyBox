@@ -7,7 +7,7 @@
 class Wipe : public Transition
 {
 public:
-	Wipe(SCENES next_scene, float step_duration, bool non_lerp, bool vertical, bool wipe_from_right, bool wipe_from_bottom, Color wipe_colour);
+	Wipe(SceneID next_scene, float step_duration, bool non_lerp, bool vertical, bool wipe_from_right, bool wipe_from_bottom, Color wipe_colour);
 	~Wipe();
 
 	void StepTransition();

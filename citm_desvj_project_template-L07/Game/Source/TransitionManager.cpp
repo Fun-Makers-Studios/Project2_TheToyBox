@@ -1,12 +1,10 @@
 #include "TransitionManager.h"
-#include "CameraToMouse.h"
 #include "Cut.h"
 #include "FadeToColour.h"
 #include "Slide.h"
 #include "Wipe.h"
 #include "AlternatingBars.h"
 #include "ExpandingBars.h"
-#include "ZoomToMouse.h"
 #include "ZoomToTexture.h"
 #include "Dissolve.h"
 
@@ -54,7 +52,7 @@ void TransitionManager::DeleteActiveTransition()
 	active_transition = nullptr;
 }
 
-Transition* TransitionManager::CreateCut(SCENES next_scene)
+Transition* TransitionManager::CreateCut(SceneID next_scene)
 {
 	if (!is_transitioning)
 	{
@@ -66,7 +64,7 @@ Transition* TransitionManager::CreateCut(SCENES next_scene)
 	return active_transition;
 }
 
-Transition* TransitionManager::CreateFadeToColour(SCENES next_scene, float step_duration, Color fade_colour)
+Transition* TransitionManager::CreateFadeToColour(SceneID next_scene, float step_duration, Color fade_colour)
 {	
 	if (!is_transitioning)
 	{
@@ -78,7 +76,7 @@ Transition* TransitionManager::CreateFadeToColour(SCENES next_scene, float step_
 	return active_transition;
 }
 
-Transition* TransitionManager::CreateSlide(SCENES next_scene, float step_duration, bool non_lerp, bool vertical, bool slide_from_right, bool slide_from_bottom, Color slide_colour)
+Transition* TransitionManager::CreateSlide(SceneID next_scene, float step_duration, bool non_lerp, bool vertical, bool slide_from_right, bool slide_from_bottom, Color slide_colour)
 {
 	if (!is_transitioning)
 	{
@@ -90,7 +88,7 @@ Transition* TransitionManager::CreateSlide(SCENES next_scene, float step_duratio
 	return active_transition;
 }
 
-Transition* TransitionManager::CreateWipe(SCENES next_scene, float step_duration, bool non_lerp, bool vertical, bool wipe_from_right, bool wipe_from_bottom, Color fade_colour)
+Transition* TransitionManager::CreateWipe(SceneID next_scene, float step_duration, bool non_lerp, bool vertical, bool wipe_from_right, bool wipe_from_bottom, Color fade_colour)
 {
 	if (!is_transitioning)
 	{
@@ -102,11 +100,11 @@ Transition* TransitionManager::CreateWipe(SCENES next_scene, float step_duration
 	return active_transition;
 }
 
-Transition* TransitionManager::CreateAlternatingBars(SCENES next_scene, float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_colour, Color odd_colour)
+Transition* TransitionManager::CreateAlternatingBars(SceneID next_scene, float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color)
 {
 	if (!is_transitioning)
 	{
-		active_transition = new AlternatingBars(next_scene, step_duration, non_lerp, bar_number, vertical, random_colours, even_colour, odd_colour);
+		active_transition = new AlternatingBars(next_scene, step_duration, non_lerp, bar_number, vertical, random_colours, even_color, odd_color);
 
 		is_transitioning = true;
 	}
@@ -114,11 +112,11 @@ Transition* TransitionManager::CreateAlternatingBars(SCENES next_scene, float st
 	return active_transition;
 }
 
-Transition* TransitionManager::CreateExpandingBars(SCENES next_scene, float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_colour, Color odd_colour)
+Transition* TransitionManager::CreateExpandingBars(SceneID next_scene, float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color)
 {
 	if (!is_transitioning)
 	{
-		active_transition = new ExpandingBars(next_scene, step_duration, non_lerp, bar_number, vertical, random_colours, even_colour, odd_colour);
+		active_transition = new ExpandingBars(next_scene, step_duration, non_lerp, bar_number, vertical, random_colours, even_color, odd_color);
 
 		is_transitioning = true;
 	}
@@ -126,31 +124,7 @@ Transition* TransitionManager::CreateExpandingBars(SCENES next_scene, float step
 	return active_transition;
 }
 
-Transition* TransitionManager::CreateZoomToMouse(SCENES next_scene, iPoint mouse_position, float step_duration, bool non_lerp, float zoom_scale)
-{
-	if (!is_transitioning)
-	{
-		active_transition = new ZoomToMouse(next_scene, mouse_position, step_duration, non_lerp, zoom_scale);
-
-		is_transitioning = true;
-	}
-
-	return active_transition;
-}
-
-Transition* TransitionManager::CreateCameraToMouse(iPoint mouse_position, float step_duration, bool non_lerp)
-{
-	if (!is_transitioning)
-	{
-		active_transition = new CameraToMouse(mouse_position, step_duration, non_lerp);
-
-		is_transitioning = true;
-	}
-
-	return active_transition;
-}
-
-Transition* TransitionManager::CreateZoomToTexture(SCENES next_scene, iPoint mouse_position, float step_duration, float zoom_scale)
+Transition* TransitionManager::CreateZoomToTexture(SceneID next_scene, iPoint mouse_position, float step_duration, float zoom_scale)
 {
 	if (!is_transitioning)
 	{
@@ -162,7 +136,7 @@ Transition* TransitionManager::CreateZoomToTexture(SCENES next_scene, iPoint mou
 	return active_transition;
 }
 
-Transition* TransitionManager::CreateDissolve(SCENES next_scene, float step_duration)
+Transition* TransitionManager::CreateDissolve(SceneID next_scene, float step_duration)
 {
 	if (!is_transitioning)
 	{

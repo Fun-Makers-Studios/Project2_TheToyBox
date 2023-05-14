@@ -1,7 +1,7 @@
 #include "Wipe.h"
 #include "TransitionManager.h"
 
-Wipe::Wipe(SCENES next_scene, float step_duration, bool non_lerp, bool vertical, bool wipe_from_right, bool wipe_from_bottom, Color wipe_colour) 
+Wipe::Wipe(SceneID next_scene, float step_duration, bool non_lerp, bool vertical, bool wipe_from_right, bool wipe_from_bottom, Color wipe_colour) 
 	: Transition(next_scene, step_duration, non_lerp)
 	, vertical(vertical)
 	, wipe_from_right(wipe_from_right)
@@ -22,19 +22,19 @@ void Wipe::StepTransition()
 	
 	switch (step)
 	{
-	case TRANSITION_STEP::ENTERING:
+	case TransitionStep::ENTERING:
 
 		Entering();
 
 		break;
 
-	case TRANSITION_STEP::CHANGING:
+	case TransitionStep::CHANGING:
 
 		Changing();
 
 		break;
 
-	case TRANSITION_STEP::EXITING:
+	case TransitionStep::EXITING:
 
 		Exiting();
 
@@ -50,15 +50,15 @@ void Wipe::Entering()
 	{
 		current_cutoff = MIN_CUTOFF;
 
-		step = TRANSITION_STEP::CHANGING;
+		step = TransitionStep::CHANGING;
 	}
 }
 
 void Wipe::Changing()
 {
-	App->scene_manager->SwitchScene(next_scene);
+	app->sceneManager->SwitchTo(next_scene);
 
-	step = TRANSITION_STEP::EXITING;
+	step = TransitionStep::EXITING;
 }
 
 void Wipe::Exiting()
@@ -67,9 +67,9 @@ void Wipe::Exiting()
 	{
 		current_cutoff = MIN_CUTOFF;
 		
-		step = TRANSITION_STEP::NONE;
+		step = TransitionStep::NONE;
 
-		App->transition_manager->DeleteActiveTransition();
+		app->transitionManager->DeleteActiveTransition();
 	}
 }
 
@@ -91,7 +91,7 @@ void Wipe::HorizontalWipe()
 {
 	if (!wipe_from_right)
 	{
-		if (step == TRANSITION_STEP::ENTERING)												// Horizontal wipe that will start from (-screen.w, 0 ) and will stop at ( 0, 0 ).
+		if (step == TransitionStep::ENTERING)												// Horizontal wipe that will start from (-screen.w, 0 ) and will stop at ( 0, 0 ).
 		{
 			if (!non_lerp)
 			{
@@ -104,7 +104,7 @@ void Wipe::HorizontalWipe()
 			}
 		}
 
-		if (step == TRANSITION_STEP::EXITING)												// Horizontal wipe that will start from ( 0, 0 ) and will stop at ( sceen.w , 0 ).
+		if (step == TransitionStep::EXITING)												// Horizontal wipe that will start from ( 0, 0 ) and will stop at ( sceen.w , 0 ).
 		{
 			if (!non_lerp)
 			{
@@ -119,7 +119,7 @@ void Wipe::HorizontalWipe()
 	}
 	else
 	{
-		if (step == TRANSITION_STEP::ENTERING)												// Horizontal wipe that will start from ( screen.w, 0 ) and will stop at ( 0, 0 ).
+		if (step == TransitionStep::ENTERING)												// Horizontal wipe that will start from ( screen.w, 0 ) and will stop at ( 0, 0 ).
 		{
 			if (!non_lerp)
 			{
@@ -132,7 +132,7 @@ void Wipe::HorizontalWipe()
 			}
 		}
 
-		if (step == TRANSITION_STEP::EXITING)												// Horizontal wipe that will start from ( 0, 0 ) and will stop at ( -sceen.w , 0 ).
+		if (step == TransitionStep::EXITING)												// Horizontal wipe that will start from ( 0, 0 ) and will stop at ( -sceen.w , 0 ).
 		{
 			if (!non_lerp)
 			{
@@ -151,7 +151,7 @@ void Wipe::VerticalWipe()
 {
 	if (!wipe_from_bottom)
 	{
-		if (step == TRANSITION_STEP::ENTERING)												// Vertical wipe that will start from ( 0, screen.h ) and will stop at ( 0, 0 ).
+		if (step == TransitionStep::ENTERING)												// Vertical wipe that will start from ( 0, screen.h ) and will stop at ( 0, 0 ).
 		{
 			if (!non_lerp)
 			{
@@ -164,7 +164,7 @@ void Wipe::VerticalWipe()
 			}
 		}
 
-		if (step == TRANSITION_STEP::EXITING)												// Vertical wipe that will start from ( 0, 0 ) and will stop at ( 0, screen.h ).
+		if (step == TransitionStep::EXITING)												// Vertical wipe that will start from ( 0, 0 ) and will stop at ( 0, screen.h ).
 		{
 			if (!non_lerp)
 			{
@@ -179,7 +179,7 @@ void Wipe::VerticalWipe()
 	}
 	else
 	{
-		if (step == TRANSITION_STEP::ENTERING)												// Vertical wipe that will start from ( 0, screen.h ) and will stop at ( 0, 0 ).
+		if (step == TransitionStep::ENTERING)												// Vertical wipe that will start from ( 0, screen.h ) and will stop at ( 0, 0 ).
 		{
 			if (!non_lerp)
 			{
@@ -192,7 +192,7 @@ void Wipe::VerticalWipe()
 			}
 		}
 
-		if (step == TRANSITION_STEP::EXITING)												// Vertical wipe that will start from ( 0, 0 ) and will stop at ( 0, -screen.h ).
+		if (step == TransitionStep::EXITING)												// Vertical wipe that will start from ( 0, 0 ) and will stop at ( 0, -screen.h ).
 		{
 			if (!non_lerp)
 			{
@@ -209,15 +209,15 @@ void Wipe::VerticalWipe()
 
 void Wipe::DrawWipe()
 {
-	SDL_SetRenderDrawColor(App->render->renderer, wipe_colour.r, wipe_colour.g, wipe_colour.b, 255);
-	SDL_RenderFillRect(App->render->renderer, &screen);
+	SDL_SetRenderDrawColor(app->render->renderer, wipe_colour.r, wipe_colour.g, wipe_colour.b, 255);
+	SDL_RenderFillRect(app->render->renderer, &screen);
 }
 
 void Wipe::InitWipe()
 {
-	SDL_SetRenderDrawBlendMode(App->render->renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawBlendMode(app->render->renderer, SDL_BLENDMODE_BLEND);
 
-	App->win->GetWindowRect(screen);
+	app->win->GetWindowRect(screen);
 
-	step = TRANSITION_STEP::ENTERING;
+	step = TransitionStep::ENTERING;
 }

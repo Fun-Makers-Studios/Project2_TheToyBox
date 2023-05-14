@@ -1,15 +1,15 @@
 #include "AlternatingBars.h"
 #include "TransitionManager.h"
 
-AlternatingBars::AlternatingBars(SCENES next_scene, float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_colour, Color odd_colour) 
-	: Transition(next_scene, step_duration, non_lerp)
-	, bar_number(bar_number)
-	, win_width(0.0f)
-	, win_height(0.0f)
-	, vertical(vertical)
-	, random_colours(random_colours)
-	, even_colour(even_colour)
-	, odd_colour(odd_colour)
+AlternatingBars::AlternatingBars(SceneID next_scene, float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color) :
+	Transition(next_scene, step_duration, non_lerp),
+	bar_number(bar_number),
+	win_width(0.0f),
+	win_height(0.0f),
+	vertical(vertical),
+	random_colours(random_colours),
+	even_color(even_color),
+	odd_color(odd_color)
 {	
 	InitAlternatingBars();
 }
@@ -25,19 +25,19 @@ void AlternatingBars::StepTransition()
 
 	switch (step)
 	{
-	case TRANSITION_STEP::ENTERING:
+	case TransitionStep::ENTERING:
 
 		Entering();
 
 		break;
 
-	case TRANSITION_STEP::CHANGING:
+	case TransitionStep::CHANGING:
 
 		Changing();
 
 		break;
 
-	case TRANSITION_STEP::EXITING:
+	case TransitionStep::EXITING:
 
 		Exiting();
 
@@ -53,26 +53,26 @@ void AlternatingBars::Entering()
 	{
 		current_cutoff = MIN_CUTOFF;
 		
-		step = TRANSITION_STEP::CHANGING;
+		step = TransitionStep::CHANGING;
 	}
 }
 
 void AlternatingBars::Changing()
 {
-	App->scene_manager->SwitchScene(next_scene);
+	app->sceneManager->SwitchTo(next_scene);
 
-	step = TRANSITION_STEP::EXITING;
+	step = TransitionStep::EXITING;
 }
 
 void AlternatingBars::Exiting()
 {	
 	if (current_cutoff >= MAX_CUTOFF)
 	{
-		step = TRANSITION_STEP::NONE;
+		step = TransitionStep::NONE;
 
-		bars.clear();
+		bars.Clear();
 		
-		App->transition_manager->DeleteActiveTransition();
+		app->transitionManager->DeleteActiveTransition();
 	}
 }
 
@@ -92,11 +92,11 @@ void AlternatingBars::AlternateBars()
 
 void AlternatingBars::TranslateHorizontalBars()
 {
-	if (step == TRANSITION_STEP::ENTERING)
+	if (step == TransitionStep::ENTERING)
 	{
 		if (!non_lerp)
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < bars.Count(); ++i)
 			{
 				if (i % 2 == 0)
 				{
@@ -110,7 +110,7 @@ void AlternatingBars::TranslateHorizontalBars()
 		}
 		else
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < bars.Count(); ++i)
 			{
 				if (i % 2 == 0)
 				{
@@ -126,11 +126,11 @@ void AlternatingBars::TranslateHorizontalBars()
 		}
 	}
 
-	if (step == TRANSITION_STEP::EXITING)
+	if (step == TransitionStep::EXITING)
 	{
 		if (!non_lerp)
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < bars.Count(); ++i)
 			{
 				if (i % 2 == 0)
 				{
@@ -144,7 +144,7 @@ void AlternatingBars::TranslateHorizontalBars()
 		}
 		else
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < bars.Count(); ++i)
 			{
 				if (i % 2 == 0)
 				{
@@ -163,11 +163,11 @@ void AlternatingBars::TranslateHorizontalBars()
 
 void AlternatingBars::TranslateVerticalBars()
 {	
-	if (step == TRANSITION_STEP::ENTERING)
+	if (step == TransitionStep::ENTERING)
 	{
 		if (!non_lerp)
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < bars.Count(); ++i)
 			{
 				if (i % 2 == 0)
 				{
@@ -181,7 +181,7 @@ void AlternatingBars::TranslateVerticalBars()
 		}
 		else
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < bars.Count(); ++i)
 			{
 				if (i % 2 == 0)
 				{
@@ -197,11 +197,11 @@ void AlternatingBars::TranslateVerticalBars()
 		}
 	}
 
-	if (step == TRANSITION_STEP::EXITING)
+	if (step == TransitionStep::EXITING)
 	{
 		if (!non_lerp)
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < bars.Count(); ++i)
 			{
 				if (i % 2 == 0)
 				{
@@ -215,7 +215,7 @@ void AlternatingBars::TranslateVerticalBars()
 		}
 		else
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < bars.Count(); ++i)
 			{
 				if (i % 2 == 0)
 				{
@@ -234,18 +234,22 @@ void AlternatingBars::TranslateVerticalBars()
 
 void AlternatingBars::DrawBars()
 {
-	for (int i = 0; i < bars.size(); ++i)
+	for (int i = 0; i < bars.Count(); ++i)
 	{
-		SDL_SetRenderDrawColor(App->render->renderer, bars[i].colour.r, bars[i].colour.g, bars[i].colour.b, 255);
-		SDL_RenderFillRect(App->render->renderer, &bars[i].bar);
+		SDL_SetRenderDrawColor(app->render->renderer, bars[i].colour.r, bars[i].colour.g, bars[i].colour.b, 255);
+		SDL_RenderFillRect(app->render->renderer, &bars[i].bar);
 	}
 }
 
 void AlternatingBars::InitAlternatingBars()
 {	
-	SDL_SetRenderDrawBlendMode(App->render->renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawBlendMode(app->render->renderer, SDL_BLENDMODE_BLEND);
 	
-	App->win->GetWindowSize(win_width, win_height);
+	uint height, width;
+	app->win->GetWindowSize(width, height);
+
+	win_width = width;
+	win_height = height;
 
 	for (int i = 0; i < bar_number; ++i)
 	{
@@ -262,10 +266,10 @@ void AlternatingBars::InitAlternatingBars()
 		
 		AssignBarColour(new_bar, i);
 
-		bars.push_back(new_bar);
+		bars.Add(new_bar);
 	}
 
-	step = TRANSITION_STEP::ENTERING;
+	step = TransitionStep::ENTERING;
 }
 
 void AlternatingBars::AssignHorizontalBar(Bar& new_bar, const int& win_width, const int& win_height, const int& index)
@@ -308,17 +312,17 @@ void AlternatingBars::AssignBarColour(Bar& new_bar, const int& index)
 {
 	if (random_colours)
 	{
-		new_bar.colour = GetRandomColour();
+		new_bar.colour = Blue/*GetRandomColour()*/;
 	}
 	else
 	{
 		if (index % 2 == 0)
 		{
-			new_bar.colour = even_colour;
+			new_bar.colour = even_color;
 		}
 		else
 		{
-			new_bar.colour = odd_colour;
+			new_bar.colour = odd_color;
 		}
 	}
 }

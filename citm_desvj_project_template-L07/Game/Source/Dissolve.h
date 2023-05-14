@@ -9,7 +9,7 @@
 class Dissolve : public Transition
 {
 public:
-	Dissolve(SCENES next_scene, float step_duration);
+	Dissolve(SceneID next_scene, float step_duration);
 	~Dissolve();
 
 	void StepTransition();

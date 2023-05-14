@@ -1,7 +1,7 @@
 #include "Slide.h"
 #include "TransitionManager.h"
 
-Slide::Slide(SCENES next_scene, float step_duration, bool non_lerp, bool vertical, bool slide_from_right, bool slide_from_bottom, Color slide_colour)
+Slide::Slide(SceneID next_scene, float step_duration, bool non_lerp, bool vertical, bool slide_from_right, bool slide_from_bottom, Color slide_colour)
 	: Transition(next_scene, step_duration, non_lerp)
 	, vertical(vertical)
 	, slide_from_right(slide_from_right)
@@ -20,19 +20,19 @@ void Slide::StepTransition()
 {
 	switch (step)
 	{
-	case TRANSITION_STEP::ENTERING:
+	case TransitionStep::ENTERING:
 
 		Entering();
 
 		break;
 
-	case TRANSITION_STEP::CHANGING:
+	case TransitionStep::CHANGING:
 
 		Changing();
 
 		break;
 
-	case TRANSITION_STEP::EXITING:
+	case TransitionStep::EXITING:
 
 		Exiting();
 
@@ -50,15 +50,15 @@ void Slide::Entering()
 	{
 		current_cutoff = MAX_CUTOFF;
 
-		step = TRANSITION_STEP::CHANGING;
+		step = TransitionStep::CHANGING;
 	}
 }
 
 void Slide::Changing()
 {
-	App->scene_manager->SwitchScene(next_scene);
+	app->sceneManager->SwitchTo(next_scene);
 
-	step = TRANSITION_STEP::EXITING;
+	step = TransitionStep::EXITING;
 }
 
 void Slide::Exiting()
@@ -69,9 +69,9 @@ void Slide::Exiting()
 	{
 		current_cutoff = MIN_CUTOFF;
 		
-		step = TRANSITION_STEP::NONE;
+		step = TransitionStep::NONE;
 
-		App->transition_manager->DeleteActiveTransition();
+		app->transitionManager->DeleteActiveTransition();
 	}
 }
 
@@ -147,15 +147,15 @@ void Slide::VerticalSlide()
 
 void Slide::DrawSlide()
 {
-	SDL_SetRenderDrawColor(App->render->renderer, slide_colour.r, slide_colour.g, slide_colour.b, 255);
-	SDL_RenderFillRect(App->render->renderer, &screen);
+	SDL_SetRenderDrawColor(app->render->renderer, slide_colour.r, slide_colour.g, slide_colour.b, 255);
+	SDL_RenderFillRect(app->render->renderer, &screen);
 }
 
 void Slide::InitSlide()
 {
-	App->win->GetWindowRect(screen);
+	app->win->GetWindowRect(screen);
 
-	SDL_SetRenderDrawBlendMode(App->render->renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawBlendMode(app->render->renderer, SDL_BLENDMODE_BLEND);
 
-	step = TRANSITION_STEP::ENTERING;
+	step = TransitionStep::ENTERING;
 }

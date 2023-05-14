@@ -96,7 +96,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\AlternatingBars.cpp" />
-    <ClCompile Include="Source\CameraToMouse.cpp" />
     <ClCompile Include="Source\CollectQuest.cpp" />
     <ClCompile Include="Source\Cut.cpp" />
     <ClCompile Include="Source\Dissolve.cpp" />
@@ -156,12 +155,10 @@
     <ClCompile Include="Source\UI.cpp" />
     <ClCompile Include="Source\Window.cpp" />
     <ClCompile Include="Source\Wipe.cpp" />
-    <ClCompile Include="Source\ZoomToMouse.cpp" />
     <ClCompile Include="Source\ZoomToTexture.cpp" />
     <ClInclude Include="Source\AlternatingBars.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Bar.h" />
-    <ClInclude Include="Source\CameraToMouse.h" />
     <ClInclude Include="Source\CollectQuest.h" />
     <ClInclude Include="Source\Cut.h" />
     <ClInclude Include="Source\Dissolve.h" />
@@ -238,7 +235,6 @@
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp" />
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp" />
     <ClInclude Include="Source\Wipe.h" />
-    <ClInclude Include="Source\ZoomToMouse.h" />
     <ClInclude Include="Source\ZoomToTexture.h" />
   </ItemGroup>
   <ItemGroup>

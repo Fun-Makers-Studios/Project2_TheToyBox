@@ -1,12 +1,12 @@
 #include "ExpandingBars.h"
 #include "TransitionManager.h"
 
-ExpandingBars::ExpandingBars(SCENES next_scene, float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_colour, Color odd_colour) 
+ExpandingBars::ExpandingBars(SceneID next_scene, float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color) 
 	: Transition(next_scene, step_duration, non_lerp)
 	, bar_number(bar_number)
 	, random_colours(random_colours)
-	, even_colour(even_colour)
-	, odd_colour(odd_colour)
+	, even_color(even_color)
+	, odd_color(odd_color)
 	, vertical(vertical)
 {
 	InitExpandingBars();
@@ -21,19 +21,19 @@ void ExpandingBars::StepTransition()
 {
 	switch (step)
 	{
-	case TRANSITION_STEP::ENTERING:
+	case TransitionStep::ENTERING:
 
 		Entering();
 
 		break;
 
-	case TRANSITION_STEP::CHANGING:
+	case TransitionStep::CHANGING:
 
 		Changing();
 
 		break;
 
-	case TRANSITION_STEP::EXITING:
+	case TransitionStep::EXITING:
 
 		Exiting();
 
@@ -51,15 +51,15 @@ void ExpandingBars::Entering()
 	{
 		current_cutoff = MAX_CUTOFF;
 		
-		step = TRANSITION_STEP::CHANGING;
+		step = TransitionStep::CHANGING;
 	}
 }
 
 void ExpandingBars::Changing()
 {
-	App->scene_manager->SwitchScene(next_scene);
+	app->sceneManager->SwitchTo(next_scene);
 
-	step = TRANSITION_STEP::EXITING;
+	step = TransitionStep::EXITING;
 }
 
 void ExpandingBars::Exiting()
@@ -68,11 +68,11 @@ void ExpandingBars::Exiting()
 	
 	if (current_cutoff <= MIN_CUTOFF)
 	{
-		step = TRANSITION_STEP::NONE;
+		step = TransitionStep::NONE;
 
-		bars.clear();
+		bars.Clear();
 
-		App->transition_manager->DeleteActiveTransition();
+		app->transitionManager->DeleteActiveTransition();
 	}
 }
 
@@ -92,11 +92,11 @@ void ExpandingBars::ExpandBars()
 
 void ExpandingBars::ExpandHorizontalBars()
 {
-	if (step == TRANSITION_STEP::ENTERING)
+	if (step == TransitionStep::ENTERING)
 	{
 		if (!non_lerp)
 		{
-			for (int i = 0; i < bars.size(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
+			for (int i = 0; i < bars.Count(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
 			{																					// separate expansion and reduction in different steps.
 				bars[i].bar.x = Lerp(screen_center.x, 0, current_cutoff);
 				bars[i].bar.w = Lerp(0, win_width, current_cutoff);
@@ -104,7 +104,7 @@ void ExpandingBars::ExpandHorizontalBars()
 		}
 		else
 		{
-			for (int i = 0; i < bars.size(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
+			for (int i = 0; i < bars.Count(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
 			{																					// separate expansion and reduction in different steps.
 				if (i % 2 == 0)																	// Ex: 0 --> win_width --> 0.
 				{
@@ -120,9 +120,9 @@ void ExpandingBars::ExpandHorizontalBars()
 		}
 	}
 
-	if (step == TRANSITION_STEP::EXITING)
+	if (step == TransitionStep::EXITING)
 	{
-		for (int i = 0; i < bars.size(); ++i)												// As in the exiting step all bars will be at the same position/size, we need Lerp().
+		for (int i = 0; i < bars.Count(); ++i)												// As in the exiting step all bars will be at the same position/size, we need Lerp().
 		{																					// By using Lerp(), non_lerp and even/odd bar distinction is not needed.
 			bars[i].bar.x = Lerp(screen_center.x, 0, current_cutoff);
 			bars[i].bar.w = Lerp(0, win_width, current_cutoff);
@@ -132,11 +132,11 @@ void ExpandingBars::ExpandHorizontalBars()
 
 void ExpandingBars::ExpandVerticalBars()
 {
-	if (step == TRANSITION_STEP::ENTERING)
+	if (step == TransitionStep::ENTERING)
 	{
 		if (!non_lerp)
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < bars.Count(); ++i)
 			{
 				bars[i].bar.y = Lerp(screen_center.y, 0, current_cutoff);
 				bars[i].bar.h = Lerp(0, win_height, current_cutoff);
@@ -144,7 +144,7 @@ void ExpandingBars::ExpandVerticalBars()
 		}
 		else
 		{
-			for (int i = 0; i < bars.size(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
+			for (int i = 0; i < bars.Count(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
 			{																					// separate expansion and reduction in different steps.
 				if (i % 2 == 0)																	// Ex: 0 --> win_width --> 0.
 				{
@@ -160,9 +160,9 @@ void ExpandingBars::ExpandVerticalBars()
 		}
 	}
 
-	if (step == TRANSITION_STEP::EXITING)
+	if (step == TransitionStep::EXITING)
 	{
-		for (int i = 0; i < bars.size(); ++i)													// cutoff goes from 0 to 1 to 0, so there would be no need to									
+		for (int i = 0; i < bars.Count(); ++i)													// cutoff goes from 0 to 1 to 0, so there would be no need to									
 		{																						// separate expansion and reduction in different steps.
 			bars[i].bar.y = Lerp(screen_center.y, 0, current_cutoff);							// Ex: 0 --> win_height --> 0.
 			bars[i].bar.h = Lerp(0, win_height, current_cutoff);
@@ -172,18 +172,22 @@ void ExpandingBars::ExpandVerticalBars()
 
 void ExpandingBars::DrawBars()
 {
-	for (int i = 0; i < bars.size(); ++i)
+	for (int i = 0; i < bars.Count(); ++i)
 	{
-		SDL_SetRenderDrawColor(App->render->renderer, bars[i].colour.r, bars[i].colour.g, bars[i].colour.b, 255);
-		SDL_RenderFillRect(App->render->renderer, &bars[i].bar);
+		SDL_SetRenderDrawColor(app->render->renderer, bars[i].colour.r, bars[i].colour.g, bars[i].colour.b, 255);
+		SDL_RenderFillRect(app->render->renderer, &bars[i].bar);
 	}
 }
 
 void ExpandingBars::InitExpandingBars()
 {
-	SDL_SetRenderDrawBlendMode(App->render->renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawBlendMode(app->render->renderer, SDL_BLENDMODE_BLEND);
 	
-	App->win->GetWindowSize(win_width, win_height);
+	uint height, width;
+	app->win->GetWindowSize(width, height);
+
+	win_width = width;
+	win_height = height;
 
 	screen_center = { win_width * 0.5f, win_height * 0.5f };
 
@@ -202,10 +206,10 @@ void ExpandingBars::InitExpandingBars()
 		
 		AssignBarColour(new_bar, i);
 
-		bars.push_back(new_bar);
+		bars.Add(new_bar);
 	}
 
-	step = TRANSITION_STEP::ENTERING;
+	step = TransitionStep::ENTERING;
 }
 
 void ExpandingBars::AssignHorizontalBar(Bar& new_bar, const int& win_width, const int& win_height, const int& index)
@@ -234,17 +238,17 @@ void ExpandingBars::AssignBarColour(Bar& new_bar, const int& index)
 {
 	if (random_colours)
 	{
-		new_bar.colour = GetRandomColour();
+		new_bar.colour = Blue/*GetRandomColour()*/;
 	}
 	else
 	{
 		if (index % 2 == 0)
 		{
-			new_bar.colour = even_colour;
+			new_bar.colour = even_color;
 		}
 		else
 		{
-			new_bar.colour = odd_colour;
+			new_bar.colour = odd_color;
 		}
 	}
 }
