@@ -187,6 +187,9 @@
     <ClCompile Include="Source\TransitionManager.cpp">
       <Filter>Core\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AssetsManager.cpp">
+      <Filter>Core\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -418,6 +421,9 @@
       <Filter>Transitions\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Source\TransitionManager.h">
+      <Filter>Core\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AssetsManager.h">
       <Filter>Core\Managers</Filter>
     </ClInclude>
   </ItemGroup>

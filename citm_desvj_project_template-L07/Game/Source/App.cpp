@@ -6,6 +6,7 @@
 #include "Audio.h"
 #include "ModuleController.h"
 
+#include "AssetsManager.h"
 #include "SceneManager.h"
 #include "TransitionManager.h"
 
@@ -49,6 +50,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	controller = new ModuleController();
 
+	assetManager = new AssetsManager();
 	sceneManager = new SceneManager();
 	
 	map = new Map();
@@ -79,6 +81,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio, true);
 	AddModule(controller, true);
 
+	AddModule(assetManager, true);
 	AddModule(sceneManager, true);
 	
 	AddModule(map, false);
