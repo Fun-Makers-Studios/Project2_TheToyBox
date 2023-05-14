@@ -95,15 +95,15 @@ bool PartyManager::SaveState(pugi::xml_node& data)
 		partyMember.append_attribute("fightPosY") = pmemberItem->data->fightPosition.y;
 	}
 
-	ListItem<Item*>* inventoryItem;
+	/*ListItem<Item*>* inventoryItem;
 	pugi::xml_node inventory = data.append_child("inventory");
 	for (inventoryItem = app->partyManager->inventory.start; inventoryItem != NULL; inventoryItem = inventoryItem->next)
 	{
 		pugi::xml_node item = inventory.append_child("item");
-		item.append_attribute("name") = inventoryItem->data->name.GetString();
+		item.append_attribute("name") = inventoryItem->data->itemData.name.GetString();
 		item.append_attribute("quantity") = inventoryItem->data->itemStackQuantity;
 		item.append_attribute("inventoryPos") = inventoryItem->data->GetInventoryPos();
-	}
+	}*/
 
 	return true;
 }

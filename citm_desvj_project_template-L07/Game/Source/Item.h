@@ -11,7 +11,11 @@
 struct SDL_Texture;
 
 struct ItemData {
-
+	SString name;
+	const char* texturePath;
+	SString itemType;
+	bool animable = false;
+	uint frames;
 };
 
 class Item : public Entity
@@ -38,18 +42,16 @@ public:
 
 	bool takeItem = false;
 
-	SString itemType;
+	ItemData itemData;
 
 	uint itemStackQuantity = 1;
-private:
-
-	bool animable = false;
-	uint frames;
-	Animation* anim = nullptr;
-	Animation idle;
 
 	SDL_Texture* texture;
-	const char* texturePath;
+
+private:
+
+	Animation* anim = nullptr;
+	Animation idle;
 
 	Animation* currentAnim = nullptr;
 	Animation itemAnim;

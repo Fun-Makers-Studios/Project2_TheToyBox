@@ -111,7 +111,6 @@ public:
 
 public:
 	List<PartyMember*> party;
-	List<Item*> inventory;
 	const char* enemyToFight = nullptr;
 	uint maxPartyMembers = 3;
 };

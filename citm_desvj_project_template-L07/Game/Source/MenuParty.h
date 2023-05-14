@@ -4,9 +4,11 @@
 #include "Menu.h"
 #include "GuiControl.h"
 #include "GuiButton.h"
+#include "GuiInventorySlot.h"
 #include "Item.h"
 
-#define MAX_INVENTORY_SLOTS 30
+#define MAX_INVENTORY_SLOTS_ROWS 3
+#define MAX_INVENTORY_SLOTS_COLS 10
 
 struct SDL_Texture;
 
@@ -30,6 +32,8 @@ public:
 	// Define multiple Gui Event methods
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
+	void SwapItems();
+
 public:
 
 	// UI
@@ -39,8 +43,11 @@ public:
 	enum class ControlID : uint32
 	{
 		PARTY_1,
-		PARTY_2
+		PARTY_2,
+		I_SLOT
 	};
+
+	List<GuiInventorySlot*> inventorySlotsList;
 
 private:
 
@@ -56,8 +63,10 @@ private:
 	const char* sophieImgPath = nullptr;
 	SDL_Texture* sophieImg = nullptr;
 
-	List<Item*> inventorySlots;
-	uint margin = 10;
+	//List<Item*> inventoryItems;
+	int margin = 21;
+	int marginDown = 25;
+	uint slotNumP = 0;
 };
 
 #endif // __MENU_PARTY_H__

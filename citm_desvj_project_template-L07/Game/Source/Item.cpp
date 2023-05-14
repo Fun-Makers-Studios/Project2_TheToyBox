@@ -10,6 +10,7 @@
 #include "Collisions.h"
 #include "EntityManager.h"
 #include "ParticleSystemManager.h"
+#include "MenuManager.h"
 
 Item::Item(pugi::xml_node parameters) : Entity(EntityType::ITEM)
 {
@@ -20,10 +21,12 @@ Item::Item(pugi::xml_node parameters) : Entity(EntityType::ITEM)
 
 	double posX = parameters.attribute("x").as_int();
 	double posY = parameters.attribute("y").as_int();
-	texturePath = parameters.attribute("texturepath").as_string();
-	itemType = parameters.attribute("itemType").as_string();
-	animable = parameters.attribute("animable").as_bool();
-	frames = parameters.attribute("frames").as_uint();
+
+	itemData.name = parameters.attribute("name").as_string();
+	itemData.texturePath = parameters.attribute("texturepath").as_string();
+	itemData.itemType = parameters.attribute("itemType").as_string();
+	itemData.animable = parameters.attribute("animable").as_bool();
+	itemData.frames = parameters.attribute("frames").as_uint();
 	// Create collider body
 	body = new Body();	// HEKATE cleanup
 	body->type = ColliderType::ITEM;
@@ -52,12 +55,12 @@ bool Item::Start()
 {
 
 	//initilize textures
-	texture = app->tex->Load(texturePath);
+	texture = app->tex->Load(itemData.texturePath);
 	
 	rect = {0, 0, 16, 16};
 
-	if (animable) {
-		for (int i = 0; i < frames; i++)
+	if (itemData.animable) {
+		for (int i = 0; i < itemData.frames; i++)
 		{
 			idle.PushBack({ i * 16, 0, 16, 16 });
 		}
@@ -73,21 +76,42 @@ bool Item::Update()
 {
 	if (takeItem)
 	{
-		app->partyManager->inventory.Add(this);
-		if (takeItemPS == nullptr) {
+		if (takeItemPS == nullptr) 
+		{
 			dPoint pos = { body->pos.x, body->pos.y };
 			takeItemPS = app->particleManager->CreateParticleSystem(pos, Blueprint::TAKE_ITEM);
-
-			app->entityManager->DestroyEntity(this);
 		}
-		else {
+		else if(takeItemPS != nullptr)
+		{
 			takeItemPS->TurnOff();
 			takeItemPS = nullptr;
 		}
+
+		ListItem<GuiInventorySlot*>* inventoryItem;
+
+		for (inventoryItem = app->menuManager->menuParty->inventorySlotsList.start; inventoryItem != NULL; inventoryItem = inventoryItem->next)
+		{
+			if (inventoryItem->data->slotItem != nullptr)
+			{
+				if (inventoryItem->data->slotItem->itemData.name == this->itemData.name)
+				{
+					inventoryItem->data->slotItem->itemStackQuantity++;
+					break;
+				}
+			}
+			else
+			{
+				inventoryItem->data->slotItem = this;
+				break;
+			}
+		}
+		
+		app->entityManager->DestroyEntity(this);
+
 	}
 	else 
 	{
-		if (animable)
+		if (itemData.animable)
 		{
 			SDL_Rect rect = currentAnim->GetCurrentFrame();
 			ScaleType scale = app->scaleObj->GetCurrentScale();

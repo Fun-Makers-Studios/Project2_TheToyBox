@@ -55,6 +55,17 @@ bool MenuParty::Start()
 	partyMember1Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_1, "z", 2, { 176, 140, 65, 76 }, this, ButtonType::SMALL);
 	partyMember2Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_2, "s", 2, { 176, 216, 64, 76 }, this, ButtonType::SMALL);
 
+	for (int i = 0; i < MAX_INVENTORY_SLOTS_ROWS; i++)
+	{
+		for (int j = 0; j < MAX_INVENTORY_SLOTS_COLS; j++)
+		{
+			GuiInventorySlot* slot = (GuiInventorySlot*)app->guiManager->CreateGuiControl(GuiControlType::INVENTORY_SLOT, (uint32)ControlID::I_SLOT, "", 1, { 341 + ((41 + margin) * j), 423 + ((38 + marginDown) * i), 40, 38 }, this);
+			slot->slotID = slotNumP;
+			inventorySlotsList.Add(slot);
+			slotNumP++;
+		}
+	}
+
 	// Set easing finished on title buttons
 	ListItem<GuiControl*>* control = guiControlsList.start;
 
@@ -101,13 +112,13 @@ bool MenuParty::PostUpdate()
 	{
 	case ControlID::PARTY_1:
 		// Zero
-		app->render->DrawTexture(zeroImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
+		app->render->DrawTexture(zeroImg, app->render->camera.x + 312, app->render->camera.y + 220, NULL);
 		app->sceneManager->sceneGame->partyMemberSelected = 0;
 		break;
 
 	case ControlID::PARTY_2:
 		// Sophie
-		app->render->DrawTexture(sophieImg, app->render->camera.x + 290, app->render->camera.y + 207, NULL);
+		app->render->DrawTexture(sophieImg, app->render->camera.x + 312, app->render->camera.y + 220, NULL);
 		app->sceneManager->sceneGame->partyMemberSelected = 1;
 		break;
 	default:
@@ -139,13 +150,20 @@ bool MenuParty::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case (uint32)ControlID::PARTY_1:
 		partyMemberSelected = ControlID::PARTY_1;
-		app->audio->PlayFx(app->menuManager->selectSFX);
+		app->audio->PlayFx(app->menuManager->startSFX);
 		break;
 
 	case (uint32)ControlID::PARTY_2:
 		partyMemberSelected = ControlID::PARTY_2;
 		app->audio->PlayFx(app->menuManager->startSFX);
 		break;
+	
+	case (uint32)ControlID::I_SLOT:
+	{
+		control->state = GuiControlState::SELECTED;
+		app->audio->PlayFx(app->menuManager->closeMenuSFX);
+
+	}break;
 
 	default:
 		break;
@@ -153,4 +171,9 @@ bool MenuParty::OnGuiMouseClickEvent(GuiControl* control)
 	}
 
 	return true;
+}
+
+void MenuParty::SwapItems()
+{
+
 }

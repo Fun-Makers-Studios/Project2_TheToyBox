@@ -99,39 +99,39 @@ bool UI::CleanUp()
 
 void UI::BlitPartyStats()
 {	
-	app->fonts->BlitText(445, 240, app->ui->font1_id, app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->name.GetString());
+	app->fonts->BlitText(465, 230, app->ui->font1_id, app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->name.GetString());
 
 	char level[5];
 	sprintf_s(level, 5, "%d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->level);
-	app->fonts->BlitText(544, 264, app->ui->font1_id, level);
+	app->fonts->BlitText(465, 260, app->ui->font1_id, level);
 
 	char currentHP[8];
 	sprintf_s(currentHP, 8, "hp %d/", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->currentHp);
 	char maxHP[3];
 	sprintf_s(maxHP, 3, "%d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->maxHp);
-	app->fonts->BlitText(780, 270, app->ui->font1_id, currentHP);
-	app->fonts->BlitText(828, 270, app->ui->font1_id, maxHP);
+	app->fonts->BlitText(776, 265, app->ui->font1_id, currentHP);
+	app->fonts->BlitText(824, 265, app->ui->font1_id, maxHP);
 
 	char currentMana[10];
 	sprintf_s(currentMana, 10, "mana %d/", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->currentMana);
 	char maxMana[3];
 	sprintf_s(maxMana, 3, "%d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->maxMana);
-	app->fonts->BlitText(875, 270, app->ui->font1_id, currentMana);
-	app->fonts->BlitText(940, 270, app->ui->font1_id, maxMana);
+	app->fonts->BlitText(871, 265, app->ui->font1_id, currentMana);
+	app->fonts->BlitText(936, 265, app->ui->font1_id, maxMana);
 
 	char attack[12];
 	sprintf_s(attack, 12, "attack %d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->attack);
-	app->fonts->BlitText(780, 295, app->ui->font1_id, attack);
+	app->fonts->BlitText(776, 290, app->ui->font1_id, attack);
 
 	char defense[15];
 	sprintf_s(defense, 15, "defense %d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->defense);
-	app->fonts->BlitText(875, 295, app->ui->font1_id, defense);
+	app->fonts->BlitText(871, 290, app->ui->font1_id, defense);
 
 	char speed[10];
 	sprintf_s(speed, 10, "speed %d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->speed);
-	app->fonts->BlitText(780, 320, app->ui->font1_id, speed);
+	app->fonts->BlitText(776, 315, app->ui->font1_id, speed);
 
 	char critRate[15];
 	sprintf_s(critRate, 15, "crit r %d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->critRate);
-	app->fonts->BlitText(875, 320, app->ui->font1_id, critRate);
+	app->fonts->BlitText(871, 315, app->ui->font1_id, critRate);
 }

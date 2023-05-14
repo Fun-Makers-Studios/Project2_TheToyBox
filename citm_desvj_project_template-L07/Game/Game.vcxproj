@@ -103,6 +103,7 @@
     <ClCompile Include="Source\ExpandingBars.cpp" />
     <ClCompile Include="Source\FadeToColour.cpp" />
     <ClCompile Include="Source\GuiCheckBox.cpp" />
+    <ClCompile Include="Source\GuiInventorySlot.cpp" />
     <ClCompile Include="Source\GuiSlider.cpp" />
     <ClCompile Include="Source\KidEnemy.cpp" />
     <ClCompile Include="Source\Color.cpp" />
@@ -166,6 +167,7 @@
     <ClInclude Include="Source\ExpandingBars.h" />
     <ClInclude Include="Source\FadeToColour.h" />
     <ClInclude Include="Source\GuiCheckBox.h" />
+    <ClInclude Include="Source\GuiInventorySlot.h" />
     <ClInclude Include="Source\GuiSlider.h" />
     <ClInclude Include="Source\KidEnemy.h" />
     <ClInclude Include="Source\Color.h" />

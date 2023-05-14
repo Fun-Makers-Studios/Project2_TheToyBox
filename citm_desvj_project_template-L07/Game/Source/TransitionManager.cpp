@@ -9,7 +9,7 @@
 
 TransitionManager::TransitionManager() : currentTransition(nullptr)
 {
-
+	name.Create("transitionmanager");
 }
 
 TransitionManager::~TransitionManager()
