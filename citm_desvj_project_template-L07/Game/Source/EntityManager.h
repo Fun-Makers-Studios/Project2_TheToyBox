@@ -28,6 +28,8 @@ public:
 
 	bool PostUpdate();
 
+	void SortEntitiesZ();
+
 	// Called before quitting
 	bool CleanUp();
 

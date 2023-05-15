@@ -100,19 +100,25 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
     return ret;
 }
 
-void Map::Draw()
+void Map::Draw(bool drawTop)
 {
     OPTICK_CATEGORY("Draw Map", Optick::Category::GameLogic);
+
     if(mapLoaded == false)
         return;
+
+    const char* layer = "Draw";
+
+    if (drawTop)
+        layer = "DrawTop";
 
     ListItem<MapLayer*>* mapLayerItem;
     mapLayerItem = mapData.maplayers.start;
 
-    while (mapLayerItem != NULL) {
-
-        if (mapLayerItem->data->properties.GetProperty("Draw") != NULL && mapLayerItem->data->properties.GetProperty("Draw")->value) {
-
+    while (mapLayerItem != NULL)
+    {
+        if (mapLayerItem->data->properties.GetProperty(layer) != NULL && mapLayerItem->data->properties.GetProperty(layer)->value)
+        {
             for (int x = 0; x < mapLayerItem->data->width; x++)
             {
                 for (int y = 0; y < mapLayerItem->data->height; y++)
@@ -616,8 +622,8 @@ Properties::Property* Properties::GetProperty(const char* name)
 }
 
 
-bool Map::Parallax(TileSet* tileset_, iPoint pos, SDL_Rect r, float x) {
-
+bool Map::Parallax(TileSet* tileset_, iPoint pos, SDL_Rect r, float x)
+{
     bool ret = true;
 
     app->render->DrawTexture(tileset_->texture,
@@ -651,7 +657,7 @@ bool Map::CreateTeleports(pugi::xml_node mapNode)
                 Body* trigger = new Body();
                 trigger->shape = ColliderShape::RECTANGLE;
                 trigger->type = ColliderType::UNKNOWN;
-                trigger->pos.x = object.attribute("x").as_double() + object.attribute("width").as_double() /2;
+                trigger->pos.x = object.attribute("x").as_double() + object.attribute("width").as_double() / 2;
                 trigger->pos.y = object.attribute("y").as_double() + object.attribute("height").as_double() / 2;
                 trigger->w = object.attribute("width").as_double();
                 trigger->h = object.attribute("height").as_double();

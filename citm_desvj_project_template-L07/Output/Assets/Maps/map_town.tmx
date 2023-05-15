@@ -6033,9 +6033,9 @@
    <tile gid="228"/>
   </data>
  </layer>
- <layer id="11" name="Aboveall" width="55" height="36">
+ <layer id="11" name="TopLayer" width="55" height="36">
   <properties>
-   <property name="Draw" type="bool" value="true"/>
+   <property name="DrawTop" type="bool" value="true"/>
    <property name="Navigation" type="bool" value="false"/>
   </properties>
   <data>

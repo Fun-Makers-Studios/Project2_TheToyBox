@@ -35,6 +35,12 @@ enum MapTypes
 	MAPTYPE_STAGGERED
 };
 
+enum class DrawLayer
+{
+	DRAW,
+	DRAW_TOP
+};
+
 //Generic structure to hold properties
 struct Properties
 {
@@ -153,7 +159,7 @@ public:
 	bool Start();
 
     // Called each loop iteration
-    void Draw();
+    void Draw(bool drawTop);
 
     // Called before quitting
     bool CleanUp();

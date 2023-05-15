@@ -176,7 +176,7 @@ bool SceneGame::Update(float dt)
 	}
 
 	// Draw map
-	app->map->Draw();
+	app->map->Draw(false);
 
 	//Changes to Night Mode
 	if(mapName == "town" && isNight)

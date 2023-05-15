@@ -5,6 +5,7 @@
 #include "App.h"
 #include "Textures.h"
 #include "Scene.h"
+#include "Map.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -149,6 +150,7 @@ bool EntityManager::Update(float dt)
 	ListItem<Entity*>* item;
 	Entity* pEntity = NULL;
 
+	// Destroy entities
 	for (item = entities.start; item != NULL && ret == true; item = item->next)
 	{
 		pEntity = item->data;
@@ -160,6 +162,7 @@ bool EntityManager::Update(float dt)
 		}
 	}
 
+	// Update entities
 	for (item = entities.start; item != NULL && ret == true; item = item->next)
 	{
 		pEntity = item->data;
@@ -167,6 +170,9 @@ bool EntityManager::Update(float dt)
 		if (pEntity->active)
 			ret = item->data->Update();
 	}
+
+	//cSort Entites
+	SortEntitiesZ();
 
 	return ret;
 }
@@ -185,6 +191,31 @@ bool EntityManager::PostUpdate()
 		ret = item->data->PostUpdate();
 	}
 
+	// HEKATE - Should find a better place for this
+	// Draw top layer
+	app->map->Draw(true);
+
 	return ret;
 }
 
+// HEKATE - Sort depending on y center? Should sort pickable Items?
+void EntityManager::SortEntitiesZ()
+{
+	bool swapped = true;
+
+	while (swapped)
+	{
+		swapped = false;
+		ListItem<Entity*>* item;
+		Entity* pEntity = NULL;
+
+		for (item = entities.start; item != NULL && item->next != NULL; item = item->next)
+		{
+			if (item->data->body->pos.y > item->next->data->body->pos.y)
+			{
+				SWAP(item->data, item->next->data);
+				swapped = true;
+			}
+		}
+	}
+}
