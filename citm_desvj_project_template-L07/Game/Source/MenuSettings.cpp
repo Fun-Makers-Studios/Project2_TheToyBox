@@ -2,6 +2,7 @@
 
 #include "App.h"
 #include "Menu.h"
+#include "MenuPause.h"
 #include "SceneManager.h"
 #include "MenuManager.h"
 #include "GuiManager.h"
@@ -84,16 +85,7 @@ bool MenuSettings::Update(float dt)
 		app->menuManager->SetDefaultMenu();
 	}
 
-	// HEKATE - GuiControl Label?
-	char music[10];
-	sprintf_s(music, 10, "%d", app->musicValue);
-	app->fonts->BlitText(630, 245, app->ui->font1_id, music);
-
-	char sfx[10];
-	sprintf_s(sfx, 10, "%d", app->sfxValue);
-	app->fonts->BlitText(630, 362, app->ui->font1_id, sfx);
-
-
+	
 	ListItem<GuiControl*>* control = guiControlsList.start;
 
 	while (control != nullptr)
@@ -147,7 +139,19 @@ bool MenuSettings::PostUpdate()
 {
 	bool ret = true;
 
+	app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
+
 	app->render->DrawTexture(popImg_settings, app->render->camera.x, app->render->camera.y - 3, NULL);
+
+	// HEKATE - GuiControl Label?
+	char music[10];
+	sprintf_s(music, 10, "%d", app->musicValue);
+	app->fonts->BlitText(630, 245, app->ui->font1_id, music);
+
+	char sfx[10];
+	sprintf_s(sfx, 10, "%d", app->sfxValue);
+	app->fonts->BlitText(630, 362, app->ui->font1_id, sfx);
+
 
 	//if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	//	ret = false;
@@ -177,7 +181,7 @@ bool MenuSettings::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		case 8:
 			// Decrease music volume
-			app->musicValue = app->musicValue - 1;
+			app->musicValue = app->musicValue - 5;
 			if (app->musicValue <= 0)
 				app->musicValue = 0;
 			if (app->musicValue >= 100)
@@ -188,7 +192,7 @@ bool MenuSettings::OnGuiMouseClickEvent(GuiControl* control)
 
 		case 9:
 			// Increase music volume
-			app->musicValue = app->musicValue + 1;
+			app->musicValue = app->musicValue + 5;
 			if (app->musicValue <= 0)
 				app->musicValue = 0;
 			if (app->musicValue >= 100)
@@ -199,7 +203,7 @@ bool MenuSettings::OnGuiMouseClickEvent(GuiControl* control)
 
 		case 10:
 			// Decrease SFX volume
-			app->sfxValue -= 1;
+			app->sfxValue -= 5;
 			if (app->sfxValue <= 0)
 				app->sfxValue = 0;
 			if (app->sfxValue >= 100)
@@ -210,7 +214,7 @@ bool MenuSettings::OnGuiMouseClickEvent(GuiControl* control)
 
 		case 11:
 			// Increase SFX volume
-			app->sfxValue += 1;
+			app->sfxValue += 5;
 			if (app->sfxValue <= 0)
 				app->sfxValue = 0;
 			if (app->sfxValue >= 100)

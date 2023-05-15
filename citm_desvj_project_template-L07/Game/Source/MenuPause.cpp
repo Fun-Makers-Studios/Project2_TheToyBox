@@ -79,11 +79,6 @@ bool MenuPause::PreUpdate()
 
 bool MenuPause::Update(float dt)
 {
-	app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
-
-	app->render->DrawTexture(imgPause,
-		app->render->camera.x + app->render->camera.w / 2 - pauseRect.w / 2,
-		app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
 
 	return true;
 }
@@ -92,6 +87,13 @@ bool MenuPause::Update(float dt)
 bool MenuPause::PostUpdate()
 {
 	bool ret = true;
+
+	app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
+
+	app->render->DrawTexture(imgPause,
+		app->render->camera.x + app->render->camera.w / 2 - pauseRect.w / 2,
+		app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
+
 
 	return ret;
 }
