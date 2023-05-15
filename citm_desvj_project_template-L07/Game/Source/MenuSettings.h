@@ -4,6 +4,8 @@
 #include "Menu.h"
 #include "GuiControl.h"
 #include "GuiButton.h"
+#include "GuiSlider.h"
+
 
 struct SDL_Texture;
 
@@ -36,6 +38,10 @@ public:
 	GuiButton* increaseSFXButton = nullptr;
 	GuiButton* fullscreenButton = nullptr;
 	GuiButton* vsyncButton = nullptr;
+
+	//Sliders
+	GuiSlider* S_music;
+	GuiSlider* S_fx;
 
 	enum class ControlID : uint32
 	{

@@ -52,6 +52,13 @@ bool MenuSettings::Start()
 	fullscreenButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::FULL_SCREEN, "off", 4, { 520, 424, 252, 76 }, this);
 	vsyncButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::V_SYNC, "off", 4, { 520, 532, 252, 76 }, this);
 
+	//Sliders
+	S_music = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 33, "music", 6, { 260,250,40,40 }, this, ButtonType::UNKNOWN, { 230, 257, 120, 10 });
+	S_music->slider = GuiSliderType::MUSIC;
+
+	S_fx = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 34, "fx", 3,{ 260,270 + 50,40,40 }, this, ButtonType::UNKNOWN, { 230, 327, 120, 10 });
+	S_fx->slider = GuiSliderType::FX;
+		
 	// Set easing finished on title buttons
 	ListItem<GuiControl*>* control =  guiControlsList.start;
 

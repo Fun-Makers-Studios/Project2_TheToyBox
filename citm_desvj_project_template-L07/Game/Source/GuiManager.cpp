@@ -6,6 +6,7 @@
 #include "GuiControl.h"
 #include "GuiButton.h"
 #include "GuiInventorySlot.h"
+#include "GuiSlider.h"
 
 #include "Textures.h"
 #include "Audio.h"
@@ -39,6 +40,7 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	case GuiControlType::CHECKBOX:
 		break;
 	case GuiControlType::SLIDER:
+		guiControl = new GuiSlider(id, bounds, text, sliderBounds);
 		break;
 	case GuiControlType::SLIDERBAR:
 		break;
