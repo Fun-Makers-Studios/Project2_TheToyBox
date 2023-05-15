@@ -185,7 +185,8 @@ bool Player::Update()
 		if (app->menuManager->currentMenu != app->menuManager->menuPause &&
 			app->menuManager->currentMenu != app->menuManager->menuSettings &&
 			app->menuManager->currentMenu != app->menuManager->menuParty &&
-			app->menuManager->currentMenu != app->menuManager->menuQuest) {
+			app->menuManager->currentMenu != app->menuManager->menuQuest &&
+			app->sceneManager->sceneGame->dialogueManager->dialogueLoaded == false) {
 
 			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 				body->vel.y = -speed;
@@ -199,7 +200,7 @@ bool Player::Update()
 				body->vel.x = -speed;
 				currentAnim = &walkLeft;
 			}
-			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || app->controller->Controller_player1_LAxisX > 6400) {
+			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				body->vel.x = speed;
 				currentAnim = &walkRight;
 			}
