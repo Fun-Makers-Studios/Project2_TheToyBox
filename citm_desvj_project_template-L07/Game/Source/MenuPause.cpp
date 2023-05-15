@@ -141,8 +141,9 @@ bool MenuPause::OnGuiMouseClickEvent(GuiControl* control)
 	case (uint32)ControlID::SAVE_EXIT:
 		//showSavingState = true;
 		app->SaveGameRequest();
-		//exitGame = !exitGame;
 		app->audio->PlayFx(app->menuManager->selectSFX);
+		app->menuManager->exitGame = true;
+
 		break;
 
 	default:
