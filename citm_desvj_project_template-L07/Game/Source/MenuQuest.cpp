@@ -83,6 +83,17 @@ bool MenuQuest::PreUpdate()
 
 bool MenuQuest::Update(float dt)
 {
+	
+	return true;
+}
+
+
+bool MenuQuest::PostUpdate()
+{
+	bool ret = true;
+
+	app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
+
 	app->render->DrawTexture(questMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
 
 	iPoint displacement = { 270, 120 };
@@ -125,14 +136,6 @@ bool MenuQuest::Update(float dt)
 	default:
 		break;
 	}
-
-	return true;
-}
-
-
-bool MenuQuest::PostUpdate()
-{
-	bool ret = true;
 
 	return ret;
 }
