@@ -77,6 +77,17 @@ bool MenuCredits::Update(float dt)
 		app->menuManager->SetDefaultMenu();
 	}
 
+	// Lower music volume
+	if (app->menuManager->currentMenu == app->menuManager->menuCredits) {
+
+		if (app->musicValue >= 20)
+			Mix_VolumeMusic(20);
+	}
+	else
+	{
+		Mix_VolumeMusic(app->musicValue);
+	}
+
 	return true;
 }
 

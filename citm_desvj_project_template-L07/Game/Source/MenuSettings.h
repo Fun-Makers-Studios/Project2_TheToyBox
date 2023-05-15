@@ -32,16 +32,13 @@ public:
 public:
 
 	// UI
-	GuiButton* decreaseMusicButton = nullptr;
-	GuiButton* increaseMusicButton = nullptr;
-	GuiButton* decreaseSFXButton = nullptr;
-	GuiButton* increaseSFXButton = nullptr;
-	GuiButton* fullscreenButton = nullptr;
-	GuiButton* vsyncButton = nullptr;
-
 	//Sliders
 	GuiSlider* S_music;
 	GuiSlider* S_fx;
+
+	//Buttons
+	GuiButton* fullscreenButton = nullptr;
+	GuiButton* vsyncButton = nullptr;
 
 	enum class ControlID : uint32
 	{

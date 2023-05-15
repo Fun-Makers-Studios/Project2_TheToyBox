@@ -30,22 +30,16 @@ public:
 
 	bool canClick = true;
 	bool drawBasic = false;
-GuiSliderType slider;
+
+	GuiSliderType slider;
+
 private:
-	const char* texturePath;
-	const char* focusAudioPath;
-	const char* clickAudioPath;
-	bool one, two, three, four;
 
 	SDL_Rect sliderbounds;
 
 	float boundsX, boundsY;
 
-	uint clickaudioFxId;
-	uint focusaudioFxId;
-
-
-	uint pressed, focused;
+	uint pressedFX, focusedFX;
 };
 
 #endif // __GUISLIDER_H__

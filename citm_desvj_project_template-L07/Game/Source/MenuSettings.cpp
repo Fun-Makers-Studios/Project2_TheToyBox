@@ -43,20 +43,14 @@ bool MenuSettings::Start()
 	popImg_settings = app->tex->Load(popImgSettingsPath);
 
 	// Create UI
-	decreaseMusicButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "decrease", 9, { 325, 200, 252, 76 }, this);
-	increaseMusicButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "increase", 9, { 700, 200, 252, 76 }, this);
-
-	decreaseSFXButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, "decrease", 9, { 325, 315, 252, 76 }, this);
-	increaseSFXButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "increase", 9, { 700, 315, 252, 76 }, this);
-
 	fullscreenButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::FULL_SCREEN, "off", 4, { 520, 424, 252, 76 }, this);
 	vsyncButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::V_SYNC, "off", 4, { 520, 532, 252, 76 }, this);
 
 	//Sliders
-	S_music = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 33, "music", 6, { 260,250,40,40 }, this, ButtonType::UNKNOWN, { 230, 257, 120, 10 });
+	S_music = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 33, "music", 6, { 620,241,40,40 }, this, ButtonType::UNKNOWN, { 377, 253, 530, 15 });
 	S_music->slider = GuiSliderType::MUSIC;
 
-	S_fx = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 34, "fx", 3,{ 260,270 + 50,40,40 }, this, ButtonType::UNKNOWN, { 230, 327, 120, 10 });
+	S_fx = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 34, "fx", 3,{ 620,343,40,40 }, this, ButtonType::UNKNOWN, { 377, 353, 530, 15 });
 	S_fx->slider = GuiSliderType::FX;
 		
 	// Set easing finished on title buttons
@@ -138,6 +132,17 @@ bool MenuSettings::Update(float dt)
 		control = control->next;
 	}
 
+	// Lower music volume
+	if (app->menuManager->currentMenu == app->menuManager->menuSettings) {
+
+		if (app->musicValue >= 20)
+			Mix_VolumeMusic(20);
+	}
+	else
+	{
+		Mix_VolumeMusic(app->musicValue);
+	}
+
 	return true;
 }
 
@@ -149,16 +154,6 @@ bool MenuSettings::PostUpdate()
 	app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
 
 	app->render->DrawTexture(popImg_settings, app->render->camera.x, app->render->camera.y - 3, NULL);
-
-	// HEKATE - GuiControl Label?
-	char music[10];
-	sprintf_s(music, 10, "%d", app->musicValue);
-	app->fonts->BlitText(630, 245, app->ui->font1_id, music);
-
-	char sfx[10];
-	sprintf_s(sfx, 10, "%d", app->sfxValue);
-	app->fonts->BlitText(630, 362, app->ui->font1_id, sfx);
-
 
 	//if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	//	ret = false;
