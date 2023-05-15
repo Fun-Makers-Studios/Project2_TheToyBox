@@ -18,6 +18,7 @@
 #include "PartyManager.h"
 #include "ParticleSystemManager.h"
 #include "QuestManager.h"
+#include "PuzzleManager.h"
 
 #include "MenuManager.h"
 #include "UI.h"
@@ -59,6 +60,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	entityManager = new EntityManager();
 	partyManager = new PartyManager();
+	puzzleManager = new PuzzleManager();
 	questManager = new QuestManager();
 	particleManager = new ParticleSystemManager();
 
@@ -90,6 +92,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	AddModule(entityManager, false);
 	AddModule(partyManager, true);
+	AddModule(puzzleManager, false);
 	AddModule(particleManager, true);
 	AddModule(questManager, false);
 

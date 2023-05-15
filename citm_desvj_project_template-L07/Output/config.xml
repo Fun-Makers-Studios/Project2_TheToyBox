@@ -55,12 +55,19 @@
 
 	<scene>
 		<music musicPath="Assets/Audio/Music/town.ogg" />
-		
 		<saveTex saveTexPath="Assets/Textures/UI/save.png"/>
 		<scenesfx selectSFXPath="Assets/Audio/Fx/select.wav" />
 		<player x="224" y="530" texturepath="Assets/Textures/SceneGame/characterZero.png" shadowtexture="Assets/Textures/shadow.png"/>
 		<enemykid x="175" y="350" texturepath="Assets/Textures/characters.png"/>
 	</scene>
+	
+	<sceneCircus>
+		<music musicPath="Assets/Audio/Music/dungeon.ogg" />
+		<saveTex saveTexPath="Assets/Textures/UI/save.png"/>
+		<scenesfx selectSFXPath="Assets/Audio/Fx/select.wav" />
+		<player x="224" y="530" texturepath="Assets/Textures/SceneGame/characterZero.png" shadowtexture="Assets/Textures/shadow.png"/>
+		<enemykid x="175" y="350" texturepath="Assets/Textures/characters.png"/>
+	</sceneCircus>
 
 	<sceneFight>
 		<music musicPath="Assets/Audio/Music/battle.ogg" />
@@ -280,6 +287,43 @@
 			
 		</circusTwo>
 	</particles>
+
+	<puzzlesMap>
+		<circusOne>
+			<activepuzzles>
+				<puzzle orderID="1"/>
+			</activepuzzles>
+			<puzzle type="0" orderID="1" name="Color Button Order" nextPuzzleId="2">
+				<piece pieceType="0" x="250" y="450" id="1" texturepath="Assets/Textures/PuzzleButtons.png"/>
+				<piece pieceType="0" x="300" y="450" id="2" texturepath="Assets/Textures/PuzzleButtons.png"/>
+				<piece pieceType="0" x="350" y="450" id="3" texturepath="Assets/Textures/PuzzleButtons.png"/>
+				<piece pieceType="0" x="400" y="450" id="4" texturepath="Assets/Textures/PuzzleButtons.png"/>
+				<piece pieceType="0" x="450" y="450" id="5" texturepath="Assets/Textures/PuzzleButtons.png"/>
+				<piece pieceType="2" x="1792" y="544" texturepath="Assets/Textures/DoorPuzzle1.png"/>
+			</puzzle>
+			<puzzle type="1" orderID="2" name="Mirror" nextPuzzleId="0">
+				<object x="250" y="450" id="1" initialOrientation="up"	 texturepath="Assets/Textures/PuzzleButtons.png"/>
+				<object x="250" y="450" id="1" initialOrientation="left" texturepath="Assets/Textures/PuzzleButtons.png"/>
+				<object x="250" y="450" id="1" initialOrientation="down" texturepath="Assets/Textures/PuzzleButtons.png"/>
+				<target x="250" y="450" id="1" finalOrientation="right"  texturepath="Assets/Textures/PuzzleButtons.png"/>
+				<target x="250" y="450" id="1" finalOrientation="up"	 texturepath="Assets/Textures/PuzzleButtons.png"/>
+				<target x="250" y="450" id="1" finalOrientation="left"	 texturepath="Assets/Textures/PuzzleButtons.png"/>
+			</puzzle>
+		</circusOne>
+		<circusTwo>
+			<activepuzzles>
+				<puzzle orderID="1"/>
+			</activepuzzles>
+			<puzzle type="0" orderID="1" name="Color Button Order" nextPuzzleId="2">
+				<button x="250" y="450" id="1" texturepath="Assets/Textures/PuzzleButtons.png"/>
+				<button x="300" y="450" id="2" texturepath="Assets/Textures/PuzzleButtons.png"/>
+				<button x="350" y="450" id="3" texturepath="Assets/Textures/PuzzleButtons.png"/>
+				<button x="400" y="450" id="4" texturepath="Assets/Textures/PuzzleButtons.png"/>
+				<button x="450" y="450" id="5" texturepath="Assets/Textures/PuzzleButtons.png"/>
+				<door x="1792" y="544" texturepath="Assets/Textures/DoorPuzzle1.png"/>
+			</puzzle>
+		</circusTwo>
+	</puzzlesMap>
 	
 	
 </config>

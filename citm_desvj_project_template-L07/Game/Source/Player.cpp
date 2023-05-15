@@ -205,7 +205,7 @@ bool Player::Update()
 				currentAnim = &walkRight;
 			}
 		}
-		if (currentAnim != &idle)
+		/*if (currentAnim != &idle)
 		{
 			if (walkParticles == nullptr) {
 				dPoint pos = { body->pos.x, body->pos.y + 10 };
@@ -215,7 +215,7 @@ bool Player::Update()
 				walkParticles->TurnOff();
 				walkParticles = nullptr;
 			}
-		}
+		}*/
 
 		body->pos.x += body->vel.x;
 		body->pos.y += body->vel.y;
@@ -247,8 +247,6 @@ bool Player::CleanUp()
 void Player::ResetPlayerPos()
 {
 	body->vel = { 0, 0 };
-	// HEKATE
-	//pbody->body->SetTransform(PIXEL_TO_METERS(startPos), 0.0f);
 	dead = false;
 	
 	LOG("--RESETING PLAYER--");

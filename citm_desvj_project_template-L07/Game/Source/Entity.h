@@ -15,6 +15,7 @@ enum class EntityType
 	NPC,
 	ENEMY_KID,
 	ITEM,
+	PUZZLE_PIECE,
 	UNKNOWN
 };
 

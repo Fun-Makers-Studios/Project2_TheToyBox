@@ -5,6 +5,7 @@
 #include "Render.h"
 #include "Window.h"
 #include "EntityManager.h"
+#include "PuzzleManager.h"
 #include "QuestManager.h"
 #include "MenuManager.h"
 #include "Map.h"
@@ -79,6 +80,7 @@ bool SceneGame::Start()
 	app->map->Enable();
 	app->collisions->Enable();
 	app->entityManager->Enable();
+	app->puzzleManager->Enable();
 	app->questManager->Enable();
 	app->particleManager->Enable();
 	app->debug->debug = false;
@@ -178,10 +180,6 @@ bool SceneGame::Update(float dt)
 	// Draw map
 	app->map->Draw(false);
 
-	//Changes to Night Mode
-	if(mapName == "town" && isNight)
-		app->render->DrawRectangle(app->render->viewport, 0, 0, 255, 100, true, false);
-
 	ActiveParticles();
 
 	SaveUI();
@@ -217,7 +215,13 @@ bool SceneGame::Update(float dt)
 bool SceneGame::PostUpdate()
 {
 	bool ret = true;	
-	
+
+	app->map->Draw(true);
+
+	//Changes to Night Mode
+	if (mapName == "town" && isNight)
+		app->render->DrawRectangle(app->render->viewport, 0, 0, 255, 100, true, false);
+
 	// HEKATE
 	if (/*gamePaused &&*/ dialogueManager->dialogueLoaded)
 	{
@@ -241,6 +245,7 @@ bool SceneGame::CleanUp()
 	app->pathfinding->Disable();
 	app->collisions->Disable();
 	app->questManager->Disable();
+	app->puzzleManager->Disable();
 	app->map->Disable();
 
 	//HEKATE
@@ -271,12 +276,28 @@ bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
 
 void SceneGame::ActiveParticles()
 {
-	if (mapName == "town" && isNight)
+	if (mapName == "town")
 	{
-		if (firefliesPS == nullptr) 
+		if (isNight)
 		{
-			firefliesPS = app->particleManager->CreateParticleSystem({0, 0}, Blueprint::FIREFLIES);
-		}		
+			if (firefliesPS == nullptr)
+			{
+				firefliesPS = app->particleManager->CreateParticleSystem({ 0, 0 }, Blueprint::FIREFLIES);
+			}
+		}
+			
+		if (player->currentAnim != &player->idle)
+		{
+			if (walkParticles == nullptr) {
+				dPoint pos = { player->body->pos.x, player->body->pos.y + 10 };
+				walkParticles = app->particleManager->CreateParticleSystem(pos, Blueprint::SAND);
+			}
+			else {
+				walkParticles->TurnOff();
+				walkParticles = nullptr;
+			}
+		}
+
 	}
 	else
 	{

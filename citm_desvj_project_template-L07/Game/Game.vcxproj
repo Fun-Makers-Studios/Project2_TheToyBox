@@ -97,6 +97,7 @@
   <ItemGroup>
     <ClCompile Include="Source\AlternatingBars.cpp" />
     <ClCompile Include="Source\AssetsManager.cpp" />
+    <ClCompile Include="Source\ButtonOrderPuzzle.cpp" />
     <ClCompile Include="Source\CollectQuest.cpp" />
     <ClCompile Include="Source\Dissolve.cpp" />
     <ClCompile Include="Source\Easing.cpp" />
@@ -118,7 +119,11 @@
     <ClCompile Include="Source\MenuQuest.cpp" />
     <ClCompile Include="Source\MenuSettings.cpp" />
     <ClCompile Include="Source\MenuTitle.cpp" />
+    <ClCompile Include="Source\MirrorPuzzle.cpp" />
+    <ClCompile Include="Source\PuzzleManager.cpp" />
+    <ClCompile Include="Source\PuzzlePiece.cpp" />
     <ClCompile Include="Source\QuestManager.cpp" />
+    <ClCompile Include="Source\SceneCircus.cpp" />
     <ClCompile Include="Source\SceneEnding.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\Fonts.cpp" />
@@ -160,6 +165,7 @@
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\AssetsManager.h" />
     <ClInclude Include="Source\Bar.h" />
+    <ClInclude Include="Source\ButtonOrderPuzzle.h" />
     <ClInclude Include="Source\CollectQuest.h" />
     <ClInclude Include="Source\Dissolve.h" />
     <ClInclude Include="Source\Easing.h" />
@@ -173,6 +179,10 @@
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\Dialogue.h" />
     <ClInclude Include="Source\DialogueManager.h" />
+    <ClInclude Include="Source\MirrorPuzzle.h" />
+    <ClInclude Include="Source\Puzzle.h" />
+    <ClInclude Include="Source\PuzzleManager.h" />
+    <ClInclude Include="Source\PuzzlePiece.h" />
     <ClInclude Include="Source\Quest.h" />
     <ClInclude Include="Source\QuestManager.h" />
     <ClInclude Include="Source\Menu.h" />
@@ -184,6 +194,7 @@
     <ClInclude Include="Source\MenuQuest.h" />
     <ClInclude Include="Source\MenuSettings.h" />
     <ClInclude Include="Source\MenuTitle.h" />
+    <ClInclude Include="Source\SceneCircus.h" />
     <ClInclude Include="Source\SceneEnding.h" />
     <ClInclude Include="Source\Fonts.h" />
     <ClInclude Include="Source\GuiButton.h" />

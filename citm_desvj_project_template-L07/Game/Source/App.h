@@ -29,6 +29,7 @@ class Pathfinding;
 class Collisions;
 
 class QuestManager;
+class PuzzleManager;
 class EntityManager;
 class PartyManager;
 class ParticleSystemManager;
@@ -127,6 +128,7 @@ public:
 
 	EntityManager* entityManager;
 	PartyManager* partyManager;
+	PuzzleManager* puzzleManager;
 	QuestManager* questManager;
 	ParticleSystemManager* particleManager;
 

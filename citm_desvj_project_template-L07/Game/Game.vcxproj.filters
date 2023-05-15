@@ -190,6 +190,21 @@
     <ClCompile Include="Source\Wipe.cpp">
       <Filter>Transitions\Others</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SceneCircus.cpp">
+      <Filter>Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PuzzleManager.cpp">
+      <Filter>Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ButtonOrderPuzzle.cpp">
+      <Filter>Game\Puzzles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MirrorPuzzle.cpp">
+      <Filter>Game\Puzzles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PuzzlePiece.cpp">
+      <Filter>Game\Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -429,6 +444,24 @@
     <ClInclude Include="Source\AssetsManager.h">
       <Filter>Core\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SceneCircus.h">
+      <Filter>Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Puzzle.h">
+      <Filter>Game\Puzzles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PuzzleManager.h">
+      <Filter>Core\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ButtonOrderPuzzle.h">
+      <Filter>Game\Puzzles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MirrorPuzzle.h">
+      <Filter>Game\Puzzles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PuzzlePiece.h">
+      <Filter>Game\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Utils">
@@ -496,6 +529,9 @@
     </Filter>
     <Filter Include="Transitions\Others">
       <UniqueIdentifier>{982bd02d-adad-412d-be79-223f899930e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Puzzles">
+      <UniqueIdentifier>{b79f9ae9-448e-4c8e-81e5-117aca876b58}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

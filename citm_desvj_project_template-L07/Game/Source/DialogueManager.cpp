@@ -10,7 +10,7 @@
 
 #include "Log.h"
 
-DialogueManager::DialogueManager(SceneGame* scene)
+DialogueManager::DialogueManager(Scene* scene)
 {
 	LOG("Loading Dialogue Manager");
 

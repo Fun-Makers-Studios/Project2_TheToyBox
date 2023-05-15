@@ -7,6 +7,7 @@
 #include "SceneLogo.h"
 #include "SceneTitle.h"
 #include "SceneGame.h"
+#include "SceneCircus.h"
 #include "SceneFight.h"
 #include "SceneEnding.h"
 
@@ -22,12 +23,14 @@ bool SceneManager::Awake(pugi::xml_node& config)
     sceneLogo    = new SceneLogo();
     sceneTitle   = new SceneTitle();
     sceneGame    = new SceneGame();
+    sceneCircus  = new SceneCircus();
     sceneFight   = new SceneFight();
     sceneEnding  = new SceneEnding();
 
     AddScene(sceneLogo, config);
     AddScene(sceneTitle, config);
     AddScene(sceneGame, config);
+    AddScene(sceneCircus, config);
     AddScene(sceneFight, config);
     AddScene(sceneEnding, config);
 
@@ -152,6 +155,9 @@ bool SceneManager::SaveState(pugi::xml_node& data)
     {
         scene->data->SaveState(data);
     }
+
+    pugi::xml_node currentSc = data.append_child("currentScene");
+    currentSc.append_attribute("sceneID") = (uint32)currentScene->id;
 
     return true;
 }

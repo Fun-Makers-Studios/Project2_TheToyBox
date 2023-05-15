@@ -79,8 +79,6 @@ private:
 	SDL_Texture* shadowTexture = nullptr;
 	const char* shadowTexturePath = nullptr;
 
-	ParticleSystem* walkParticles;
-
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 	
 	dPoint startPos;

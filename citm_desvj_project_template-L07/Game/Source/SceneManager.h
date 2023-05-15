@@ -6,6 +6,7 @@
 #include "SceneLogo.h"
 #include "SceneTitle.h"
 #include "SceneGame.h"
+#include "SceneCircus.h"
 #include "SceneFight.h"
 #include "SceneEnding.h"
 
@@ -20,6 +21,7 @@ enum class SceneState
 class SceneLogo;
 class SceneTitle;
 class SceneGame;
+class SceneCircus;
 class SceneFight;
 class SceneEnding;
 
@@ -66,6 +68,7 @@ public:
 	SceneLogo* sceneLogo;
 	SceneTitle* sceneTitle;
 	SceneGame* sceneGame;
+	SceneCircus* sceneCircus;
 	SceneFight* sceneFight;
 	SceneEnding* sceneEnding;
 };
