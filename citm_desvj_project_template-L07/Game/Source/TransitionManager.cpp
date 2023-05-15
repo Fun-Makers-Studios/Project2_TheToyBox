@@ -118,9 +118,9 @@ void TransitionManager::LoadTransition()
 
 		case SceneID::SCENE_FIGHT:
 			CreateAlternatingBars(8, false, false, Black, Black);
-			easing->SetTotalTime(1.2);
+			easing->SetTotalTime(2);
 			easingTypeIN = EasingType::EASE_OUT_ELASTIC;
-			easingTypeOUT = EasingType::EASE_IN_SIN;
+			easingTypeOUT = EasingType::EASE_OUT_CUBIC;
 			break;
 
 		case SceneID::SCENE_ENDING:

@@ -160,15 +160,6 @@
     <ClCompile Include="Source\Easing.cpp">
       <Filter>Utils\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="Source\FadeToColor.cpp">
-      <Filter>Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Slide.cpp">
-      <Filter>Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Wipe.cpp">
-      <Filter>Transitions</Filter>
-    </ClCompile>
     <ClCompile Include="Source\AlternatingBars.cpp">
       <Filter>Transitions\Bars</Filter>
     </ClCompile>
@@ -189,6 +180,15 @@
     </ClCompile>
     <ClCompile Include="Source\GuiInventorySlot.cpp">
       <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\FadeToColor.cpp">
+      <Filter>Transitions\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Slide.cpp">
+      <Filter>Transitions\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Wipe.cpp">
+      <Filter>Transitions\Others</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -390,16 +390,7 @@
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FadeToColor.h">
-      <Filter>Transitions</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Slide.h">
-      <Filter>Transitions</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Transition.h">
-      <Filter>Transitions</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Wipe.h">
       <Filter>Transitions</Filter>
     </ClInclude>
     <ClInclude Include="Source\AlternatingBars.h">
@@ -422,6 +413,21 @@
     </ClInclude>
     <ClInclude Include="Source\Scale.h">
       <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\FadeToColor.h">
+      <Filter>Transitions\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Slide.h">
+      <Filter>Transitions\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Wipe.h">
+      <Filter>Transitions\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiInventorySlot.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AssetsManager.h">
+      <Filter>Core\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -488,11 +494,9 @@
     <Filter Include="Transitions\Texture">
       <UniqueIdentifier>{177c4d57-a516-4f47-a123-0663ab0f47de}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Xml Include="..\Output\config.xml">
-      <Filter>Core</Filter>
-    </Xml>
+    <Filter Include="Transitions\Others">
+      <UniqueIdentifier>{982bd02d-adad-412d-be79-223f899930e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Output\Assets\Maps\map_town.tmx">
@@ -516,5 +520,10 @@
     <None Include="..\Output\Assets\Maps\circusTwo.tmx">
       <Filter>Game\Maps</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Output\config.xml">
+      <Filter>App</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

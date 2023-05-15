@@ -6,7 +6,6 @@
 #include "External/SDL/include/SDL.h"
 
 
-
 class AssetsManager : public Module
 {
 public:

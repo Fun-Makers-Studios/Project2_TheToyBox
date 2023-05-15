@@ -68,6 +68,7 @@ bool SceneManager::PreUpdate()
         currentScene->PreUpdate();
         return true;
     }
+
     return false;
 }
 
