@@ -64,8 +64,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;OptickCore.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL_ttf\libx86;$(ProjectDir)Source\External\Optick\lib\releaseLib;$(ProjectDir)Source\External\Optick\lib\debugLib;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\SDL_mixer\libx86;$(ProjectDir)Source\External\Box2D\libx86\DebugLib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;physfs.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;OptickCore.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\PhysFS\libx86;$(ProjectDir)Source\External\SDL_ttf\libx86;$(ProjectDir)Source\External\Optick\lib\releaseLib;$(ProjectDir)Source\External\Optick\lib\debugLib;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\SDL_mixer\libx86;$(ProjectDir)Source\External\Box2D\libx86\DebugLib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)Build\$(Configuration)\$(ProjectName).exe" "$(SolutionDir)Output\$(ProjectName).exe"</Command>
@@ -87,8 +87,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;OptickCore.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\SDL_ttf\libx86;$(ProjectDir)Source\External\Optick\lib\releaseLib;$(ProjectDir)Source\External\Optick\lib\debugLib;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\SDL_mixer\libx86;$(ProjectDir)Source\External\Box2D\libx86\ReleaseLib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_mixer.lib;physfs.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;OptickCore.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)Source\External\PhysFS\libx86;$(ProjectDir)Source\External\SDL_ttf\libx86;$(ProjectDir)Source\External\Optick\lib\releaseLib;$(ProjectDir)Source\External\Optick\lib\debugLib;$(ProjectDir)Source\External\SDL\libx86;$(ProjectDir)Source\External\SDL_image\libx86;$(ProjectDir)Source\External\SDL_mixer\libx86;$(ProjectDir)Source\External\Box2D\libx86\ReleaseLib</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)Build\$(Configuration)\$(ProjectName).exe" "$(SolutionDir)Output\$(ProjectName).exe"</Command>
@@ -96,12 +96,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\AlternatingBars.cpp" />
+    <ClCompile Include="Source\AssetsManager.cpp" />
     <ClCompile Include="Source\CollectQuest.cpp" />
     <ClCompile Include="Source\Dissolve.cpp" />
     <ClCompile Include="Source\Easing.cpp" />
     <ClCompile Include="Source\ExpandingBars.cpp" />
     <ClCompile Include="Source\FadeToColor.cpp" />
     <ClCompile Include="Source\GuiCheckBox.cpp" />
+    <ClCompile Include="Source\GuiInventorySlot.cpp" />
     <ClCompile Include="Source\GuiSlider.cpp" />
     <ClCompile Include="Source\KidEnemy.cpp" />
     <ClCompile Include="Source\Color.cpp" />
@@ -156,6 +158,7 @@
     <ClCompile Include="Source\ZoomToTexture.cpp" />
     <ClInclude Include="Source\AlternatingBars.h" />
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\AssetsManager.h" />
     <ClInclude Include="Source\Bar.h" />
     <ClInclude Include="Source\CollectQuest.h" />
     <ClInclude Include="Source\Dissolve.h" />
@@ -163,6 +166,7 @@
     <ClInclude Include="Source\ExpandingBars.h" />
     <ClInclude Include="Source\FadeToColor.h" />
     <ClInclude Include="Source\GuiCheckBox.h" />
+    <ClInclude Include="Source\GuiInventorySlot.h" />
     <ClInclude Include="Source\GuiSlider.h" />
     <ClInclude Include="Source\KidEnemy.h" />
     <ClInclude Include="Source\Color.h" />

@@ -184,6 +184,12 @@
     <ClCompile Include="Source\TransitionManager.cpp">
       <Filter>Core\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AssetsManager.cpp">
+      <Filter>Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiInventorySlot.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">

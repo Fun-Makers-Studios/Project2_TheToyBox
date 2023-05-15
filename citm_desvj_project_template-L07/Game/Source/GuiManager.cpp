@@ -5,6 +5,7 @@
 #include "MenuManager.h"
 #include "GuiControl.h"
 #include "GuiButton.h"
+#include "GuiInventorySlot.h"
 
 #include "Textures.h"
 #include "Audio.h"
@@ -50,6 +51,9 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	case GuiControlType::VALUEBOX:
 		break;
 	case GuiControlType::SPINNER:
+		break;
+	case GuiControlType::INVENTORY_SLOT:
+		guiControl = (GuiControl*) new GuiInventorySlot(id, bounds, text, textSize);
 		break;
 	default:
 		break;

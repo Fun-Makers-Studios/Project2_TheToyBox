@@ -14,7 +14,7 @@
 
 MenuManager::MenuManager() : Module()
 {
-	name.Create("menuManager");
+	name.Create("menumanager");
 }
 
 MenuManager::~MenuManager() {}

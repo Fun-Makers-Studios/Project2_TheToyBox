@@ -99,6 +99,7 @@
 	<gui>
 		<guiButtons buttonsTexPath="Assets/Textures/UI/ButtonsSprites/Buttons.png"/>
 		<guiButtons smallButtonTexPath="Assets/Textures/UI/ButtonsSprites/Buttons.png"/>
+		<guiSlots slotTexPath="Assets/Textures/UI/PartyMenu/InventoryHoverButton.png"/>
 	</gui>
 
 	<questmanager>
@@ -222,13 +223,13 @@
 	
 	<itemsMap>
 		<town>
-			<item x="230" y="400" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/peanut_bag.png"/>
-			<item x="250" y="450" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/peanut_bag.png"/>
-			<item x="232" y="300" itemType ="potionmana" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
-			<item x="250" y="500" itemType ="potionmana" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
-			<item x="250" y="525" itemType ="key" animable ="false" frames ="0" isStackable ="false" texturepath="Assets/Textures/Items/key.png"/>
-			<item x="285" y="525" itemType ="key" animable ="false" frames ="0" isStackable ="false" texturepath="Assets/Textures/Items/circus_ticket.png"/>
-			<item x="285" y="560" itemType ="lightupsword" animable ="true" frames ="5" isStackable ="false" texturepath="Assets/Textures/Items/lightup_sword.png"/>
+			<item x="230" y="400" name="Peanut bag" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/peanut_bag.png"/>
+			<item x="250" y="450" name="Peanut bag" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/peanut_bag.png"/>
+			<item x="232" y="300" name="Cotton candy" itemType ="potionmana" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
+			<item x="250" y="500" name="Cotton candy" itemType ="potionmana" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
+			<item x="250" y="525" name="Key" itemType ="key" animable ="false" frames ="0" isStackable ="false" texturepath="Assets/Textures/Items/key.png"/>
+			<item x="285" y="525" name="Circus ticket" itemType ="key" animable ="false" frames ="0" isStackable ="false" texturepath="Assets/Textures/Items/circus_ticket.png"/>
+			<item x="285" y="560" name="Light-up sword" itemType ="lightupsword" animable ="true" frames ="5" isStackable ="false" texturepath="Assets/Textures/Items/lightup_sword.png"/>
 		</town>
 		<tavern>
 			

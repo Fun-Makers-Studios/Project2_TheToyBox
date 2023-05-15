@@ -20,6 +20,7 @@ class Fonts;
 class Audio;
 class ModuleController;
 
+class AssetsManager;
 class SceneManager;
 class TransitionManager;
 
@@ -116,6 +117,7 @@ public:
 	Audio* audio;
 	ModuleController* controller;
 
+	AssetsManager* assetManager;
 	SceneManager* sceneManager;
 	TransitionManager* transitionManager;
 	

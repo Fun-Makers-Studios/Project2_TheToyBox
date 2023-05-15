@@ -12,6 +12,7 @@ TransitionManager::TransitionManager() : currentTransition(nullptr)
 {
 	easing = new Easing();
 	easing->SetFinished(false);
+	name.Create("transitionmanager");
 }
 
 TransitionManager::~TransitionManager()
