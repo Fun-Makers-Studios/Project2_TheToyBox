@@ -49,7 +49,7 @@ bool SceneManager::PreUpdate()
     {
         if (app->transitionManager->step == TransitionStep::NONE)
         {
-            app->transitionManager->CreateFadeToColour();
+            app->transitionManager->LoadTransition();
         }
         else if (app->transitionManager->step == TransitionStep::SWITCH)
         {

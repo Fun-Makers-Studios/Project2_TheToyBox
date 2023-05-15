@@ -65,9 +65,9 @@ private:
 	uint selectSFX = 0;
 
 	// Declare a GUI Button and create it using the GuiManager
-	GuiButton* attackButton18;
-	GuiButton* defenseButton19;
-	GuiButton* escapeButton20;
+	GuiButton* attackButton;
+	GuiButton* specialButton;
+	GuiButton* bagButton;
 
 	uint alliesAlive;
 	uint enemiesAlive;

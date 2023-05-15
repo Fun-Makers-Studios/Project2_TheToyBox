@@ -230,9 +230,10 @@ double Easing::TrackTime(double dt)
 {
     double dtCap = fmin(dt, 32);
 
+    elapsedTime += (dtCap / 1000);
+
     if (elapsedTime < totalTime + delayTime)
     {
-        elapsedTime += (dtCap / 1000);
         return elapsedTime / (totalTime + delayTime);
     }
     else

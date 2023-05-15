@@ -7,11 +7,9 @@
 class ExpandingBars : public Transition
 {
 public:
-	ExpandingBars(float step_duration, bool non_lerp, int bar_number, bool horizontal, bool random_colours, Color even_color, Color odd_color);
+
+	ExpandingBars(int bar_number, bool horizontal, bool random_colours, Color even_color, Color odd_color);
 	~ExpandingBars();
-
-
-public:
 
 	void DoTransition();
 

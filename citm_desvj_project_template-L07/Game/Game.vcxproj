@@ -100,7 +100,7 @@
     <ClCompile Include="Source\Dissolve.cpp" />
     <ClCompile Include="Source\Easing.cpp" />
     <ClCompile Include="Source\ExpandingBars.cpp" />
-    <ClCompile Include="Source\FadeToColour.cpp" />
+    <ClCompile Include="Source\FadeToColor.cpp" />
     <ClCompile Include="Source\GuiCheckBox.cpp" />
     <ClCompile Include="Source\GuiSlider.cpp" />
     <ClCompile Include="Source\KidEnemy.cpp" />
@@ -149,7 +149,6 @@
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\SceneTitle.cpp" />
-    <ClCompile Include="Source\Transition.cpp" />
     <ClCompile Include="Source\TransitionManager.cpp" />
     <ClCompile Include="Source\UI.cpp" />
     <ClCompile Include="Source\Window.cpp" />
@@ -162,7 +161,7 @@
     <ClInclude Include="Source\Dissolve.h" />
     <ClInclude Include="Source\Easing.h" />
     <ClInclude Include="Source\ExpandingBars.h" />
-    <ClInclude Include="Source\FadeToColour.h" />
+    <ClInclude Include="Source\FadeToColor.h" />
     <ClInclude Include="Source\GuiCheckBox.h" />
     <ClInclude Include="Source\GuiSlider.h" />
     <ClInclude Include="Source\KidEnemy.h" />

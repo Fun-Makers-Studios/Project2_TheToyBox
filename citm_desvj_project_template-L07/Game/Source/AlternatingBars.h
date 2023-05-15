@@ -8,7 +8,7 @@ class AlternatingBars : public Transition
 {
 public:
 
-	AlternatingBars(float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color);
+	AlternatingBars(int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color);
 	~AlternatingBars();
 
 public:

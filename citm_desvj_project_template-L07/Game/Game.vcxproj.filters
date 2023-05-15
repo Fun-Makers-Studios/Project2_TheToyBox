@@ -160,13 +160,10 @@
     <ClCompile Include="Source\Easing.cpp">
       <Filter>Utils\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="Source\FadeToColour.cpp">
+    <ClCompile Include="Source\FadeToColor.cpp">
       <Filter>Transitions</Filter>
     </ClCompile>
     <ClCompile Include="Source\Slide.cpp">
-      <Filter>Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Transition.cpp">
       <Filter>Transitions</Filter>
     </ClCompile>
     <ClCompile Include="Source\Wipe.cpp">
@@ -266,9 +263,6 @@
     </ClInclude>
     <ClInclude Include="Source\DialogueManager.h">
       <Filter>Game\Dialogue</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scale.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\EntityManager.h">
       <Filter>Core\Managers</Filter>
@@ -390,7 +384,7 @@
     <ClInclude Include="Source\Animation.h">
       <Filter>Utils\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="Source\FadeToColour.h">
+    <ClInclude Include="Source\FadeToColor.h">
       <Filter>Transitions</Filter>
     </ClInclude>
     <ClInclude Include="Source\Slide.h">
@@ -419,6 +413,9 @@
     </ClInclude>
     <ClInclude Include="Source\TransitionManager.h">
       <Filter>Core\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scale.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,16 +1,16 @@
 #include "AlternatingBars.h"
 #include "TransitionManager.h"
 
-AlternatingBars::AlternatingBars(float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color) :
-	Transition(step_duration, non_lerp),
-	bar_number(bar_number),
-	win_width(0.0f),
-	win_height(0.0f),
-	vertical(vertical),
-	random_colours(random_colours),
-	even_color(even_color),
-	odd_color(odd_color)
-{	
+AlternatingBars::AlternatingBars(int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color)
+{
+	this->bar_number = bar_number;
+	this->win_width = 0.0f;
+	this->win_height = 0.0f;
+	this->vertical = vertical;
+	this->random_colours = random_colours;
+	this->even_color = even_color;
+	this->odd_color = odd_color;
+	
 	InitAlternatingBars();
 }
 
@@ -21,13 +21,13 @@ AlternatingBars::~AlternatingBars()
 
 void AlternatingBars::DoTransition()
 {
-	if (!vertical)
+	if (vertical)
 	{
-		TranslateHorizontalBars();
+		TranslateVerticalBars();		
 	}
 	else
 	{
-		TranslateVerticalBars();
+		TranslateHorizontalBars();
 	}
 
 	DrawBars();
@@ -37,68 +37,29 @@ void AlternatingBars::TranslateHorizontalBars()
 {
 	if (app->transitionManager->step == TransitionStep::IN)
 	{
-		if (!non_lerp)
+		for (int i = 0; i < bars.Count(); ++i)
 		{
-			for (int i = 0; i < bars.Count(); ++i)
+			if (i % 2 == 0)
 			{
-				if (i % 2 == 0)
-				{
-					bars[i].bar.x = Lerp(-win_width, 0, current_cutoff);
-				}
-				else
-				{
-					bars[i].bar.x = Lerp(win_width, 0, current_cutoff);
-				}
+				bars[i].bar.x = app->transitionManager->easing->EasingAnimation(-win_width, 0, app->transitionManager->trackedTime, app->transitionManager->easingTypeIN);
 			}
-		}
-		else
-		{
-			for (int i = 0; i < bars.Count(); ++i)
+			else
 			{
-				if (i % 2 == 0)
-				{
-					//bars[i].bar.x = N_Lerp(-win_width, 0, current_cutoff, true);
-					bars[i].bar.x = N_Lerp(-win_height, 0, current_cutoff);
-				}
-				else
-				{
-					//bars[i].bar.x = N_Lerp(win_width, 0, current_cutoff, true);
-					bars[i].bar.x = N_Lerp(win_width, 0, current_cutoff);
-				}
+				bars[i].bar.x = app->transitionManager->easing->EasingAnimation(win_width, 0, app->transitionManager->trackedTime, app->transitionManager->easingTypeIN);
 			}
 		}
 	}
-
-	if (app->transitionManager->step == TransitionStep::OUT)
+	else if (app->transitionManager->step == TransitionStep::OUT)
 	{
-		if (!non_lerp)
+		for (int i = 0; i < bars.Count(); ++i)
 		{
-			for (int i = 0; i < bars.Count(); ++i)
+			if (i % 2 == 0)
 			{
-				if (i % 2 == 0)
-				{
-					bars[i].bar.x = Lerp(0, win_width, current_cutoff);
-				}
-				else
-				{
-					bars[i].bar.x = Lerp(0, -win_width, current_cutoff);
-				}
+				bars[i].bar.x = app->transitionManager->easing->EasingAnimation(0, win_width, app->transitionManager->trackedTime, app->transitionManager->easingTypeOUT);
 			}
-		}
-		else
-		{
-			for (int i = 0; i < bars.Count(); ++i)
+			else
 			{
-				if (i % 2 == 0)
-				{
-					//bars[i].bar.x = N_Lerp(0, win_width, current_cutoff, true);
-					bars[i].bar.x = N_Lerp(0, win_width, current_cutoff);
-				}
-				else
-				{
-					//bars[i].bar.x = N_Lerp(0, -win_width, current_cutoff, true);
-					bars[i].bar.x = N_Lerp(0, -win_width, current_cutoff);
-				}
+				bars[i].bar.x = app->transitionManager->easing->EasingAnimation(0, -win_width, app->transitionManager->trackedTime, app->transitionManager->easingTypeOUT);
 			}
 		}
 	}
@@ -107,69 +68,30 @@ void AlternatingBars::TranslateHorizontalBars()
 void AlternatingBars::TranslateVerticalBars()
 {	
 	if (app->transitionManager->step == TransitionStep::IN)
-	{
-		if (!non_lerp)
+	{		
+		for (int i = 0; i < bars.Count(); ++i)
 		{
-			for (int i = 0; i < bars.Count(); ++i)
+			if (i % 2 == 0)
 			{
-				if (i % 2 == 0)
-				{
-					bars[i].bar.y = Lerp(-win_height, 0, current_cutoff);
-				}
-				else
-				{
-					bars[i].bar.y = Lerp(win_height, 0, current_cutoff);
-				}
+				bars[i].bar.y = app->transitionManager->easing->EasingAnimation(-win_height, 0, app->transitionManager->trackedTime, app->transitionManager->easingTypeIN);
 			}
-		}
-		else
-		{
-			for (int i = 0; i < bars.Count(); ++i)
+			else
 			{
-				if (i % 2 == 0)
-				{
-					//bars[i].bar.y = N_Lerp(-win_height, 0, current_cutoff, true);
-					bars[i].bar.y = N_Lerp(-win_height, 0, current_cutoff);
-				}
-				else
-				{
-					//bars[i].bar.y = N_Lerp(win_height, 0, current_cutoff, true);
-					bars[i].bar.y = N_Lerp(win_height, 0, current_cutoff);
-				}
+				bars[i].bar.y = app->transitionManager->easing->EasingAnimation(win_height, 0, app->transitionManager->trackedTime, app->transitionManager->easingTypeIN);
 			}
 		}
 	}
-
-	if (app->transitionManager->step == TransitionStep::OUT)
+	else if (app->transitionManager->step == TransitionStep::OUT)
 	{
-		if (!non_lerp)
+		for (int i = 0; i < bars.Count(); ++i)
 		{
-			for (int i = 0; i < bars.Count(); ++i)
+			if (i % 2 == 0)
 			{
-				if (i % 2 == 0)
-				{
-					bars[i].bar.y = Lerp(0, win_height, current_cutoff);
-				}
-				else
-				{
-					bars[i].bar.y = Lerp(0, -win_height, current_cutoff);
-				}
+				bars[i].bar.y = app->transitionManager->easing->EasingAnimation(0, win_height, app->transitionManager->trackedTime, app->transitionManager->easingTypeOUT);
 			}
-		}
-		else
-		{
-			for (int i = 0; i < bars.Count(); ++i)
+			else
 			{
-				if (i % 2 == 0)
-				{
-					//bars[i].bar.y = N_Lerp(0, win_height, current_cutoff, true);
-					bars[i].bar.y = N_Lerp(0, win_height, current_cutoff);
-				}
-				else
-				{
-					//bars[i].bar.y = N_Lerp(0, -win_height, current_cutoff, true);
-					bars[i].bar.y = N_Lerp(0, -win_height, current_cutoff);
-				}
+				bars[i].bar.y = app->transitionManager->easing->EasingAnimation(0, -win_height, app->transitionManager->trackedTime, app->transitionManager->easingTypeOUT);
 			}
 		}
 	}

@@ -1,14 +1,14 @@
 #include "ExpandingBars.h"
 #include "TransitionManager.h"
 
-ExpandingBars::ExpandingBars(float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color) 
-	: Transition(step_duration, non_lerp)
-	, bar_number(bar_number)
-	, random_colours(random_colours)
-	, even_color(even_color)
-	, odd_color(odd_color)
-	, vertical(vertical)
+ExpandingBars::ExpandingBars(int bar_number, bool vertical, bool random_colours, Color even_color, Color odd_color)
 {
+	this->bar_number = bar_number;
+	this->random_colours = random_colours;
+	this->even_color = even_color;
+	this->odd_color = odd_color;
+	this->vertical = vertical;
+
 	InitExpandingBars();
 }
 
@@ -33,82 +33,82 @@ void ExpandingBars::DoTransition()
 
 void ExpandingBars::ExpandHorizontalBars()
 {
-	if (app->transitionManager->step == TransitionStep::IN)
-	{
-		if (!non_lerp)
-		{
-			for (int i = 0; i < bars.Count(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
-			{																					// separate expansion and reduction in different steps.
-				bars[i].bar.x = Lerp(screen_center.x, 0, current_cutoff);
-				bars[i].bar.w = Lerp(0, win_width, current_cutoff);
-			}
-		}
-		else
-		{
-			for (int i = 0; i < bars.Count(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
-			{																					// separate expansion and reduction in different steps.
-				if (i % 2 == 0)																	// Ex: 0 --> win_width --> 0.
-				{
-					bars[i].bar.x = N_Lerp(screen_center.x, 0, current_cutoff);
-					bars[i].bar.w = N_Lerp(0, win_width, current_cutoff);
-				}
-				else
-				{
-					bars[i].bar.x = N_Lerp(screen_center.x, 0, current_cutoff, true);
-					bars[i].bar.w = N_Lerp(0, win_width, current_cutoff, true);
-				}
-			}
-		}
-	}
+	//if (app->transitionManager->step == TransitionStep::IN)
+	//{
+	//	if (!non_lerp)
+	//	{
+	//		for (int i = 0; i < bars.Count(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
+	//		{																					// separate expansion and reduction in different steps.
+	//			bars[i].bar.x = Lerp(screen_center.x, 0, current_cutoff);
+	//			bars[i].bar.w = Lerp(0, win_width, current_cutoff);
+	//		}
+	//	}
+	//	else
+	//	{
+	//		for (int i = 0; i < bars.Count(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
+	//		{																					// separate expansion and reduction in different steps.
+	//			if (i % 2 == 0)																	// Ex: 0 --> win_width --> 0.
+	//			{
+	//				bars[i].bar.x = N_Lerp(screen_center.x, 0, current_cutoff);
+	//				bars[i].bar.w = N_Lerp(0, win_width, current_cutoff);
+	//			}
+	//			else
+	//			{
+	//				bars[i].bar.x = N_Lerp(screen_center.x, 0, current_cutoff, true);
+	//				bars[i].bar.w = N_Lerp(0, win_width, current_cutoff, true);
+	//			}
+	//		}
+	//	}
+	//}
 
-	if (app->transitionManager->step == TransitionStep::OUT)
-	{
-		for (int i = 0; i < bars.Count(); ++i)												// As in the exiting step all bars will be at the same position/size, we need Lerp().
-		{																					// By using Lerp(), non_lerp and even/odd bar distinction is not needed.
-			bars[i].bar.x = Lerp(screen_center.x, 0, current_cutoff);
-			bars[i].bar.w = Lerp(0, win_width, current_cutoff);
-		}
-	}
+	//if (app->transitionManager->step == TransitionStep::OUT)
+	//{
+	//	for (int i = 0; i < bars.Count(); ++i)												// As in the exiting step all bars will be at the same position/size, we need Lerp().
+	//	{																					// By using Lerp(), non_lerp and even/odd bar distinction is not needed.
+	//		bars[i].bar.x = Lerp(screen_center.x, 0, current_cutoff);
+	//		bars[i].bar.w = Lerp(0, win_width, current_cutoff);
+	//	}
+	//}
 }
 
 void ExpandingBars::ExpandVerticalBars()
 {
-	if (app->transitionManager->step == TransitionStep::IN)
-	{
-		if (!non_lerp)
-		{
-			for (int i = 0; i < bars.Count(); ++i)
-			{
-				bars[i].bar.y = Lerp(screen_center.y, 0, current_cutoff);
-				bars[i].bar.h = Lerp(0, win_height, current_cutoff);
-			}
-		}
-		else
-		{
-			for (int i = 0; i < bars.Count(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
-			{																					// separate expansion and reduction in different steps.
-				if (i % 2 == 0)																	// Ex: 0 --> win_width --> 0.
-				{
-					bars[i].bar.y = N_Lerp(screen_center.y, 0, current_cutoff);
-					bars[i].bar.h = N_Lerp(0, win_height, current_cutoff);
-				}
-				else
-				{
-					bars[i].bar.y = N_Lerp(screen_center.y, 0, current_cutoff, true);
-					bars[i].bar.h = N_Lerp(0, win_height, current_cutoff, true);
-				}
-			}
-		}
-	}
+	//if (app->transitionManager->step == TransitionStep::IN)
+	//{
+	//	if (!non_lerp)
+	//	{
+	//		for (int i = 0; i < bars.Count(); ++i)
+	//		{
+	//			bars[i].bar.y = Lerp(screen_center.y, 0, current_cutoff);
+	//			bars[i].bar.h = Lerp(0, win_height, current_cutoff);
+	//		}
+	//	}
+	//	else
+	//	{
+	//		for (int i = 0; i < bars.Count(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
+	//		{																					// separate expansion and reduction in different steps.
+	//			if (i % 2 == 0)																	// Ex: 0 --> win_width --> 0.
+	//			{
+	//				bars[i].bar.y = N_Lerp(screen_center.y, 0, current_cutoff);
+	//				bars[i].bar.h = N_Lerp(0, win_height, current_cutoff);
+	//			}
+	//			else
+	//			{
+	//				bars[i].bar.y = N_Lerp(screen_center.y, 0, current_cutoff, true);
+	//				bars[i].bar.h = N_Lerp(0, win_height, current_cutoff, true);
+	//			}
+	//		}
+	//	}
+	//}
 
-	if (app->transitionManager->step == TransitionStep::OUT)
-	{
-		for (int i = 0; i < bars.Count(); ++i)													// cutoff goes from 0 to 1 to 0, so there would be no need to									
-		{																						// separate expansion and reduction in different steps.
-			bars[i].bar.y = Lerp(screen_center.y, 0, current_cutoff);							// Ex: 0 --> win_height --> 0.
-			bars[i].bar.h = Lerp(0, win_height, current_cutoff);
-		}
-	}
+	//if (app->transitionManager->step == TransitionStep::OUT)
+	//{
+	//	for (int i = 0; i < bars.Count(); ++i)													// cutoff goes from 0 to 1 to 0, so there would be no need to									
+	//	{																						// separate expansion and reduction in different steps.
+	//		bars[i].bar.y = Lerp(screen_center.y, 0, current_cutoff);							// Ex: 0 --> win_height --> 0.
+	//		bars[i].bar.h = Lerp(0, win_height, current_cutoff);
+	//	}
+	//}
 }
 
 void ExpandingBars::DrawBars()

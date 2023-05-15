@@ -7,7 +7,7 @@ class ZoomToTexture : public Transition
 {
 public:
 
-	ZoomToTexture(iPoint mouse_position, float step_duration, float zoom_scale);
+	ZoomToTexture(iPoint mouse_position, float zoom_scale);
 	~ZoomToTexture();
 
 	void DoTransition();

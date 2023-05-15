@@ -2,10 +2,11 @@
 #include "TransitionManager.h"
 #include "Map.h"
 
-ZoomToTexture::ZoomToTexture(iPoint mouse_position, float step_duration, float zoom_scale) : Transition(step_duration)
-, zoom_scale(zoom_scale)
-, mouse_position(mouse_position)
+ZoomToTexture::ZoomToTexture(iPoint mouse_position, float zoom_scale)
 {
+	this->zoom_scale = zoom_scale;
+	this->mouse_position = mouse_position;
+
 	InitZoomToTexture(mouse_position);
 }
 
@@ -13,7 +14,7 @@ ZoomToTexture::~ZoomToTexture() {}
 
 void ZoomToTexture::DoTransition()
 {
-	zoom_rate = original_scale + current_cutoff * zoom_scale;															// If current_cutoff == 0.0f, then scale == original_scale.
+	//zoom_rate = original_scale + current_cutoff * zoom_scale;															// If current_cutoff == 0.0f, then scale == original_scale.
 
 	//app->render->Blit(target_to_zoom, x_increase_rate, y_increase_rate, NULL, true, app->render->renderer, zoom_rate);
 }
