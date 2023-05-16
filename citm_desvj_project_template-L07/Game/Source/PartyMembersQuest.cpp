@@ -28,6 +28,8 @@ PartyMembersQuest::~PartyMembersQuest() {}
 
 bool PartyMembersQuest::Update() {
 	bool ret = false;
+
+	//Completion event
 	members = 0;
 	for (ListItem<PMember>* item = memberNames.start; item != nullptr; item = item->next)
 	{
@@ -37,7 +39,20 @@ bool PartyMembersQuest::Update() {
 	}
 	if (members == membersLeft) { return true; }
 
-	//Completion event
+	for (ListItem<PMember>* item = memberNames.start; item != nullptr; item = item->next)
+	{
+		if (item->data.name == "Sophie" && item->data.picked == true) {
+			for (ListItem<NPC*>* itemNPC = app->sceneManager->sceneGame->npcList.start; itemNPC != nullptr; itemNPC = itemNPC->next)
+			{
+				if (itemNPC->data->npcid == 2) {
+					itemNPC->data->needToDestroy = true;
+					app->sceneManager->sceneGame->npcList.Del(itemNPC);
+					break;
+				}
+			}
+		}
+	}
+
 	if (app->sceneManager->sceneGame->dialogueManager->dialogueLoaded) {
 		currentSpeaker = app->sceneManager->sceneGame->dialogueManager->GetCurrentDialogue()->currentNode->speaker;
 		if (app->sceneManager->sceneGame->dialogueManager->GetCurrentDialogue()->currentNode->currentOption->questCompletionId == this->id) {
