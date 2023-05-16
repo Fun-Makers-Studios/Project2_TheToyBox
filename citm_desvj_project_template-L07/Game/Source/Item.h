@@ -16,6 +16,7 @@ struct ItemData {
 	SString itemType;
 	bool animable = false;
 	uint frames;
+	bool isStackeable = false;
 };
 
 class Item : public Entity

@@ -21,6 +21,7 @@ enum class ColliderType
 	WATER,
 	WIN_ZONE,
 	CHECKPOINT,
+	BUTTON,
 	UNKNOWN
 };
 

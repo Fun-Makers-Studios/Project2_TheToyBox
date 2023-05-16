@@ -194,6 +194,10 @@ void MenuManager::SetDefaultMenu()
 		case SceneID::SCENE_GAME:
 			currentMenu = nullptr;
 			break;
+		
+		case SceneID::SCENE_CIRCUS:
+			currentMenu = nullptr;
+			break;
 
 		case SceneID::SCENE_FIGHT:
 			currentMenu = menuFight;
@@ -212,7 +216,7 @@ void MenuManager::SelectMenu()
 {
 	switch (app->sceneManager->currentScene->id)
 	{
-	case SceneID::SCENE_GAME:
+	case SceneID::SCENE_GAME: case SceneID::SCENE_CIRCUS:
 
 		if (currentMenu == nullptr)
 		{

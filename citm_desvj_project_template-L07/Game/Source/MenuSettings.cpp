@@ -2,6 +2,7 @@
 
 #include "App.h"
 #include "Menu.h"
+#include "MenuPause.h"
 #include "SceneManager.h"
 #include "MenuManager.h"
 #include "GuiManager.h"
@@ -42,15 +43,16 @@ bool MenuSettings::Start()
 	popImg_settings = app->tex->Load(popImgSettingsPath);
 
 	// Create UI
-	decreaseMusicButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 8, "decrease", 9, { 325, 200, 252, 76 }, this);
-	increaseMusicButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 9, "increase", 9, { 700, 200, 252, 76 }, this);
-
-	decreaseSFXButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 10, "decrease", 9, { 325, 315, 252, 76 }, this);
-	increaseSFXButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 11, "increase", 9, { 700, 315, 252, 76 }, this);
-
 	fullscreenButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::FULL_SCREEN, "off", 4, { 520, 424, 252, 76 }, this);
 	vsyncButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::V_SYNC, "off", 4, { 520, 532, 252, 76 }, this);
 
+	//Sliders
+	S_music = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 33, "music", 6, { 620,241,40,40 }, this, ButtonType::UNKNOWN, { 377, 253, 530, 15 });
+	S_music->slider = GuiSliderType::MUSIC;
+
+	S_fx = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 34, "fx", 3,{ 620,343,40,40 }, this, ButtonType::UNKNOWN, { 377, 353, 530, 15 });
+	S_fx->slider = GuiSliderType::FX;
+		
 	// Set easing finished on title buttons
 	ListItem<GuiControl*>* control =  guiControlsList.start;
 
@@ -84,16 +86,7 @@ bool MenuSettings::Update(float dt)
 		app->menuManager->SetDefaultMenu();
 	}
 
-	// HEKATE - GuiControl Label?
-	char music[10];
-	sprintf_s(music, 10, "%d", app->musicValue);
-	app->fonts->BlitText(630, 245, app->ui->font1_id, music);
-
-	char sfx[10];
-	sprintf_s(sfx, 10, "%d", app->sfxValue);
-	app->fonts->BlitText(630, 362, app->ui->font1_id, sfx);
-
-
+	
 	ListItem<GuiControl*>* control = guiControlsList.start;
 
 	while (control != nullptr)
@@ -139,6 +132,17 @@ bool MenuSettings::Update(float dt)
 		control = control->next;
 	}
 
+	// Lower music volume
+	if (app->menuManager->currentMenu == app->menuManager->menuSettings) {
+
+		if (app->musicValue >= 20)
+			Mix_VolumeMusic(20);
+	}
+	else
+	{
+		Mix_VolumeMusic(app->musicValue);
+	}
+
 	return true;
 }
 
@@ -146,6 +150,8 @@ bool MenuSettings::Update(float dt)
 bool MenuSettings::PostUpdate()
 {
 	bool ret = true;
+
+	app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
 
 	app->render->DrawTexture(popImg_settings, app->render->camera.x, app->render->camera.y - 3, NULL);
 
@@ -177,7 +183,7 @@ bool MenuSettings::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		case 8:
 			// Decrease music volume
-			app->musicValue = app->musicValue - 1;
+			app->musicValue = app->musicValue - 5;
 			if (app->musicValue <= 0)
 				app->musicValue = 0;
 			if (app->musicValue >= 100)
@@ -188,7 +194,7 @@ bool MenuSettings::OnGuiMouseClickEvent(GuiControl* control)
 
 		case 9:
 			// Increase music volume
-			app->musicValue = app->musicValue + 1;
+			app->musicValue = app->musicValue + 5;
 			if (app->musicValue <= 0)
 				app->musicValue = 0;
 			if (app->musicValue >= 100)
@@ -199,7 +205,7 @@ bool MenuSettings::OnGuiMouseClickEvent(GuiControl* control)
 
 		case 10:
 			// Decrease SFX volume
-			app->sfxValue -= 1;
+			app->sfxValue -= 5;
 			if (app->sfxValue <= 0)
 				app->sfxValue = 0;
 			if (app->sfxValue >= 100)
@@ -210,7 +216,7 @@ bool MenuSettings::OnGuiMouseClickEvent(GuiControl* control)
 
 		case 11:
 			// Increase SFX volume
-			app->sfxValue += 1;
+			app->sfxValue += 5;
 			if (app->sfxValue <= 0)
 				app->sfxValue = 0;
 			if (app->sfxValue >= 100)

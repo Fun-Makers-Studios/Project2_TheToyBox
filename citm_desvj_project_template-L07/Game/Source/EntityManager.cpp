@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Item.h"
 #include "KidEnemy.h"
+#include "PuzzlePiece.h"
 #include "App.h"
 #include "Textures.h"
 #include "Scene.h"
@@ -102,6 +103,10 @@ Entity* EntityManager::CreateEntity(EntityType type, pugi::xml_node itemNode)
 	case EntityType::ITEM:
 		entity = new Item(itemNode);
 		break;
+	
+	case EntityType::PUZZLE_PIECE:
+		entity = new PuzzlePiece(itemNode);
+		break;
 
 	default: break;
 	}
@@ -193,7 +198,6 @@ bool EntityManager::PostUpdate()
 
 	// HEKATE - Should find a better place for this
 	// Draw top layer
-	app->map->Draw(true);
 
 	return ret;
 }

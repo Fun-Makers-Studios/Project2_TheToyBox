@@ -50,6 +50,7 @@ public:
 	void SceneMap();
 	void LoadNPC();
 	void LoadItems();
+	void LoadPuzzles();
 
 	void ActiveParticles();
 	void SaveUI();
@@ -68,8 +69,6 @@ public:
 	List<NPC*> npcList;
 	KidEnemy* kid = nullptr;
 	Item* item = nullptr;
-
-	//Items that appears in the map
 	List<Item*> itemsList;
 
 	// Set of SFX
@@ -124,6 +123,7 @@ private:
 	// Particle system
 	ParticleSystem* smokePS = nullptr;
 	ParticleSystem* firefliesPS = nullptr;
+	ParticleSystem* walkParticles = nullptr;
 	ParticleSystem* fireTorchPS = nullptr;
 	List<ParticleSystem*> particlesList;
 

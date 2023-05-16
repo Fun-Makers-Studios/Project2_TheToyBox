@@ -1,5 +1,5 @@
-#ifndef __SCENEGAME_H__
-#define __SCENEGAME_H__
+#ifndef __SCENECIRCUS_H__
+#define __SCENECIRCUS_H__
 
 #include "Scene.h"
 #include "Player.h"
@@ -14,14 +14,14 @@
 
 struct SDL_Texture;
 
-class SceneGame : public Scene
+class SceneCircus : public Scene
 {
 public:
 
-	SceneGame();
+	SceneCircus();
 
 	// Destructor
-	virtual ~SceneGame();
+	virtual ~SceneCircus();
 
 	bool Awake(pugi::xml_node&) override;
 

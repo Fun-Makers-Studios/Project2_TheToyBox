@@ -4,6 +4,8 @@
 #include "Menu.h"
 #include "GuiControl.h"
 #include "GuiButton.h"
+#include "GuiSlider.h"
+
 
 struct SDL_Texture;
 
@@ -30,10 +32,11 @@ public:
 public:
 
 	// UI
-	GuiButton* decreaseMusicButton = nullptr;
-	GuiButton* increaseMusicButton = nullptr;
-	GuiButton* decreaseSFXButton = nullptr;
-	GuiButton* increaseSFXButton = nullptr;
+	//Sliders
+	GuiSlider* S_music;
+	GuiSlider* S_fx;
+
+	//Buttons
 	GuiButton* fullscreenButton = nullptr;
 	GuiButton* vsyncButton = nullptr;
 

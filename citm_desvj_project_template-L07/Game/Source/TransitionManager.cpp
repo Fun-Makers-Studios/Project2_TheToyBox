@@ -115,6 +115,13 @@ void TransitionManager::LoadTransition()
 			easingTypeIN = EasingType::EASE_INOUT_SIN;
 			easingTypeOUT = EasingType::EASE_INOUT_SIN;
 			break;
+		
+		case SceneID::SCENE_CIRCUS:
+			CreateWipe(TransitionStart::LEFT, Black);
+			easing->SetTotalTime(1);
+			easingTypeIN = EasingType::EASE_INOUT_SIN;
+			easingTypeOUT = EasingType::EASE_INOUT_SIN;
+			break;
 
 		case SceneID::SCENE_FIGHT:
 			CreateAlternatingBars(8, false, false, Black, Black);

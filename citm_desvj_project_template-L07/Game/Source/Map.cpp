@@ -644,9 +644,6 @@ bool Map::CreateTeleports(pugi::xml_node mapNode)
     // HEKATE
     pugi::xml_node objectgroup = mapNode.child("objectgroup");
 
-    Body* playerBody = app->sceneManager->sceneGame->player->body;
-    iPoint tilePos = app->map->WorldToMap(playerBody->pos.x, playerBody->pos.y);
-
     for (pugi::xml_node objectgroup = mapNode.child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
     {
         // TRIGGERS

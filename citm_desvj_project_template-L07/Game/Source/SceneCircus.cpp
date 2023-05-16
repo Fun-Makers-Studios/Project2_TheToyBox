@@ -16,63 +16,48 @@
 #include "PartyManager.h"
 #include "ParticleSystemManager.h"
 #include "Debug.h"
-#include "SceneGame.h"
+#include "SceneCircus.h"
 
 #include "Defs.h"
 #include "Log.h"
 
-SceneGame::SceneGame() : Scene()
+SceneCircus::SceneCircus() : Scene()
 {	
-	id = SceneID::SCENE_GAME;
+	id = SceneID::SCENE_CIRCUS;
 
 	/*STORE INFO FROM XML*/
-	musicPath = app->configNode.child("scene").child("music").attribute("musicPath").as_string();
-	saveTexPath = app->configNode.child("scene").child("saveTex").attribute("saveTexPath").as_string();
+	musicPath = app->configNode.child("sceneCircus").child("music").attribute("musicPath").as_string();
+	saveTexPath = app->configNode.child("sceneCircus").child("saveTex").attribute("saveTexPath").as_string();
 }
 
 // Destructor
-SceneGame::~SceneGame()
+SceneCircus::~SceneCircus()
 {}
 
 // Called before render is available
-bool SceneGame::Awake(pugi::xml_node& config)
+bool SceneCircus::Awake(pugi::xml_node& config)
 {
-	LOG("Loading Scene");
+	LOG("Loading Circus");
 	bool ret = true;
 
 	return ret;
 }
 
 // Called before the first frame
-bool SceneGame::Start()
+bool SceneCircus::Start()
 {
-	LOG("--STARTS GAME SCENE--");
+	LOG("--STARTS CIRCUS SCENE--");
 
 	dialogueManager = new DialogueManager(this);
 
-	
-	// Iterate all objects in the scene
-	/*for (pugi::xml_node itemNode = app->configNode.child("scene").child("potionhp"); itemNode; itemNode = itemNode.next_sibling("potionhp"))
-	{
-		item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-		item->parameters = itemNode;
-		livesCollectedList.Add(item);
-	}*/
-
-	// Load Enemies
-	for (pugi::xml_node itemNode = app->configNode.child("scene").child("enemykid"); itemNode; itemNode = itemNode.next_sibling("enemykid"))
-	{
-		kid = (KidEnemy*)app->entityManager->CreateEntity(EntityType::ENEMY_KID, itemNode);
-	}
-
-	
 	//Load First Map NPCs
-	mapName = "town";
+	mapName = "circusOne";
 	LoadNPC();
 	LoadItems();
 
 	//Instantiate and init the player using the entity manager
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER, app->configNode.child("scene").child("player"));
+	player->body->pos = { 180, 430 };
 
 	/*INITIALIZE NECESSARY MODULES*/
 	app->pathfinding->Enable();
@@ -109,13 +94,13 @@ bool SceneGame::Start()
 }
 
 // Called each loop iteration
-bool SceneGame::PreUpdate()
+bool SceneCircus::PreUpdate()
 {
 	return true;
 }
 
 // Called each loop iteration
-bool SceneGame::Update(float dt)
+bool SceneCircus::Update(float dt)
 {
 	SceneMap();
 
@@ -132,35 +117,6 @@ bool SceneGame::Update(float dt)
 		FightKid();
 	}
 
-	// HEKATE
-	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	{
-		if (!dialogueManager->dialogueLoaded && !settingSceneMenu && !partyMenu) { gamePaused != gamePaused; }
-		
-		if(!settingSceneMenu)
-			pauseMenu = !pauseMenu;
-	
-		Mix_PauseMusic();
-	}
-
-	if (!gamePaused)
-	{
-		Mix_ResumeMusic();
-	}
-	
-	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && !dialogueManager->dialogueLoaded)
-	{
-		gamePaused != gamePaused;
-		partyMenu != partyMenu;
-		app->audio->PlayFx(selectSFX);
-	}*/
-	/*if (app->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN && !dialogueManager->dialogueLoaded)
-	{
-		gamePaused != gamePaused;
-		questMenu != questMenu;
-		app->audio->PlayFx(selectSFX);
-	}*/
-
 	// Camera movement
 	if (app->debug->debug && app->debug->freeCam)
 	{
@@ -176,11 +132,7 @@ bool SceneGame::Update(float dt)
 	}
 
 	// Draw map
-	app->map->Draw();
-
-	//Changes to Night Mode
-	if(mapName == "town" && isNight)
-		app->render->DrawRectangle(app->render->viewport, 0, 0, 255, 100, true, false);
+	app->map->Draw(false);
 
 	ActiveParticles();
 
@@ -203,10 +155,12 @@ bool SceneGame::Update(float dt)
 }
 
 // Called each loop iteration
-bool SceneGame::PostUpdate()
+bool SceneCircus::PostUpdate()
 {
 	bool ret = true;	
 	
+	app->map->Draw(true);
+
 	// HEKATE
 	if (/*gamePaused &&*/ dialogueManager->dialogueLoaded)
 	{
@@ -222,7 +176,7 @@ bool SceneGame::PostUpdate()
 }
 
 // Called before quitting
-bool SceneGame::CleanUp()
+bool SceneCircus::CleanUp()
 {
 	LOG("Freeing GAME SCENE");
 
@@ -251,14 +205,7 @@ bool SceneGame::CleanUp()
 	return true;
 }
 
-bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
-{
-	// HEKATE MUST DELETE	
-
-	return true;
-}
-
-void SceneGame::ActiveParticles()
+void SceneCircus::ActiveParticles()
 {
 	if (mapName == "town" && isNight)
 	{
@@ -277,7 +224,7 @@ void SceneGame::ActiveParticles()
 	}
 }
 
-void SceneGame::SaveUI()
+void SceneCircus::SaveUI()
 {
 	if (showSavingState == true)
 	{
@@ -294,7 +241,7 @@ void SceneGame::SaveUI()
 	}
 }
 
-void SceneGame::ResetScene()
+void SceneCircus::ResetScene()
 {
 	app->audio->PlayMusic(musicPath, 1.0f);
 
@@ -310,7 +257,7 @@ void SceneGame::ResetScene()
 	}
 }
 
-void SceneGame::SceneMap()
+void SceneCircus::SceneMap()
 {
 	if (isMapChanging)
 	{		
@@ -323,7 +270,7 @@ void SceneGame::SceneMap()
 	}
 }
 
-void SceneGame::LoadNPC()
+void SceneCircus::LoadNPC()
 {
 	ListItem<NPC*>* npcItem;
 
@@ -341,7 +288,7 @@ void SceneGame::LoadNPC()
 	
 }
 
-void SceneGame::LoadItems()
+void SceneCircus::LoadItems()
 {
 	ListItem<Item*>* itemsItem;
 
@@ -359,7 +306,7 @@ void SceneGame::LoadItems()
 	}	
 }
 
-void SceneGame::FixCamera()
+void SceneCircus::FixCamera()
 {
 	// HEKATE width/height in TILES (townMap 55x36)
 	if (app->map->mapData.width >= 55 && app->map->mapData.height >= 36)	//SMALL MAP SIZE 1280x704
@@ -386,14 +333,14 @@ void SceneGame::FixCamera()
 	}
 }
 
-void SceneGame::FightKid()
+void SceneCircus::FightKid()
 {
 	app->partyManager->enemyToFight = "enemykid";
 	app->sceneManager->sceneState = SceneState::SWITCH;
 	app->sceneManager->nextScene = SceneID::SCENE_FIGHT;
 }
 
-bool SceneGame::LoadState(pugi::xml_node& data)
+bool SceneCircus::LoadState(pugi::xml_node& data)
 {
 	// HEKATE
 	// Load previous saved player position
@@ -454,38 +401,12 @@ bool SceneGame::LoadState(pugi::xml_node& data)
 	return true;
 }
 
-bool SceneGame::SaveState(pugi::xml_node& data)
+bool SceneCircus::SaveState(pugi::xml_node& data)
 {
-	pugi::xml_node sceneGame = data.append_child("scene");
+	pugi::xml_node sceneGame = data.append_child("sceneCircus");
 
 	pugi::xml_node mapname = sceneGame.append_child("mapName");
 	mapname.append_attribute("actualMap") = mapName.GetString();
-
-	
-	// HEKATE
-	// Save current player position
-	//pugi::xml_node playerPos = data.append_child("playerPosition");
-	//playerPos.append_attribute("x") = app->scene->player->pbody->body->GetTransform().p.x;
-	//playerPos.append_attribute("y") = app->scene->player->pbody->body->GetTransform().p.y;
-	//
-	//// Save current player number of coins
-	//pugi::xml_node itemLives = data.append_child("itemLives");
-	//itemLives.append_attribute("itemLives") = itemLives;
-	//
-	//// Save current player number of coins
-	//pugi::xml_node checkpointEnabled = data.append_child("checkpointEnabled");
-	//checkpointEnabled.append_attribute("checkpointEnabled") = checkpointEnabled;
-
-	//// Save current bat position
-	//pugi::xml_node kidPos = data.append_child("kidPosition");
-	//kidPos.append_attribute("x") = app->scene->kid->pbody->body->GetTransform().p.x;
-	//kidPos.append_attribute("y") = app->scene->kid->pbody->body->GetTransform().p.y;
-	//
-	//pugi::xml_node checkPoint = data.append_child("checkPoint");
-	//checkPoint.append_attribute("checkPoint") = app->scene->saveEnabled;
-	//
-	//pugi::xml_node actualMapName = data.append_child("mapName");
-	//actualMapName.append_attribute("mapName") = mapName.GetString();
 
 	return true;
 }

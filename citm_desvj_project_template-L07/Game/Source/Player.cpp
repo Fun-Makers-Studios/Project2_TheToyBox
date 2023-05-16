@@ -12,6 +12,7 @@
 #include "EntityManager.h"
 #include "ParticleSystemManager.h"
 #include "ModuleController.h"
+#include "MenuManager.h"
 
 #include <math.h>
 
@@ -181,24 +182,30 @@ bool Player::Update()
 		body->vel = { 0, 0 };
 		// HEKATE pbody->body->SetGravityScale(0);
 
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT ) {
-			body->vel.y = -speed;
-			currentAnim = &walkUp;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			body->vel.y = speed;
-			currentAnim = &walkDown;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			body->vel.x = -speed;
-			currentAnim = &walkLeft;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || app->controller->Controller_player1_LAxisX > 6400) {
-			body->vel.x = speed;
-			currentAnim = &walkRight;
-		}
+		if (app->menuManager->currentMenu != app->menuManager->menuPause &&
+			app->menuManager->currentMenu != app->menuManager->menuSettings &&
+			app->menuManager->currentMenu != app->menuManager->menuParty &&
+			app->menuManager->currentMenu != app->menuManager->menuQuest &&
+			app->sceneManager->sceneGame->dialogueManager->dialogueLoaded == false) {
 
-		if (currentAnim != &idle)
+			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+				body->vel.y = -speed;
+				currentAnim = &walkUp;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+				body->vel.y = speed;
+				currentAnim = &walkDown;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+				body->vel.x = -speed;
+				currentAnim = &walkLeft;
+			}
+			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+				body->vel.x = speed;
+				currentAnim = &walkRight;
+			}
+		}
+		/*if (currentAnim != &idle)
 		{
 			if (walkParticles == nullptr) {
 				dPoint pos = { body->pos.x, body->pos.y + 10 };
@@ -208,7 +215,7 @@ bool Player::Update()
 				walkParticles->TurnOff();
 				walkParticles = nullptr;
 			}
-		}
+		}*/
 
 		body->pos.x += body->vel.x;
 		body->pos.y += body->vel.y;
@@ -240,8 +247,6 @@ bool Player::CleanUp()
 void Player::ResetPlayerPos()
 {
 	body->vel = { 0, 0 };
-	// HEKATE
-	//pbody->body->SetTransform(PIXEL_TO_METERS(startPos), 0.0f);
 	dead = false;
 	
 	LOG("--RESETING PLAYER--");

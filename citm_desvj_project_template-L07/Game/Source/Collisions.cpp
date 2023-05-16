@@ -217,6 +217,10 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
 
             break;
 
+        case ColliderType::BUTTON:
+            CirCirCollision(body1, body2);
+            break;
+
         case ColliderType::UNKNOWN:
             break;
 
@@ -293,6 +297,8 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
     
     case MapZone::TOWN_TO_CIRCUS:
         LOG("GO TO CIRCUS");
+        /*app->sceneManager->sceneState = SceneState::SWITCH;
+        app->sceneManager->nextScene = SceneID::SCENE_CIRCUS;*/
         app->sceneManager->sceneGame->mapName = "circusOne";
         app->sceneManager->sceneGame->player->newPos = { 160, 416 };
         app->sceneManager->sceneGame->isMapChanging = true;
@@ -301,6 +307,8 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
 
     case MapZone::CIRCUS_TO_TOWN:
         LOG("GO TO TOWN");
+        /*app->sceneManager->sceneState = SceneState::SWITCH;
+        app->sceneManager->nextScene = SceneID::SCENE_GAME;*/
         app->sceneManager->sceneGame->mapName = "town";
         app->sceneManager->sceneGame->player->newPos = { 1450, 96 };
         app->sceneManager->sceneGame->isMapChanging = true;
