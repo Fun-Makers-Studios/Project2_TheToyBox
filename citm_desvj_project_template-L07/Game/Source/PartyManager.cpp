@@ -114,8 +114,8 @@ bool PartyManager::LoadPartyMember(SString name) {
 		itemNode.attribute("defense").as_uint(),
 		itemNode.attribute("speed").as_uint(),
 		itemNode.attribute("critRate").as_uint(),
-		tex,
 		position,
+		tex,
 		textureRect);
 
 	AddMemberToParty(member);
