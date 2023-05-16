@@ -74,8 +74,8 @@
 		<fightCircusBG texturepath="Assets/Textures/SceneFight/FightCircusBG.png"/>
 		<arrowimage texturepath="Assets/Textures/SceneFight/cursedArrow.png"/>
 		
-		<partymember type="ally" name="zero" maxHp="25" maxMana="20" level ="1" attack="4" defense="30" speed="40" critRate="10" texturepath="Assets/Textures/characters.png" initial="true"/>
-		<partymember type="ally" name="sophie" maxHp="15" maxMana="30" level ="1" attack="6" defense="20" speed="50" critRate="15" texturepath="Assets/Textures/characters.png" initial="true"/>
+		<partymember type="ally" name="zero" maxHp="25" maxMana="20" level ="1" attack="4" defense="30" speed="40" critRate="10" texturepath="Assets/Textures/CombatSprites.png" initial="true"/>
+		<partymember type="ally" name="sophie" maxHp="15" maxMana="30" level ="1" attack="6" defense="20" speed="50" critRate="15" texturepath="Assets/Textures/CombatSprites.png" initial="true"/>
 		
 		<enemykid type="enemy" name="enemykid" maxHp="20" maxMana="25" attack="3" defense="10" speed="15" critRate="10" texturepath="Assets/Textures/characters.png"/>
 		

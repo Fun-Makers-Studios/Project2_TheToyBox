@@ -31,9 +31,11 @@ bool PartyManager::Start()
 		SDL_Rect textureRect;
 		SString nameStr = itemNode.attribute("name").as_string();
 		if (nameStr == "zero")
-			textureRect = { 32, 0, 32, 64 };
+			textureRect = { 0, 23, 48, 57 };
+		//textureRect = { 32, 0, 32, 64 };
 		else if (nameStr == "sophie")
-			textureRect = { 128, 0, 32, 64 };
+			textureRect = { 49, 24, 44, 56 };
+		//textureRect = { 128, 0, 32, 64 };
 		
 		//battle position
 		int offsetX = 210;
