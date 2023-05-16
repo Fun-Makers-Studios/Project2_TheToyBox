@@ -91,6 +91,9 @@ bool MenuFight::PostUpdate()
 {
 	bool ret = true;
 
+	// Draw GUI
+	app->guiManager->Draw();
+
 	return ret;
 }
 

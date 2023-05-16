@@ -30,8 +30,8 @@ SceneFight::SceneFight() : Scene()
 
 	//Create Easings
 	easingPos = new Easing();
-	easingPos->SetTotalTime(0.5);
-	easingPos->SetDelayTime(0.5);
+	easingPos->SetTotalTime(0.4);
+	easingPos->SetDelayTime(0.3);
 }
 
 // Destructor
@@ -236,22 +236,31 @@ bool SceneFight::PostUpdate()
 		app->render->DrawTexture(tex_fightCircusBG, 0, 0, NULL, SDL_FLIP_NONE, ScaleType::FIGHT);
 	}
 
-	// Draw turnList members
+	// Draw turnList members + allies HP
 	for (size_t i = 0; i < turnList.Count(); i++)
 	{
+		PartyMember* member = turnList.At(i)->data;
+
 		app->render->DrawTexture(
-			turnList.At(i)->data->texture,
-			turnList.At(i)->data->pos.x,
-			turnList.At(i)->data->pos.y,
-			&turnList.At(i)->data->textureRect,
+			member->texture,
+			member->pos.x,
+			member->pos.y,
+			&member->textureRect,
 			SDL_FLIP_NONE, ScaleType::FIGHT);
+
+		if (member->type == MemberType::ALLY)
+		{
+			SDL_Rect rect1 = { member->pos.x, member->pos.y, member->textureRect.w * member->currentHp / member->maxHp, 3 };
+			app->render->DrawRectangle(rect1, 255, 0, 0, 196);
+
+			SDL_Rect rect2 = { member->pos.x, member->pos.y, member->textureRect.w, 3 };
+			app->render->DrawRectangle(rect2, 0, 0, 0, 196, false);
+		}
 	}
 
-	// Draw Selected enemy
-	app->render->DrawTexture(tex_arrow, enemyList.At(enemySelected)->data->pos.x, enemyList.At(enemySelected)->data->pos.y - 32, NULL, SDL_FLIP_NONE, ScaleType::FIGHT);
-
-	// Draw GUI
-	app->guiManager->Draw();
+	// Draw Arrow Selected enemy
+	app->render->DrawTexture(tex_arrow, enemyList.At(enemySelected)->data->pos.x, enemyList.At(enemySelected)->data->pos.y - 32, NULL, SDL_FLIP_NONE, ScaleType::FIGHT);	
+	
 
 	return ret;
 }
