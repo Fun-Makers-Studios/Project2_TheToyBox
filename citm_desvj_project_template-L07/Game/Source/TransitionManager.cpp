@@ -117,7 +117,7 @@ void TransitionManager::LoadTransition()
 			break;
 		
 		case SceneID::SCENE_CIRCUS:
-			CreateWipe(TransitionStart::LEFT, Black);
+			CreateSlide(TransitionStart::TOP, Black);
 			easing->SetTotalTime(1);
 			easingTypeIN = EasingType::EASE_INOUT_SIN;
 			easingTypeOUT = EasingType::EASE_INOUT_SIN;

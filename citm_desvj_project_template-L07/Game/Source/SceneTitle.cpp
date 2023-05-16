@@ -30,6 +30,8 @@ SceneTitle::SceneTitle() : Scene()
 	nameImgPath = app->configNode.child("title").child("gameName").attribute("texturepath").as_string();
 	musicPath = app->configNode.child("title").child("music").attribute("musicPath").as_string();
 	select2SFXPath = app->configNode.child("player").child("SFXset").attribute("selectSFXPath").as_string();
+	
+	easingTitle = new Easing(2.8);
 }
 
 
@@ -49,6 +51,8 @@ bool SceneTitle::Awake(pugi::xml_node& config)
 bool SceneTitle::Start()
 {
 	LOG("--STARTS TITLE SCENE--");
+
+	tilteEasingState = TilteEasingState::DOWN;
 
 	app->render->camera.x = 0;
 	app->debug->debug = false;
@@ -84,7 +88,41 @@ bool SceneTitle::Update(float dt)
 	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
 
 	app->render->DrawTexture(img, 0, 0, NULL, SDL_FLIP_NONE, ScaleType::TITLE);
-	app->render->DrawTexture(nameImg, 210, 10, NULL, SDL_FLIP_NONE, ScaleType::TITLE);
+
+	double time = easingTitle->TrackTime(dt);
+	double y = 0;
+
+	switch (tilteEasingState)
+	{
+	case TilteEasingState::UP:
+
+		y = easingTitle->EasingAnimation(17, 28, time, EasingType::EASE_INOUT_SIN);
+
+		if (easingTitle->GetFinished())
+		{
+			easingTitle->SetFinished(false);
+			tilteEasingState = TilteEasingState::DOWN;
+		}
+
+		break;
+
+	case TilteEasingState::DOWN:
+
+		y = easingTitle->EasingAnimation(28, 17, time, EasingType::EASE_INOUT_SIN);
+
+		if (easingTitle->GetFinished())
+		{
+			easingTitle->SetFinished(false);
+			tilteEasingState = TilteEasingState::UP;
+		}
+
+		break;
+
+	default:
+		break;
+	}
+
+	app->render->DrawTexture(nameImg, 300, y, NULL, SDL_FLIP_NONE, ScaleType::FIGHT);
 
 	return true;
 }

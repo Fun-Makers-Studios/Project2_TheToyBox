@@ -7,6 +7,12 @@
 
 struct SDL_Texture;
 
+enum class TilteEasingState
+{
+	UP,
+	DOWN
+};
+
 class SceneTitle : public Scene
 {
 public:
@@ -56,6 +62,9 @@ private:
 	bool isSaved = false;
 	bool exitGame = false;
 
+	Easing* easingTitle = nullptr;
+
+	TilteEasingState tilteEasingState;
 };
 
 #endif // __SCENE_TITLE_H__
