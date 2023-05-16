@@ -55,7 +55,7 @@
 		<music musicPath="Assets/Audio/Music/town.ogg" />
 		<saveTex saveTexPath="Assets/Textures/UI/save.png"/>
 		<scenesfx selectSFXPath="Assets/Audio/Fx/select.wav" />
-		<player x="224" y="530" texturepath="Assets/Textures/SceneGame/characterZero.png" shadowtexture="Assets/Textures/shadow.png"/>
+		<player x="70" y="1088" texturepath="Assets/Textures/SceneGame/characterZero.png" shadowtexture="Assets/Textures/shadow.png"/>
 		<enemykid x="175" y="350" texturepath="Assets/Textures/characters.png"/>
 	</scene>
 	
@@ -242,13 +242,13 @@
 	
 	<itemsMap>
 		<town>
-			<item x="230" y="400" name="Peanut bag" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/peanut_bag.png"/>
-			<item x="250" y="450" name="Peanut bag" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/peanut_bag.png"/>
-			<item x="232" y="300" name="Cotton candy" itemType ="potionmana" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
-			<item x="250" y="500" name="Cotton candy" itemType ="potionmana" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
-			<item x="250" y="525" name="Key" itemType ="key" animable ="false" frames ="0" isStackable ="false" texturepath="Assets/Textures/Items/key.png"/>
-			<item x="285" y="525" name="Circus ticket" itemType ="key" animable ="false" frames ="0" isStackable ="false" texturepath="Assets/Textures/Items/circus_ticket.png"/>
-			<item x="285" y="560" name="Light-up sword" itemType ="lightupsword" animable ="true" frames ="5" isStackable ="false" texturepath="Assets/Textures/Items/lightup_sword.png"/>
+			<item x="112" y="910" name="Peanut bag" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/peanut_bag.png"/>
+			<item x="560" y="170" name="Peanut bag" itemType ="potionhp" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/peanut_bag.png"/>
+			<item x="321" y="384" name="Cotton candy" itemType ="potionmana" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
+			<item x="865" y="580" name="Cotton candy" itemType ="potionmana" animable ="false" frames ="0" isStackable ="true" texturepath="Assets/Textures/Items/potion_mana.png"/>
+			<item x="640" y="705" name="Key" itemType ="key" animable ="false" frames ="0" isStackable ="false" texturepath="Assets/Textures/Items/key.png"/>
+			<item x="1375" y="225" name="Circus ticket" itemType ="key" animable ="false" frames ="0" isStackable ="false" texturepath="Assets/Textures/Items/circus_ticket.png"/>
+			<item x="175" y="1088" name="Light-up sword" itemType ="lightupsword" animable ="true" frames ="5" isStackable ="false" texturepath="Assets/Textures/Items/lightup_sword.png"/>
 		</town>
 		<tavern>
 			
