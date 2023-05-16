@@ -8021,7 +8021,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="4" name="Collisions" width="55" height="36" locked="1" opacity="0.61">
+ <layer id="4" name="Collisions" width="55" height="36" visible="0" locked="1" opacity="0.61">
   <properties>
    <property name="Draw" type="bool" value="false"/>
    <property name="Navigation" type="bool" value="true"/>
@@ -10009,7 +10009,7 @@
    <tile gid="19"/>
   </data>
  </layer>
- <objectgroup id="10" name="TRIGGERS" locked="1">
+ <objectgroup id="10" name="TRIGGERS">
   <properties>
    <property name="Draw" type="bool" value="false"/>
    <property name="Navigation" type="bool" value="false"/>
@@ -10019,7 +10019,7 @@
     <property name="value" value="TOWN_TO_HOUSE1"/>
    </properties>
   </object>
-  <object id="2" name="TOWN_TO_TAVERN" x="736" y="288" width="64" height="32">
+  <object id="2" name="TOWN_TO_TAVERN" x="736.667" y="290" width="64" height="32">
    <properties>
     <property name="value" value="TOWN_TO_TAVERN"/>
    </properties>
@@ -10029,7 +10029,7 @@
     <property name="value" value="TOWN_TO_INN"/>
    </properties>
   </object>
-  <object id="5" name="TOWN_TO_CIRCUS" x="1408" y="32" width="64" height="32">
+  <object id="5" name="TOWN_TO_CIRCUS" x="1408" y="34" width="64" height="32">
    <properties>
     <property name="value" value="TOWN_TO_CIRCUS"/>
    </properties>

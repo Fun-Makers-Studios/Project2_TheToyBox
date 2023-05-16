@@ -4462,7 +4462,7 @@
  </layer>
  <layer id="9" name="Aboveall" width="40" height="22">
   <properties>
-   <property name="Draw" type="bool" value="true"/>
+   <property name="DrawTop" type="bool" value="true"/>
    <property name="Navigation" type="bool" value="false"/>
   </properties>
   <data>

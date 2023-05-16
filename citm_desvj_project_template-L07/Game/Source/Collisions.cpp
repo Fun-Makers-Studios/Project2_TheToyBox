@@ -254,7 +254,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
     case MapZone::HOUSEBASE_TO_HOUSEFLOOR:
         LOG("GO TO HOUSE FLOOR");
         app->sceneManager->sceneGame->mapName = "housefloor";
-        app->sceneManager->sceneGame->player->newPos = { 960, 256 };
+        app->sceneManager->sceneGame->player->newPos = { 840, 140};
         app->sceneManager->sceneGame->isMapChanging = true;
         app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
         break;
@@ -262,7 +262,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
     case MapZone::HOUSEFLOOR_TO_HOUSEFBASE:
         LOG("GO TO HOUSE BASEMENT");
         app->sceneManager->sceneGame->mapName = "housebasement";
-        app->sceneManager->sceneGame->player->newPos = { 672, 176 };
+        app->sceneManager->sceneGame->player->newPos = { 660, 150 };
         app->sceneManager->sceneGame->isMapChanging = true;
         app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
         break;
