@@ -56,7 +56,7 @@ bool SceneTitle::Start()
 	app->menuManager->Enable();
 
 	
-	/*Load*/
+	// Load tex / sfx
 	img = app->tex->Load(imgPath);
 	titleIntroSFX = app->audio->LoadFx("Assets/Audio/Fx/SceneTitle/scene_title.wav");
 
@@ -81,7 +81,7 @@ bool SceneTitle::Update(float dt)
 	pugi::xml_document gameStateFile;
 	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
 
-	app->render->DrawTexture(img, 0, 0, NULL);
+	app->render->DrawTexture(img, 0, 0, NULL, SDL_FLIP_NONE, ScaleType::TITLE);
 
 	return true;
 }

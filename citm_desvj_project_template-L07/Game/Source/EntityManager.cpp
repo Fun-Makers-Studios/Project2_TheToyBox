@@ -196,9 +196,6 @@ bool EntityManager::PostUpdate()
 		ret = item->data->PostUpdate();
 	}
 
-	// HEKATE - Should find a better place for this
-	// Draw top layer
-
 	return ret;
 }
 

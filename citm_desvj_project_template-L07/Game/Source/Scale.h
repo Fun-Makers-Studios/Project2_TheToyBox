@@ -7,12 +7,12 @@
 enum class ScaleType
 {
 	NORMAL,
+	TITLE,
 	WORLD,
 	HOUSE,
 	FIGHT,
 	UI_50,
 	UI_100,
-	XAVIDATECUENTA
 };
 
 
@@ -25,12 +25,12 @@ public:
 		switch (scale)
 		{
 		case ScaleType::NORMAL: return 1;
-		case ScaleType::WORLD:	return 2; //2
+		case ScaleType::TITLE:	return 4;	// 4
+		case ScaleType::WORLD:	return 2;	// 2
 		case ScaleType::HOUSE:	return 1;
-		case ScaleType::FIGHT:	return 3; //3
+		case ScaleType::FIGHT:	return 3;	// 3
 		case ScaleType::UI_50:	return 1;
 		case ScaleType::UI_100: return 1;
-		case ScaleType::XAVIDATECUENTA: return 4;
 		default: return 1;
 		}
 	}
