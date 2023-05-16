@@ -399,6 +399,11 @@ void SceneGame::LoadPuzzles()
 
 	for (ListItem<Puzzle*>* puzzlesItem = app->puzzleManager->puzzles.start; puzzlesItem != nullptr; puzzlesItem = puzzlesItem->next)
 	{
+		puzzlesItem->data->pieces.Clear();
+	}
+
+	for (ListItem<Puzzle*>* puzzlesItem = app->puzzleManager->puzzles.start; puzzlesItem != nullptr; puzzlesItem = puzzlesItem->next)
+	{
 		if (puzzlesItem->data->map == mapName)
 		{
 			app->puzzleManager->TriggerPuzzle(puzzlesItem->data->orderID);

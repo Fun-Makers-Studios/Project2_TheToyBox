@@ -13,6 +13,7 @@
 #include "Map.h"
 #include "Pathfinding.h"
 #include "EntityManager.h"
+#include "MenuManager.h"
 #include "Debug.h"
 
 #include <cmath>
@@ -254,7 +255,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
     case MapZone::HOUSEBASE_TO_HOUSEFLOOR:
         LOG("GO TO HOUSE FLOOR");
         app->sceneManager->sceneGame->mapName = "housefloor";
-        app->sceneManager->sceneGame->player->newPos = { 960, 256 };
+        app->sceneManager->sceneGame->player->newPos = { 840, 140};
         app->sceneManager->sceneGame->isMapChanging = true;
         app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
         break;
@@ -262,7 +263,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
     case MapZone::HOUSEFLOOR_TO_HOUSEFBASE:
         LOG("GO TO HOUSE BASEMENT");
         app->sceneManager->sceneGame->mapName = "housebasement";
-        app->sceneManager->sceneGame->player->newPos = { 672, 176 };
+        app->sceneManager->sceneGame->player->newPos = { 660, 150 };
         app->sceneManager->sceneGame->isMapChanging = true;
         app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
         break;
@@ -300,19 +301,27 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         break;
     
     case MapZone::TOWN_TO_CIRCUS:
+    {
         LOG("GO TO CIRCUS");
-        /*app->sceneManager->sceneState = SceneState::SWITCH;
-        app->sceneManager->nextScene = SceneID::SCENE_CIRCUS;*/
-        app->sceneManager->sceneGame->mapName = "circusOne";
-        app->sceneManager->sceneGame->player->newPos = { 160, 416 };
-        app->sceneManager->sceneGame->isMapChanging = true;
-        app->scaleObj->SetCurrentScale(ScaleType::WORLD);
-        break;
+
+        SString str = "Circus ticket";
+
+        for (ListItem<GuiInventorySlot*>* invItem = app->menuManager->menuParty->inventorySlotsList.start; invItem != nullptr; invItem = invItem->next)
+        {
+            if (invItem->data->slotItem != nullptr && invItem->data->slotItem->itemData.name == str)
+            {
+                app->sceneManager->sceneGame->mapName = "circusOne";
+                app->sceneManager->sceneGame->player->newPos = { 160, 416 };
+                app->sceneManager->sceneGame->isMapChanging = true;
+                app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+            }
+        }
+
+    }break;
 
     case MapZone::CIRCUS_TO_TOWN:
         LOG("GO TO TOWN");
-        /*app->sceneManager->sceneState = SceneState::SWITCH;
-        app->sceneManager->nextScene = SceneID::SCENE_GAME;*/
+
         app->sceneManager->sceneGame->mapName = "town";
         app->sceneManager->sceneGame->player->newPos = { 1450, 96 };
         app->sceneManager->sceneGame->isMapChanging = true;

@@ -3,6 +3,8 @@
 
 #include "Module.h"
 #include "Entity.h"
+#include "List.h"
+#include "SString.h"
 
 enum class ColliderShape
 {

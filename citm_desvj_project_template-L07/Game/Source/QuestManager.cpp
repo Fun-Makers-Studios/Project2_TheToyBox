@@ -129,6 +129,10 @@ void QuestManager::TriggerQuest(int id)
 		Quest* item = qitem->data;
 		if (item->id == id) {
 			activeQuests.Add(item);
+
+			//Open Quests Menu
+			app->menuManager->menuState = MenuState::SWITCH;
+			app->menuManager->nextMenu = MenuID::MENU_QUEST;
 			break;
 		}
 

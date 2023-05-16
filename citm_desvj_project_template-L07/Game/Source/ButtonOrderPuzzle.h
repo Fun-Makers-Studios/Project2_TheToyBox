@@ -22,10 +22,6 @@ public:
 	void ResetPuzzle();
 	void OpenDoor();
 
-public:
-
-	List<PuzzlePiece*> pieces;
-
 private:
 
 	PuzzlePiece* piece = nullptr;

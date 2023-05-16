@@ -5,6 +5,7 @@
 #include "SString.h"
 #include "Input.h"
 #include "Render.h"
+#include "PuzzlePiece.h"
 
 enum class PuzzleType
 {
@@ -32,7 +33,7 @@ public:
 	int orderID;
 	int nextPuzzleId;
 	SString map;
-
+	List<PuzzlePiece*> pieces;
 };
 
 #endif // __QUEST_H__
