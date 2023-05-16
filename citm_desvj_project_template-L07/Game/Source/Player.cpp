@@ -144,7 +144,7 @@ bool Player::PreUpdate()
 bool Player::Update()
 {
 	int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
-	double speed = std::min(4 * app->GetDT() / 16 / scale, 18.0f);
+	double speed = std::min(6 * app->GetDT() / 16 / scale, 18.0f);
 
 	currentAnim = &idle;
 
