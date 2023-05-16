@@ -259,8 +259,10 @@ bool SceneFight::PostUpdate()
 	}
 
 	// Draw Arrow Selected enemy
-	app->render->DrawTexture(tex_arrow, enemyList.At(enemySelected)->data->pos.x, enemyList.At(enemySelected)->data->pos.y - 32, NULL, SDL_FLIP_NONE, ScaleType::FIGHT);	
-	
+	if (enemyList.At(enemySelected) != nullptr)
+	{
+		app->render->DrawTexture(tex_arrow, enemyList.At(enemySelected)->data->pos.x, enemyList.At(enemySelected)->data->pos.y - 32, NULL, SDL_FLIP_NONE, ScaleType::FIGHT);
+	}
 
 	return ret;
 }
