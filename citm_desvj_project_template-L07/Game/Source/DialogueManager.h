@@ -27,11 +27,11 @@ public:
 	uint dialogueFontId;
 
 private:
-	Scene* scene;
+	Scene* scene = nullptr;
 	pugi::xml_node file;
 
-	Dialogue* currentDialogue;
-	SDL_Texture* dialoguetext;
+	Dialogue* currentDialogue = nullptr;
+	SDL_Texture* dialoguetext = nullptr;
 };
 
 #endif // __DIALOGUEMANAGER_H__
