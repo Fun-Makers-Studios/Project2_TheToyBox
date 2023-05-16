@@ -131,103 +131,859 @@
 
 	<dialoguemanager dialoguetext="Assets/Textures/UI/Dialog/Dialog.png" font="Assets/Textures/UI/Fonts/DialogFont.png" lookuptable="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz:?!.,-'*  " rows="6">
 		<dialogue id ="0">
-			<node id="0" text="Greetings traveler." speaker="Sophie">
+			<node id="0" text="Zero - Wha-? Where-? I was just-" speaker="Tumama">
 				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="1" text="Are you lost?" speaker="Sophie">
-				<option id="0" nextNodeId="3" text="What is this place?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
-				<option id="1" nextNodeId="2" text="No thanks." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			<node id="1" text="Zero - … Huh? What just happened?" speaker="Tumama">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="2" text="Oh, sorry" speaker="Sophie">
+			<node id="2" text="??? - Oooh, yeah I was asking the same thing" speaker="Tumama">
 				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="3" text="Place? What a silly cuestion." speaker="Sophie">
+		</dialogue>
+
+
+		<dialogue id ="1">
+			<node id="0" text="Zero - What?" speaker="Tumama">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="1" text="Weird wizard - I said that I was asking the same thing, are you deaf??" speaker="Tumama">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="2" text="Weird wizard - Hehehe I was just joking kid, it's fine. Come, come, I won’t bite, probably." speaker="Tumama">
+				<option id="0" nextNodeId="3" text="What is this place?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+				<option id="1" nextNodeId="5" text="Where are my friends?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+				<option id="2" nextNodeId="12" text="Who are you?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+
+			<node id="3" text="Weird wizard - oh this, this is- is an adventurer’s dream!" speaker="Tumama">
+				<option id="0" nextNodeId="4" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="4" text="Weird wizard - A curious thing really, so strange and fun and whimsical…" speaker="Tumama">
+				<option id="0" nextNodeId="16" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+
+			<node id="5" text="Weird wizard - Hohoho friends? Plural? That’s amazing, I’m really proud of you. " speaker="Tumama">
+				<option id="0" nextNodeId="6" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="6" text="Zero - ..." speaker="Tumama">
+				<option id="0" nextNodeId="7" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="7" text="Weird wizard - ..." speaker="Tumama">
+				<option id="0" nextNodeId="8" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="8" text="Zero - So, you know anything about the-" speaker="Tumama">
+				<option id="0" nextNodeId="9" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="9" text="Weird wizard - You’re the persuasive type, aren’t you? It’s a bit rude, people may think you’re annoying." speaker="Tumama">
+				<option id="0" nextNodeId="10" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="10" text="Weird wizard - Well, if you look hard enough, certainly, they’ll be somewhere. They can’t have gone far, can they?" speaker="Tumama">
+				<option id="0" nextNodeId="11" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="11" text="Weird wizard - I’m sure they’re having a nice time wherever they are anyways heehee" speaker="Tumama">
+				<option id="0" nextNodeId="16" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+
+			<node id="12" text="Weird wizard - Who am I? Ohhh that’s a good one." speaker="Tumama">
+				<option id="0" nextNodeId="13" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="13" text="Weird wizard - I’ve been around for quite a while, I know how things work, you don’t. It wouldn’t be fair to send a blind man to a cave without a flashlight, right?" speaker="Tumama">
+				<option id="0" nextNodeId="14" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="14" text="Zero - I, um… I guess…?" speaker="Tumama">
+				<option id="0" nextNodeId="15" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="15" text="Weird wizard - Yeah, keep guessing." speaker="Tumama">
+				<option id="0" nextNodeId="16" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+
+			<node id="16" text="Zero - I need to go" speaker="Tumama">
+				<option id="0" nextNodeId="17" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="17" text="Weird wizard - Hey, HEY, where are you going? You haven’t even saved yet." speaker="Tumama">
+				<option id="0" nextNodeId="18" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="18" text="Zero - Sav- what?" speaker="Tumama">
+				<option id="0" nextNodeId="19" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="19" text="Weird wizard - Save you the trouble of starting over, we don’t want that, no no." speaker="Tumama">
+				<option id="0" nextNodeId="20" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="20" text="Weird wizard - You think I want to stand here talking to you about the same stuff over and over? I got things to do." speaker="Tumama">
+				<option id="0" nextNodeId="21" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="21" text="Weird wizard - Oh and by the way, my instincts tell me that something is eagerly waiting for you at the park." speaker="Tumama">
+				<option id="0" nextNodeId="22" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="22" text="Zero - What are you even-" speaker="Tumama">
+				<option id="0" nextNodeId="23" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="22" text="Weird wizard - Shhhhhh my instincts can’t know I told you that hehehehe" speaker="Tumama">
+				<option id="0" nextNodeId="23" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="23" text="Weird wizard - Be seeing you, Zero!" speaker="Tumama">
+				<option id="0" nextNodeId="24" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="24" text="Zero - How do you-" speaker="Tumama">
+				<option id="0" nextNodeId="25" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="25" text="Zero - … weird old man" speaker="Tumama">
 				<option id="0" nextNodeId="-1" text="" questCompletionId="1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 		</dialogue>
-		<dialogue id ="1">
-			<node id="0" text="Have you tried the beer they serve here?" speaker="Tumama">
-				<option id="0" nextNodeId="1" text="No." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+
+
+		<dialogue id ="2">
+			<node id="0" text="Sophie - But that’s not fair! It’s three against one! One of you has to join my team!" speaker="Sophie">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"  speaker="Sophie"/>
 			</node>
-			<node id="1" text="Well then, enter the tabern and get one yourself." speaker="Tumama">
-				<option id="0" nextNodeId="-1" text="..." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
-				<option id="1" nextNodeId="2" text="No thanks." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			<node id="1" text="Kid 1 - No, we don’t" speaker="Sophie">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1" speaker="Sophie"/>
 			</node>
-			<node id="2" text="O fuck off" speaker="Tumama">
-				<option id="0" nextNodeId="-1" text="Wtf?!" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			<node id="2" text="Kid 2 - It’s in the rules!" speaker="Sophie">
+				<option id="0" nextNodeId="3" text="" questCompletionId="-1" questTriggerId="-1" speaker="Sophie"/>
+			</node>
+			<node id="3" text="Kid 3 - It doesn’t matter how many people are in each team just that it’s less than the number of fingers in the fountain." speaker="Sophie">
+				<option id="0" nextNodeId="4" text="" questCompletionId="-1" questTriggerId="-1" speaker="Sophie"/>
+			</node>
+			<node id="4" text="Sophie - I’ll find someone and then you’ll see. No-one can beat the warrior princess!!" speaker="Sophie">
+				<option id="0" nextNodeId="5" text="" questCompletionId="-1" questTriggerId="-1" speaker="Sophie"/>
+			</node>
+			<node id="5" text="Sophie - Zero!" speaker="Sophie">
+				<option id="0" nextNodeId="6" text="" questCompletionId="-1" questTriggerId="-1" speaker="Sophie"/>
+			</node>
+			<node id="6" text="Sophie - Zero!" speaker="Sophie">
+				<option id="0" nextNodeId="7" text="" questCompletionId="-1" questTriggerId="-1" speaker="Sophie"/>
+			</node>
+			<node id="7" text="Sophie - Zero, Zero, Zero, Zero, can you pleeeeease come play this game with me" speaker="Sophie">
+				<option id="0" nextNodeId="8" text="" questCompletionId="-1" questTriggerId="-1" speaker="Sophie"/>
+			</node>
+			<node id="8" text="Sophie - Those kids are being mean, they won’t split so they’re just all going against me and it’s not FAIR" speaker="Sophie">
+				<option id="0" nextNodeId="9" text="" questCompletionId="-1" questTriggerId="-1" speaker="Sophie"/>
+			</node>
+			<node id="9" text="Sophie - So, play!" speaker="Sophie">
+				<option id="0" nextNodeId="10" text="Yes" questCompletionId="-1" questTriggerId="-1" speaker="Sophie"/>
+				<option id="1" nextNodeId="13" text="No" questCompletionId="-1" questTriggerId="-1" speaker="Sophie"/>
+			</node>
+
+			<node id="10" text="Zero - Oook, but just one round and we go find everyone else" speaker="Sophie">
+				<option id="0" nextNodeId="11" text="" questCompletionId="-1" questTriggerId="-1" speaker="Sophie"/>
+			</node>
+			<node id="11" text="Sophie - Yay! Just one win and then we go find everyone else!" speaker="Sophie">
+				<option id="0" nextNodeId="12" text="" questCompletionId="-1" questTriggerId="-1" speaker="Sophie"/>
+			</node>
+			<node id="12" text="Zero - Wait, that’s not- *Battle start*" speaker="Sophie">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="2" questTriggerId="-1" speaker="Sophie"/>
+			</node>
+
+			<node id="13" text="Zero - No Sophie, we need to go find where the others are and try to go back home" speaker="Sophie">
+				<option id="0" nextNodeId="14" text="" questCompletionId="-1" questTriggerId="-1" speaker="Sophie"/>
+			</node>
+			<node id="14" text="Sophie - Oh" speaker="Sophie">
+				<option id="0" nextNodeId="15" text="" questCompletionId="-1" questTriggerId="-1" speaker="Sophie"/>
+			</node>
+			<node id="15" text="Sophie - Well, you do that and I’ll keep playing here, See ya!" speaker="Sophie">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Sophie"/>
 			</node>
 		</dialogue>
-		<dialogue id ="2" speaker="Tumama">
-			<node id="0" text="No place like this Inn." speaker="Tumama">
-				<option id="0" nextNodeId="1" text="Did you say Inn?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
-			</node>
-			<node id="1" text="Yes, what happens sweety?" speaker="Tumama">
-				<option id="0" nextNodeId="-1" text="Ah, nothing. Thanks." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
-				<option id="1" nextNodeId="2" text="Thank god, somewhere to rest." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
-			</node>
-			<node id="2" text="Well, not a cheap place." speaker="Tumama">
-				<option id="0" nextNodeId="-1" text="Fuck." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
-			</node>
-		</dialogue>
+
+
 		<dialogue id ="3">
-			<node id="0" text="Seems like no market today. Everybody went to the circus." speaker="Tumama">
-				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			<node id="0" text="Sophie - So, you'll play now?">
+				<option id="0" nextNodeId="1" text="Yes" questCompletionId="-1" questTriggerId="-1"/>
+				<option id="1" nextNodeId="4" text="No" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+
+			<node id="1" text="Zero - Oook, but just one round and we go find everyone else">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="2" text="Sophie - Yay! Just one win and then we go find everyone else!">
+				<option id="0" nextNodeId="3" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="3" text="Zero - Wait, that’s not- *Battle start*">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+
+			<node id="4" text="Sophie - Well, see ya!">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 		</dialogue>
+
+
 		<dialogue id ="4">
-			<node id="0" text="O man, all the tickets are sold." speaker="Tumama">
+			<node id="0" text="Sophie - Zero, I'm hungry." speaker="Tumama">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="1" text="Zero - There’s fruit here, let’s grab some." speaker="Tumama">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="2" text="Sophie - Yaaay I love free stuff!" speaker="Tumama">
+				<option id="0" nextNodeId="3" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="3" text="Angry shopkeeper - HEY, YOU!! YOU DANG KIDS!! YOU CAN’T JUST TAKE THAT!! *Battle start*" speaker="Tumama">
 				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
+
 		</dialogue>
+
+
 		<dialogue id ="5">
-			<node id="0" text="Fuck off!! Leave me alone." speaker="Tumama">
+			<node id="0" text="Angry shopkeeper - You think it’s normal to rob an honest man AND THEN BEAT HIM UP?? I don’t want to see ANY of you around here until you replace EVERYTHING you stole!!">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+
+		<dialogue id ="6">
+			<node id="0" text="Weird wizard - Need saving already?
+        	You guys really think you’ll do THAT badly?">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="1" text="Weird wizard - Hehe lighten up, kids! It was a joke!">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="2" text="Weird wizard - Boom! Progress saved.">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+
+		<dialogue id ="7">
+			<node id="0" text="Zero - Well, that went great...">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="1" text="??? - Attention everyone! I have a great announcement for you today!">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="2" text="Zero - What-?">
+				<option id="0" nextNodeId="3" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="3" text="Sophie -Someone’s at the plaza. Let’s go!">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+
+		<dialogue id ="8">
+			<node id="0" text="??? - Hello my friends, it's fantastic to see all of you getting here so quickly!" speaker="Tumama">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="1" text="??? - As you all know, today we are having a show in our beloved circus. The greatest and most spectacular one yet!" speaker="Tumama">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="2" text="??? - But! That’s not all, as today we’re choosing a couple of lucky onlookers to join us at the show, isn’t that exciting?" speaker="Tumama">
+				<option id="0" nextNodeId="3" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="3" text="??? - I know, I know, I, too, hate that so few of you get to join us in these extra special events. But it wouldn’t be so special otherwise now, would it?" speaker="Tumama">
+				<option id="0" nextNodeId="4" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="4" text="??? - I wish you all the best of luck and don’t forget to get your tickets, I heard we’re about to run out!" speaker="Tumama">
+				<option id="0" nextNodeId="5" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="5" text="??? - I hope to see you all later in the show" speaker="Tumama">
+				<option id="0" nextNodeId="6" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="6" text="Sophie - We HAVE to go there" speaker="Tumama">
+				<option id="0" nextNodeId="7" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="7" text="Zero - I don’t know, we should be looking for the others now" speaker="Tumama">
+				<option id="0" nextNodeId="8" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="8" text="Sophie - Please, please, pleaaaase! It’ll be so much fun!" speaker="Tumama">
+				<option id="0" nextNodeId="9" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="9" text="Zero - I-" speaker="Tumama">
+				<option id="0" nextNodeId="10" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="10" text="??? - Well, you two look new here" speaker="Tumama">
+				<option id="0" nextNodeId="11" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="11" text="Sophie - You’re the one that was talking in the plaza! See Zero, they’re talking to us, now we HAVE to go to the show" speaker="Tumama">
+				<option id="0" nextNodeId="12" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="12" text="??? - You sure do it’s the best around here!" speaker="Tumama">
+				<option id="0" nextNodeId="13" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="13" text="Imp - Where are my manners, I’m Imp, a pleasure to meet both of you" speaker="Tumama">
+				<option id="0" nextNodeId="14" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="14" text="Zero - I’m Zero and the loud one is my little sister Sophie" speaker="Tumama">
+				<option id="0" nextNodeId="15" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="15" text="Sophie - HEY!" speaker="Tumama">
+				<option id="0" nextNodeId="16" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="16" text="Zero - Loud and tiny!" speaker="Tumama">
+				<option id="0" nextNodeId="17" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="17" text="Imp - Pff" speaker="Tumama">
+				<option id="0" nextNodeId="19" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="19" text="Imp - If you don’t mind me asking. Where did you come from? It’s not every day we get new people here" speaker="Tumama">
+				<option id="0" nextNodeId="20" text="Tell the truth" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+				<option id="1" nextNodeId="22" text="Lie" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+
+			<node id="20" text="Zero - We’re from the real world, outside of the box" speaker="Tumama">
+				<option id="0" nextNodeId="21" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="21" text="Imp - So, I *was* right, You’re human too" speaker="Tumama">
+				<option id="0" nextNodeId="29" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+
+			<node id="22" text="Zero - Oh just, you know, around. From outside, the forest and stuff" speaker="Tumama">
+				<option id="0" nextNodeId="23" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="23" text="Sophie - Yeah, we bite! Grrr" speaker="Tumama">
+				<option id="0" nextNodeId="24" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="24" text="Imp - Pff. Sure, sure" speaker="Tumama">
+				<option id="0" nextNodeId="25" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="25" text="Imp - You’re definitely from outside… Out of the Toy Box that is" speaker="Tumama">
+				<option id="0" nextNodeId="26" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="26" text="Zero - I- We- no." speaker="Tumama">
+				<option id="0" nextNodeId="27" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="27" text="Zero - I- We- no." speaker="Tumama">
+				<option id="0" nextNodeId="28" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="28" text="Imp - Don’t worry, I won’t tell. We humans should look out for each other in here" speaker="Tumama">
+				<option id="0" nextNodeId="29" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+
+			<node id="29" text="Sophie - Wait, you’re not a toy?" speaker="Tumama">
+				<option id="0" nextNodeId="30" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="30" text="Imp - Do I really look that bad?" speaker="Tumama">
+				<option id="0" nextNodeId="31" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="31" text="Imp - To be honest, I’m not quite… sure, anymore, it’s been a long while and being here… it changes you." speaker="Tumama">
+				<option id="0" nextNodeId="32" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="32" text="Imp - But, yes, I came from the real world too" speaker="Tumama">
+				<option id="0" nextNodeId="33" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="33" text="Imp - If you want, maybe I can help you with some stuff, surely you have questions" speaker="Tumama">
+				<option id="0" nextNodeId="34" text="Ask about your friends" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+				<option id="1" nextNodeId="39" text="Ask about getting out" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+				<option id="2" nextNodeId="43" text="Changes you?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+
+			<node id="34" text="Zero - We weren’t alone, before we got here, we had three friends with us. Do you have any idea where they could be?" speaker="Tumama">
+				<option id="0" nextNodeId="35" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="35" text="Imp - Well, they’re not in the circus, I can tell you that for sure." speaker="Tumama">
+				<option id="0" nextNodeId="36" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="36" text="Imp - I’ve heard some rumors, about how the Toy Box is much, much bigger than what I know of it." speaker="Tumama">
+				<option id="0" nextNodeId="37" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="37" text="Imp - Other… sections of the world and ways to get there. That wizard talks about them sometimes, portals or something similar I’ve never seen one, so it could only be down in..." speaker="Tumama">
+				<option id="0" nextNodeId="38" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="38" text="Imp - Nevermind." speaker="Tumama">
+				<option id="0" nextNodeId="48" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+
+			<node id="39" text="Zero - You have any idea how to get out if this place?" speaker="Tumama">
+				<option id="0" nextNodeId="40" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="40" text="Imp - No clue, take any direction and go straight, you won’t find an end and when you turn back, the town is right there, never far." speaker="Tumama">
+				<option id="0" nextNodeId="41" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="41" text="Imp - Maybe there’s something at…" speaker="Tumama">
+				<option id="0" nextNodeId="42" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="42" text="Imp - No... Forget it." speaker="Tumama">
+				<option id="0" nextNodeId="48" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+
+			<node id="43" text="Zero - You said being here changes you. Is it like, an amount of time or… what did you mean by that?" speaker="Tumama">
+				<option id="0" nextNodeId="44" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="44" text="Imp - Ah, yeah, no it’s not time, it’d be too… predictable I guess?" speaker="Tumama">
+				<option id="0" nextNodeId="45" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="45" text="Imp - No, sometimes, things happen. You take something, you make a deal, you die" speaker="Tumama">
+				<option id="0" nextNodeId="46" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="46" text="Imp - You can come back from those but, you’re not the same" speaker="Tumama">
+				<option id="0" nextNodeId="47" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="47" text="Imp - Don’t worry too much about it, it's not as bad as it sounds" speaker="Tumama">
+				<option id="0" nextNodeId="48" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+
+			<node id="48" text="Sophie - So, about those tickets?" speaker="Tumama">
+				<option id="0" nextNodeId="49" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="49" text="Imp - oh, I don’t th- I don- I-" speaker="Tumama">
+				<option id="0" nextNodeId="50" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="50" text="Imp - ..." speaker="Tumama">
+				<option id="0" nextNodeId="51" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="51" text="Imp - I don’t have tickets with me at the moment dear, but if you get some I will make sure you get the *best* seats to see our wonderful show." speaker="Tumama">
+				<option id="0" nextNodeId="52" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="52" text="Imp - I have to go now, duty calls. Until next time" speaker="Tumama">
+				<option id="0" nextNodeId="53" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="53" text="Zero - That was… something" speaker="Tumama">
+				<option id="0" nextNodeId="54" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="54" text="Sophie - What are we waiting for? Let’s get those tickets!!!" speaker="Tumama">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="4" speaker="Tumama"/>
+			</node>
+		</dialogue>
+
+
+		<dialogue id ="9">
+			<node id="0" text="Zero - Hello, two tickets for t-">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="1" text="Clown - Sold out">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="2" text="Zero - But we just-">
+				<option id="0" nextNodeId="3" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="3" text="Clown - Sold out">
+				<option id="0" nextNodeId="4" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="4" text="Zero - Guess we’re not seeing the show. Sorry Sophie.">
+				<option id="0" nextNodeId="5" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="5" text="Sophie - No, we’re going. I have an idea. Let's go talk with the toys still out here">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+		<dialogue id ="9">
+			<node id="0" text="Zero - Hello, two tickets for t-">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="1" text="Clown - Sold out">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="2" text="Zero - But we just-">
+				<option id="0" nextNodeId="3" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="3" text="Clown - Sold out">
+				<option id="0" nextNodeId="4" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="4" text="Zero - Guess we’re not seeing the show. Sorry Sophie.">
+				<option id="0" nextNodeId="5" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="5" text="Sophie - No, we’re going. I have an idea. Let's go talk with the toys still out here">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+		<dialogue id ="10">
+			<node id="0" text="Shopkeeper - Wow wow wow. What are you trying to do there you rascal">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="0" text="Zero - Nothing! We're going now">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+		<dialogue id ="11">
+			<node id="0" text="Zero - Nice day we’re having.">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="1" text="Doll - Yes, an amazing day. I got so much done!">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="2" text="Sophie - No ticket.">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+		<dialogue id ="12">
+			<node id="0" text="Zero - It's impressive how many people want to go to the circus, right?">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="1" text="Doll - Bah, it’s like this every week. But I never get in so what’s the point.">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="2" text="Sophie - Nothing.">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+		<dialogue id ="13">
+			<node id="0" text="Zero - Nice day we’re having.">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="1" text="Doll - Yes! and such a great show to go to now">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="2" text="Sophie - Bingo!">
+				<option id="0" nextNodeId="3" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="3" text="Zero - Yeah, definitely gonna be great to see.">
+				<option id="0" nextNodeId="4" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="4" text="Zero - Anyway, see ya!">
+				<option id="0" nextNodeId="5" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="5" text="Sophie - WE HAVE TICKETS!">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+		<dialogue id ="14">
+			<node id="0" text="Imp - You made it. I didn’t think you’d be able to get tickets." speaker="Tumama">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="1" text="Zero - Yeah… we managed." speaker="Tumama">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="2" text="Imp - Well, since you’re here. Go as high in the benches as you can you’ll get the best view" speaker="Tumama">
+				<option id="0" nextNodeId="3" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="3" text="Imp - And no matter what *no volunteering*" speaker="Tumama">
+				<option id="0" nextNodeId="4" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="4" text="Imp - I- *cough* *cough*" speaker="Tumama">
+				<option id="0" nextNodeId="5" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="5" text="Imp - ..." speaker="Tumama">
+				<option id="0" nextNodeId="6" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			</node>
+			<node id="6" text="Imp - I have to go now, enjoy the show dearies!" speaker="Tumama">
 				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 		</dialogue>
-		<dialogue id ="6">
-			<node id="0" text="Hello, hello! Do you wanna save?." speaker="Tumama">
-				<option id="0" nextNodeId="1" text="Yes in your mum ass." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
-				<option id="1" nextNodeId="2" text="No, im not a pussy." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+
+		<dialogue id ="15">
+			<node id="0" text="Imp - LADIES AND GENTLEMEN, WELCOME TO…">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
-			<node id="1" text="WOWOWOW! Relax my friend, here you have." speaker="Tumama">
-				<option id="0" nextNodeId="-1" text="Bye fucking asshole." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			<node id="1" text="...">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
-			<node id="2" text="Dammnnn that is how things work here. Yeah!" speaker="Tumama">
-				<option id="0" nextNodeId="-1" text="Shut up old man." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			<node id="2" text="...">
+				<option id="0" nextNodeId="3" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="3" text="...">
+				<option id="0" nextNodeId="4" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="4" text="Imp - I hope all of you enjoyed and an extra round of applause for our newest additions">
+				<option id="0" nextNodeId="5" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="5" text="Imp - We’ll see you again in our next show and remember. The show is never over as long as we keep the connection">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 		</dialogue>
+
+		<dialogue id ="16">
+			<node id="0" text="Zero - Well… A bit creepy, but kinda fun. What did you think, Sophie?">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="1" text="Sophie - I have developed an irrational fear of puppets now!!!">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="2" text="Weird wizard - Yeah, I don’t blame you, I have never made it past half time.">
+				<option id="0" nextNodeId="3" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="3" text="Zero - Oh, it’s you… again.">
+				<option id="0" nextNodeId="4" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="4" text="Weird wizard - Yeah, I missed you too, please hold back the excitement, jeez.">
+				<option id="0" nextNodeId="5" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="5" text="Sophie - What’s the matter, funny wizard man?">
+				<option id="0" nextNodeId="6" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="6" text="Weird wizard - First of all, I have no idea what about me you’d ever find funny.">
+				<option id="0" nextNodeId="7" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="7" text="Weird wizard - Secondly, how about that Jester fella, huh?">
+				<option id="0" nextNodeId="8" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="8" text="Zero - You mean Imp?">
+				<option id="0" nextNodeId="9" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="9" text="Weird wizard - Yeah, that’s the one! And you know their name, too!">
+				<option id="0" nextNodeId="10" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="10" text="Weird wizard - I always had a hunch you’d get along, huhuhu.">
+				<option id="0" nextNodeId="11" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="11" text="Sophie - They were saying some weird stuff about death and portals and circus tickets.">
+				<option id="0" nextNodeId="12" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="12" text="Weird wizard - Yeah, weeeeeiiiiiird.">
+				<option id="0" nextNodeId="13" text="They also said you might know something about that" questCompletionId="-1" questTriggerId="-1"/>
+				<option id="1" nextNodeId="22" text="Is Imp ok? They seemed concerned" questCompletionId="-1" questTriggerId="-1"/>
+				<option id="2" nextNodeId="29" text="Well, we have to go" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+
+			<node id="13" text="Zero - They also said you might know something about that.">
+				<option id="0" nextNodeId="14" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="14" text="Weird wizard - I might or might not.">
+				<option id="0" nextNodeId="15" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="15" text="Weird wizard - Bot outright telling you would kinda ruin the fun, wouldn’t it?">
+				<option id="0" nextNodeId="16" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="16" text="Weird wizard - And even if I did know.">
+				<option id="0" nextNodeId="17" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="17" text="Weird wizard - I’m sure you kids wouldn’t want to miss the satisfaction of solving a puzzle by yourselves, hehe…">
+				<option id="0" nextNodeId="18" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="18" text="Zero - But what about the other worlds that Imp mentioned?">
+				<option id="0" nextNodeId="19" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="19" text="Weird wizard - I don’t know, ask Imp about it.">
+				<option id="0" nextNodeId="20" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="20" text="Zero - But-">
+				<option id="0" nextNodeId="21" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="21" text="Weird wizard - It’s cool, I don’t think they would mind.">
+				<option id="0" nextNodeId="22" text="Is Imp ok? They seemed concerned" questCompletionId="-1" questTriggerId="-1"/>
+				<option id="1" nextNodeId="29" text="Well, we have to go" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+
+			<node id="22" text="Zero - Is Imp ok? They seemed concerned.">
+				<option id="0" nextNodeId="23" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="23" text="Weird wizard - Oh, they’ve always been the theatrical type.">
+				<option id="0" nextNodeId="24" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="24" text="Weird wizard - Working on stage ends up making a drama queen out of you.">
+				<option id="0" nextNodeId="25" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="25" text="Sophie - Yeah, that IS true.">
+				<option id="0" nextNodeId="26" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="26" text="Weird wizard - Also, between you and me, you should keep an eye out.">
+				<option id="0" nextNodeId="27" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="27" text="Zero - Why?">
+				<option id="0" nextNodeId="28" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="28" text="Weird wizard - This circus may not be what it seems.">
+				<option id="0" nextNodeId="13" text="They also said you might know something about that" questCompletionId="-1" questTriggerId="-1"/>
+				<option id="1" nextNodeId="29" text="Well, we have to go" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+
+			<node id="29" text="Zero - Well, we have to go.">
+				<option id="0" nextNodeId="30" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="30" text="Weird wizard - Best of luck, then!">
+				<option id="0" nextNodeId="31" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="31" text="Sophie - Thanks, mister wizard!">
+				<option id="0" nextNodeId="32" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="31" text="Zero - ...">
+				<option id="0" nextNodeId="32" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="31" text="Sophie - ...">
+				<option id="0" nextNodeId="32" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="31" text="Zero - We should sneak in. See what’s wrong with Imp">
+				<option id="0" nextNodeId="32" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="32" text="Sophie - Yay!!! Crime!!">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+
+		<dialogue id ="17">
+			<node id="0" text="Zero - I don’t know if it’s more or less creepy with the puppets.">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="1" text="Sophie - I think both are more.">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+
+		<dialogue id ="18">
+			<node id="0" text="Color with color in front on each other, gives us a path when in the right order">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+
+		<dialogue id ="19">
+			<node id="0" text="Sophie - That's a lot of mirrors.">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+
+		<dialogue id ="20">
+			<node id="0" text="Cast member - Hey! Cast members only.">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+
+		<dialogue id ="21">
+			<node id="0" text="Imp - What are you doing here!?">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="1" text="Sophie - Zero was worried there was something wrong with you.">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="2" text="Imp - You shouldn’t be here, the circus doesn’t appreciate intruders.">
+				<option id="0" nextNodeId="3" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="3" text="Imp - But maybe you could join us here! Tangled like a puppe-">
+				<option id="0" nextNodeId="4" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="4" text="Imp - NO. Get out, surely there’s a nice place in the town where you can stay. I heard the inn isn’t too expensive.">
+				<option id="0" nextNodeId="5" text="But we came here to help you" questCompletionId="-1" questTriggerId="-1"/>
+				<option id="1" nextNodeId="13" text="What about our friends?" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+
+
+			<node id="5" text="Zero - But we came here to help you!">
+				<option id="0" nextNodeId="6" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="6" text="Sophie - Yeah, we only want to help.">
+				<option id="0" nextNodeId="7" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="7" text="Imp - You CAN’T help me, I’m in too deep already.">
+				<option id="0" nextNodeId="8" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="8" text="Imp - You being here will only make everything worse.">
+				<option id="0" nextNodeId="9" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="9" text="Imp - It’s ALREADY making it worse.">
+				<option id="0" nextNodeId="10" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="10" text="Imp - Save yourselves and hope no one noticed you here.">
+				<option id="0" nextNodeId="11" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="11" text="Imp - Unless you wanted to joi-">
+				<option id="0" nextNodeId="12" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="12" text="Imp - NO NO NO">
+				<option id="0" nextNodeId="13" text="What about our friends?" questCompletionId="-1" questTriggerId="-1"/>
+				<option id="1" nextNodeId="19" text="What about getting out?" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+
+			<node id="13" text="Zero - What about our friends? They're out there! Probably alone. Shouldn't we try to get to them?">
+				<option id="0" nextNodeId="14" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="14" text="Imp - They’ll be fine wherever they are. Or not, is not like you can do anything except slow the process">
+				<option id="0" nextNodeId="15" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="15" text="Imp - You could make it go faster-">
+				<option id="0" nextNodeId="16" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="16" text="Imp - Stop stop STOP.">
+				<option id="0" nextNodeId="17" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="17" text="Sophie - Imp, you’re scaring me.">
+				<option id="0" nextNodeId="18" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="18" text="Imp - I- sorry, dear...">
+				<option id="0" nextNodeId="5" text="But we came here to help you!" questCompletionId="-1" questTriggerId="-1"/>
+				<option id="1" nextNodeId="19" text="What about getting out?" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+
+			<node id="19" text="Zero - What about getting out? Didn’t you want to try too? You said there is nowhere to go from out there.">
+				<option id="0" nextNodeId="20" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="20" text="Zero - We need to go deeper to get back home.">
+				<option id="0" nextNodeId="21" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="21" text="Imp - Yes, but it’s too d-">
+				<option id="0" nextNodeId="22" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="22" text="Imp - It’d be perfect for-">
+				<option id="0" nextNodeId="23" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="23" text="Imp - I want to-">
+				<option id="0" nextNodeId="24" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="24" text="Imp - I can’t-">
+				<option id="0" nextNodeId="25" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="25" text="Imp - AAAHHHHHHHHHHHHHHHHHH">
+				<option id="0" nextNodeId="26" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="26" text="...">
+				<option id="0" nextNodeId="27" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="27" text="Imp - There">
+				<option id="0" nextNodeId="28" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="28" text="Imp - The door is open.">
+				<option id="0" nextNodeId="29" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="29" text="Sophie - Thank you.">
+				<option id="0" nextNodeId="30" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="30" text="Imp - I hope you too can get out.">
+				<option id="0" nextNodeId="31" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="31" text="Imp - I’m about to be in so much trouble.">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+
+		<dialogue id ="22">
+			<node id="0" text="Weird wizard - Shoo shoo, they’re not ready in there yet.">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="1" text="Weird wizard - Go now.">
+				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+			<node id="2" text="Weird wizard - Shoo!">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			</node>
+		</dialogue>
+
+
 	</dialoguemanager>
 
 	<npcs>
 		<town>
-			<npc x="928" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="1" character="3" dialogueid="0"/>
-			<npc x="736" y="352" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="2" character="2" dialogueid="1"/>
-			<npc x="1216" y="448" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="3" character="4" dialogueid="2"/>
-			<npc x="672" y="960" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="1" dialogueid="-1"/>
-			<npc x="1184" y="832" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="5" dialogueid="3"/>
-			<npc x="192" y="512" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="0" dialogueid="-1"/>
-			<npc x="1344" y="192" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="6" dialogueid="4"/>
-			<npc x="415" y="666" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="0" dialogueid="6" name="Mage"/>
-			<npc x="1285" y="340" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="0" dialogueid="6" name="Mage"/>
+			<npc x="512" y="992" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="1" character="0" dialogueid="1"/>
+			<npc x="320" y="480" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="2" character="8" dialogueid="2"/>
+			<npc x="1120" y="640" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="3" character="5" dialogueid="4"/>
+			<npc x="1600" y="640" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="5" dialogueid="-1"/>
+			<npc x="416" y="288" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="5" character="2" dialogueid="-1"/>
+			<npc x="384" y="288" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="6" character="3" dialogueid="-1"/>
+			<npc x="736" y="384" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="7" character="4" dialogueid="-1"/>
+			<npc x="800" y="576" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="8" character="1" dialogueid="8"/>
+			<npc x="1376" y="64" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="9" character="6" dialogueid="-1"/>
 		</town>
 		<tavern>
-			<npc x="448" y="416" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="1" character="5" dialogueid="5"/>
-			<npc x="608" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="2" character="1" dialogueid="-1"/>
+			<npc x="448" y="416" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="1" character="2" dialogueid="-1"/>
+			<npc x="608" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="2" character="3" dialogueid="-1"/>
 		</tavern>
 		<inn>
 			<npc x="1120" y="320" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="2" character="2" dialogueid="-1"/>
 		</inn>
 		<housebasement>
-			<npc x="864" y="320" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="1" character="2" dialogueid="-1"/>
+			<npc x="864" y="320" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="1" character="4" dialogueid="-1"/>
 		</housebasement>
 		<housefloor>
-			<npc x="736" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="6" dialogueid="5"/>
+			<npc x="736" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="3" dialogueid="-1"/>
 		</housefloor>
 		<circusOne>
-			<npc x="736" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="6" dialogueid="5"/>
+			<npc x="384" y="416" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="8" character="1" dialogueid="14"/>
 		</circusOne>
 		<circusTwo>
-			<npc x="736" y="160" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="6" dialogueid="5"/>
+			<npc x="1472" y="1024" texturepath="Assets/Textures/SceneGame/NPCs.png" shadowtexturepath="Assets/Textures/shadow.png" id="4" character="6" dialogueid="-1"/>
 		</circusTwo>
 	</npcs>
 	
