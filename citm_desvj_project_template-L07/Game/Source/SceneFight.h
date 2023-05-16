@@ -6,41 +6,46 @@
 #include "GuiButton.h"
 #include "SDL/include/SDL.h"
 
+enum class TurnStep
+{
+	IN,
+	ACTION,
+	OUT,
+	FINISHED
+};
+
 class SceneFight : public Scene
 {
 public:
-	SceneFight();
 
-	// Destructor
+	SceneFight();
 	virtual ~SceneFight();
 
-	// Called before render is available
 	bool Awake(pugi::xml_node& config);
-
-	// Called before the first frame
 	bool Start();
 
-	// Called before all Updates
 	bool PreUpdate();
-
-	// Called each loop iteration
 	bool Update(float dt);
-
-	// Called before all Updates
 	bool PostUpdate();
 
-	// Called before quitting
 	bool CleanUp();
 
 	// Define multiple Gui Event methods
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
-	void Attack(PartyMember* turnMember_, PartyMember* receiverMember_);
+	void ExecuteTurn();
+
+	// Returns true if the reciever has been killed
+	bool Attack(PartyMember* turnMember_, PartyMember* receiverMember_);
 
 	void Escape();
 
+	void SortBySpeed();
+
 public:
-	uint startSFX = 0;
+
+	TurnStep turnStep;
+
 	uint turn = 0;
 	List<PartyMember*> turnList;
 	List<PartyMember*> enemyList;
@@ -51,26 +56,24 @@ public:
 	PartyMember* turnMember = nullptr;
 
 private:
-	SDL_Texture* tex_bg = nullptr;
+
+	SDL_Texture* tex_fightTownBG = nullptr;
+	SDL_Texture* tex_fightCircusBG = nullptr;
 	SDL_Texture* tex_arrow = nullptr;
 
-	const char* path_bg;
+	const char* path_fightTownBG;
+	const char* path_fightCircusBG;
 	const char* path_arrow;
 	const char* path_startsSfx;
 
 	const char* musicPath = nullptr;
-	const char* selectSFXPath = nullptr;
-
-	// Set of SFX
-	uint selectSFX = 0;
-
-	// Declare a GUI Button and create it using the GuiManager
-	GuiButton* attackButton;
-	GuiButton* specialButton;
-	GuiButton* bagButton;
 
 	uint alliesAlive;
 	uint enemiesAlive;
+
+	Easing* easingPos = nullptr;
+
+	int scale = app->scaleObj->ScaleTypeToInt(ScaleType::FIGHT);
 };
 
 #endif //__SCENEFIGHT_H__

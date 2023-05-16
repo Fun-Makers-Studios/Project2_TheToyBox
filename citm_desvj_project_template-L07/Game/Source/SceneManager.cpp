@@ -105,7 +105,8 @@ bool SceneManager::AddScene(Scene* scene, pugi::xml_node& config)
 void SceneManager::SwitchTo(SceneID id)
 {
     currentScene->CleanUp();
-
+    previousScene = currentScene->id;
+    
     auto scene = FindSceneByID(id);
     currentScene = scene->data;
     currentScene->Start();

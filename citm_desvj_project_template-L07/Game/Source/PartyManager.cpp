@@ -10,8 +10,12 @@ PartyManager::~PartyManager(){}
 
 bool PartyManager::Start()
 {
+	// Scale
+	int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
+
 	//Create party
 	uchar partyCount = 0;
+
 	for (pugi::xml_node itemNode = app->configNode.child("sceneFight").child("partymember"); itemNode; itemNode = itemNode.next_sibling("partymember"))
 	{
 		//type
@@ -29,16 +33,15 @@ bool PartyManager::Start()
 		else if (nameStr == "sophie")
 			textureRect = { 128, 0, 32, 64 };
 		
-
 		//battle position
-		int offsetX = 350;
-		int offsetY = 300;
+		int offsetX = 210;
+		int offsetY = 50;
 
 		iPoint position;
-		position.x = offsetX - 32 * partyCount;;
-		position.y = offsetY + 96 * partyCount;
-		partyCount++;
+		position.x = (offsetX - 32 * partyCount) / scale;
+		position.y = (offsetY + 96 * partyCount) / scale;
 
+		//Create Member
 		PartyMember* member = new PartyMember(
 			type,
 			MemberStatus::NORMAL,
@@ -50,15 +53,14 @@ bool PartyManager::Start()
 			itemNode.attribute("defense").as_uint(),
 			itemNode.attribute("speed").as_uint(),
 			itemNode.attribute("critRate").as_uint(),
-			tex,
-			position,
-			textureRect);
+			position, tex, textureRect);
 
 		AddMemberToParty(member);
+
+		partyCount++;
 	}
 
 	return true;
-
 }
 
 void PartyManager::AddMemberToParty(PartyMember* member)
@@ -68,8 +70,6 @@ void PartyManager::AddMemberToParty(PartyMember* member)
 
 bool PartyManager::LoadState(pugi::xml_node& data)
 {
-
-	
 
 	return true;
 }
@@ -91,8 +91,8 @@ bool PartyManager::SaveState(pugi::xml_node& data)
 		partyMember.append_attribute("defense") = pmemberItem->data->defense;
 		partyMember.append_attribute("speed") = pmemberItem->data->speed;
 		partyMember.append_attribute("critRate") = pmemberItem->data->critRate;
-		partyMember.append_attribute("fightPosX") = pmemberItem->data->fightPosition.x;
-		partyMember.append_attribute("fightPosY") = pmemberItem->data->fightPosition.y;
+		partyMember.append_attribute("fightPosX") = pmemberItem->data->initPos.x;
+		partyMember.append_attribute("fightPosY") = pmemberItem->data->initPos.y;
 	}
 
 	/*ListItem<Item*>* inventoryItem;

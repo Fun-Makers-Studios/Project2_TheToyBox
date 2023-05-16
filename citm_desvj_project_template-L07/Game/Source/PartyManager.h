@@ -17,6 +17,14 @@ enum class GearType
 	WEAPON
 };
 
+struct Gear
+{
+	Item* helmet = nullptr;
+	Item* chest = nullptr;
+	Item* pants = nullptr;
+	Item* weapon = nullptr;
+};
+
 enum class StatType
 {
 	HP,
@@ -28,12 +36,9 @@ enum class StatType
 	CRIT_RATE
 };
 
-struct Gear
+struct Stats
 {
-	Item* helmet = nullptr;
-	Item* chest = nullptr;
-	Item* pants = nullptr;
-	Item* weapon = nullptr;
+
 };
 
 enum class MemberType
@@ -53,22 +58,27 @@ enum class MemberStatus
 class PartyMember
 {
 public:
-	PartyMember(MemberType type, MemberStatus status, SString name, uint maxHp, uint maxMana, uint level, uint attack, uint defense, uint speed, uint critRate, SDL_Texture* texture, iPoint fightPosition, SDL_Rect textureRect)
+	PartyMember(MemberType type, MemberStatus status, SString name, uint maxHp, uint maxMana, uint level, uint attack, uint defense, uint speed, uint critRate, iPoint initPos, SDL_Texture* texture, SDL_Rect textureRect)
 	{
 		this->type = type;
 		this->status = status;
+
 		this->name = name;
-		this->maxHp = maxHp;
-		this->currentHp = maxHp;
-		this->maxMana = maxMana;
-		this->currentMana = maxMana;
 		this->level = level;
+
+		this->maxHp = maxHp;
+		this->maxMana = maxMana;
 		this->attack = attack;
 		this->defense = defense;
 		this->speed = speed;
 		this->critRate = critRate;
+
+		this->currentHp = maxHp;
+		this->currentMana = maxMana;
+
+		this->initPos = initPos;
+		this->pos = initPos;
 		this->texture = texture;
-		this->fightPosition = fightPosition;
 		this->textureRect = textureRect;
 	};
 
@@ -92,7 +102,8 @@ public:
 	SDL_Texture* texture;
 	SDL_Rect textureRect;
 
-	iPoint fightPosition;
+	iPoint initPos;
+	iPoint pos;
 };
 
 class PartyManager: public Module

@@ -43,9 +43,9 @@ bool MenuFight::Start()
 	pauseRect = { 35, 69, 310, 555 };
 
 	//UI
-	//attackButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 18, "attack", 7, { 100, 600, 252, 76 }, this);
-	//defenseButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 19, "defend", 7, { 510, 600, 252, 76 }, this);
-	//escapeButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 20, "escape", 7, { 915, 600, 252, 76 }, this);
+	attackButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::ATTACK, "attack", 7, { 100, 600, 252, 76 }, this);
+	specialButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SPECIAL, "special", 8, { 510, 600, 252, 76 }, this);
+	bagButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::BAG, "bag", 4, { 915, 600, 252, 76 }, this);
 
 	// Set easing finished on title buttons
 	ListItem<GuiControl*>* control = guiControlsList.start;
@@ -112,35 +112,21 @@ bool MenuFight::OnGuiMouseClickEvent(GuiControl* control)
 {
 	switch (control->id)
 	{
-	//case (uint32)ControlID::RESUME:
-	//	// HEKATE
-	//	/*if (!app->sceneManager->sceneGame->dialogueManager->dialogueLoaded)
-	//		app->sceneManager->sceneGame->gamePaused != app->sceneManager->sceneGame->gamePaused;*/
+	case (uint32)ControlID::ATTACK:
+		app->sceneManager->sceneFight->turnStep = TurnStep::IN;
+		app->audio->PlayFx(app->menuManager->selectSFX);
+		break;
 
-	//		//app->sceneManager->sceneGame->pauseMenu != app->sceneManager->sceneGame->pauseMenu;
-	//	app->menuManager->menuState = MenuState::SWITCH;
-	//	app->menuManager->nextMenu = MenuID::MENU_NULL;
-	//	app->audio->PlayFx(app->menuManager->selectSFX);
-	//	break;
+	case (uint32)ControlID::SPECIAL:
+		
+		app->audio->PlayFx(app->menuManager->startSFX);
+		app->sceneManager->sceneFight->turnStep = TurnStep::IN;
+		break;
 
-	//case (uint32)ControlID::BACK_TO_TITLE:
-	//	app->sceneManager->sceneState = SceneState::SWITCH;
-	//	app->sceneManager->nextScene = SceneID::SCENE_TITLE;
-	//	app->audio->PlayFx(app->menuManager->startSFX);
-	//	break;
-
-	//case (uint32)ControlID::SETTINGS:
-	//	app->menuManager->menuState = MenuState::SWITCH;
-	//	app->menuManager->nextMenu = MenuID::MENU_SETTINGS;
-	//	app->audio->PlayFx(app->menuManager->openMenuSFX);
-	//	break;
-
-	//case (uint32)ControlID::SAVE_EXIT:
-	//	//showSavingState = true;
-	//	app->SaveGameRequest();
-	//	//exitGame = !exitGame;
-	//	app->audio->PlayFx(app->menuManager->selectSFX);
-	//	break;
+	case (uint32)ControlID::BAG:
+		
+		app->audio->PlayFx(app->menuManager->openMenuSFX);
+		break;
 
 	default:
 		break;

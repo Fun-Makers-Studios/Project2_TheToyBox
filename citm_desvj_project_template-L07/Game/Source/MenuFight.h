@@ -31,14 +31,14 @@ public:
 
 	// UI
 	GuiButton* attackButton = nullptr;
-	GuiButton* defenseButton = nullptr;
-	GuiButton* escapeButton = nullptr;
+	GuiButton* specialButton = nullptr;
+	GuiButton* bagButton = nullptr;
 
 	enum class ControlID : uint32
 	{
 		ATTACK,
-		DEFENSE,
-		SPECIAL
+		SPECIAL,
+		BAG
 	};
 
 private:

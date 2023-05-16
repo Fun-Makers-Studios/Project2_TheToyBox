@@ -58,6 +58,7 @@ public:
 	Scene* currentScene = nullptr;
 	SceneState sceneState = SceneState::CONTINUE;
 	SceneID nextScene;
+	SceneID previousScene;
 
 	List<Scene*> scenes;
 	uint numScenes = 0;

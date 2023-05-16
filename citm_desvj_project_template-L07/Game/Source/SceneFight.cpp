@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "App.h"
 #include "Input.h"
+#include "Window.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -20,11 +21,18 @@ SceneFight::SceneFight() : Scene()
 {
 	id = SceneID::SCENE_FIGHT;
 
-	/*Initialize*/
+	/*Initialize from xml*/
 	musicPath = app->configNode.child("sceneFight").child("music").attribute("musicPath").as_string();
 
-	path_bg = app->configNode.child("sceneFight").child("backgroundimage").attribute("texturepath").as_string();
+	path_fightTownBG = app->configNode.child("sceneFight").child("fightTownBG").attribute("texturepath").as_string();
+	path_fightCircusBG = app->configNode.child("sceneFight").child("fightCircusBG").attribute("texturepath").as_string();
+
 	path_arrow = app->configNode.child("sceneFight").child("arrowimage").attribute("texturepath").as_string();
+
+	//Create Easings
+	easingPos = new Easing();
+	easingPos->SetTotalTime(0.5);
+	easingPos->SetDelayTime(0.5);
 }
 
 // Destructor
@@ -37,10 +45,6 @@ bool SceneFight::Awake(pugi::xml_node& config)
 	LOG("|| AWAKE SceneFight ||");
 	bool ret = true;
 
-	/*Initialize from xml*/
-	path_bg = app->configNode.child("sceneFight").child("backgroundimage").attribute("texturepath").as_string();
-	path_arrow = app->configNode.child("sceneFight").child("arrowimage").attribute("texturepath").as_string();
-	//musicPath = app->configNode.child("logo").child("music").attribute("musicPath").as_string();
 
 	return ret;
 }
@@ -50,18 +54,21 @@ bool SceneFight::Start()
 {
 	LOG("--START SceneFight--");
 
+	//Set turn step
+	turnStep = TurnStep::FINISHED;
+
 	// Set rand seed
 	srand(time(NULL));
 
 	// Set Scale
 	app->scaleObj->SetCurrentScale(ScaleType::FIGHT);
-	int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
 
 	// Play level music
 	app->audio->PlayMusic(musicPath, 1.0f);
 
 	/*Load*/
-	tex_bg = app->tex->Load(path_bg);
+	tex_fightTownBG = app->tex->Load(path_fightTownBG);
+	tex_fightCircusBG = app->tex->Load(path_fightCircusBG);
 	tex_arrow = app->tex->Load(path_arrow);
 
 	// ======== CREATE TURN LIST ========
@@ -106,11 +113,11 @@ bool SceneFight::Start()
 
 		//battle position
 		int offsetX = 850;
-		int offsetY = 250;
+		int offsetY = 50;
 
 		iPoint position;
-		position.x = (offsetX + 32 * i)/scale;
-		position.y = (offsetY + 96 * i)/scale;
+		position.x = (offsetX + 32 * i) / scale;
+		position.y = (offsetY + 96 * i) / scale;
 
 		PartyMember* member = new PartyMember(
 			type, MemberStatus::NORMAL,
@@ -122,7 +129,7 @@ bool SceneFight::Start()
 			itemNode.attribute("defense").as_uint(),
 			itemNode.attribute("speed").as_uint(),
 			itemNode.attribute("critRate").as_uint(),
-			tex, position, textureRect);
+			position, tex, textureRect);
 
 		turnList.Add(member);
 		enemyList.Add(member);
@@ -130,6 +137,10 @@ bool SceneFight::Start()
 	
 	enemiesAlive = enemyList.Count();
 	enemySelected = 0;
+
+	// Sort by speed - set first turn
+	SortBySpeed();
+	turn = 0;
 
 	return true;
 }
@@ -143,68 +154,54 @@ bool SceneFight::PreUpdate()
 // Called each loop iteration
 bool SceneFight::Update(float dt)
 {
-	app->render->DrawTexture(tex_bg, 0, 0, NULL, SDL_FLIP_NONE, ScaleType::XAVIDATECUENTA);
-
-	//TODO: Sort by speed
-
-	//Turn start
 	uint id = turn % turnList.Count();
 	turnMember = turnList.At(id)->data;
 
-	//	check player turn
-	if (turnMember->type == MemberType::ALLY)
+	//Check TurnStep
+	if (turnStep == TurnStep::FINISHED)
 	{
-		//	choose enemy
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-		{			
-			if (enemySelected == 0)
-				enemySelected = enemyList.Count() - 1;
-			else
-				enemySelected--;
-		}
-		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		easingPos->SetFinished(false);
+
+		//	check player turn
+		if (turnMember->type == MemberType::ALLY)
 		{
-			if (enemySelected < enemyList.Count() -1)
-				enemySelected++;
-			else
-				enemySelected = 0;
+			//	choose enemy
+			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+			{
+				if (enemySelected == 0)
+					enemySelected = enemyList.Count() - 1;
+				else
+					enemySelected--;
+			}
+			else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+			{
+				if (enemySelected < enemyList.Count() - 1)
+					enemySelected++;
+				else
+					enemySelected = 0;
+			}
+		}
+		else if (turnMember->type == MemberType::ENEMY)
+		{
+			app->sceneManager->sceneFight->turnStep = TurnStep::IN;
 		}
 	}
-	else if (turnMember->type == MemberType::ENEMY)
-	{
-		int randomMember = rand() % app->partyManager->party.Count();
 
-		Attack(turnMember, app->partyManager->party.At(randomMember)->data);
+	ExecuteTurn();	
 
-	}
-
-	
-	//	draw selected enemy
-	app->render->DrawTexture(tex_arrow, enemyList.At(enemySelected)->data->fightPosition.x, enemyList.At(enemySelected)->data->fightPosition.y - 32, NULL);
-
-	// Draw GUI
-	app->guiManager->Draw();
-
-	/*attackButton18->state = GuiControlState::DISABLED;
-	defenseButton19->state = GuiControlState::DISABLED;
-	escapeButton20->state = GuiControlState::DISABLED;
-
-	if (attackButton18->state == GuiControlState::DISABLED) {
-		attackButton18->state = GuiControlState::NORMAL;
-	}
-	if (defenseButton19->state == GuiControlState::DISABLED) {
-		defenseButton19->state = GuiControlState::NORMAL;
-	}
-	if (escapeButton20->state == GuiControlState::DISABLED) {
-		escapeButton20->state = GuiControlState::NORMAL;
-	}*/
-	
+	// Win/Lose - Back to SceneGame
 	if (enemiesAlive <= 0)
-		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
+	{
+		app->sceneManager->sceneState = SceneState::SWITCH;
+		app->sceneManager->nextScene = SceneID::SCENE_GAME;
+	}
 	else if (alliesAlive <= 0)
-		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
+	{
+		app->sceneManager->sceneState = SceneState::SWITCH;
+		app->sceneManager->nextScene = SceneID::SCENE_GAME;
+	}
 
-
+	// Delete dead members from turnList
 	for (size_t i = 0; i < turnList.Count(); i++)
 	{
 		if (turnList.At(i)->data->status == MemberStatus::DEAD)
@@ -218,44 +215,58 @@ bool SceneFight::Update(float dt)
 			}
 
 			turnList.Del(turnList.At(i));			
-		}
-		else 
-		{
-			app->render->DrawTexture(
-				turnList.At(i)->data->texture,
-				turnList.At(i)->data->fightPosition.x,
-				turnList.At(i)->data->fightPosition.y,
-				&turnList.At(i)->data->textureRect,
-				SDL_FLIP_NONE, ScaleType::FIGHT);			
-		}
-			
+		}			
 	}
 
 	return true;
 }
 
-// Called each loop iteration
 bool SceneFight::PostUpdate()
 {
 	bool ret = true;
 
-	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;*/
+	// Draw BG
+	SString map = app->sceneManager->sceneGame->mapName;
+	
+	if (map == "town")
+	{
+		app->render->DrawTexture(tex_fightTownBG, 0, 0, NULL, SDL_FLIP_NONE, ScaleType::FIGHT);
+	}
+	else if (map == "circus1" || map == "circus2")
+	{
+		app->render->DrawTexture(tex_fightCircusBG, 0, 0, NULL, SDL_FLIP_NONE, ScaleType::FIGHT);
+	}
+
+	// Draw turnList members
+	for (size_t i = 0; i < turnList.Count(); i++)
+	{
+		app->render->DrawTexture(
+			turnList.At(i)->data->texture,
+			turnList.At(i)->data->pos.x,
+			turnList.At(i)->data->pos.y,
+			&turnList.At(i)->data->textureRect,
+			SDL_FLIP_NONE, ScaleType::FIGHT);
+	}
+
+	// Draw Selected enemy
+	app->render->DrawTexture(tex_arrow, enemyList.At(enemySelected)->data->pos.x, enemyList.At(enemySelected)->data->pos.y - 32, NULL, SDL_FLIP_NONE, ScaleType::FIGHT);
+
+	// Draw GUI
+	app->guiManager->Draw();
 
 	return ret;
 }
 
-// Called before quitting
 bool SceneFight::CleanUp()
 {
-	LOG("Freeing LOGO SCENE");
+	LOG("* CLEANUP SceneFight *");
 
-	turnList.Clear();
-	
+	turnList.Clear();	
 	enemyList.Clear();
 
-	if (tex_bg != nullptr) { app->tex->UnLoad(tex_bg); }
-	if (tex_arrow != nullptr) { app->tex->UnLoad(tex_arrow); }
+	app->tex->UnLoad(tex_fightTownBG);
+	app->tex->UnLoad(tex_fightCircusBG);
+	app->tex->UnLoad(tex_arrow);
 
 	//app->guiManager->guiControlsList.Clear();
 
@@ -264,40 +275,93 @@ bool SceneFight::CleanUp()
 	return true;
 }
 
-bool SceneFight::OnGuiMouseClickEvent(GuiControl* control)
+
+void SceneFight::ExecuteTurn()
 {
-	// L15: TODO 5: Implement the OnGuiMouseClickEvent method
-	switch (control->id)
+	switch (turnStep)
 	{
-	//case 18: //Attack
-	//	Attack(turnMember, enemyList.At(enemySelected)->data);
-	//	app->audio->PlayFx(app->sceneManager->sceneTitle->menuSelectionSFX);	
-	//	break;
+		case TurnStep::IN:
+		{
+			//Go to mid
+			double easedTime = easingPos->TrackTime(app->GetDT());
+			turnMember->pos.x = easingPos->EasingAnimation(turnMember->initPos.x, app->render->camera.w / 2 / scale, easedTime, EasingType::EASE_INOUT_SIN);
+			turnMember->pos.y = easingPos->EasingAnimation(turnMember->initPos.y, app->render->camera.h / 2 / scale - turnMember->textureRect.h, easedTime, EasingType::EASE_INOUT_SIN);
 
-	//case 19: //Defense
-	//	turn++;
-	//	app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
-	//	break;
+			if (easingPos->GetFinished())
+			{
+				if (turnMember->type == MemberType::ENEMY)
+				{
+					int randomMember = rand() % app->partyManager->party.Count();
+					Attack(turnMember, app->partyManager->party.At(randomMember)->data);
+				}
+				else
+				{
+					Attack(turnMember, app->partyManager->party.At(enemySelected)->data);
+				}
 
-	//case 20: //Skip turn
-	//	Escape();
-	//	app->audio->PlayFx(app->sceneManager->sceneTitle->startSFX);
-	//	break;
+				easingPos->SetFinished(false);
+				turnStep = TurnStep::ACTION;
+			}
+		} break;
 
-	//default:
-	//	break;
+		case TurnStep::ACTION:
+		{
+			//Stats display
+			/*double easedTime = easingPos->TrackTime(app->GetDT());
+			turnMember->pos.x = easingPos->EasingAnimation(turnMember->initPos.x, app->render->camera.w / 2 / scale, easedTime, EasingType::EASE_INOUT_SIN);
+			turnMember->pos.y = easingPos->EasingAnimation(turnMember->initPos.y, app->render->camera.h / 2 / scale - turnMember->textureRect.h, easedTime, EasingType::EASE_INOUT_SIN);
+
+			if (easingPos->GetFinished())
+			{
+				if (turnMember->type == MemberType::ENEMY)
+				{
+					int randomMember = rand() % app->partyManager->party.Count();
+					Attack(turnMember, app->partyManager->party.At(randomMember)->data);
+				}
+				else
+				{
+					Attack(turnMember, app->partyManager->party.At(enemySelected)->data);
+				}
+
+				turnStep = TurnStep::OUT;
+			}*/
+
+			turnStep = TurnStep::OUT;
+
+		} break;
+			
+		case TurnStep::OUT:
+		{
+			//Back to initPos
+			double easedTime = easingPos->TrackTime(app->GetDT());
+			turnMember->pos.x = easingPos->EasingAnimation(app->render->camera.w / 2 / scale, turnMember->initPos.x, easedTime, EasingType::EASE_INOUT_SIN);
+			turnMember->pos.y = easingPos->EasingAnimation(app->render->camera.h / 2 / scale - turnMember->textureRect.h, turnMember->initPos.y, easedTime, EasingType::EASE_INOUT_SIN);
+
+			if (easingPos->GetFinished())
+			{
+				easingPos->SetFinished(false);
+				turnStep = TurnStep::FINISHED;
+				turn++;
+			}
+
+			
+		} break;
+			
+		case TurnStep::FINISHED:
+
+			break;
+
+		default:
+			break;
 	}
-
-	return true;
 }
 
-
-void SceneFight::Attack(PartyMember* turnMember_, PartyMember* receiverMember_)
+bool SceneFight::Attack(PartyMember* turnMember_, PartyMember* receiverMember_)
 {
-	//TODO: Calculate crit, def
-	turn++;
+	// HEKATE: Calculate crit, def
+
 	//godmode no damage
-	if (turnMember_->type == MemberType::ENEMY && app->debug->godMode) { return; }
+	if (turnMember_->type == MemberType::ENEMY && app->debug->godMode) { return false; }
 
 	//check death || godmode instakill
 	if ((turnMember_->attack > receiverMember_->currentHp) || 
@@ -310,13 +374,15 @@ void SceneFight::Attack(PartyMember* turnMember_, PartyMember* receiverMember_)
 			enemiesAlive--;
 		else
 			alliesAlive--;
+
+		return true;
 	}
 	else
 	{
 		receiverMember_->currentHp -= turnMember->attack;
-	}
 
-	
+		return false;
+	}
 }
 
 void SceneFight::Escape()
@@ -329,5 +395,26 @@ void SceneFight::Escape()
 	}
 	else {
 		turn++;
+	}
+}
+
+void SceneFight::SortBySpeed()
+{
+	bool swapped = true;
+
+	while (swapped)
+	{
+		swapped = false;
+		ListItem<PartyMember*>* item;
+		Entity* pEntity = NULL;
+
+		for (item = turnList.start; item != NULL && item->next != NULL; item = item->next)
+		{
+			if (item->data->speed > item->next->data->speed)
+			{
+				SWAP(item->data, item->next->data);
+				swapped = true;
+			}
+		}
 	}
 }

@@ -27,7 +27,7 @@ bool MenuManager::Awake(pugi::xml_node& config)
 	menuPause = new MenuPause();
 	menuQuest = new MenuQuest();
 	menuParty = new MenuParty();
-	//menuFight = new MenuFight();
+	menuFight = new MenuFight();
 
 	AddMenu(menuTitle, config);
 	AddMenu(menuSettings, config);
@@ -35,7 +35,7 @@ bool MenuManager::Awake(pugi::xml_node& config)
 	AddMenu(menuPause, config);
 	AddMenu(menuQuest, config);
 	AddMenu(menuParty, config);
-	//AddMenu(menuFight, config);
+	AddMenu(menuFight, config);
 
 
 	// Properties from xml
@@ -196,7 +196,7 @@ void MenuManager::SetDefaultMenu()
 			break;
 
 		case SceneID::SCENE_FIGHT:
-			//currentMenu = menuFight;
+			currentMenu = menuFight;
 			break;
 
 		case SceneID::SCENE_ENDING:
