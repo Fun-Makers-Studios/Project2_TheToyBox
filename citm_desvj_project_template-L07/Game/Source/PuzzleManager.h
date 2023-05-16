@@ -26,9 +26,9 @@ public:
 	// Additional methods
 	void TriggerPuzzle(int id);
 
-	void LoadPuzzlesByMap(SString mapName_);
-
 public:
+
+	Puzzle* currentPuzzle = nullptr;
 
 	List<Puzzle*> puzzles;
 	List<Puzzle*> activePuzzles;

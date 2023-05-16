@@ -391,6 +391,26 @@ void SceneGame::LoadItems()
 	}	
 }
 
+void SceneGame::LoadPuzzles()
+{
+	/*
+	for (ListItem<Puzzle*>* puzzlesItem = app->puzzleManager->activePuzzles.start; puzzlesItem != NULL; puzzlesItem = puzzlesItem->next)
+	{
+		puzzlesItem
+	}
+	
+	for (ListItem<Puzzle*>* puzzlesItem = app->puzzleManager->puzzles.start; puzzlesItem != NULL; puzzlesItem = puzzlesItem->next)
+	{
+		if (true)
+		{
+
+		}
+
+		puzzlesItem.da
+	}*/
+
+}
+
 void SceneGame::FixCamera()
 {
 	// HEKATE width/height in TILES (townMap 55x36)

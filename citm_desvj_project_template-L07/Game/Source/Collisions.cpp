@@ -217,6 +217,10 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
 
             break;
 
+        case ColliderType::BUTTON:
+            CirCirCollision(body1, body2);
+            break;
+
         case ColliderType::UNKNOWN:
             break;
 

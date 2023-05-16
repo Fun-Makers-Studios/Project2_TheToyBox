@@ -23,7 +23,7 @@ bool PuzzleManager::Awake(pugi::xml_node& config)
 	LOG("Loading Quest Manager");
 	bool ret = true;
 	
-	for (pugi::xml_node node = config.child(app->sceneManager->sceneGame->mapName.GetString()).child("puzzle"); node; node = node.next_sibling("puzzle"))
+	for (pugi::xml_node node = config.child("puzzle"); node; node = node.next_sibling("puzzle"))
 	{
 		Puzzle* puzzle;
 		switch ((PuzzleType)node.attribute("type").as_int())
@@ -64,12 +64,7 @@ bool PuzzleManager::Start()
 	LOG("Starting Quest Manager");
 	bool ret = true;
 
-	ListItem<Puzzle*>* item;
-
-	for (item = activePuzzles.start; item != NULL; item = item->next)
-	{
-		item->data->Start();
-	}
+	TriggerPuzzle(1);
 
 	return ret;
 }
@@ -93,7 +88,7 @@ bool PuzzleManager::Update(float dt)
 			while (pitem != nullptr)
 			{
 				Puzzle* item = pitem->data;
-				if (item->id == pPuzzle->nextPuzzleId)
+				if (item->orderID == pPuzzle->nextPuzzleId)
 				{
 					activePuzzles.Add(item);
 					break;
@@ -106,6 +101,8 @@ bool PuzzleManager::Update(float dt)
 		}
 	}
 
+	LOG("PUZZLES: %d", puzzles.Count());
+
 	return ret;
 }
 
@@ -116,7 +113,7 @@ void PuzzleManager::TriggerPuzzle(int id)
 	while (pitem != nullptr)
 	{
 		Puzzle* item = pitem->data;
-		if (item->id == id) {
+		if (item->orderID == id) {
 			activePuzzles.Add(item);
 			break;
 		}
@@ -125,25 +122,4 @@ void PuzzleManager::TriggerPuzzle(int id)
 	}
 }
 
-void PuzzleManager::LoadPuzzlesByMap(SString mapName_)
-{
 
-	for (pugi::xml_node node = config.child(app->sceneManager->sceneGame->mapName.GetString()).child("puzzle"); node; node = node.next_sibling("puzzle"))
-	{
-		Puzzle* puzzle;
-		switch ((PuzzleType)node.attribute("type").as_int())
-		{
-		case PuzzleType::BUTTON_ORDER:
-			puzzle = new ButtonOrderPuzzle(node);
-			break;
-		case PuzzleType::MIRROR:
-			puzzle = new MirrorPuzzle(node);
-			break;
-		default:
-			break;
-		}
-
-		puzzles.Add(puzzle);
-	}
-
-}

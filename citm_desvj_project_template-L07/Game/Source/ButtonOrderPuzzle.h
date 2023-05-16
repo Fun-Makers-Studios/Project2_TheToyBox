@@ -15,16 +15,16 @@ public:
 	ButtonOrderPuzzle(pugi::xml_node node);
 	virtual ~ButtonOrderPuzzle();
 
-	bool Start() override;
 	bool Update() override;
 
 	void LoadAssets(pugi::xml_node node);
 	void ButtonTriggerCheck();
 	void ResetPuzzle();
+	void OpenDoor();
 
 public:
 
-	int itemId;
+	SString map;
 	List<PuzzlePiece*> pieces;
 
 private:

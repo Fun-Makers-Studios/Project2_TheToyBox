@@ -26,7 +26,7 @@ public:
 
 	SString name;
 	PuzzleType type;
-	int id;
+	int orderID;
 	int nextPuzzleId;
 
 };

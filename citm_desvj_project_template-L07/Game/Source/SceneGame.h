@@ -50,6 +50,7 @@ public:
 	void SceneMap();
 	void LoadNPC();
 	void LoadItems();
+	void LoadPuzzles();
 
 	void ActiveParticles();
 	void SaveUI();

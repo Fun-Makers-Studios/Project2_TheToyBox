@@ -9,35 +9,26 @@
 
 ButtonOrderPuzzle::ButtonOrderPuzzle(pugi::xml_node node) {
 
-	this->id = node.attribute("id").as_int();
+	this->orderID = node.attribute("orderID").as_int();
 	this->name = node.attribute("name").as_string();
-	this->nextPuzzleId = node.attribute("nextQuestId").as_int();
-	this->itemId = node.attribute("itemId").as_int();
+	this->nextPuzzleId = node.attribute("nextPuzzleId").as_int();
+	this->map = node.attribute("map").as_string();
 	this->type = PuzzleType::BUTTON_ORDER;
 	LoadAssets(node);
 }
 
 ButtonOrderPuzzle::~ButtonOrderPuzzle() {}
 
-bool ButtonOrderPuzzle::Start()
-{
-	bool ret = true;
-	//Completion event
-
-	return ret;
-}
-
-
 bool ButtonOrderPuzzle ::Update() {
 	bool ret = false;
 
 	//Completion event
-
+	LOG("ACTIVE PUZZLE");
 	if (actualOrder == 6)
 	{
+		OpenDoor();
 		ret = true;
 	}
-
 
 	return ret;
 }
@@ -49,6 +40,7 @@ void ButtonOrderPuzzle::LoadAssets(pugi::xml_node node)
 	for (pugi::xml_node itemNode = node.child("piece"); itemNode; itemNode = itemNode.next_sibling("piece"))
 	{
 		piece = (PuzzlePiece*)app->entityManager->CreateEntity(EntityType::PUZZLE_PIECE, itemNode);
+		piece->Start();
 		pieces.Add(piece);
 	}
 }
@@ -81,7 +73,6 @@ void ButtonOrderPuzzle::ButtonTriggerCheck()
 
 void ButtonOrderPuzzle::ResetPuzzle()
 {
-
 	ListItem<PuzzlePiece*>* pieceItem;
 
 	for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)
@@ -90,5 +81,18 @@ void ButtonOrderPuzzle::ResetPuzzle()
 		actualOrder = 1;
 	}
 
+}
+
+void ButtonOrderPuzzle::OpenDoor()
+{
+	ListItem<PuzzlePiece*>* pieceItem;
+
+	for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)
+	{
+		if (pieceItem->data->pieceType == PieceType::DOOR)
+		{
+			app->entityManager->DestroyEntity(pieceItem->data);
+		}
+	}
 
 }

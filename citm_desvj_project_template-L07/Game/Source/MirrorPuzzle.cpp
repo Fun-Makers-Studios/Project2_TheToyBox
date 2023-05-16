@@ -6,9 +6,9 @@
 #include "Point.h"
 
 MirrorPuzzle::MirrorPuzzle(pugi::xml_node node) {
-	this->id = node.attribute("id").as_int();
+	this->orderID = node.attribute("orderID").as_int();
 	this->name = node.attribute("name").as_string();
-	this->nextPuzzleId = node.attribute("nextQuestId").as_int();
+	this->nextPuzzleId = node.attribute("nextPuzzleId").as_int();
 	this->itemId = node.attribute("itemId").as_int();
 	this->type = PuzzleType::MIRROR;
 }
