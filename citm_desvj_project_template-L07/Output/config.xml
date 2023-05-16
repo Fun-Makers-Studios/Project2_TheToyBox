@@ -305,27 +305,19 @@
 			<puzzle orderID="1"/>
 		</activepuzzles>
 
-		<!--Circus One Puzzles-->
-		<puzzle type="0" orderID="1" name="Color Button Order" nextPuzzleId="2" map ="circusOne">
-			<piece pieceType="0" x="1345" y="384" id="1" texturepath="Assets/Textures/PuzzleButtons.png"/>
-			<piece pieceType="0" x="1377" y="384" id="2" texturepath="Assets/Textures/PuzzleButtons.png"/>
-			<piece pieceType="0" x="1409" y="384" id="3" texturepath="Assets/Textures/PuzzleButtons.png"/>
-			<piece pieceType="0" x="1441" y="384" id="4" texturepath="Assets/Textures/PuzzleButtons.png"/>
-			<piece pieceType="0" x="1473" y="384" id="5" texturepath="Assets/Textures/PuzzleButtons.png"/>
-			<piece pieceType="2" x="1792" y="544" texturepath="Assets/Textures/DoorPuzzle1.png"/>
-		</puzzle>
-		
-		<puzzle type="1" orderID="2" name="Mirror" nextPuzzleId="3" map ="circusOne">
-			<object x="250" y="450" id="1" initialOrientation="up"	 texturepath="Assets/Textures/PuzzleButtons.png"/>
-			<object x="250" y="450" id="1" initialOrientation="left" texturepath="Assets/Textures/PuzzleButtons.png"/>
-			<object x="250" y="450" id="1" initialOrientation="down" texturepath="Assets/Textures/PuzzleButtons.png"/>
-			<target x="250" y="450" id="1" finalOrientation="right"  texturepath="Assets/Textures/PuzzleButtons.png"/>
-			<target x="250" y="450" id="1" finalOrientation="up"	 texturepath="Assets/Textures/PuzzleButtons.png"/>
-			<target x="250" y="450" id="1" finalOrientation="left"	 texturepath="Assets/Textures/PuzzleButtons.png"/>
+		<!--Circus One Puzzle 1-->
+		<puzzle type="0" orderID="1" name="Color Button Order" nextPuzzleId="2" map="circusOne">
+			<piece pieceType="0" x="1344" y="224" id="1" texturepath="Assets/Textures/PuzzleButtons.png"/>
+			<piece pieceType="0" x="1536" y="576" id="2" texturepath="Assets/Textures/PuzzleButtons.png"/>
+			<piece pieceType="0" x="1600" y="384" id="3" texturepath="Assets/Textures/PuzzleButtons.png"/>
+			<piece pieceType="0" x="1280" y="608" id="4" texturepath="Assets/Textures/PuzzleButtons.png"/>
+			<piece pieceType="0" x="1632" y="224" id="5" texturepath="Assets/Textures/PuzzleButtons.png"/>
+			<piece pieceType="2" x="1808" y="590" texturepath="Assets/Textures/DoorPuzzle1.png"/>
 		</puzzle>
 
-		<!--Circus Two Puzzles-->
-		<puzzle type="0" orderID="3" name="Color Button Order" nextPuzzleId="0" map ="circusTwo">
+
+		<!--Circus Two Puzzle 1-->
+		<puzzle type="0" orderID="3" name="Color Button Order" nextPuzzleId="0" map="circusTwo">
 			<button x="250" y="450" id="1" texturepath="Assets/Textures/PuzzleButtons.png"/>
 			<button x="300" y="450" id="2" texturepath="Assets/Textures/PuzzleButtons.png"/>
 			<button x="350" y="450" id="3" texturepath="Assets/Textures/PuzzleButtons.png"/>

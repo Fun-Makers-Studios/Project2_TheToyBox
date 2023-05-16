@@ -17,14 +17,13 @@ public:
 
 	bool Update() override;
 
-	void LoadAssets(pugi::xml_node node);
+	void LoadAssets(pugi::xml_node node) override;
 	void ButtonTriggerCheck();
 	void ResetPuzzle();
 	void OpenDoor();
 
 public:
 
-	SString map;
 	List<PuzzlePiece*> pieces;
 
 private:
@@ -33,6 +32,7 @@ private:
 
 	uint actualOrder = 1;
 
+	uint maxButtons = 1;
 };
 
 #endif // __COLLECTQUEST_H__

@@ -22,6 +22,7 @@ enum class ColliderType
 	WIN_ZONE,
 	CHECKPOINT,
 	BUTTON,
+	MOVABLEOBJ,
 	UNKNOWN
 };
 

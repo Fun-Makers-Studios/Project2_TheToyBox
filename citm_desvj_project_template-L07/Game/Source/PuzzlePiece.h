@@ -7,7 +7,7 @@
 #include "Collisions.h"
 #include "SDL/include/SDL.h"
 
-#define PIECE_BOUNDARY 48.0f
+#define PIECE_BOUNDARY 25.0f
 
 struct SDL_Texture;
 
@@ -60,11 +60,9 @@ public:
 
 	Body boundaries;
 
-	uint order = 0;
+	int order = 0;
 
 	bool activated = false;
-
-	int pieceID;
 
 	PieceType pieceType;
 };

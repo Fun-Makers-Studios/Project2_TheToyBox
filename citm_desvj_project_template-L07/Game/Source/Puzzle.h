@@ -22,12 +22,16 @@ public:
 	virtual bool Start() { return true; }
 	virtual bool Update() { return false; }
 
+	virtual void LoadAssets(pugi::xml_node node) {}
+	//virtual void UnloadAssets();
+
 public:
 
 	SString name;
 	PuzzleType type;
 	int orderID;
 	int nextPuzzleId;
+	SString map;
 
 };
 

@@ -20,7 +20,7 @@ PuzzleManager::~PuzzleManager()
 // Called before render is available
 bool PuzzleManager::Awake(pugi::xml_node& config)
 {
-	LOG("Loading Quest Manager");
+	LOG("Loading Puzzle Manager");
 	bool ret = true;
 	
 	for (pugi::xml_node node = config.child("puzzle"); node; node = node.next_sibling("puzzle"))
@@ -41,21 +41,6 @@ bool PuzzleManager::Awake(pugi::xml_node& config)
 		puzzles.Add(puzzle);
 	}
 
-	/*for (pugi::xml_node node = config.child("activepuzzles").child("quest"); node; node = node.next_sibling("quest"))
-	{
-		ListItem<Puzzle*>* puzzleItem = puzzles.start;
-		while (puzzleItem != nullptr)
-		{
-			Puzzle* item = puzzleItem->data;
-			if (item->id == node.attribute("orderID").as_int()) {
-				activePuzzles.Add(item);
-				break;
-			}
-
-			puzzleItem = puzzleItem->next;
-		}
-	}*/
-
 	return ret;
 }
 
@@ -63,8 +48,6 @@ bool PuzzleManager::Start()
 {
 	LOG("Starting Quest Manager");
 	bool ret = true;
-
-	TriggerPuzzle(1);
 
 	return ret;
 }
@@ -102,6 +85,7 @@ bool PuzzleManager::Update(float dt)
 	}
 
 	LOG("PUZZLES: %d", puzzles.Count());
+	LOG("PUZZLES ACTIVE: %d", activePuzzles.Count());
 
 	return ret;
 }
@@ -114,6 +98,7 @@ void PuzzleManager::TriggerPuzzle(int id)
 	{
 		Puzzle* item = pitem->data;
 		if (item->orderID == id) {
+			item->LoadAssets(app->configNode);
 			activePuzzles.Add(item);
 			break;
 		}

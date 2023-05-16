@@ -71,6 +71,7 @@ bool SceneGame::Start()
 	mapName = "town";
 	LoadNPC();
 	LoadItems();
+	LoadPuzzles();
 
 	//Instantiate and init the player using the entity manager
 	player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER, app->configNode.child("scene").child("player"));
@@ -350,6 +351,7 @@ void SceneGame::SceneMap()
 		player->body->pos = player->newPos;
 		LoadNPC();
 		LoadItems();
+		LoadPuzzles();
 
 		isMapChanging = false;
 	}
@@ -393,21 +395,15 @@ void SceneGame::LoadItems()
 
 void SceneGame::LoadPuzzles()
 {
-	/*
-	for (ListItem<Puzzle*>* puzzlesItem = app->puzzleManager->activePuzzles.start; puzzlesItem != NULL; puzzlesItem = puzzlesItem->next)
+	app->puzzleManager->activePuzzles.Clear();
+
+	for (ListItem<Puzzle*>* puzzlesItem = app->puzzleManager->puzzles.start; puzzlesItem != nullptr; puzzlesItem = puzzlesItem->next)
 	{
-		puzzlesItem
-	}
-	
-	for (ListItem<Puzzle*>* puzzlesItem = app->puzzleManager->puzzles.start; puzzlesItem != NULL; puzzlesItem = puzzlesItem->next)
-	{
-		if (true)
+		if (puzzlesItem->data->map == mapName)
 		{
-
+			app->puzzleManager->TriggerPuzzle(puzzlesItem->data->orderID);
 		}
-
-		puzzlesItem.da
-	}*/
+	}
 
 }
 

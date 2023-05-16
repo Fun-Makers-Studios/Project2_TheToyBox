@@ -22,18 +22,56 @@ PuzzlePiece::PuzzlePiece(pugi::xml_node parameters) : Entity(EntityType::PUZZLE_
 	startPos.x = parameters.attribute("x").as_int();
 	startPos.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
-	pieceID = parameters.attribute("id").as_int();
+	order = parameters.attribute("id").as_int();
 	pieceType = (PieceType)parameters.attribute("pieceType").as_int();
 
-	// Create body
-	body = new Body();	// HEKATE cleanup
-	body->type = ColliderType::BUTTON;
-	body->shape = ColliderShape::CIRCLE;
-	body->pos = { startPos.x, startPos.y };
-	body->r = 8;
+	switch (pieceType)
+	{
+	case PieceType::BUTTON:
 
-	boundaries = *this->body;
-	boundaries.r = PIECE_BOUNDARY;
+		// Create body
+		body = new Body();	// HEKATE cleanup
+		body->type = ColliderType::BUTTON;
+		body->shape = ColliderShape::CIRCLE;
+		body->pos = { startPos.x, startPos.y };
+		body->r = 8;
+
+		boundaries = *this->body;
+		boundaries.r = PIECE_BOUNDARY;
+
+		break;
+
+	case PieceType::MOV_OBJ:
+
+		// Create body
+		body = new Body();	// HEKATE cleanup
+		body->type = ColliderType::MOVABLEOBJ;
+		body->shape = ColliderShape::RECTANGLE;
+		body->pos = { startPos.x, startPos.y };
+		body->w = 32;
+		body->h = 32;
+
+		break;
+
+	case PieceType::DOOR:
+
+		// Create body
+		body = new Body();	// HEKATE cleanup
+		body->type = ColliderType::WALL;
+		body->shape = ColliderShape::RECTANGLE;
+		body->pos = { startPos.x, startPos.y };
+		body->w = 32;
+		body->h = 96;
+
+		break;
+
+	case PieceType::UNKNOWN:
+
+		break;
+
+	default:
+		break;
+	}
 
 }
 
@@ -59,13 +97,26 @@ bool PuzzlePiece::Start()
 	width = 32;
 	height = 32;
 
-	idleAnim.PushBack({ 0, 0, 32, 32 });
-	idleAnim.loop = true;
-	idleAnim.speed = 0.1f;
+	if (pieceType == PieceType::DOOR)
+	{
+		idleAnim.PushBack({ 0, 0, 32, 96 });
+		idleAnim.loop = true;
+		idleAnim.speed = 0.1f;
+	}
+	else
+	{
+		idleAnim.PushBack({ 0, 0, 32, 32 });
+		idleAnim.loop = true;
+		idleAnim.speed = 0.1f;
+	}
 	
-	activeAnim.PushBack({ 0 + (32 * pieceID), 0, 32, 32 });
-	activeAnim.loop = true;
-	activeAnim.speed = 0.1f;
+
+	if (pieceType != PieceType::DOOR)
+	{
+		activeAnim.PushBack({ 0 + (32 * order), 0, 32, 32 });
+		activeAnim.loop = true;
+		activeAnim.speed = 0.1f;
+	}
 
 	currentAnim = &idleAnim;
 
@@ -84,22 +135,18 @@ bool PuzzlePiece::Update()
 {
 	currentAnim = &idleAnim;
 
-	SDL_Rect rect = currentAnim->GetCurrentFrame();
-	ScaleType scale = app->scaleObj->GetCurrentScale();
-	//app->render->DrawTexture(shadowTexture, body->pos.x - rect.w / 2, body->pos.y - 54, NULL, fliped, scale);
-
-	if (activated) 
+	if (activated && pieceType == PieceType::BUTTON)
 	{
 		
 		currentAnim = &activeAnim;
 	
 	}
 
-	app->render->DrawTexture(texture, body->pos.x - rect.w / 2, body->pos.y - 24, &rect, SDL_FLIP_NONE, scale);
+	SDL_Rect rect = currentAnim->GetCurrentFrame();
+	ScaleType scale = app->scaleObj->GetCurrentScale();
+	app->render->DrawTexture(texture, body->pos.x - rect.w / 2, body->pos.y - rect.h / 2, &rect, SDL_FLIP_NONE, scale);
 
 	currentAnim->Update();
-
-	//TriggerCheck();
 
 	return true;
 }
@@ -116,15 +163,3 @@ bool PuzzlePiece::CleanUp()
 {
 	return true;
 }
-
-//void PuzzlePiece::TriggerCheck()
-//{
-//	/*boundaries = *this->body;
-//	boundaries.r = 30;
-//
-//	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN &&
-//		app->collisions->CheckCollision(*app->sceneManager->sceneGame->player->body, boundaries))
-//	{
-//		activated = true;
-//	}*/
-//}

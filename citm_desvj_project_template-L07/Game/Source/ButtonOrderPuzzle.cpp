@@ -14,7 +14,6 @@ ButtonOrderPuzzle::ButtonOrderPuzzle(pugi::xml_node node) {
 	this->nextPuzzleId = node.attribute("nextPuzzleId").as_int();
 	this->map = node.attribute("map").as_string();
 	this->type = PuzzleType::BUTTON_ORDER;
-	LoadAssets(node);
 }
 
 ButtonOrderPuzzle::~ButtonOrderPuzzle() {}
@@ -22,9 +21,11 @@ ButtonOrderPuzzle::~ButtonOrderPuzzle() {}
 bool ButtonOrderPuzzle ::Update() {
 	bool ret = false;
 
+	ButtonTriggerCheck();
+
 	//Completion event
 	LOG("ACTIVE PUZZLE");
-	if (actualOrder == 6)
+	if (actualOrder == maxButtons)
 	{
 		OpenDoor();
 		ret = true;
@@ -37,11 +38,18 @@ void ButtonOrderPuzzle::LoadAssets(pugi::xml_node node)
 {
 	pieces.Clear();
 	
-	for (pugi::xml_node itemNode = node.child("piece"); itemNode; itemNode = itemNode.next_sibling("piece"))
+	pugi::xml_node assetNode = node.child("puzzlemanager").child("puzzle");
+
+	for (pugi::xml_node itemNode = assetNode.child("piece"); itemNode; itemNode = itemNode.next_sibling("piece"))
 	{
 		piece = (PuzzlePiece*)app->entityManager->CreateEntity(EntityType::PUZZLE_PIECE, itemNode);
 		piece->Start();
 		pieces.Add(piece);
+
+		if (piece->pieceType == PieceType::BUTTON)
+		{
+			maxButtons++;
+		}
 	}
 }
 

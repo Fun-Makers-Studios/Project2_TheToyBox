@@ -2,7 +2,9 @@
 #define __MIRRORPUZZLE_H__
 
 #include "Puzzle.h"
+#include "PuzzlePiece.h"
 #include "Point.h"
+#include "Collisions.h"
 #include "SDL/include/SDL.h"
 
 struct SDL_Texture;
@@ -15,9 +17,19 @@ public:
 
 	bool Update() override;
 
+	void LoadAssets(pugi::xml_node node) override;
+	void ObjectTriggerCheck();
+	void ResetPuzzle();
+	void OpenDoor();
+
 public:
 
-	int itemId;
+	List<PuzzlePiece*> pieces;
+
+private:
+
+	PuzzlePiece* piece = nullptr;
+
 };
 
 #endif // __COLLECTQUEST_H__
