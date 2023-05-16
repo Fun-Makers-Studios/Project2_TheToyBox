@@ -8,6 +8,7 @@
 
 
 #include "PugiXml/src/pugixml.hpp"
+#include "SDL_mixer/include/SDL_mixer.h"
 
 #define CONFIG_FILENAME		"config.xml"
 #define SAVE_STATE_FILENAME "save_game.xml"
@@ -35,7 +36,6 @@ class PartyManager;
 class ParticleSystemManager;
 
 class MenuManager;
-class UI;
 class GuiManager;
 class Debug;
 
@@ -133,7 +133,6 @@ public:
 	ParticleSystemManager* particleManager;
 
 	MenuManager* menuManager;
-	UI* ui;
 	GuiManager* guiManager;
 	Debug* debug;
 

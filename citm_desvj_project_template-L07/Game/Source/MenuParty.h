@@ -34,6 +34,8 @@ public:
 
 	void SwapItems();
 
+	void BlitPartyStats();
+
 public:
 
 	// UI

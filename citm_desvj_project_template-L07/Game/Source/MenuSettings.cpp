@@ -6,7 +6,6 @@
 #include "SceneManager.h"
 #include "MenuManager.h"
 #include "GuiManager.h"
-#include "UI.h"
 
 #include "Window.h"
 #include "Audio.h"

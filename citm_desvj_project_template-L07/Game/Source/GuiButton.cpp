@@ -3,9 +3,8 @@
 #include "App.h"
 #include "Audio.h"
 #include "Textures.h"
-//#include "Scene.h"
+#include "MenuManager.h"
 #include "Fonts.h"
-#include "UI.h"
 
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, int textSize, ButtonType buttonType_) : GuiControl(GuiControlType::BUTTON, id)
 {
@@ -94,7 +93,7 @@ bool GuiButton::Draw(Render* render)
 			rect = { 0, 233, 64, 76 };
 		
 		render->DrawTexture(buttonTex, rec.x, rec.y, &rect);
-		app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2) - 4, app->ui->font3_id, this->text);
+		app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2) - 4, app->menuManager->font3_id, this->text);
 
 	} break;
 
@@ -111,7 +110,7 @@ bool GuiButton::Draw(Render* render)
 			rect = { 94, 233, 64, 76 };
 
 		render->DrawTexture(buttonTex, rec.x, rec.y, &rect);
-		app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->ui->font3_id, this->text);
+		app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->menuManager->font3_id, this->text);
 
 	} break;
 	case GuiControlState::PRESSED:
@@ -126,7 +125,7 @@ bool GuiButton::Draw(Render* render)
 			rect = { 188, 233, 64, 76 };
 
 		render->DrawTexture(buttonTex, rec.x, rec.y, &rect);
-		app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->ui->font3_id, this->text);
+		app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->menuManager->font3_id, this->text);
 
 	} break;
 

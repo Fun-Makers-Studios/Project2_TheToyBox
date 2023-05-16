@@ -4,6 +4,7 @@
 #include "Audio.h"
 #include "Render.h"
 #include "Window.h"
+
 #include "EntityManager.h"
 #include "PuzzleManager.h"
 #include "QuestManager.h"
@@ -11,7 +12,6 @@
 #include "Map.h"
 #include "Collisions.h"
 #include "PathFinding.h"
-#include "UI.h"
 #include "GuiManager.h"
 #include "SceneManager.h"
 #include "PartyManager.h"

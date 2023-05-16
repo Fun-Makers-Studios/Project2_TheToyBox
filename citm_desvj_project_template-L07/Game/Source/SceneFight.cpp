@@ -10,7 +10,6 @@
 #include "PartyManager.h"
 #include "SceneTitle.h"
 #include "SceneManager.h"
-#include "UI.h"
 #include "GuiManager.h"
 #include "Debug.h"
 #include "List.h"
@@ -296,7 +295,7 @@ void SceneFight::ExecuteTurn()
 				}
 				else
 				{
-					Attack(turnMember, app->partyManager->party.At(enemySelected)->data);
+					Attack(turnMember, enemyList.At(enemySelected)->data);
 				}
 
 				easingPos->SetFinished(false);

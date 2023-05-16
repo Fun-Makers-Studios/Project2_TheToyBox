@@ -5,7 +5,6 @@
 #include "Textures.h"
 //#include "Scene.h"
 #include "Fonts.h"
-#include "UI.h"
 
 GuiInventorySlot::GuiInventorySlot(uint32 id, SDL_Rect bounds, const char* text, int textSize) : GuiControl(GuiControlType::INVENTORY_SLOT, id)
 {

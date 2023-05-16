@@ -58,13 +58,13 @@ public:
 	MenuID nextMenu;
 
 	//Menus
-	MenuTitle* menuTitle;
-	MenuSettings* menuSettings;
-	MenuCredits* menuCredits;
-	MenuPause* menuPause;
-	MenuQuest* menuQuest;
-	MenuParty* menuParty;
-	MenuFight* menuFight;
+	MenuTitle* menuTitle = nullptr;
+	MenuSettings* menuSettings = nullptr;
+	MenuCredits* menuCredits = nullptr;
+	MenuPause* menuPause = nullptr;
+	MenuQuest* menuQuest = nullptr;
+	MenuParty* menuParty = nullptr;
+	MenuFight* menuFight = nullptr;
 
 	bool exitGame = false;
 
@@ -79,6 +79,16 @@ public:
 	const char* openMenuSFXPath;
 	const char* closeMenuSFXPath;
 
+	//FONTS
+	uint font1_id = -1;
+	uint font2_id = -1;
+	uint font2Red_id = -1;
+	uint font3_id = -1;
+
+	const char* font1Path;
+	const char* font2Path;
+	const char* font2_RedPath;
+	const char* font3Path;
 };
 
 

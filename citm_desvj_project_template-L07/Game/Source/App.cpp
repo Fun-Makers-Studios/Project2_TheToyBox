@@ -21,7 +21,6 @@
 #include "PuzzleManager.h"
 
 #include "MenuManager.h"
-#include "UI.h"
 #include "ParticleSystemManager.h"
 #include "GuiManager.h"
 #include "GuiButton.h"
@@ -65,7 +64,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	particleManager = new ParticleSystemManager();
 
 	menuManager = new MenuManager();
-	ui = new UI();
 	guiManager = new GuiManager();
 
 	transitionManager = new TransitionManager();
@@ -97,7 +95,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(questManager, false);
 
 	AddModule(menuManager, false);
-	AddModule(ui, true);
 	AddModule(guiManager, true);
 
 	AddModule(transitionManager, true);

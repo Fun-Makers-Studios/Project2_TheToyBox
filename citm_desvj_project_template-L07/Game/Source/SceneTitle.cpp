@@ -14,7 +14,6 @@
 #include "Map.h"
 #include "GuiManager.h"
 #include "Fonts.h"
-#include "UI.h"
 #include "Debug.h"
 
 #include "SDL/include/SDL_render.h"

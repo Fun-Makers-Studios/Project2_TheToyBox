@@ -22,18 +22,16 @@
 		<fx volume="50"/>
 	</audio>
 
-	<ui>
-		<font1 texturepath="Assets/Textures/UI/Fonts/font1.png"/>
-		<font2 texturepath="Assets/Textures/UI/Fonts/font2.png"/>
-		<font2Red texturepath="Assets/Textures/UI/Fonts/font2_red.png"/>
-		<font3 texturepath="Assets/Textures/UI/Fonts/font3.png"/>
-	</ui>
-
 	<menuManager>
 		<startsfx startSFXPath="Assets/Audio/Fx/Menus/fx5.wav"/>
 		<selectsfx selectSFXPath="Assets/Audio/FX/select.wav"/>
 		<openMenuSFX openMenuSFXPath="Assets/Audio/Fx/Menus/open_menu.wav"/>
 		<closeMenuSFX closeMenuSFXPath="Assets/Audio/Fx/Menus/close_menu.wav"/>
+
+		<font1 texturepath="Assets/Textures/UI/Fonts/font1.png"/>
+		<font2 texturepath="Assets/Textures/UI/Fonts/font2.png"/>
+		<font2Red texturepath="Assets/Textures/UI/Fonts/font2_red.png"/>
+		<font3 texturepath="Assets/Textures/UI/Fonts/font3.png"/>
 
 		<popImage settingtexturepath="Assets/Textures/UI/SceneTitle/Settings/SettingsMenu.png" creditstexturepath="Assets/Textures/UI/SceneTitle/Credits/CreditsMenu.png"/>
 		<imgPause imgPausePath="Assets/Textures/UI/PauseMenu/PauseMenuTemplate.png"/>

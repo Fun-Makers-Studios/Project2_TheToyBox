@@ -10,7 +10,6 @@
 #include "Map.h"
 #include "Collisions.h"
 #include "PathFinding.h"
-#include "UI.h"
 #include "GuiManager.h"
 #include "SceneManager.h"
 #include "PartyManager.h"

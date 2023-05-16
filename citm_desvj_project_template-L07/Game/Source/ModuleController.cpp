@@ -7,7 +7,6 @@
 #include "Audio.h"
 #include "Collisions.h"
 #include "Fonts.h"
-#include "UI.h"
 
 #include <SDL/include/SDL.h>
 

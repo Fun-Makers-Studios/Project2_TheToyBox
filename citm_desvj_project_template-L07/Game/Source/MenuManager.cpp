@@ -11,6 +11,7 @@
 #include "SceneManager.h"
 #include "GuiManager.h"
 #include "Audio.h"
+#include "Fonts.h"
 
 MenuManager::MenuManager() : Module()
 {
@@ -38,11 +39,16 @@ bool MenuManager::Awake(pugi::xml_node& config)
 	AddMenu(menuFight, config);
 
 
-	// Properties from xml
+	/*Initialize from xml*/
 	startSFXPath = app->configNode.child("menuManager").child("startsfx").attribute("startSFXPath").as_string();
 	selectSFXPath = app->configNode.child("menuManager").child("selectsfx").attribute("selectSFXPath").as_string();
 	openMenuSFXPath = app->configNode.child("menuManager").child("openMenuSFX").attribute("openMenuSFXPath").as_string();
 	closeMenuSFXPath = app->configNode.child("menuManager").child("closeMenuSFX").attribute("closeMenuSFXPath").as_string();
+	
+	font1Path = app->configNode.child("menuManager").child("font1").attribute("texturepath").as_string();
+	font2Path = app->configNode.child("menuManager").child("font2").attribute("texturepath").as_string();
+	font2_RedPath = app->configNode.child("menuManager").child("font2Red").attribute("texturepath").as_string();
+	font3Path = app->configNode.child("menuManager").child("font3").attribute("texturepath").as_string();
 
 	return true;
 }
@@ -65,6 +71,18 @@ bool MenuManager::Start()
 	openMenuSFX = app->audio->LoadFx(openMenuSFXPath);
 	closeMenuSFX = app->audio->LoadFx(closeMenuSFXPath);
 
+	//Load fonts
+	char lookupTableFont1[] = { "! @,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz" };
+	font1_id = app->fonts->Load(font1Path, lookupTableFont1, 2);
+
+	char lookupTableFont2[] = { "! %&'()*+,-./0123456789:;<=>abcdefghijklmnopqrstuvwxyz" };
+	font2_id = app->fonts->Load(font2Path, lookupTableFont2, 1);
+
+	char lookupTableFont2Red[] = { "! %&'()*+,-./0123456789:;<=>abcdefghijklmnopqrstuvwxyz" };
+	font2Red_id = app->fonts->Load(font2_RedPath, lookupTableFont2Red, 1);
+
+	char lookupTableFont3[] = { "abcdefghijklmnopqrstuvwxyz 0123456789.,;:$#'! /?%&()@ -+=      " };
+	font3_id = app->fonts->Load(font3Path, lookupTableFont3, 7);
 	return true;
 }
 
@@ -112,7 +130,17 @@ bool MenuManager::PostUpdate()
 	return true;
 }
 
-bool MenuManager::CleanUp() { return true; }
+bool MenuManager::CleanUp()
+{
+	// HEKATE Audio Cleanup?
+
+	app->fonts->UnLoad(font1_id);
+	app->fonts->UnLoad(font2_id);
+	app->fonts->UnLoad(font2Red_id);
+	app->fonts->UnLoad(font3_id);
+
+	return true;
+}
 
 
 bool MenuManager::AddMenu(Menu* menu, pugi::xml_node& config)

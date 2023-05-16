@@ -8,7 +8,6 @@
 #include "QuestManager.h"
 #include "DialogueManager.h"
 #include "GuiManager.h"
-#include "UI.h"
 
 #include "Window.h"
 #include "Audio.h"
