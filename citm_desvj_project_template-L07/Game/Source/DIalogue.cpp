@@ -3,6 +3,7 @@
 Option::Option(pugi::xml_node option) {
 	this->id = option.attribute("id").as_int();
 	this->text = option.attribute("text").as_string();
+	this->speaker = option.attribute("speaker").as_string();
 	this->nextNodeId = option.attribute("nextNodeId").as_int();
 	this->questCompletionId = option.attribute("questCompletionId").as_int();
 	this->questTriggerId = option.attribute("questTriggerId").as_int();
@@ -11,6 +12,7 @@ Option::Option(pugi::xml_node option) {
 Node::Node(pugi::xml_node node) {
 	this->id = node.attribute("id").as_int();
 	this->text = node.attribute("text").as_string();
+	this->speaker = node.attribute("speaker").as_string();
 
 	for (pugi::xml_node n = node.child("option"); n; n = n.next_sibling("option"))
 	{

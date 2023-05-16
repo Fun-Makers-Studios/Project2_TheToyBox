@@ -4,13 +4,15 @@
 #include "Input.h"
 #include "Log.h"
 #include "Point.h"
+#include "MenuParty.h"
+#include "MenuManager.h"
 
 CollectQuest::CollectQuest(pugi::xml_node node) {
 	this->id = node.attribute("id").as_int();
 	this->name = node.attribute("name").as_string();
 	this->description = node.attribute("description").as_string();
 	this->nextQuestId = node.attribute("nextQuestId").as_int();
-	this->itemId = node.attribute("itemId").as_int();
+	this->itemName = node.attribute("itemName").as_string();
 	this->reward = node.attribute("reward").as_int();
 	this->type = QuestType::COLLECT;
 }
@@ -18,7 +20,17 @@ CollectQuest::CollectQuest(pugi::xml_node node) {
 CollectQuest::~CollectQuest() {}
 
 bool CollectQuest::Update() {
-	bool ret = true;
+	bool ret = false;
+
 	//Completion event
+	for (ListItem<GuiInventorySlot*>* sitem = app->menuManager->menuParty->inventorySlotsList.start; sitem != nullptr; sitem = sitem->next)
+	{
+		if (sitem->data->slotItem != nullptr) {
+			if (sitem->data->slotItem->itemData.name == itemName) {
+				return true;
+			}
+		}
+	}
+
 	return ret;
 }

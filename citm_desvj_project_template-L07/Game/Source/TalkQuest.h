@@ -15,8 +15,8 @@ public:
 
 	bool Update() override;
 
-public:
-
+private:
+	bool optionSelected = false;
 };
 
 #endif // __TALKQUEST_H__

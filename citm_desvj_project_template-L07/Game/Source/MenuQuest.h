@@ -45,7 +45,8 @@ private:
 	const char* questMenuImgPath = nullptr;
 
 	ControlID questListSelected = ControlID::ACTIVE;
-
+	int currentQuestSelectedActive;
+	int currentQuestSelectedDone;
 	SDL_Rect pauseRect;
 };
 

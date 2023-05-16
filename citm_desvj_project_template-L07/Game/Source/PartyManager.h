@@ -115,6 +115,7 @@ public:
 
 	bool Start();
 
+	bool LoadPartyMember(SString name);
 	void AddMemberToParty(PartyMember* member);
 
 	bool LoadState(pugi::xml_node&);
@@ -124,4 +125,5 @@ public:
 	List<PartyMember*> party;
 	const char* enemyToFight = nullptr;
 	uint maxPartyMembers = 3;
+	uchar partyCount = 0;
 };

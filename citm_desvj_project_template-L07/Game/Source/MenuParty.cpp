@@ -8,6 +8,7 @@
 #include "QuestManager.h"
 #include "DialogueManager.h"
 #include "GuiManager.h"
+#include "PartyManager.h"
 
 #include "Window.h"
 #include "Audio.h"
@@ -89,6 +90,17 @@ bool MenuParty::PreUpdate()
 		app->audio->PlayFx(app->menuManager->closeMenuSFX);
 		app->menuManager->SelectMenu();
 	}
+	ListItem<PartyMember*>* item = app->partyManager->party.start;
+	bool active = false;
+	while (item != nullptr)
+	{
+		if (item->data->name.GetString() == "sophie") {
+			active = true;
+		}
+		item = item->next;
+	}
+	if (!active) { partyMember2Button->state = GuiControlState::DISABLED; }
+
 	return true;
 }
 

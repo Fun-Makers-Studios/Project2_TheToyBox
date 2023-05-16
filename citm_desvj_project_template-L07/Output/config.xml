@@ -73,8 +73,8 @@
 		<fightCircusBG texturepath="Assets/Textures/SceneFight/FightCircusBG.png"/>
 		<arrowimage texturepath="Assets/Textures/SceneFight/cursedArrow.png"/>
 		
-		<partymember type="ally" name="zero" maxHp="25" maxMana="20" level ="1" attack="4" defense="30" speed="40" critRate="10" texturepath="Assets/Textures/characters.png"/>
-		<partymember type="ally" name="sophie" maxHp="15" maxMana="30" level ="1" attack="6" defense="20" speed="50" critRate="15" texturepath="Assets/Textures/characters.png"/>
+		<partymember type="ally" name="zero" maxHp="25" maxMana="20" level ="1" attack="4" defense="30" speed="40" critRate="10" texturepath="Assets/Textures/characters.png" initial="true"/>
+		<partymember type="ally" name="sophie" maxHp="15" maxMana="30" level ="1" attack="6" defense="20" speed="50" critRate="15" texturepath="Assets/Textures/characters.png" initial="true"/>
 		
 		<enemykid type="enemy" name="enemykid" maxHp="20" maxMana="25" attack="3" defense="10" speed="15" critRate="10" texturepath="Assets/Textures/characters.png"/>
 		
@@ -114,76 +114,86 @@
 	<questmanager>
 		<activequests>
 			<quest id="1"></quest>
+			<quest id="2"></quest>
+			<quest id="3"></quest>
 		</activequests>
-		<quest type="0" id="1" name="TALK WITH GRANDPA KIKO" description="Search for your grandfather hwo needs your help." nextQuestId="2" npcId="2" reward="700"></quest>
-		<quest type="1" id="2" name="FIND GRANDPA S LOST CHESTS" description="Grandpa's chests disappeared long ago. They have to be somewhere!" nextQuestId="0" itemId="1" reward="0"></quest>
+		<quest type="0" id="1" name="Search for info" description="I suddenly woke up on this misterious place. I don't know where am I. I should find someone ho can help me." nextQuestId="-1" npcId="1" reward="0"></quest>
+		<quest type="2" id="2" name="Find the others" description="I found myself lost here. I was with my friends but now I'm alone. What happened to them?" nextQuestId="-1" npcId="2" reward="0">
+			<member name="Ashley"/>
+			<member name="Gabriel"/>
+			<member name="Johnny"/>
+			<member name="Sophie"/>
+		</quest>
+		<quest type="4" id="3" name="Return to the real world" description="I'm lost. I'm alone. This feels strange. The only thing I know is that I must find my way back home." nextQuestId="-1" reward="0"></quest>
+		<quest type="1" id="4" name="Find a ticket" description="My path is clear. I must enter that circus and for that I need a ticket. No matter what it takes to get one." nextQuestId="-1" itemName="Circus ticket" reward="0"></quest>
+		<quest type="4" id="5" name="Find what's wrong with IMP" description="There's something happening behind the scenes in the circus and Imp has been saying some worring things. I should find the truth behind this circus." nextQuestId="-1" reward="0"></quest>
 	</questmanager>
 
-	<dialoguemanager dialoguetext="Assets/Textures/UI/Dialog/Dialog.png" font="Assets/Textures/UI/Fonts/DialogFont.png" lookuptable="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz:?!.,     " rows="6">
+	<dialoguemanager dialoguetext="Assets/Textures/UI/Dialog/Dialog.png" font="Assets/Textures/UI/Fonts/DialogFont.png" lookuptable="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz:?!.,-'*  " rows="6">
 		<dialogue id ="0">
-			<node id="0" text="Greetings traveler.">
-				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			<node id="0" text="Greetings traveler." speaker="Sophie">
+				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="1" text="Are you lost?">
-				<option id="0" nextNodeId="3" text="What is this place?" questCompletionId="-1" questTriggerId="-1"/>
-				<option id="1" nextNodeId="2" text="No thanks." questCompletionId="-1" questTriggerId="-1"/>
+			<node id="1" text="Are you lost?" speaker="Sophie">
+				<option id="0" nextNodeId="3" text="What is this place?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+				<option id="1" nextNodeId="2" text="No thanks." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="2" text="Oh, sorry">
-				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			<node id="2" text="Oh, sorry" speaker="Sophie">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="3" text="Place? What a silly cuestion.">
-				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			<node id="3" text="Place? What a silly cuestion." speaker="Sophie">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 		</dialogue>
 		<dialogue id ="1">
-			<node id="0" text="Have you tried the beer they serve here?">
-				<option id="0" nextNodeId="1" text="No." questCompletionId="-1" questTriggerId="-1"/>
+			<node id="0" text="Have you tried the beer they serve here?" speaker="Tumama">
+				<option id="0" nextNodeId="1" text="No." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="1" text="Well then, enter the tabern and get one yourself.">
-				<option id="0" nextNodeId="-1" text="..." questCompletionId="-1" questTriggerId="-1"/>
-				<option id="1" nextNodeId="2" text="No thanks." questCompletionId="-1" questTriggerId="-1"/>
+			<node id="1" text="Well then, enter the tabern and get one yourself." speaker="Tumama">
+				<option id="0" nextNodeId="-1" text="..." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+				<option id="1" nextNodeId="2" text="No thanks." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="2" text="O fuck off">
-				<option id="0" nextNodeId="-1" text="Wtf?!" questCompletionId="-1" questTriggerId="-1"/>
+			<node id="2" text="O fuck off" speaker="Tumama">
+				<option id="0" nextNodeId="-1" text="Wtf?!" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 		</dialogue>
-		<dialogue id ="2">
-			<node id="0" text="No place like this Inn.">
-				<option id="0" nextNodeId="1" text="Did you say Inn?" questCompletionId="-1" questTriggerId="-1"/>
+		<dialogue id ="2" speaker="Tumama">
+			<node id="0" text="No place like this Inn." speaker="Tumama">
+				<option id="0" nextNodeId="1" text="Did you say Inn?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="1" text="Yes, what happens sweety?">
-				<option id="0" nextNodeId="-1" text="Ah, nothing. Thanks." questCompletionId="-1" questTriggerId="-1"/>
-				<option id="1" nextNodeId="2" text="Thank god, somewhere to rest." questCompletionId="-1" questTriggerId="-1"/>
+			<node id="1" text="Yes, what happens sweety?" speaker="Tumama">
+				<option id="0" nextNodeId="-1" text="Ah, nothing. Thanks." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+				<option id="1" nextNodeId="2" text="Thank god, somewhere to rest." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="2" text="Well, not a cheap place.">
-				<option id="0" nextNodeId="-1" text="Fuck." questCompletionId="-1" questTriggerId="-1"/>
+			<node id="2" text="Well, not a cheap place." speaker="Tumama">
+				<option id="0" nextNodeId="-1" text="Fuck." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 		</dialogue>
 		<dialogue id ="3">
-			<node id="0" text="Seems like no market today. Everybody went to the circus.">
-				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			<node id="0" text="Seems like no market today. Everybody went to the circus." speaker="Tumama">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 		</dialogue>
 		<dialogue id ="4">
-			<node id="0" text="O man, all the tickets are sold.">
-				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			<node id="0" text="O man, all the tickets are sold." speaker="Tumama">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 		</dialogue>
 		<dialogue id ="5">
-			<node id="0" text="Fuck off!! Leave me alone.">
-				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1"/>
+			<node id="0" text="Fuck off!! Leave me alone." speaker="Tumama">
+				<option id="0" nextNodeId="-1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 		</dialogue>
 		<dialogue id ="6">
-			<node id="0" text="Hello, hello! Do you wanna save?.">
-				<option id="0" nextNodeId="1" text="Yes in your mum ass." questCompletionId="-1" questTriggerId="-1"/>
-				<option id="1" nextNodeId="2" text="No, im not a pussy." questCompletionId="-1" questTriggerId="-1"/>
+			<node id="0" text="Hello, hello! Do you wanna save?." speaker="Tumama">
+				<option id="0" nextNodeId="1" text="Yes in your mum ass." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+				<option id="1" nextNodeId="2" text="No, im not a pussy." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="1" text="WOWOWOW! Relax my friend, here you have.">
-				<option id="0" nextNodeId="-1" text="Bye fucking asshole." questCompletionId="-1" questTriggerId="-1"/>
+			<node id="1" text="WOWOWOW! Relax my friend, here you have." speaker="Tumama">
+				<option id="0" nextNodeId="-1" text="Bye fucking asshole." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="2" text="Dammnnn that is how things work here. Yeah!">
-				<option id="0" nextNodeId="-1" text="Shut up old man." questCompletionId="-1" questTriggerId="-1"/>
+			<node id="2" text="Dammnnn that is how things work here. Yeah!" speaker="Tumama">
+				<option id="0" nextNodeId="-1" text="Shut up old man." questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 		</dialogue>
 	</dialoguemanager>

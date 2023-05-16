@@ -23,8 +23,12 @@ bool TalkQuest::Update() {
 	//Check completion event
 	if (app->sceneManager->sceneGame->dialogueManager->dialogueLoaded) {
 		if (app->sceneManager->sceneGame->dialogueManager->GetCurrentDialogue()->currentNode->currentOption->questCompletionId == this->id) {
-			ret = true;
+			optionSelected = true;
 		}
+	}
+	else if (optionSelected == true) {
+		optionSelected = false;
+		ret = true;
 	}
 
 	return ret;

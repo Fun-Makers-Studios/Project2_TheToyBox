@@ -3,6 +3,10 @@
 #include "Textures.h"
 #include "TalkQuest.h"
 #include "CollectQuest.h"
+#include "PartyMembersQuest.h"
+#include "GoToQuest.h"
+#include "ImposibleQuest.h"
+#include "MenuManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -32,6 +36,15 @@ bool QuestManager::Awake(pugi::xml_node& config)
 			break;
 		case QuestType::COLLECT:
 			quest = new CollectQuest(node);
+			break;
+		case QuestType::PARTYMEMBERS:
+			quest = new PartyMembersQuest(node);
+			break;
+		case QuestType::GOTO:
+			quest = new GoToQuest(node);
+			break;
+		case QuestType::IMPOSIBLE:
+			quest = new ImposibleQuest(node);
 			break;
 		default:
 			break;
@@ -81,20 +94,26 @@ bool QuestManager::Update(float dt)
 		{
 			activeQuests.Del(item);
 
-			ListItem<Quest*>* qitem = quests.start;
-			while (qitem != nullptr)
-			{
-				Quest* item = qitem->data;
-				if (item->id == pQuest->nextQuestId)
+			if (pQuest->nextQuestId != -1) {
+				ListItem<Quest*>* qitem = quests.start;
+				while (qitem != nullptr)
 				{
-					activeQuests.Add(item);
-					break;
-				}
+					Quest* item = qitem->data;
+					if (item->id == pQuest->nextQuestId)
+					{
+						activeQuests.Add(item);
+						break;
+					}
 
-				qitem = qitem->next;
+					qitem = qitem->next;
+				}
 			}
 
 			completedQuests.Add(pQuest);
+
+			//Open Quests Menu
+			app->menuManager->menuState = MenuState::SWITCH;
+			app->menuManager->nextMenu = MenuID::MENU_QUEST;
 		}
 	}
 

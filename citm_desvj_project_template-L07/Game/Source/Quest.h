@@ -10,6 +10,9 @@ enum class QuestType
 {
 	TALK,
 	COLLECT,
+	PARTYMEMBERS,
+	GOTO,
+	IMPOSIBLE,
 	UNKNOWN
 };
 

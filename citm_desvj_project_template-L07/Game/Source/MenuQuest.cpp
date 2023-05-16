@@ -8,6 +8,7 @@
 #include "QuestManager.h"
 #include "DialogueManager.h"
 #include "GuiManager.h"
+#include "PartyMembersQuest.h"
 
 #include "Window.h"
 #include "Audio.h"
@@ -65,6 +66,14 @@ bool MenuQuest::Start()
 		control = control->next;
 	}
 
+	if (app->questManager->activeQuests.start != nullptr) {
+		currentQuestSelectedActive = app->questManager->activeQuests.start->data->id;
+	}
+
+	if (app->questManager->completedQuests.start != nullptr) {
+		currentQuestSelectedDone = app->questManager->completedQuests.start->data->id;
+	}
+
 	return true;
 }
 
@@ -76,6 +85,58 @@ bool MenuQuest::PreUpdate()
 		app->audio->PlayFx(app->menuManager->closeMenuSFX);
 		app->menuManager->SelectMenu();
 	}
+
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	{
+		if (questListSelected == ControlID::ACTIVE) {
+			for (ListItem<Quest*>* qitem1 = app->questManager->activeQuests.start; qitem1 != nullptr; qitem1 = qitem1->next)
+			{
+				if (qitem1->next != nullptr) {
+					if (qitem1->next->data->id == currentQuestSelectedActive) {
+						currentQuestSelectedActive = qitem1->data->id;
+						break;
+					}
+				}
+			}
+		}
+		else if (questListSelected == ControlID::DONE) {
+			for (ListItem<Quest*>* qitem1 = app->questManager->completedQuests.start; qitem1 != nullptr; qitem1 = qitem1->next)
+			{
+				if (qitem1->next != nullptr) {
+					if (qitem1->next->data->id == currentQuestSelectedDone) {
+						currentQuestSelectedDone = qitem1->data->id;
+						break;
+					}
+				}
+			}
+		}
+	}
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	{
+		if (questListSelected == ControlID::ACTIVE) {
+			for (ListItem<Quest*>* qitem1 = app->questManager->activeQuests.start; qitem1 != nullptr; qitem1 = qitem1->next)
+			{
+				if (qitem1->data->id == currentQuestSelectedActive) {
+					if (qitem1->next != nullptr) {
+						currentQuestSelectedActive = qitem1->next->data->id;
+					}
+					break;
+				}
+			}
+		}
+		else if (questListSelected == ControlID::DONE) {
+			for (ListItem<Quest*>* qitem1 = app->questManager->completedQuests.start; qitem1 != nullptr; qitem1 = qitem1->next)
+			{
+				if (qitem1->data->id == currentQuestSelectedDone) {
+					if (qitem1->next != nullptr) {
+						currentQuestSelectedDone = qitem1->next->data->id;
+					}
+					break;
+				}
+			}
+		}
+	}
+
 	return true;
 }
 
@@ -97,7 +158,6 @@ bool MenuQuest::PostUpdate()
 
 	iPoint displacement = { 270, 120 };
 	int lines = 0;
-	int currentQuestSelected = 1;
 	uint fontID = app->sceneManager->sceneGame->dialogueManager->dialogueFontId;
 
 	switch (questListSelected)
@@ -110,10 +170,33 @@ bool MenuQuest::PostUpdate()
 
 			lines = app->fonts->BlitText2(displacement.x, displacement.y, fontID, (const char*)item->name.GetString(), 8, 215);
 
-			if (item->id == currentQuestSelected)
-				app->fonts->BlitText2(540, 130, fontID, (const char*)item->description.GetString(), 8, 460);
+			if (item->id == currentQuestSelectedActive) {
+				iPoint displacement2 = { 540, 130 };
 
-			displacement.y += (lines * (int)app->fonts->fonts[fontID].char_h) + 16;
+				int lines2 = app->fonts->BlitText2(displacement2.x, displacement2.y, fontID, (const char*)item->description.GetString(), 8, 460);
+				displacement2.y += (lines2 * (int)app->fonts->fonts[fontID].char_h) + ((lines2 - 1) * 8) + 16;
+
+				if (item->type == QuestType::PARTYMEMBERS) {
+					PartyMembersQuest* pQuest = dynamic_cast<PartyMembersQuest*>(item);
+					for (ListItem<PMember>* pmember = pQuest->memberNames.start; pmember != nullptr; pmember = pmember->next)
+					{
+						std::string strInfo;
+						if (pmember->data.picked) {
+							strInfo = std::string(pmember->data.name.GetString()) + " - FOUND";
+						}
+						else {
+							strInfo = std::string(pmember->data.name.GetString()) + " - LOST";
+						}
+						lines2 = app->fonts->BlitText2(displacement2.x, displacement2.y, fontID, (const char*)strInfo.c_str(), 8, 460);
+						displacement2.y += (lines2 * (int)app->fonts->fonts[fontID].char_h) + ((lines2 - 1) * 8) + 16;
+					}
+				}
+
+				app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 218, 141, 85, 96, true, false, true);
+				app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 55, 55, 80, 196, false, false, true);
+			}
+
+			displacement.y += (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8) + 16;
 		}
 		break;
 
@@ -125,8 +208,31 @@ bool MenuQuest::PostUpdate()
 
 			lines = app->fonts->BlitText2(displacement.x, displacement.y, fontID, (const char*)item->name.GetString(), 8, 215);
 
-			if (item->id == currentQuestSelected)
-				app->fonts->BlitText2(540, 130, fontID, (const char*)item->description.GetString(), 8, 460);
+			if (item->id == currentQuestSelectedDone) {
+				iPoint displacement2 = { 540, 130 };
+
+				int lines2 = app->fonts->BlitText2(displacement2.x, displacement2.y, fontID, (const char*)item->description.GetString(), 8, 460);
+				displacement2.y += (lines2 * (int)app->fonts->fonts[fontID].char_h) + ((lines2 - 1) * 8) + 16;
+
+				if (item->type == QuestType::PARTYMEMBERS) {
+					PartyMembersQuest* pQuest = dynamic_cast<PartyMembersQuest*>(item);
+					for (ListItem<PMember>* pmember = pQuest->memberNames.start; pmember != nullptr; pmember = pmember->next)
+					{
+						std::string strInfo;
+						if (pmember->data.picked) {
+							strInfo = std::string(pmember->data.name.GetString()) + " - FOUND";
+						}
+						else {
+							strInfo = std::string(pmember->data.name.GetString()) + " - LOST";
+						}
+						lines2 = app->fonts->BlitText2(displacement2.x, displacement2.y, fontID, (const char*)strInfo.c_str(), 8, 460);
+						displacement2.y += (lines2 * (int)app->fonts->fonts[fontID].char_h) + ((lines2 - 1) * 8) + 16;
+					}
+				}
+
+				app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 218, 141, 85, 96, true, false, true);
+				app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 55, 55, 80, 196, false, false, true);
+			}
 
 			displacement.y += (lines * (int)app->fonts->fonts[fontID].char_h) + 16;
 		}
@@ -158,11 +264,19 @@ bool MenuQuest::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case (uint32)ControlID::DONE:
 		questListSelected = ControlID::DONE;
+		if (app->questManager->completedQuests.start != nullptr) {
+			currentQuestSelectedDone = app->questManager->completedQuests.start->data->id;
+		}
+
 		app->audio->PlayFx(app->menuManager->selectSFX);
 		break;
 
 	case (uint32)ControlID::ACTIVE:
 		questListSelected = ControlID::ACTIVE;
+		if (app->questManager->activeQuests.start != nullptr) {
+			currentQuestSelectedActive = app->questManager->activeQuests.start->data->id;
+		}
+
 		app->audio->PlayFx(app->menuManager->startSFX);
 		break;
 

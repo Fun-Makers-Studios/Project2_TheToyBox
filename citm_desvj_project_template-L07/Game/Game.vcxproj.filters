@@ -190,20 +190,14 @@
     <ClCompile Include="Source\Wipe.cpp">
       <Filter>Transitions\Others</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneCircus.cpp">
-      <Filter>Game\Scenes</Filter>
+    <ClCompile Include="Source\GoToQuest.cpp">
+      <Filter>Game\Quests</Filter>
     </ClCompile>
-    <ClCompile Include="Source\PuzzleManager.cpp">
-      <Filter>Core\Managers</Filter>
+    <ClCompile Include="Source\ImposibleQuest.cpp">
+      <Filter>Game\Quests</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ButtonOrderPuzzle.cpp">
-      <Filter>Game\Puzzles</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\MirrorPuzzle.cpp">
-      <Filter>Game\Puzzles</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\PuzzlePiece.cpp">
-      <Filter>Game\Entities</Filter>
+    <ClCompile Include="Source\PartyMembersQuest.cpp">
+      <Filter>Game\Quests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -453,14 +447,14 @@
     <ClInclude Include="Source\PuzzleManager.h">
       <Filter>Core\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ButtonOrderPuzzle.h">
-      <Filter>Game\Puzzles</Filter>
+    <ClInclude Include="Source\GoToQuest.h">
+      <Filter>Game\Quests</Filter>
     </ClInclude>
-    <ClInclude Include="Source\MirrorPuzzle.h">
-      <Filter>Game\Puzzles</Filter>
+    <ClInclude Include="Source\ImposibleQuest.h">
+      <Filter>Game\Quests</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PuzzlePiece.h">
-      <Filter>Game\Entities</Filter>
+    <ClInclude Include="Source\PartyMembersQuest.h">
+      <Filter>Game\Quests</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

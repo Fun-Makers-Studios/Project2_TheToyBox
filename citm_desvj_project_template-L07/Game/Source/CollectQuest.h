@@ -17,7 +17,7 @@ public:
 
 public:
 
-	int itemId;
+	SString itemName;
 };
 
 #endif // __COLLECTQUEST_H__

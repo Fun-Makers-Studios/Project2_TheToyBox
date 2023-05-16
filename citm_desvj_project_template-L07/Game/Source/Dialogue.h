@@ -18,6 +18,7 @@ public:
 	int questCompletionId;
 	int questTriggerId;
 	SString text;
+	SString speaker;
 };
 
 class Node
@@ -31,6 +32,7 @@ public:
 public:
 	int id;
 	SString text;
+	SString speaker;
 
 	List<Option*> options;
 	Option* currentOption;

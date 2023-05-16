@@ -103,9 +103,11 @@
     <ClCompile Include="Source\Easing.cpp" />
     <ClCompile Include="Source\ExpandingBars.cpp" />
     <ClCompile Include="Source\FadeToColor.cpp" />
+    <ClCompile Include="Source\GoToQuest.cpp" />
     <ClCompile Include="Source\GuiCheckBox.cpp" />
     <ClCompile Include="Source\GuiInventorySlot.cpp" />
     <ClCompile Include="Source\GuiSlider.cpp" />
+    <ClCompile Include="Source\ImposibleQuest.cpp" />
     <ClCompile Include="Source\KidEnemy.cpp" />
     <ClCompile Include="Source\Color.cpp" />
     <ClCompile Include="Source\Debug.cpp" />
@@ -122,6 +124,7 @@
     <ClCompile Include="Source\MirrorPuzzle.cpp" />
     <ClCompile Include="Source\PuzzleManager.cpp" />
     <ClCompile Include="Source\PuzzlePiece.cpp" />
+    <ClCompile Include="Source\PartyMembersQuest.cpp" />
     <ClCompile Include="Source\QuestManager.cpp" />
     <ClCompile Include="Source\SceneCircus.cpp" />
     <ClCompile Include="Source\SceneEnding.cpp" />
@@ -170,9 +173,11 @@
     <ClInclude Include="Source\Easing.h" />
     <ClInclude Include="Source\ExpandingBars.h" />
     <ClInclude Include="Source\FadeToColor.h" />
+    <ClInclude Include="Source\GoToQuest.h" />
     <ClInclude Include="Source\GuiCheckBox.h" />
     <ClInclude Include="Source\GuiInventorySlot.h" />
     <ClInclude Include="Source\GuiSlider.h" />
+    <ClInclude Include="Source\ImposibleQuest.h" />
     <ClInclude Include="Source\KidEnemy.h" />
     <ClInclude Include="Source\Color.h" />
     <ClInclude Include="Source\Debug.h" />
@@ -182,6 +187,7 @@
     <ClInclude Include="Source\Puzzle.h" />
     <ClInclude Include="Source\PuzzleManager.h" />
     <ClInclude Include="Source\PuzzlePiece.h" />
+    <ClInclude Include="Source\PartyMembersQuest.h" />
     <ClInclude Include="Source\Quest.h" />
     <ClInclude Include="Source\QuestManager.h" />
     <ClInclude Include="Source\Menu.h" />
