@@ -27,6 +27,7 @@ SceneTitle::SceneTitle() : Scene()
 
 	/*Initialize xml*/
 	imgPath = app->configNode.child("title").child("backgroundimage").attribute("texturepath").as_string();
+	nameImgPath = app->configNode.child("title").child("gameName").attribute("texturepath").as_string();
 	musicPath = app->configNode.child("title").child("music").attribute("musicPath").as_string();
 	select2SFXPath = app->configNode.child("player").child("SFXset").attribute("selectSFXPath").as_string();
 }
@@ -58,6 +59,7 @@ bool SceneTitle::Start()
 	
 	// Load tex / sfx
 	img = app->tex->Load(imgPath);
+	nameImg = app->tex->Load(nameImgPath);
 	titleIntroSFX = app->audio->LoadFx("Assets/Audio/Fx/SceneTitle/scene_title.wav");
 
 	// AUDIO
@@ -82,6 +84,7 @@ bool SceneTitle::Update(float dt)
 	pugi::xml_parse_result result = gameStateFile.load_file("save_game.xml");
 
 	app->render->DrawTexture(img, 0, 0, NULL, SDL_FLIP_NONE, ScaleType::TITLE);
+	app->render->DrawTexture(nameImg, 210, 10, NULL, SDL_FLIP_NONE, ScaleType::TITLE);
 
 	return true;
 }
@@ -104,6 +107,7 @@ bool SceneTitle::CleanUp()
 	LOG("Freeing TITLE SCENE");
 
 	app->tex->UnLoad(img);
+	app->tex->UnLoad(nameImg);
 
 	// HEKATE Should check all scene and menu CleanUp
 	 

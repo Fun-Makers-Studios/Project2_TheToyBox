@@ -48,6 +48,7 @@
 
 	<title>
 		<backgroundimage texturepath="Assets/Textures/SceneTitle/title.png"/>
+		<gameName texturepath="Assets/Textures/SceneTitle/gameName.png"/>
 		<music musicPath="Assets/Audio/Music/menu.ogg"/>
 	</title>
 

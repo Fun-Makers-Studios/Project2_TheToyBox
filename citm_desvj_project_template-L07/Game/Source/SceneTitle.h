@@ -46,8 +46,10 @@ public:
 
 private:
 	SDL_Texture* img = nullptr;
+	SDL_Texture* nameImg = nullptr;
 
 	const char* imgPath;
+	const char* nameImgPath;
 	const char* musicPath;
 	const char* select2SFXPath;
 
