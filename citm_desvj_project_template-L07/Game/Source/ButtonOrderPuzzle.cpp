@@ -34,6 +34,17 @@ bool ButtonOrderPuzzle ::Update() {
 	return ret;
 }
 
+void ButtonOrderPuzzle::UnloadAssets()
+{
+	for (ListItem<PuzzlePiece*>* item = pieces.start; item != NULL; item = item->next)
+	{
+		item->data->needToDestroy = true;
+	}
+
+	pieces.Clear();
+
+}
+
 void ButtonOrderPuzzle::LoadAssets(pugi::xml_node node)
 {
 	pieces.Clear();

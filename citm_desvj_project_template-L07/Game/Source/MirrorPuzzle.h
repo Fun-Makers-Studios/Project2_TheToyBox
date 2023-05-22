@@ -18,6 +18,7 @@ public:
 	bool Update() override;
 
 	void LoadAssets(pugi::xml_node node) override;
+	void UnloadAssets() override;
 	void ObjectTriggerCheck();
 	void ResetPuzzle();
 	void OpenDoor();

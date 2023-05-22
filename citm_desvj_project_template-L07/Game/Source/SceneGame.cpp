@@ -395,12 +395,12 @@ void SceneGame::LoadItems()
 
 void SceneGame::LoadPuzzles()
 {
-	app->puzzleManager->activePuzzles.Clear();
-
-	for (ListItem<Puzzle*>* puzzlesItem = app->puzzleManager->puzzles.start; puzzlesItem != nullptr; puzzlesItem = puzzlesItem->next)
+	for (ListItem<Puzzle*>* item = app->puzzleManager->activePuzzles.start; item != NULL; item = item->next)
 	{
-		puzzlesItem->data->pieces.Clear();
+		item->data->UnloadAssets();
 	}
+
+	app->puzzleManager->activePuzzles.Clear();
 
 	for (ListItem<Puzzle*>* puzzlesItem = app->puzzleManager->puzzles.start; puzzlesItem != nullptr; puzzlesItem = puzzlesItem->next)
 	{

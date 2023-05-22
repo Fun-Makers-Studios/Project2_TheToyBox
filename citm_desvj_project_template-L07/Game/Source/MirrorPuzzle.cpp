@@ -29,6 +29,17 @@ bool MirrorPuzzle::Update() {
 	return ret;
 }
 
+void MirrorPuzzle::UnloadAssets()
+{
+	for (ListItem<PuzzlePiece*>* item = pieces.start; item != NULL; item = item->next)
+	{
+		item->data->needToDestroy = true;
+	}
+
+	pieces.Clear();
+
+}
+
 void MirrorPuzzle::LoadAssets(pugi::xml_node node)
 {
 	pieces.Clear();
@@ -54,7 +65,7 @@ void MirrorPuzzle::ObjectTriggerCheck()
 		{
 			if (pieceItem->data->pieceType == PieceType::MOV_OBJ)
 			{
-				
+				pieceItem->data->body->vel = app->sceneManager->sceneGame->player->body->vel;
 			}
 		}
 	}

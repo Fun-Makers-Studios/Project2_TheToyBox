@@ -24,7 +24,7 @@ public:
 	virtual bool Update() { return false; }
 
 	virtual void LoadAssets(pugi::xml_node node) {}
-	//virtual void UnloadAssets();
+	virtual void UnloadAssets() {}
 
 public:
 
