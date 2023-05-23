@@ -190,7 +190,7 @@ bool SceneGame::Update(float dt)
 	if (dialogueManager->GetCurrentDialogue() != nullptr 
 		&& dialogueManager->GetCurrentDialogue()->id == 6 
 		&& dialogueManager->GetCurrentDialogue()->currentNode->id == 1 
-		&& app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		&& app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
 		Item* addItem = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, app->configNode.child("itemsMap").child(mapName.GetString()).child("item"));
 		addItem->takeItem = true;

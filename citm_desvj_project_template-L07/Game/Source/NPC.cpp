@@ -126,10 +126,10 @@ void NPC::DialogTriggerCheck()
 	Body boundaries = *this->body;
 	boundaries.r = NPC_BOUNDARY;
 
-	if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN &&
+	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN &&
 		app->collisions->CheckCollision(*app->sceneManager->sceneGame->player->body, boundaries))
 	{
-		if (this->dialogueid != -1)
+		if (this->dialogueid != -1 && app->sceneManager->sceneGame->dialogueManager->GetCurrentDialogue() == nullptr)
 			app->sceneManager->sceneGame->dialogueManager->Load(this->dialogueid);
 	}
 }

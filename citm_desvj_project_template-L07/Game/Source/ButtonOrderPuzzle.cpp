@@ -72,7 +72,7 @@ void ButtonOrderPuzzle::ButtonTriggerCheck()
 
 	for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN &&
+		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN &&
 			app->collisions->CheckCollision(*app->sceneManager->sceneGame->player->body, pieceItem->data->boundaries))
 		{
 			if (pieceItem->data->pieceType == PieceType::BUTTON)
