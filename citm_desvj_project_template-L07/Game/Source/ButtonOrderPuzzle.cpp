@@ -24,7 +24,7 @@ bool ButtonOrderPuzzle ::Update() {
 	ButtonTriggerCheck();
 
 	//Completion event
-	LOG("ACTIVE PUZZLE");
+	//LOG("ACTIVE PUZZLE");
 	if (actualOrder == maxButtons)
 	{
 		OpenDoor();
@@ -42,6 +42,8 @@ void ButtonOrderPuzzle::UnloadAssets()
 	}
 
 	pieces.Clear();
+
+	maxButtons = 1;
 
 }
 
@@ -79,6 +81,8 @@ void ButtonOrderPuzzle::ButtonTriggerCheck()
 				{
 					pieceItem->data->activated = true;
 					actualOrder++;
+					LOG("BUTTONS ORDER %d", actualOrder);
+					LOG("MAX BUTTONS %d", maxButtons);
 				}
 				else
 				{
