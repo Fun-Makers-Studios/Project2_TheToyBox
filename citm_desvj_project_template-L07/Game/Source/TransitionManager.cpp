@@ -137,6 +137,14 @@ void TransitionManager::LoadTransition()
 			break;
 	}
 
+	if(app->sceneManager->sceneGame->isMapChanging)
+	{
+		CreateFadeToColour(Black);
+		easing->SetTotalTime(1.5);
+		easingTypeIN = EasingType::EASE_OUT_SIN;
+		easingTypeOUT = EasingType::EASE_IN_SIN;
+	}
+
 	if (currentTransition != nullptr)
 	{
 		app->transitionManager->step = TransitionStep::IN;

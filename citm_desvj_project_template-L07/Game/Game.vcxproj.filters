@@ -34,9 +34,6 @@
     <ClCompile Include="Source\Item.cpp">
       <Filter>Game\Items</Filter>
     </ClCompile>
-    <ClCompile Include="Source\UI.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\NPC.cpp">
       <Filter>Game\Entities</Filter>
     </ClCompile>
@@ -199,6 +196,18 @@
     <ClCompile Include="Source\PartyMembersQuest.cpp">
       <Filter>Game\Quests</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PuzzleManager.cpp">
+      <Filter>Core\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ButtonOrderPuzzle.cpp">
+      <Filter>Game\Puzzles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MirrorPuzzle.cpp">
+      <Filter>Game\Puzzles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PuzzlePiece.cpp">
+      <Filter>Game\Puzzles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -259,9 +268,6 @@
       <Filter>Game\Items</Filter>
     </ClInclude>
     <ClInclude Include="Source\GuiControl.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\UI.h">
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\NPC.h">
@@ -438,9 +444,6 @@
     <ClInclude Include="Source\AssetsManager.h">
       <Filter>Core\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneCircus.h">
-      <Filter>Game\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Puzzle.h">
       <Filter>Game\Puzzles</Filter>
     </ClInclude>
@@ -455,6 +458,15 @@
     </ClInclude>
     <ClInclude Include="Source\PartyMembersQuest.h">
       <Filter>Game\Quests</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ButtonOrderPuzzle.h">
+      <Filter>Game\Puzzles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MirrorPuzzle.h">
+      <Filter>Game\Puzzles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PuzzlePiece.h">
+      <Filter>Game\Puzzles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

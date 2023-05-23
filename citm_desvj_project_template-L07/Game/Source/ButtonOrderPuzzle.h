@@ -18,6 +18,7 @@ public:
 	bool Update() override;
 
 	void LoadAssets(pugi::xml_node node) override;
+	void UnloadAssets() override;
 	void ButtonTriggerCheck();
 	void ResetPuzzle();
 	void OpenDoor();
@@ -26,9 +27,9 @@ private:
 
 	PuzzlePiece* piece = nullptr;
 
-	uint actualOrder = 1;
+	uint actualOrder = 0;
 
-	uint maxButtons = 1;
+	uint maxButtons = 0;
 };
 
 #endif // __COLLECTQUEST_H__

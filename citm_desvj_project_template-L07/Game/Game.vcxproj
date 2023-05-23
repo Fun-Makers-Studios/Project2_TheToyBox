@@ -126,7 +126,6 @@
     <ClCompile Include="Source\PuzzlePiece.cpp" />
     <ClCompile Include="Source\PartyMembersQuest.cpp" />
     <ClCompile Include="Source\QuestManager.cpp" />
-    <ClCompile Include="Source\SceneCircus.cpp" />
     <ClCompile Include="Source\SceneEnding.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\Fonts.cpp" />
@@ -199,7 +198,6 @@
     <ClInclude Include="Source\MenuQuest.h" />
     <ClInclude Include="Source\MenuSettings.h" />
     <ClInclude Include="Source\MenuTitle.h" />
-    <ClInclude Include="Source\SceneCircus.h" />
     <ClInclude Include="Source\SceneEnding.h" />
     <ClInclude Include="Source\Fonts.h" />
     <ClInclude Include="Source\GuiButton.h" />

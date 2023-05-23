@@ -177,7 +177,7 @@ bool Player::Update()
 		// HEKATE pbody->body->SetLinearVelocity(velocity);
 
 	}
-	else if (!godMode && !dead)
+	else if (!godMode && !dead && !app->sceneManager->sceneGame->isMapChanging)
 	{
 		body->vel = { 0, 0 };
 		// HEKATE pbody->body->SetGravityScale(0);
@@ -205,17 +205,6 @@ bool Player::Update()
 				currentAnim = &walkRight;
 			}
 		}
-		/*if (currentAnim != &idle)
-		{
-			if (walkParticles == nullptr) {
-				dPoint pos = { body->pos.x, body->pos.y + 10 };
-				walkParticles = app->particleManager->CreateParticleSystem(pos, Blueprint::SAND);
-			}
-			else {
-				walkParticles->TurnOff();
-				walkParticles = nullptr;
-			}
-		}*/
 
 		body->pos.x += body->vel.x;
 		body->pos.y += body->vel.y;

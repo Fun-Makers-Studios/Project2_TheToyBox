@@ -9,6 +9,7 @@
 #include "PuzzleManager.h"
 #include "QuestManager.h"
 #include "MenuManager.h"
+#include "TransitionManager.h"
 #include "Map.h"
 #include "Collisions.h"
 #include "PathFinding.h"
@@ -189,7 +190,7 @@ bool SceneGame::Update(float dt)
 	if (dialogueManager->GetCurrentDialogue() != nullptr 
 		&& dialogueManager->GetCurrentDialogue()->id == 6 
 		&& dialogueManager->GetCurrentDialogue()->currentNode->id == 1 
-		&& app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		&& app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
 		Item* addItem = (Item*)app->entityManager->CreateEntity(EntityType::ITEM, app->configNode.child("itemsMap").child(mapName.GetString()).child("item"));
 		addItem->takeItem = true;
@@ -346,14 +347,25 @@ void SceneGame::ResetScene()
 void SceneGame::SceneMap()
 {
 	if (isMapChanging)
-	{		
-		app->map->ChangeMap(mapName.GetString());
-		player->body->pos = player->newPos;
-		LoadNPC();
-		LoadItems();
-		LoadPuzzles();
-
-		isMapChanging = false;
+	{	
+		if (app->transitionManager->step == TransitionStep::NONE)
+        {
+            app->transitionManager->LoadTransition();
+        }
+        else if (app->transitionManager->step == TransitionStep::SWITCH)
+        {
+			app->map->ChangeMap(mapName.GetString());
+			player->body->pos = player->newPos;
+			LoadNPC();
+			LoadItems();
+			LoadPuzzles();
+			app->scaleObj->SetCurrentScale(app->collisions->scaleMap);
+        }
+        else if (app->transitionManager->step == TransitionStep::FINISHED)
+        {
+            app->transitionManager->step = TransitionStep::NONE;
+			isMapChanging = false;
+        }  
 	}
 }
 
@@ -395,12 +407,12 @@ void SceneGame::LoadItems()
 
 void SceneGame::LoadPuzzles()
 {
-	app->puzzleManager->activePuzzles.Clear();
-
-	for (ListItem<Puzzle*>* puzzlesItem = app->puzzleManager->puzzles.start; puzzlesItem != nullptr; puzzlesItem = puzzlesItem->next)
+	for (ListItem<Puzzle*>* item = app->puzzleManager->activePuzzles.start; item != NULL; item = item->next)
 	{
-		puzzlesItem->data->pieces.Clear();
+		item->data->UnloadAssets();
 	}
+
+	app->puzzleManager->activePuzzles.Clear();
 
 	for (ListItem<Puzzle*>* puzzlesItem = app->puzzleManager->puzzles.start; puzzlesItem != nullptr; puzzlesItem = puzzlesItem->next)
 	{

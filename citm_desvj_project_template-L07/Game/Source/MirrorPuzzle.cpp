@@ -29,6 +29,17 @@ bool MirrorPuzzle::Update() {
 	return ret;
 }
 
+void MirrorPuzzle::UnloadAssets()
+{
+	for (ListItem<PuzzlePiece*>* item = pieces.start; item != NULL; item = item->next)
+	{
+		item->data->needToDestroy = true;
+	}
+
+	pieces.Clear();
+
+}
+
 void MirrorPuzzle::LoadAssets(pugi::xml_node node)
 {
 	pieces.Clear();
@@ -49,12 +60,12 @@ void MirrorPuzzle::ObjectTriggerCheck()
 
 	for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN &&
+		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN &&
 			app->collisions->CheckCollision(*app->sceneManager->sceneGame->player->body, pieceItem->data->boundaries))
 		{
 			if (pieceItem->data->pieceType == PieceType::MOV_OBJ)
 			{
-				
+				pieceItem->data->body->vel = app->sceneManager->sceneGame->player->body->vel;
 			}
 		}
 	}

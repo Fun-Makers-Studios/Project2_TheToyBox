@@ -84,8 +84,8 @@ bool PuzzleManager::Update(float dt)
 		}
 	}
 
-	LOG("PUZZLES: %d", puzzles.Count());
-	LOG("PUZZLES ACTIVE: %d", activePuzzles.Count());
+	/*LOG("PUZZLES: %d", puzzles.Count());
+	LOG("PUZZLES ACTIVE: %d", activePuzzles.Count());*/
 
 	return ret;
 }

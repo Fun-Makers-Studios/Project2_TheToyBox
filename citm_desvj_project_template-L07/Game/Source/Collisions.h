@@ -87,7 +87,9 @@ public:
 
 	void DestroyMapColliders();
 
-private:
+public:
+
+	ScaleType scaleMap = ScaleType::NORMAL;
 
 };
 

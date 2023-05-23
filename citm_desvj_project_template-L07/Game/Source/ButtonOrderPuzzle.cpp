@@ -24,7 +24,7 @@ bool ButtonOrderPuzzle ::Update() {
 	ButtonTriggerCheck();
 
 	//Completion event
-	LOG("ACTIVE PUZZLE");
+	//LOG("ACTIVE PUZZLE");
 	if (actualOrder == maxButtons)
 	{
 		OpenDoor();
@@ -32,6 +32,19 @@ bool ButtonOrderPuzzle ::Update() {
 	}
 
 	return ret;
+}
+
+void ButtonOrderPuzzle::UnloadAssets()
+{
+	for (ListItem<PuzzlePiece*>* item = pieces.start; item != NULL; item = item->next)
+	{
+		item->data->needToDestroy = true;
+	}
+
+	pieces.Clear();
+
+	maxButtons = 0;
+
 }
 
 void ButtonOrderPuzzle::LoadAssets(pugi::xml_node node)
@@ -59,7 +72,7 @@ void ButtonOrderPuzzle::ButtonTriggerCheck()
 
 	for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN &&
+		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN &&
 			app->collisions->CheckCollision(*app->sceneManager->sceneGame->player->body, pieceItem->data->boundaries))
 		{
 			if (pieceItem->data->pieceType == PieceType::BUTTON)
@@ -68,6 +81,8 @@ void ButtonOrderPuzzle::ButtonTriggerCheck()
 				{
 					pieceItem->data->activated = true;
 					actualOrder++;
+					LOG("BUTTONS ORDER %d", actualOrder);
+					LOG("MAX BUTTONS %d", maxButtons);
 				}
 				else
 				{
@@ -86,7 +101,7 @@ void ButtonOrderPuzzle::ResetPuzzle()
 	for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)
 	{
 		pieceItem->data->activated = false;
-		actualOrder = 1;
+		actualOrder = 0;
 	}
 
 }

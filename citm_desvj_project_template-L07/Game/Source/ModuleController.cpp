@@ -145,13 +145,13 @@ bool ModuleController::PreUpdate()
 
 	//CHECK BUTTONS
 	// A Button
-	if (controller_player1_A_pressed == true && app->input->keyboard[SDL_SCANCODE_RETURN] == KeyState::KEY_IDLE)
+	if (controller_player1_A_pressed == true && app->input->keyboard[SDL_SCANCODE_E] == KeyState::KEY_IDLE)
 	{
-		app->input->keyboard[SDL_SCANCODE_RETURN] = KeyState::KEY_DOWN;
+		app->input->keyboard[SDL_SCANCODE_E] = KeyState::KEY_DOWN;
 	}
 	else if (controller_player1_A_pressed == true)
 	{
-		app->input->keyboard[SDL_SCANCODE_RETURN] = KeyState::KEY_REPEAT;
+		app->input->keyboard[SDL_SCANCODE_E] = KeyState::KEY_REPEAT;
 	}
 
 	// B Button 
@@ -166,15 +166,15 @@ bool ModuleController::PreUpdate()
 	}
 
 	// X Button
-	if (controller_player1_X_pressed == true && app->input->keyboard[SDL_SCANCODE_G] == KeyState::KEY_IDLE)
-	{
-		// Talk with NPCs
-		app->input->keyboard[SDL_SCANCODE_G] = KeyState::KEY_DOWN;
-	}
-	else if (controller_player1_X_pressed == true)
-	{
-		app->input->keyboard[SDL_SCANCODE_G] = KeyState::KEY_REPEAT;
-	}
+	//if (controller_player1_X_pressed == true && app->input->keyboard[SDL_SCANCODE_E] == KeyState::KEY_IDLE)
+	//{
+	//	// Talk with NPCs
+	//	app->input->keyboard[SDL_SCANCODE_E] = KeyState::KEY_DOWN;
+	//}
+	//else if (controller_player1_X_pressed == true)
+	//{
+	//	app->input->keyboard[SDL_SCANCODE_E] = KeyState::KEY_REPEAT;
+	//}
 
 	// Y Button
 	/*if (controller_player1_Y_pressed == true && app->input->keyboard[SDL_SCANCODE_] == KeyState::KEY_IDLE)
