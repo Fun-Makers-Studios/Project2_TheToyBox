@@ -241,7 +241,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->mapName = "town";
         app->sceneManager->sceneGame->player->newPos = { 192, 256 };
         app->sceneManager->sceneGame->isMapChanging = true;
-        app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+        scaleMap = ScaleType::WORLD;
         break;
 
     case MapZone::TOWN_TO_HOUSE1:
@@ -249,7 +249,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->mapName = "housebasement";
         app->sceneManager->sceneGame->player->newPos = { 640, 480 };
         app->sceneManager->sceneGame->isMapChanging = true;
-        app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
+        scaleMap = ScaleType::HOUSE;
         break;
 
     case MapZone::HOUSEBASE_TO_HOUSEFLOOR:
@@ -257,7 +257,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->mapName = "housefloor";
         app->sceneManager->sceneGame->player->newPos = { 840, 140};
         app->sceneManager->sceneGame->isMapChanging = true;
-        app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
+        scaleMap = ScaleType::HOUSE;
         break;
 
     case MapZone::HOUSEFLOOR_TO_HOUSEFBASE:
@@ -265,7 +265,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->mapName = "housebasement";
         app->sceneManager->sceneGame->player->newPos = { 660, 150 };
         app->sceneManager->sceneGame->isMapChanging = true;
-        app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
+        scaleMap = ScaleType::HOUSE;
         break;
 
     case MapZone::TOWN_TO_TAVERN:
@@ -273,7 +273,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->mapName = "tavern";
         app->sceneManager->sceneGame->player->newPos = { 640, 500 };
         app->sceneManager->sceneGame->isMapChanging = true;
-        app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
+        scaleMap = ScaleType::HOUSE;
         break;
 
     case MapZone::TAVERN_TO_TOWN:
@@ -281,7 +281,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->mapName = "town";
         app->sceneManager->sceneGame->player->newPos = { 800, 352 };
         app->sceneManager->sceneGame->isMapChanging = true;
-        app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+        scaleMap = ScaleType::WORLD;
         break;
 
     case MapZone::TOWN_TO_INN:
@@ -289,7 +289,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->mapName = "inn";
         app->sceneManager->sceneGame->player->newPos = { 960, 544 };
         app->sceneManager->sceneGame->isMapChanging = true;
-        app->scaleObj->SetCurrentScale(ScaleType::HOUSE);
+        scaleMap = ScaleType::HOUSE;
         break;
 
     case MapZone::INN_TO_TOWN:
@@ -297,7 +297,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->mapName = "town";
         app->sceneManager->sceneGame->player->newPos = { 1184, 448 };
         app->sceneManager->sceneGame->isMapChanging = true;
-        app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+        scaleMap = ScaleType::WORLD;
         break;
     
     case MapZone::TOWN_TO_CIRCUS:
@@ -313,7 +313,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
                 app->sceneManager->sceneGame->mapName = "circusOne";
                 app->sceneManager->sceneGame->player->newPos = { 160, 416 };
                 app->sceneManager->sceneGame->isMapChanging = true;
-                app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+                scaleMap = ScaleType::WORLD;
             }
         }
 
@@ -325,7 +325,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->mapName = "town";
         app->sceneManager->sceneGame->player->newPos = { 1450, 96 };
         app->sceneManager->sceneGame->isMapChanging = true;
-        app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+        scaleMap = ScaleType::WORLD;
         break;
     
     case MapZone::CIRCUSONE_TO_CIRCUSTWO:
@@ -333,7 +333,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->mapName = "circusTwo";
         app->sceneManager->sceneGame->player->newPos = { 288, 1344 };
         app->sceneManager->sceneGame->isMapChanging = true;
-        app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+        scaleMap = ScaleType::WORLD;
         break;
     
     case MapZone::CIRCUSTWO_TO_CIRCUSONE:
@@ -341,7 +341,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->mapName = "circusOne";
         app->sceneManager->sceneGame->player->newPos = { 192, 1216 };
         app->sceneManager->sceneGame->isMapChanging = true;
-        app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+        scaleMap = ScaleType::WORLD;
         break;
 
     }

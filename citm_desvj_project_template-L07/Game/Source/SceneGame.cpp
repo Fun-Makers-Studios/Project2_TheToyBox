@@ -9,6 +9,7 @@
 #include "PuzzleManager.h"
 #include "QuestManager.h"
 #include "MenuManager.h"
+#include "TransitionManager.h"
 #include "Map.h"
 #include "Collisions.h"
 #include "PathFinding.h"
@@ -346,14 +347,25 @@ void SceneGame::ResetScene()
 void SceneGame::SceneMap()
 {
 	if (isMapChanging)
-	{		
-		app->map->ChangeMap(mapName.GetString());
-		player->body->pos = player->newPos;
-		LoadNPC();
-		LoadItems();
-		LoadPuzzles();
-
-		isMapChanging = false;
+	{	
+		if (app->transitionManager->step == TransitionStep::NONE)
+        {
+            app->transitionManager->LoadTransition();
+        }
+        else if (app->transitionManager->step == TransitionStep::SWITCH)
+        {
+			app->map->ChangeMap(mapName.GetString());
+			player->body->pos = player->newPos;
+			LoadNPC();
+			LoadItems();
+			LoadPuzzles();
+			app->scaleObj->SetCurrentScale(app->collisions->scaleMap);
+        }
+        else if (app->transitionManager->step == TransitionStep::FINISHED)
+        {
+            app->transitionManager->step = TransitionStep::NONE;
+			isMapChanging = false;
+        }  
 	}
 }
 

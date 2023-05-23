@@ -43,7 +43,7 @@ void ButtonOrderPuzzle::UnloadAssets()
 
 	pieces.Clear();
 
-	maxButtons = 1;
+	maxButtons = 0;
 
 }
 
@@ -101,7 +101,7 @@ void ButtonOrderPuzzle::ResetPuzzle()
 	for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)
 	{
 		pieceItem->data->activated = false;
-		actualOrder = 1;
+		actualOrder = 0;
 	}
 
 }

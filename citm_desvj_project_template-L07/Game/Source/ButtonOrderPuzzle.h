@@ -27,9 +27,9 @@ private:
 
 	PuzzlePiece* piece = nullptr;
 
-	uint actualOrder = 1;
+	uint actualOrder = 0;
 
-	uint maxButtons = 1;
+	uint maxButtons = 0;
 };
 
 #endif // __COLLECTQUEST_H__
