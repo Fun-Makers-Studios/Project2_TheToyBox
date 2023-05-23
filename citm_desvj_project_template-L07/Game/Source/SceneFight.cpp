@@ -420,7 +420,7 @@ void SceneFight::SortBySpeed()
 
 		for (item = turnList.start; item != NULL && item->next != NULL; item = item->next)
 		{
-			if (item->data->speed > item->next->data->speed)
+			if (item->data->speed < item->next->data->speed)
 			{
 				SWAP(item->data, item->next->data);
 				swapped = true;
