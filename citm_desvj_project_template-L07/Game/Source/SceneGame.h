@@ -24,25 +24,14 @@ public:
 	virtual ~SceneGame();
 
 	bool Awake(pugi::xml_node&) override;
-
-
-	// Called before the first frame
 	bool Start();
 
-	// Called before all Updates
 	bool PreUpdate();
-
-	// Called each loop iteration
 	bool Update(float dt);
-
-	// Called before all Updates
 	bool PostUpdate();
 
-	// Called before quitting
 	bool CleanUp();
 
-	// Define multiple Gui Event methods
-	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	void ResetScene();
 	void FixCamera();
@@ -59,7 +48,6 @@ public:
 	bool SaveState(pugi::xml_node&);
 
 	void FightKid();
-
 
 public:
 
@@ -127,7 +115,7 @@ private:
 	ParticleSystem* fireTorchPS = nullptr;
 	List<ParticleSystem*> particlesList;
 
-	//EASINGS
+	// Easings
 	Easing* easingPause = nullptr;
 	Easing* easingButton = nullptr;
 };

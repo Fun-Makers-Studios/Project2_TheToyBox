@@ -269,13 +269,6 @@ bool SceneGame::CleanUp()
 	return true;
 }
 
-bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
-{
-	// HEKATE MUST DELETE	
-
-	return true;
-}
-
 void SceneGame::ActiveParticles()
 {
 	if (mapName == "town")

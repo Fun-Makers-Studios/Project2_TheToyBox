@@ -122,18 +122,6 @@ bool KidEnemy::CleanUp()
 	return true;
 }
 
-void KidEnemy::OnCollision()
-{
-	/*switch (physB->cType)
-	{
-	
-	case ColliderType::UNKNOWN:
-		LOG("Collision UNKNOWN");
-		break;
-	}*/
-
-}
-
 void KidEnemy::ResetBat()
 {
 

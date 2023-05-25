@@ -13,6 +13,7 @@
 #include "ParticleSystemManager.h"
 #include "ModuleController.h"
 #include "MenuManager.h"
+#include "Debug.h"
 
 #include <math.h>
 
@@ -149,7 +150,7 @@ bool Player::Update()
 	body->vel = { 0, 0 };
 	isIdle = true;
 
-	if (godMode)
+	if (app->debug->godMode)
 	{
 		// HEAKTE something needed?
 	}

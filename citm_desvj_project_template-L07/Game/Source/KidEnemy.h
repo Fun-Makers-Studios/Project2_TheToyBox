@@ -14,22 +14,16 @@ class KidEnemy : public Entity
 public:
 
 	KidEnemy(pugi::xml_node parameters);
-
 	virtual ~KidEnemy();
 
 	bool Awake();
-
 	bool Start();
 
 	bool PreUpdate();
-
 	bool Update();
-
 	bool PostUpdate();
 
 	bool CleanUp();
-
-	void OnCollision();
 
 	void ResetBat();
 
@@ -46,9 +40,7 @@ public:
 	uint batHitSFX = 0;
 	const char* batHitSFXPath = nullptr;
 
-	bool onGround = false;
 	bool dead = false;
-	bool onCollision = false;
 
 private:
 

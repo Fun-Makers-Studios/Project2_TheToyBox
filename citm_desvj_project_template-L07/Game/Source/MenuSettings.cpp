@@ -46,10 +46,10 @@ bool MenuSettings::Start()
 	vsyncButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::V_SYNC, "off", 4, { 520, 532, 252, 76 }, this);
 
 	//Sliders
-	S_music = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 33, "music", 6, { 620,241,40,40 }, this, ButtonType::UNKNOWN, { 377, 253, 530, 15 });
+	S_music = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 33, "music", 6, { 620, 241, 40, 40 }, this, ButtonType::UNKNOWN, { 377, 253, 530, 15 });
 	S_music->slider = GuiSliderType::MUSIC;
 
-	S_fx = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 34, "fx", 3,{ 620,343,40,40 }, this, ButtonType::UNKNOWN, { 377, 353, 530, 15 });
+	S_fx = (GuiSlider*)app->guiManager->CreateGuiControl(GuiControlType::SLIDER, 34, "fx", 3,{ 620, 343, 40, 40 }, this, ButtonType::UNKNOWN, { 377, 353, 530, 15 });
 	S_fx->slider = GuiSliderType::FX;
 		
 	// Set easing finished on title buttons

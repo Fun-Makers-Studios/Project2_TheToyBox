@@ -154,9 +154,3 @@ bool SceneTitle::CleanUp()
 
 	return true;
 }
-
-bool SceneTitle::OnGuiMouseClickEvent(GuiControl* control)
-{
-	// HEKATE should delete OnGuiMouseClickEvent on all Scenes
-	return true;
-}

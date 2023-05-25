@@ -255,6 +255,12 @@ void Debug::DrawDebug()
 		lineNum++;
 		BlitTextDebug("#fight", 0);
 
+		if (app->sceneManager->sceneFight->turnMember != nullptr)
+		{
+			std::string text = std::string("turn: ") + app->sceneManager->sceneFight->turnMember->name.GetString();
+			BlitTextDebug(text, 1);
+		}
+
 		for (size_t i = 0; i < app->sceneManager->sceneFight->turnList.Count(); i++)
 		{
 			PartyMember* member = app->sceneManager->sceneFight->turnList.At(i)->data;
@@ -271,12 +277,7 @@ void Debug::DrawDebug()
 
 			std::string text = std::string(member->name.GetString()) + " " + std::to_string(member->currentHp).c_str() + "/" + std::to_string(member->maxHp).c_str() + "hp   " + status;
 			BlitTextDebug(text, 1);
-		}
-
-		if (app->sceneManager->sceneFight->turnMember != nullptr)
-		{
-			app->fonts->BlitText(debugX - 250, debugY, fontID, app->sceneManager->sceneFight->turnMember->name.GetString());
-		}
+		}		
 	}
 	
 

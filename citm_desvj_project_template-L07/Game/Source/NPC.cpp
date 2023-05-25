@@ -104,23 +104,6 @@ bool NPC::CleanUp()
 	return true;
 }
 
-void NPC::OnCollision()
-{
-	// HEKATE
-	/*switch (physB->cType)
-	{
-	
-	case ColliderType::PLAYER:
-		LOG("Collision UNKNOWN");
-		break;
-	
-	case ColliderType::UNKNOWN:
-		LOG("Collision UNKNOWN");
-		break;
-	}*/
-
-}
-
 void NPC::DialogTriggerCheck()
 {
 	Body boundaries = *this->body;

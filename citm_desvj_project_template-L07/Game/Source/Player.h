@@ -21,13 +21,10 @@ public:
 	virtual ~Player();
 
 	bool Awake();
-
 	bool Start();
 
 	bool PreUpdate();
-
 	bool Update();
-
 	bool PostUpdate();
 
 	bool CleanUp();
@@ -68,8 +65,6 @@ public:
 	const char* shortRangeAttackSFXPath = nullptr;
 
 	bool dead = false;
-	bool godMode = false;
-	bool onCollision = false;
 
 	dPoint newPos;
 
