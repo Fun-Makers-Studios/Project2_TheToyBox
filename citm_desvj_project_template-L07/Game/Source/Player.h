@@ -40,6 +40,8 @@ public:
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnim = nullptr;
 
+	bool isIdle = true;
+
 	//Set of animations
 	Animation idle;
 	Animation walkDown;
