@@ -288,7 +288,7 @@ void SceneGame::ActiveParticles()
 			}
 		}
 			
-		if (player->currentAnim != &player->idle)
+		if (!player->isIdle)
 		{
 			if (walkParticles == nullptr) {
 				dPoint pos = { player->body->pos.x, player->body->pos.y + 10 };
