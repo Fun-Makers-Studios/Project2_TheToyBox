@@ -5,6 +5,7 @@
 #include "Textures.h"
 #include "MenuManager.h"
 #include "Fonts.h"
+#include "Debug.h"
 
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text, int textSize, ButtonType buttonType_) : GuiControl(GuiControlType::BUTTON, id)
 {
@@ -76,13 +77,13 @@ bool GuiButton::Draw(Render* render)
 
 	case GuiControlState::DISABLED: 
 	{
-		if(app->render->viewGUIbounds == true)
+		if(app->debug->viewGUIbounds == true)
 			render->DrawRectangle(rec, 0, 0, 0, 0);
 	} break;
 
 	case GuiControlState::NORMAL:
 	{
-		if (app->render->viewGUIbounds == true)
+		if (app->debug->viewGUIbounds == true)
 			render->DrawRectangle(rec, 255, 255, 0, 255);
 
 		SDL_Rect rect;
@@ -100,7 +101,7 @@ bool GuiButton::Draw(Render* render)
 	//L15: TODO 4: Draw the button according the GuiControl State
 	case GuiControlState::FOCUSED:
 	{
-		if (app->render->viewGUIbounds == true)
+		if (app->debug->viewGUIbounds == true)
 			render->DrawRectangle(rec, 255, 255, 255, 160);
 		SDL_Rect rect;
 
@@ -115,7 +116,7 @@ bool GuiButton::Draw(Render* render)
 	} break;
 	case GuiControlState::PRESSED:
 	{
-		if (app->render->viewGUIbounds == true)
+		if (app->debug->viewGUIbounds == true)
 			render->DrawRectangle(rec, 255, 255, 255, 0);
 		SDL_Rect rect;
 

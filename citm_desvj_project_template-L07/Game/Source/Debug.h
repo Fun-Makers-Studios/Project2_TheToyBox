@@ -23,16 +23,31 @@ public:
 	void DrawColliders();
 	void DrawEntities();
 
+	void BlitTextDebug(std::string text, uchar tab);
+	void BlitTextDebug(const char* text, uchar tab);
+
 public:
-	//flags
+
+	// Flags
 	bool debug;
-	bool variables = false;
-	bool camLimits = false;
-	bool godMode = false;
+	int fontID = 3;
+
 	bool freeCam = false;
-	bool teleport = false;
+	bool camLimits = false;
+	bool viewGUIbounds = false;
 	bool drawColliders = false;
-	bool controlFPS = false;
+	bool godMode = false;
+	bool capFPS = false;
+
+	bool variables = false;
+	bool teleport = false;
+
+	// Blit
+	int debugX = 0;
+	int debugY = 0;
+
+	int lineSpacing = 16;
+	int lineNum = 0;
 
 	// FPS
 	microseconds timePerCycle;
