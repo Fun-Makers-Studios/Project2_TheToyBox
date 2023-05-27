@@ -269,13 +269,6 @@ bool SceneGame::CleanUp()
 	return true;
 }
 
-bool SceneGame::OnGuiMouseClickEvent(GuiControl* control)
-{
-	// HEKATE MUST DELETE	
-
-	return true;
-}
-
 void SceneGame::ActiveParticles()
 {
 	if (mapName == "town")
@@ -288,13 +281,36 @@ void SceneGame::ActiveParticles()
 			}
 		}
 			
-		if (player->currentAnim != &player->idle)
+		if (!player->isIdle)
 		{
-			if (walkParticles == nullptr) {
-				dPoint pos = { player->body->pos.x, player->body->pos.y + 10 };
+			if (walkParticles == nullptr)
+			{
+				dPoint pos;
+
+				if (player->currentAnim == &player->walkUp)
+				{
+					pos = { player->body->pos.x, player->body->pos.y + 10 };
+				}
+				else if (player->currentAnim == &player->walkDown)
+				{
+					pos = { player->body->pos.x, player->body->pos.y - 10 };
+
+				}
+				else if (player->currentAnim == &player->walkLeft)
+				{
+					pos = { player->body->pos.x + 10, player->body->pos.y + 4 };
+
+				}
+				else if (player->currentAnim == &player->walkRight)
+				{
+					pos = { player->body->pos.x - 10, player->body->pos.y + 4 };
+
+				}
+
 				walkParticles = app->particleManager->CreateParticleSystem(pos, Blueprint::SAND);
 			}
-			else {
+			else
+			{
 				walkParticles->TurnOff();
 				walkParticles = nullptr;
 			}

@@ -83,17 +83,8 @@ bool GuiManager::Update(float dt)
 		for (size_t i = 0; i < app->menuManager->currentMenu->guiControlsList.Count(); i++)
 		{
 			ListItem<GuiControl*>* control = app->menuManager->currentMenu->guiControlsList.At(i);
-			control->data->Update(16); // HEKATE dt!!
+			control->data->Update(dt);
 		}
-
-		// HEKATE end of list not set as nullptr, loop runs out of list
-		/*ListItem<GuiControl*>* control = guiControlsList.start;
-
-		while (control != nullptr)
-		{
-			control->data->Update(16);
-			control = control->next;
-		}*/
 
 		accumulatedTime = 0.0f;
 		doLogic = false;

@@ -19,18 +19,13 @@ public:
 	virtual ~NPC();
 
 	bool Awake();
-
 	bool Start();
 
 	bool PreUpdate();
-
 	bool Update();
-
 	bool PostUpdate();
 
 	bool CleanUp();
-
-	void OnCollision();
 
 	void DialogTriggerCheck();
 

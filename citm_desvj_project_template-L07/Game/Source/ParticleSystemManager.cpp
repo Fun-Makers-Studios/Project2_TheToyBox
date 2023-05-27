@@ -102,6 +102,7 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(dPoint initialPositi
 		PS->initialScale = 6.0f;
 		PS->objectiveScale = 1.0f;
 		break;
+
 	case FIRE:
 		GiveParticlesToPS(PS, 150);
 		PS->PSLifespan = 5;
@@ -119,6 +120,7 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(dPoint initialPositi
 		PS->initialScale = 6.0f;
 		PS->objectiveScale = 1.0f;
 		break;
+
 	case SMOKE:
 		GiveParticlesToPS(PS, 50);
 		PS->SetTexture(alphaTextures[SMOKE_SHADED]);
@@ -132,8 +134,8 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(dPoint initialPositi
 		PS->randomSpawnPositionRangeMax = dPoint{ 20, 0 };
 		PS->randomShootingVelocityRangeMin = dPoint{ 2, 0 };
 		PS->randomShootingVelocityRangeMax = dPoint{ 10, 0 };
-
 		break;
+
 	case EXPLOSION:
 		GiveParticlesToPS(PS, 20);
 		PS->PSLifespan = 0.1f;
@@ -153,21 +155,21 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(dPoint initialPositi
 		break;
 
 	case SAND:
-		GiveParticlesToPS(PS, 5);
-		PS->PSLifespan = 0.1f;
+		GiveParticlesToPS(PS, 1);
+		PS->PSLifespan = 0.02f;
 		PS->SetTexture(alphaTextures[SMOKE_SHADED]);
 		PS->spawnRate = 0.01f;
 		PS->isConstant = false;
 		PS->initialColor = Beige;
 		PS->objectiveColor.SetAlpha(Beige, 0);
 		PS->particleLifespan = 0.2f;
-		PS->shootingAcceleration = fPoint{ 0.0f, 0.5f };
-		PS->randomSpawnPositionRangeMin = dPoint{ -20, 0 };
-		PS->randomSpawnPositionRangeMax = dPoint{ 20, 0 };
+		PS->shootingAcceleration = fPoint{ 0.1f, 0.3f };
+		PS->randomSpawnPositionRangeMin = dPoint{ -3, 0 };
+		PS->randomSpawnPositionRangeMax = dPoint{ 3, 0 };
 		PS->randomShootingVelocityRangeMin = dPoint{ 2, 0 };
-		PS->randomShootingVelocityRangeMax = dPoint{ 10, 0 };
-		PS->initialScale = .60f;
-		PS->objectiveScale = .0f;
+		PS->randomShootingVelocityRangeMax = dPoint{ 4, 0 };
+		PS->initialScale = 0.8f;
+		PS->objectiveScale = 0.2f;
 		break;
 	
 	case TAKE_ITEM:
@@ -210,6 +212,7 @@ ParticleSystem* ParticleSystemManager::CreateParticleSystem(dPoint initialPositi
 
 	case NONE:
 		break;
+
 	default:
 		break;
 	}

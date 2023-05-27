@@ -105,15 +105,15 @@ void TransitionManager::LoadTransition()
 		case SceneID::SCENE_TITLE:
 			CreateFadeToColour(Black);
 			easing->SetTotalTime(1.5);
-			easingTypeIN = EasingType::EASE_OUT_SIN;
-			easingTypeOUT = EasingType::EASE_IN_SIN;
+			easingTypeIN = EasingType::EASE_INOUT_SIN;
+			easingTypeOUT = EasingType::EASE_INOUT_SIN;
 			break;
 
 		case SceneID::SCENE_GAME:
 			CreateWipe(TransitionStart::LEFT, Black);
 			easing->SetTotalTime(1);
-			easingTypeIN = EasingType::EASE_INOUT_SIN;
-			easingTypeOUT = EasingType::EASE_INOUT_SIN;
+			easingTypeIN = EasingType::EASE_INOUT_EXP;
+			easingTypeOUT = EasingType::EASE_INOUT_EXP;
 			break;
 		
 		case SceneID::SCENE_CIRCUS:
@@ -140,9 +140,9 @@ void TransitionManager::LoadTransition()
 	if(app->sceneManager->sceneGame->isMapChanging)
 	{
 		CreateFadeToColour(Black);
-		easing->SetTotalTime(1.5);
-		easingTypeIN = EasingType::EASE_OUT_SIN;
-		easingTypeOUT = EasingType::EASE_IN_SIN;
+		easing->SetTotalTime(0.8);
+		easingTypeIN = EasingType::EASE_INOUT_SIN;
+		easingTypeOUT = EasingType::EASE_INOUT_SIN;
 	}
 
 	if (currentTransition != nullptr)

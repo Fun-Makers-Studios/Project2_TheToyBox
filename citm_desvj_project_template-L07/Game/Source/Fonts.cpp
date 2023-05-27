@@ -17,7 +17,8 @@ Fonts::~Fonts()
 {}
 
 // Load new texture from file path
-int Fonts::Load(const char* texture_path, const char* characters, uint rows) {
+int Fonts::Load(const char* texture_path, const char* characters, uint rows)
+{
 	int id = -1;
 
 	if (texture_path == nullptr || characters == nullptr || rows == 0) {
@@ -63,16 +64,20 @@ int Fonts::Load(const char* texture_path, const char* characters, uint rows) {
 	return id;
 }
 
-void Fonts::UnLoad(int font_id) {
-	if (font_id >= 0 && font_id < MAX_FONTS && fonts[font_id].texture != nullptr) {
+void Fonts::UnLoad(int font_id)
+{
+	if (font_id >= 0 && font_id < MAX_FONTS && fonts[font_id].texture != nullptr)
+	{
 		app->tex->UnLoad(fonts[font_id].texture);
 		fonts[font_id].texture = nullptr;
 		LOG("Successfully Unloaded BMP font_id %d", font_id);
 	}
 }
 
-void Fonts::BlitText(int x, int y, int font_id, const char* text, bool useCamera) const {
-	if (text == nullptr || font_id < 0 || font_id >= MAX_FONTS || fonts[font_id].texture == nullptr) {
+void Fonts::BlitText(int x, int y, int font_id, const char* text, bool useCamera) const
+{
+	if (text == nullptr || font_id < 0 || font_id >= MAX_FONTS || fonts[font_id].texture == nullptr)
+	{
 		LOG("Unable to render text with bmp font id %d", font_id);
 		return;
 	}
@@ -84,13 +89,15 @@ void Fonts::BlitText(int x, int y, int font_id, const char* text, bool useCamera
 	spriteRect.w = font->char_w;
 	spriteRect.h = font->char_h;
 
-	for (uint i = 0; i < len; ++i) {
-
+	for (uint i = 0; i < len; ++i)
+	{
 		uint charIndex = 0;
 
 		// Find the location of the current character in the lookup table
-		for (uint j = 0; j < font->totalLength; ++j) {
-			if (font->table[j] == text[i]) {
+		for (uint j = 0; j < font->totalLength; ++j)
+		{
+			if (font->table[j] == text[i])
+			{
 				charIndex = j;
 				break;
 			}
@@ -100,15 +107,17 @@ void Fonts::BlitText(int x, int y, int font_id, const char* text, bool useCamera
 		spriteRect.x = spriteRect.w * (charIndex % font->columns);
 		spriteRect.y = spriteRect.h * (charIndex / font->columns);
 
-		app->render->DrawTexture(font->texture, x, y, &spriteRect, SDL_FLIP_NONE, ScaleType::UI_100,!useCamera);
+		app->render->DrawTexture(font->texture, x, y, &spriteRect, SDL_FLIP_NONE, ScaleType::UI_100, !useCamera);
 
 		// Advance the position where we blit the next character
 		x += spriteRect.w;
 	}
 }
 
-int Fonts::BlitText2(int x, int y, int font_id, const char* text, int spacing, int lineLenght, bool useCamera) const {
-	if (text == nullptr || font_id < 0 || font_id >= MAX_FONTS || fonts[font_id].texture == nullptr) {
+int Fonts::BlitText2(int x, int y, int font_id, const char* text, int spacing, int lineLenght, bool useCamera) const
+{
+	if (text == nullptr || font_id < 0 || font_id >= MAX_FONTS || fonts[font_id].texture == nullptr)
+	{
 		LOG("Unable to render text with bmp font id %d", font_id);
 		return 0;
 	}
@@ -124,12 +133,13 @@ int Fonts::BlitText2(int x, int y, int font_id, const char* text, int spacing, i
 
 	iPoint textpos = { x,y };
 
-	for (uint i = 0; i < len; ++i) {
-
+	for (uint i = 0; i < len; ++i)
+	{
 		uint charIndex = 0;
 
 		// Find the location of the current character in the lookup table
-		for (uint j = 0; j < font->totalLength; ++j) {
+		for (uint j = 0; j < font->totalLength; ++j)
+		{
 			if (font->table[j] == text[i]) {
 				charIndex = j;
 				break;
@@ -140,7 +150,8 @@ int Fonts::BlitText2(int x, int y, int font_id, const char* text, int spacing, i
 		spriteRect.x = spriteRect.w * (charIndex % font->columns);
 		spriteRect.y = spriteRect.h * (charIndex / font->columns);
 
-		if (text[i] == ' ') {
+		if (text[i] == ' ')
+		{
 			if (spacing > -1 && lineLenght > 0)
 			{
 				int check = textpos.x;
@@ -148,7 +159,8 @@ int Fonts::BlitText2(int x, int y, int font_id, const char* text, int spacing, i
 					check += spriteRect.w;
 				}
 
-				if ((check - x) > lineLenght) {
+				if ((check - x) > lineLenght)
+				{
 					textpos.x = x;
 					textpos.y += spriteRect.h + spacing;
 					lines++;

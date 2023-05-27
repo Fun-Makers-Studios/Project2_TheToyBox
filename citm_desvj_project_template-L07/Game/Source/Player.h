@@ -21,13 +21,10 @@ public:
 	virtual ~Player();
 
 	bool Awake();
-
 	bool Start();
 
 	bool PreUpdate();
-
 	bool Update();
-
 	bool PostUpdate();
 
 	bool CleanUp();
@@ -39,6 +36,8 @@ public:
 	// The pointer to the current player animation
 	// It will be switched depending on the player's movement direction
 	Animation* currentAnim = nullptr;
+
+	bool isIdle = true;
 
 	//Set of animations
 	Animation idle;
@@ -66,8 +65,6 @@ public:
 	const char* shortRangeAttackSFXPath = nullptr;
 
 	bool dead = false;
-	bool godMode = false;
-	bool onCollision = false;
 
 	dPoint newPos;
 

@@ -35,13 +35,14 @@ bool Debug::Start()
 	nullPlayer = new Player();
 
 	debug = false;
+	fontID = 3;
 	variables = true;
-	camLimits = true;
+	camLimits = false;
 	godMode = false;
 	freeCam = false;
 	teleport = false;
 	drawColliders = false;
-	controlFPS = false;
+	capFPS = false;
 
 	desiredFPS = 60;
 	return true;
@@ -57,62 +58,71 @@ bool Debug::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
 			variables = !variables;
 
-		if (app->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)
-			camLimits = !camLimits;
-
 		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 			teleport = !teleport;
 
-		if (app->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+			fontID++;
+	
+
+		// F1: Add functionality
+		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+
+		}
+
+		// F2: Add functionality
+		if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+
+		}
+
+		// F3: Start from the beginning of the current level
+		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+			app->sceneManager->sceneGame->player->ResetPlayerPos();
+			app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
+		}
+
+		// F4: Save the current game state
+		if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
+			app->SaveGameRequest();
+			app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
+		}
+
+		// F5: Load the previous state (even across levels)
+		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
+			app->LoadGameRequest();
+			app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
+		}
+
+		// F6: Enables Free Camera Mode
+		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
 			freeCam = !freeCam;
-	}
+		}
 
-	// F1: Add functionality
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		// F7: Draws camera limits center
+		if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN) {
+			camLimits = !camLimits;
+		}
 
-	}
-	// F2: Add functionality
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+		// F8: View GUI bounds rectangles and state in different colors
+		if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
+			viewGUIbounds = !viewGUIbounds;
+			app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
+		}
 
-	}
+		// F9: View colliders / logic / paths
+		if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
+			drawColliders = !drawColliders;
+		}
 
-	// F3: Start from the beginning of the current level
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-		app->sceneManager->sceneGame->player->ResetPlayerPos();
-		app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
-	}
+		// F10: God Mode (fly around, cannot be killed, etc)
+		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+			godMode = !godMode;
+		}
 
-	// F5: Save the current game state
-	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
-		app->SaveGameRequest();
-		app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
-	}
-
-	// F6: Load the previous state (even across levels)
-	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
-		app->LoadGameRequest();
-		app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
-	}
-
-	// F8: View GUI bounds rectangles and state in different colors
-	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
-		app->render->viewGUIbounds = !app->render->viewGUIbounds;
-		app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
-	}
-
-	// F9: View colliders / logic / paths
-	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN) {
-		drawColliders = !drawColliders;
-	}
-
-	// F10: God Mode (fly around, cannot be killed, etc)
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-		godMode = !godMode;
-	}
-
-	// F11: Enable/Disable FPS cap to xml value
-	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
-		controlFPS = !controlFPS;
+		// F11: Enable/Disable FPS cap to xml value
+		if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN) {
+			capFPS = !capFPS;
+		}
 	}
 
 	return true;
@@ -136,10 +146,13 @@ bool Debug::PostUpdate()
 
 void Debug::DrawDebug()
 {
-	int scale = app->win->GetScale();
+	int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
 
-	int debugX = app->render->camera.w / scale * 0.7;
-	int debugY = app->render->camera.h / scale * 0.1;
+	debugX = app->render->camera.w / scale * 0.8;
+	debugY = 0;
+
+	lineSpacing = 16;
+	lineNum = 0;
 
 	//Debug box black bg
 	Color color = Black;
@@ -147,24 +160,54 @@ void Debug::DrawDebug()
 	app->render->DrawRectangle(rect, color.r, color.g, color.b, 255, false, false);
 	app->render->DrawRectangle(rect, color.r, color.g, color.b, 160, true, false);
 
+	debugX *= scale;
+	debugY += 32;
 
-	app->fonts->BlitText(debugX, debugY, 0, "#debug mode (tab)  on/off");
+
+	// ==== DEBUG INFO ==== //
+	BlitTextDebug("#debug mode (tab) on", 0);
+	lineNum++;
 
 	//Free Camera
-	if (drawColliders)
-		app->fonts->BlitText(debugX, debugY + 15, 0, "#colliders (f9)  on");
+	if (freeCam)
+		BlitTextDebug("#free cam  (f6)   on", 0);
 	else
-		app->fonts->BlitText(debugX, debugY + 15, 0, "#colliders (f9)  off");
-	
+		BlitTextDebug("#free cam  (f6)   off", 0);
+
+	//Cam limits
+	if (camLimits)
+		BlitTextDebug("#cam lim   (f7)   on", 0);
+	else
+		BlitTextDebug("#cam lim   (f7)   off", 0);
+
+	//Cam limits
+	if (viewGUIbounds)
+		BlitTextDebug("#gui debug (f8)   on", 0);
+	else
+		BlitTextDebug("#gui debug (f8)   off", 0);
+
+	//Draw colliders
+	if (drawColliders)
+		BlitTextDebug("#colliders (f9)   on", 0);
+	else
+		BlitTextDebug("#colliders (f9)   off", 0);
+
 	//God Mode
 	if (godMode)
-		app->fonts->BlitText(debugX, debugY + 30, 0, "#god mode  (f10)  on");
+		BlitTextDebug("#god mode  (f10)  on", 0);
 	else
-		app->fonts->BlitText(debugX, debugY + 30, 0, "#god mode  (f10)  off");
+		BlitTextDebug("#god mode  (f10)  off", 0);
+
+	//FPS Cap
+	if (capFPS)
+		BlitTextDebug("#cap fps   (f11)  on", 0);
+	else
+		BlitTextDebug("#cap fps   (f11)  off", 0);
 
 
 	//Variables
-	app->fonts->BlitText(debugX, debugY, 45, "#variables ( V )  on/off");
+	lineNum++;
+	BlitTextDebug("#variables ( v )  on/off", 0);
 
 	if (variables)
 	{
@@ -175,26 +218,49 @@ void Debug::DrawDebug()
 			player = app->sceneManager->sceneGame->player;
 
 		//Player x, y
-		app->fonts->BlitText(debugX, debugY + 55, 0, "player.x =");
-			app->fonts->BlitText(debugX + 88, debugY + 55, 0, std::to_string(player->body->pos.x).c_str());
+		std::string text = std::string("player.x = ") + std::to_string(player->body->pos.x).c_str();
+		BlitTextDebug(text, 1);
 
-		app->fonts->BlitText(debugX, debugY + 65, 0, "player.y =");
-		app->fonts->BlitText(debugX + 88, debugY + 65, 0, std::to_string(player->body->pos.y).c_str());
-
-		//Camera x, y
-		app->fonts->BlitText(debugX, debugY + 80, 0, "camera.x =");
-		app->fonts->BlitText(debugX + 88, debugY + 80, 0, std::to_string(app->render->camera.x).c_str());
-
-		app->fonts->BlitText(debugX, debugY + 90, 0, "camera.y =");
-		app->fonts->BlitText(debugX + 88, debugY + 90, 0, std::to_string(app->render->camera.y).c_str());
+		text = std::string("player.y = ") + std::to_string(player->body->pos.y).c_str();
+		BlitTextDebug(text, 1);
 
 		//Player alive
 		if (!player->dead)
-			app->fonts->BlitText(debugX, debugY + 105, 0, "player.alive = true");
+			BlitTextDebug("player.alive = true", 1);
 		else
-			app->fonts->BlitText(debugX, debugY + 105, 0, "player.alive = false");
+			BlitTextDebug("player.alive = false", 1);
 
-		//Scene Fight
+		//Camera x, y
+		text = std::string("camera.x = ") + std::to_string(app->render->camera.x).c_str();
+		BlitTextDebug(text, 1);
+
+		text = std::string("camera.y = ") + std::to_string(app->render->camera.y).c_str();
+		BlitTextDebug(text, 1);
+
+		//Scale
+		text = app->scaleObj->ScaleTypeToString(app->scaleObj->GetCurrentScale());
+		if (!player->dead)
+			BlitTextDebug(text, 1);
+		else
+			BlitTextDebug(text, 1);
+
+		//Font ID
+		text = std::string("fontid = ") + std::to_string(fontID).c_str();
+		BlitTextDebug(text, 1);
+	}
+
+	//Scene Fight
+	if (app->sceneManager->currentScene->id == SceneID::SCENE_FIGHT)
+	{		
+		lineNum++;
+		BlitTextDebug("#fight", 0);
+
+		if (app->sceneManager->sceneFight->turnMember != nullptr)
+		{
+			std::string text = std::string("turn: ") + app->sceneManager->sceneFight->turnMember->name.GetString();
+			BlitTextDebug(text, 1);
+		}
+
 		for (size_t i = 0; i < app->sceneManager->sceneFight->turnList.Count(); i++)
 		{
 			PartyMember* member = app->sceneManager->sceneFight->turnList.At(i)->data;
@@ -209,27 +275,11 @@ void Debug::DrawDebug()
 			default: break;
 			}
 
-			std::string strName = std::string(member->name.GetString()); 
-			std::string strInfo = std::string(std::to_string(member->currentHp).c_str()) + "/" + std::to_string(member->maxHp).c_str() + "hp   " + status;
-
-			app->fonts->BlitText(debugX, debugY + 125 + i*10, 0, strName.c_str());
-			app->fonts->BlitText(debugX+88, debugY + 125 + i*10, 0, strInfo.c_str());
-		}
-
-		if (app->sceneManager->sceneFight->turnMember != nullptr)
-		{
-			app->fonts->BlitText(debugX - 250, debugY, 0, app->sceneManager->sceneFight->turnMember->name.GetString());
-		}
-
-
-		//Scale
-		std::string currentScale = app->scaleObj->ScaleTypeToString(app->scaleObj->GetCurrentScale());
-		if (!player->dead)
-			app->fonts->BlitText(debugX, debugY + 200, 0, currentScale.c_str());
-		else
-			app->fonts->BlitText(debugX, debugY + 200, 0, currentScale.c_str());
-		
+			std::string text = std::string(member->name.GetString()) + " " + std::to_string(member->currentHp).c_str() + "/" + std::to_string(member->maxHp).c_str() + "hp   " + status;
+			BlitTextDebug(text, 1);
+		}		
 	}
+	
 
 	//Camera limits
 	if (camLimits)
@@ -363,4 +413,16 @@ void Debug::DrawEntities()
 				color.r, color.g, color.b, 255);
 		}
 	}
+}
+
+void Debug::BlitTextDebug(std::string text, uchar tab)
+{
+	app->fonts->BlitText(debugX + tab * 16, debugY + lineSpacing * lineNum, fontID, text.c_str());
+	lineNum++;
+}
+
+void Debug::BlitTextDebug(const char* text, uchar tab)
+{
+	app->fonts->BlitText(debugX + tab * 16, debugY + lineSpacing * lineNum, fontID, text);
+	lineNum++;
 }

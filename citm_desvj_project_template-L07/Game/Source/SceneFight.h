@@ -30,8 +30,6 @@ public:
 
 	bool CleanUp();
 
-	// Define multiple Gui Event methods
-	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	void ExecuteTurn();
 

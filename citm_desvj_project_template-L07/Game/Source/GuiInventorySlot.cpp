@@ -5,6 +5,7 @@
 #include "Textures.h"
 //#include "Scene.h"
 #include "Fonts.h"
+#include "Debug.h"
 
 GuiInventorySlot::GuiInventorySlot(uint32 id, SDL_Rect bounds, const char* text, int textSize) : GuiControl(GuiControlType::INVENTORY_SLOT, id)
 {
@@ -91,13 +92,13 @@ bool GuiInventorySlot::Draw(Render* render)
 
 	case GuiControlState::DISABLED: 
 	{
-		if(app->render->viewGUIbounds == true)
+		if(app->debug->viewGUIbounds == true)
 			render->DrawRectangle(rec, 0, 0, 0, 0);
 	} break;
 
 	case GuiControlState::NORMAL:
 	{
-		if (app->render->viewGUIbounds == true)
+		if (app->debug->viewGUIbounds == true)
 			render->DrawRectangle(rec, 255, 255, 0, 255);
 
 	} break;
@@ -105,13 +106,13 @@ bool GuiInventorySlot::Draw(Render* render)
 	//L15: TODO 4: Draw the button according the GuiControl State
 	case GuiControlState::FOCUSED:
 	{
-		if (app->render->viewGUIbounds == true)
+		if (app->debug->viewGUIbounds == true)
 			render->DrawRectangle(rec, 255, 255, 255, 160);
 
 	} break;
 	case GuiControlState::PRESSED:
 	{
-		if (app->render->viewGUIbounds == true)
+		if (app->debug->viewGUIbounds == true)
 			render->DrawRectangle(rec, 255, 255, 255, 0);
 
 		render->DrawTexture(slotTex, rec.x, rec.y, NULL);
@@ -119,7 +120,7 @@ bool GuiInventorySlot::Draw(Render* render)
 
 	case GuiControlState::SELECTED:
 	{
-		if (app->render->viewGUIbounds == true)
+		if (app->debug->viewGUIbounds == true)
 			render->DrawRectangle(rec, 0, 255, 0, 255);
 
 		render->DrawTexture(slotTex, rec.x, rec.y, NULL);

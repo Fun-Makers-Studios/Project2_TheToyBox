@@ -13,6 +13,7 @@
 #include "ParticleSystemManager.h"
 #include "ModuleController.h"
 #include "MenuManager.h"
+#include "Debug.h"
 
 #include <math.h>
 
@@ -144,66 +145,51 @@ bool Player::PreUpdate()
 bool Player::Update()
 {
 	int scale = app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
-	double speed = std::min(4 * app->GetDT() / 16 / scale, 18.0f);
+	double speed;
 
-	currentAnim = &idle;
+	body->vel = { 0, 0 };
+	isIdle = true;
 
-	if (godMode)
+	if (app->debug->godMode)
 	{
-		body->vel = { 0, 0 };
-		// HEKATE pbody->body->SetGravityScale(0);
-
-		// Fly around the map
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-			body->vel.y = -speed;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			body->vel.y = speed;
-		}
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-			isFliped = true;
-			body->vel.x = -speed;
-			if (isFliped == true && fliped == SDL_FLIP_NONE) {
-				fliped = SDL_FLIP_HORIZONTAL;
-			}
-		}
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-			isFliped = false;
-			body->vel.x = speed;
-			if (isFliped == false && fliped == SDL_FLIP_HORIZONTAL) {
-				fliped = SDL_FLIP_NONE;
-			}
-		}
-		// HEKATE pbody->body->SetLinearVelocity(velocity);
-
+		// HEAKTE something needed?
 	}
-	else if (!godMode && !dead && !app->sceneManager->sceneGame->isMapChanging)
+
+	if (!dead && !app->sceneManager->sceneGame->isMapChanging)
 	{
-		body->vel = { 0, 0 };
-		// HEKATE pbody->body->SetGravityScale(0);
+		if (app->menuManager->currentMenu == nullptr && !app->sceneManager->sceneGame->dialogueManager->dialogueLoaded)
+		{
+			//Sprint
+			if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
+			{
+				speed = std::min(5.6f * app->GetDT() / 16 / scale, 18.0f);
+			}
+			else
+			{
+				speed = std::min(4 * app->GetDT() / 16 / scale, 18.0f);
+			}
 
-		if (app->menuManager->currentMenu != app->menuManager->menuPause &&
-			app->menuManager->currentMenu != app->menuManager->menuSettings &&
-			app->menuManager->currentMenu != app->menuManager->menuParty &&
-			app->menuManager->currentMenu != app->menuManager->menuQuest &&
-			app->sceneManager->sceneGame->dialogueManager->dialogueLoaded == false) {
-
+			//WASD
 			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 				body->vel.y = -speed;
 				currentAnim = &walkUp;
+				isIdle = false;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 				body->vel.y = speed;
 				currentAnim = &walkDown;
+				isIdle = false;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 				body->vel.x = -speed;
 				currentAnim = &walkLeft;
+				isIdle = false;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 				body->vel.x = speed;
 				currentAnim = &walkRight;
-			}
+				isIdle = false;
+			}	
 		}
 
 		body->pos.x += body->vel.x;
@@ -215,8 +201,10 @@ bool Player::Update()
 	app->render->DrawTexture(shadowTexture, body->pos.x - 16, body->pos.y - 54, NULL, fliped, scaleType);
 	app->render->DrawTexture(texture, body->pos.x - 16, body->pos.y - 24, &rect, fliped, scaleType);
 	
-	currentAnim->Update();
-
+	if (isIdle)
+		currentAnim->Reset();
+	else
+		currentAnim->Update();
 
 	return true;
 }
