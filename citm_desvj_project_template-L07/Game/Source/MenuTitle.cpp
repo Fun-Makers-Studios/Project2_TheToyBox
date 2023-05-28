@@ -78,13 +78,12 @@ bool MenuTitle::PreUpdate()
 bool MenuTitle::Update(float dt)
 {
 	// Easing
-	ListItem<GuiControl*>* control = app->menuManager->currentMenu->guiControlsList.start;
+	ListItem<GuiControl*>* control = guiControlsList.start;
 
 	while (control != nullptr)
 	{
 		if (!control->data->easing->GetFinished())
 		{
-			// HEKATE must pass dt!
 			double time = control->data->easing->TrackTime(dt);
 			double endPosX = control->data->boundsReset.x;
 			double endPosY = control->data->boundsReset.y;

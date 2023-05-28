@@ -211,6 +211,10 @@ void Debug::DrawDebug()
 
 	if (variables)
 	{
+		//UI TEST
+		SDL_Rect rect = { 0, 0, 488, 312 };
+		app->render->DrawRectangle(rect, 0, 255, 0, 128, true, false, true);
+
 		Player* player;
 		if (app->sceneManager->sceneGame->player == nullptr)
 			player = nullPlayer;

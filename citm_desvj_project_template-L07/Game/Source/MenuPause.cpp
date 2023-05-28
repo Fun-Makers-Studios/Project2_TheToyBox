@@ -78,6 +78,9 @@ bool MenuPause::PreUpdate()
 
 bool MenuPause::Update(float dt)
 {
+	// Lower music volume
+	if (app->musicValue >= 20)
+		Mix_VolumeMusic(20);
 
 	return true;
 }
@@ -115,13 +118,7 @@ bool MenuPause::OnGuiMouseClickEvent(GuiControl* control)
 	switch (control->id)
 	{
 	case (uint32)ControlID::RESUME:
-		// HEKATE
-		/*if (!app->sceneManager->sceneGame->dialogueManager->dialogueLoaded)
-			app->sceneManager->sceneGame->gamePaused != app->sceneManager->sceneGame->gamePaused;*/
-
-		//app->sceneManager->sceneGame->pauseMenu != app->sceneManager->sceneGame->pauseMenu;
-		app->menuManager->menuState = MenuState::SWITCH;
-		app->menuManager->nextMenu = MenuID::MENU_NULL;
+		menuState = MenuState::SWITCH_OFF;
 		app->audio->PlayFx(app->menuManager->selectSFX);
 		break;
 
@@ -131,18 +128,11 @@ bool MenuPause::OnGuiMouseClickEvent(GuiControl* control)
 		app->audio->PlayFx(app->menuManager->startSFX);
 		break;
 
-	case (uint32)ControlID::SETTINGS:
-		app->menuManager->menuState = MenuState::SWITCH;
-		app->menuManager->nextMenu = MenuID::MENU_SETTINGS;
-		app->audio->PlayFx(app->menuManager->openMenuSFX);
-		break;
-
 	case (uint32)ControlID::SAVE_EXIT:
 		//showSavingState = true;
 		app->SaveGameRequest();
 		app->audio->PlayFx(app->menuManager->selectSFX);
 		app->menuManager->exitGame = true;
-
 		break;
 
 	default:

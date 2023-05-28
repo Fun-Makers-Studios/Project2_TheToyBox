@@ -4,18 +4,14 @@
 #include "App.h"
 #include "Menu.h"
 #include "MenuTitle.h"
+#include "MenuPause.h"
+#include "MenuTabs.h"
 #include "MenuSettings.h"
 #include "MenuCredits.h"
-#include "MenuPause.h"
 #include "MenuQuest.h"
 #include "MenuParty.h"
 #include "MenuFight.h"
 
-enum class MenuState
-{
-	CONTINUE,
-	SWITCH
-};
 
 class MenuManager : public Module
 {
@@ -51,19 +47,18 @@ public:
 
 public:
 
-	Menu* currentMenu = nullptr;
-	List<Menu*> menus;
+	Menu* currentTab = nullptr;
 
-	MenuState menuState = MenuState::CONTINUE;
-	MenuID nextMenu;
+	List<Menu*> menus;
 
 	//Menus
 	MenuTitle* menuTitle = nullptr;
+	MenuPause* menuPause = nullptr;
+	MenuTabs* menuTabs = nullptr;	
+	MenuParty* menuParty = nullptr;
+	MenuQuest* menuQuest = nullptr;
 	MenuSettings* menuSettings = nullptr;
 	MenuCredits* menuCredits = nullptr;
-	MenuPause* menuPause = nullptr;
-	MenuQuest* menuQuest = nullptr;
-	MenuParty* menuParty = nullptr;
 	MenuFight* menuFight = nullptr;
 
 	bool exitGame = false;

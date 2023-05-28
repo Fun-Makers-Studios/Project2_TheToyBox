@@ -78,12 +78,24 @@ bool GuiManager::Update(float dt)
 		doLogic = true;
 
 	// We control how often the GUI is updated to optimize the performance
-	if (doLogic && app->menuManager->currentMenu != nullptr)
+	if (doLogic)
 	{
-		for (size_t i = 0; i < app->menuManager->currentMenu->guiControlsList.Count(); i++)
+		ListItem<Menu*>* menuItem = app->menuManager->menus.start;
+
+		while (menuItem != nullptr)
 		{
-			ListItem<GuiControl*>* control = app->menuManager->currentMenu->guiControlsList.At(i);
-			control->data->Update(dt);
+			if (menuItem->data->menuState == MenuState::ON)
+			{
+				ListItem<GuiControl*>* control = menuItem->data->guiControlsList.start;
+
+				while (control != nullptr)
+				{
+					control->data->Update(dt);
+					control = control->next;
+				}
+			}
+
+			menuItem = menuItem->next;
 		}
 
 		accumulatedTime = 0.0f;
@@ -100,21 +112,28 @@ bool GuiManager::PostUpdate()
 	return true;
 }
 
+// Draw control list of all active menus
 bool GuiManager::Draw()
 {
-	if (app->menuManager->currentMenu == nullptr)
-		return true;
+	ListItem<Menu*>* menuItem = app->menuManager->menus.start;
 
-	ListItem<GuiControl*>* control = app->menuManager->currentMenu->guiControlsList.start;
-
-	while (control != nullptr)
+	while (menuItem != nullptr)
 	{
-		control->data->Draw(app->render);
-		control = control->next;
+		if (menuItem->data->menuState == MenuState::ON)
+		{
+			ListItem<GuiControl*>* control = menuItem->data->guiControlsList.start;
+		
+			while (control != nullptr)
+			{
+				control->data->Draw(app->render);
+				control = control->next;
+			}
+		}
+
+		menuItem = menuItem->next;
 	}
 
 	return true;
-
 }
 
 void GuiManager::DestroyGuiControl(GuiControl* gui)

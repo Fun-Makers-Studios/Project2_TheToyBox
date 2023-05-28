@@ -208,6 +208,9 @@
     <ClCompile Include="Source\PuzzlePiece.cpp">
       <Filter>Game\Puzzles</Filter>
     </ClCompile>
+    <ClCompile Include="Source\MenuTabs.cpp">
+      <Filter>Game\Menus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Defs.h">
@@ -467,6 +470,9 @@
     </ClInclude>
     <ClInclude Include="Source\PuzzlePiece.h">
       <Filter>Game\Puzzles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MenuTabs.h">
+      <Filter>Game\Menus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

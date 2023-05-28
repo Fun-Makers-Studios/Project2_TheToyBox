@@ -157,7 +157,7 @@ bool Player::Update()
 
 	if (!dead && !app->sceneManager->sceneGame->isMapChanging)
 	{
-		if (app->menuManager->currentMenu == nullptr && !app->sceneManager->sceneGame->dialogueManager->dialogueLoaded)
+		if (app->menuManager->menuTabs->menuState == MenuState::OFF && !app->sceneManager->sceneGame->dialogueManager->dialogueLoaded)
 		{
 			//Sprint
 			if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)

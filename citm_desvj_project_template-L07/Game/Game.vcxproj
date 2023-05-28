@@ -120,6 +120,7 @@
     <ClCompile Include="Source\MenuPause.cpp" />
     <ClCompile Include="Source\MenuQuest.cpp" />
     <ClCompile Include="Source\MenuSettings.cpp" />
+    <ClCompile Include="Source\MenuTabs.cpp" />
     <ClCompile Include="Source\MenuTitle.cpp" />
     <ClCompile Include="Source\MirrorPuzzle.cpp" />
     <ClCompile Include="Source\PuzzleManager.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\Dialogue.h" />
     <ClInclude Include="Source\DialogueManager.h" />
+    <ClInclude Include="Source\MenuTabs.h" />
     <ClInclude Include="Source\MirrorPuzzle.h" />
     <ClInclude Include="Source\Puzzle.h" />
     <ClInclude Include="Source\PuzzleManager.h" />

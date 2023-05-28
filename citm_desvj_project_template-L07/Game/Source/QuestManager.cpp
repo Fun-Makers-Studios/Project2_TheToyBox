@@ -94,7 +94,8 @@ bool QuestManager::Update(float dt)
 		{
 			activeQuests.Del(item);
 
-			if (pQuest->nextQuestId != -1) {
+			if (pQuest->nextQuestId != -1)
+			{
 				ListItem<Quest*>* qitem = quests.start;
 				while (qitem != nullptr)
 				{
@@ -111,9 +112,8 @@ bool QuestManager::Update(float dt)
 
 			completedQuests.Add(pQuest);
 
-			//Open Quests Menu
-			app->menuManager->menuState = MenuState::SWITCH;
-			app->menuManager->nextMenu = MenuID::MENU_QUEST;
+			//Open Quests Menu - HEKATE
+			//app->menuManager->menuQuest->menuState = MenuState::SWITCH_ON;
 		}
 	}
 
@@ -127,12 +127,13 @@ void QuestManager::TriggerQuest(int id)
 	while (qitem != nullptr)
 	{
 		Quest* item = qitem->data;
-		if (item->id == id) {
+
+		if (item->id == id)
+		{
 			activeQuests.Add(item);
 
 			//Open Quests Menu
-			app->menuManager->menuState = MenuState::SWITCH;
-			app->menuManager->nextMenu = MenuID::MENU_QUEST;
+			app->menuManager->menuQuest->menuState = MenuState::SWITCH_ON;
 			break;
 		}
 

@@ -1,10 +1,11 @@
 #include "MenuManager.h"
 
 #include "MenuTitle.h"
-#include "MenuSettings.h"
 #include "MenuPause.h"
-#include "MenuQuest.h"
+#include "MenuTabs.h"
 #include "MenuParty.h"
+#include "MenuQuest.h"
+#include "MenuSettings.h"
 #include "MenuFight.h"
 
 #include "App.h"
@@ -23,19 +24,21 @@ MenuManager::~MenuManager() {}
 bool MenuManager::Awake(pugi::xml_node& config)
 {
 	menuTitle = new MenuTitle();
+	menuPause = new MenuPause();
+	menuTabs = new MenuTabs();
+	menuParty = new MenuParty();
+	menuQuest = new MenuQuest();
 	menuSettings = new MenuSettings();
 	menuCredits = new MenuCredits();
-	menuPause = new MenuPause();
-	menuQuest = new MenuQuest();
-	menuParty = new MenuParty();
 	menuFight = new MenuFight();
 
 	AddMenu(menuTitle, config);
+	AddMenu(menuPause, config);
+	AddMenu(menuTabs, config);
+	AddMenu(menuParty, config);	
+	AddMenu(menuQuest, config);
 	AddMenu(menuSettings, config);
 	AddMenu(menuCredits, config);
-	AddMenu(menuPause, config);
-	AddMenu(menuQuest, config);
-	AddMenu(menuParty, config);
 	AddMenu(menuFight, config);
 
 
@@ -88,29 +91,52 @@ bool MenuManager::Start()
 
 bool MenuManager::PreUpdate()
 {
-	if (menuState == MenuState::SWITCH)
+	SelectMenu();
+
+	ListItem<Menu*>* menuItem = menus.start;
+
+	while (menuItem != nullptr)
 	{
-		SwitchTo(nextMenu);
-		menuState = MenuState::CONTINUE;
+		switch (menuItem->data->menuState)
+		{
+			case MenuState::SWITCH_ON:
+				SetControlState(menuItem->data, GuiControlState::ENABLED);
+				menuItem->data->menuState = MenuState::ON;
+
+			case MenuState::ON:
+				menuItem->data->PreUpdate();
+				break;
+
+			case MenuState::SWITCH_OFF:
+				SetControlState(menuItem->data, GuiControlState::DISABLED);
+				menuItem->data->menuState = MenuState::OFF;
+									
+			case MenuState::OFF:
+				break;
+			
+			default:
+				break;
+		}
+
+		menuItem = menuItem->next;
 	}
 
-	if (currentMenu == nullptr)
-	{
-		SelectMenu();
-		return true;
-	}
 	
-	SetControlState(currentMenu, GuiControlState::ENABLED);
-	currentMenu->PreUpdate();
-
 	return true;
 }
 
 bool MenuManager::Update(float dt)
 {
-	if (currentMenu)
+	ListItem<Menu*>* menuItem = menus.start;
+
+	while (menuItem != nullptr)
 	{
-		currentMenu->Update(dt);		
+		if (menuItem->data->menuState == MenuState::ON)
+		{
+			menuItem->data->Update(dt);
+		}
+
+		menuItem = menuItem->next;
 	}
 
 	return true;
@@ -121,11 +147,19 @@ bool MenuManager::PostUpdate()
 	if (exitGame)
 		return false;
 
-	if (currentMenu)
+	ListItem<Menu*>* menuItem = menus.start;
+
+	while (menuItem != nullptr)
 	{
-		currentMenu->PostUpdate();
-		app->guiManager->Draw();
+		if (menuItem->data->menuState == MenuState::ON)
+		{
+			menuItem->data->PostUpdate();
+		}
+
+		menuItem = menuItem->next;
 	}
+
+	app->guiManager->Draw();
 
 	return true;
 }
@@ -142,7 +176,6 @@ bool MenuManager::CleanUp()
 	return true;
 }
 
-
 bool MenuManager::AddMenu(Menu* menu, pugi::xml_node& config)
 {
 	if (menu == nullptr) return false;
@@ -153,10 +186,9 @@ bool MenuManager::AddMenu(Menu* menu, pugi::xml_node& config)
 	return true;
 }
 
-
 void MenuManager::SwitchTo(MenuID id)
 {
-	SetControlState(currentMenu, GuiControlState::DISABLED);
+	/*SetControlState(currentMenu, GuiControlState::DISABLED);
 
 	if (id == MenuID::MENU_NULL)
 	{
@@ -166,9 +198,8 @@ void MenuManager::SwitchTo(MenuID id)
 	auto menu = FindMenuByID(id);
 	currentMenu = menu->data;
 
-	SetControlState(currentMenu, GuiControlState::ENABLED);
+	SetControlState(currentMenu, GuiControlState::ENABLED);*/
 }
-
 
 void MenuManager::RemoveMenu(MenuID id)
 {
@@ -206,32 +237,28 @@ void MenuManager::SetControlState(Menu* menu, GuiControlState _state)
 // Sets a default menu after Switching Scene
 void MenuManager::SetDefaultMenu()
 {
-	if (currentMenu != nullptr)
-		SetControlState(currentMenu, GuiControlState::DISABLED);
+	// Disable all controls
+	ListItem<Menu*>* menuItem = menus.start;
 
+	while (menuItem != nullptr)
+	{
+		if (menuItem->data->menuState == MenuState::ON)
+		{
+			app->menuManager->SetControlState(menuItem->data, GuiControlState::DISABLED);
+		}
+
+		menuItem = menuItem->next;
+	}
+
+	// Enable Default Menu controls for currentScene
 	switch (app->sceneManager->currentScene->id)
 	{
-		case SceneID::SCENE_LOGO:
-			currentMenu = nullptr;
-			break;
-
 		case SceneID::SCENE_TITLE:
-			currentMenu = menuTitle;
-			break;
-
-		case SceneID::SCENE_GAME:
-			currentMenu = nullptr;
-			break;
-		
-		case SceneID::SCENE_CIRCUS:
-			currentMenu = nullptr;
+			menuTitle->menuState = MenuState::SWITCH_ON;
 			break;
 
 		case SceneID::SCENE_FIGHT:
-			currentMenu = menuFight;
-			break;
-
-		case SceneID::SCENE_ENDING:
+			menuFight->menuState = MenuState::SWITCH_ON;
 			break;
 
 		default:
@@ -244,41 +271,31 @@ void MenuManager::SelectMenu()
 {
 	switch (app->sceneManager->currentScene->id)
 	{
-	case SceneID::SCENE_GAME: case SceneID::SCENE_CIRCUS:
+	case SceneID::SCENE_GAME:
 
-		if (currentMenu == nullptr)
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		{
-			if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+			if (menuPause->menuState == MenuState::ON)
 			{
-				menuState = MenuState::SWITCH;
-				nextMenu = MenuID::MENU_PAUSE;
+				menuPause->menuState = MenuState::SWITCH_OFF;
 			}
-			if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+			else if (currentTab == nullptr)
 			{
-				menuState = MenuState::SWITCH;
-				nextMenu = MenuID::MENU_PARTY;
+				menuPause->menuState = MenuState::SWITCH_ON;
 			}
-			if (app->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+			else
 			{
-				menuState = MenuState::SWITCH;
-				nextMenu = MenuID::MENU_QUEST;
-			}
+				currentTab->menuState = MenuState::SWITCH_OFF;
+				currentTab = nullptr;
+			}			
 		}
-		else if (currentMenu == menuPause || currentMenu == menuQuest || currentMenu == menuParty)
+		else if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 		{
-			if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-			{
-				menuState = MenuState::SWITCH;
-				nextMenu = MenuID::MENU_NULL;
-			}
+			menuParty->menuState = MenuState::SWITCH_ON;
 		}
-		else if (currentMenu == menuSettings)
+		else if (app->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
 		{
-			if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-			{
-				menuState = MenuState::SWITCH;
-				nextMenu = MenuID::MENU_PAUSE;
-			}
+			menuQuest->menuState = MenuState::SWITCH_ON;
 		}
 		
 		break;

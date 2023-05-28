@@ -7,13 +7,26 @@
 enum class MenuID
 {
 	MENU_TITLE,
+
+	MENU_TABS,
+	
+	MENU_PAUSE,
+	MENU_PARTY,
+	MENU_QUEST,
+	MENU_SAVE,
 	MENU_SETTINGS,
 	MENU_CREDITS,
-	MENU_PAUSE,
-	MENU_QUEST,
-	MENU_PARTY,
+
 	MENU_FIGHT,
 	MENU_NULL
+};
+
+enum class MenuState
+{
+	ON,
+	OFF,
+	SWITCH_ON,
+	SWITCH_OFF,
 };
 
 class GuiControl;
@@ -57,6 +70,7 @@ public:
 public:
 
 	MenuID id;
+	MenuState menuState = MenuState::OFF;
 	List<GuiControl*> guiControlsList;
 };
 

@@ -199,8 +199,8 @@ bool SceneGame::Update(float dt)
 		app->SaveGameRequest();
 	}
 
-	// Lower music volume
-	if (app->menuManager->currentMenu == app->menuManager->menuPause) {
+	// Lower music volume - HEKATE
+	/*if (app->menuManager->currentMenu == app->menuManager->menuPause) {
 
 		if (app->musicValue >= 20)
 			Mix_VolumeMusic(20);
@@ -208,7 +208,7 @@ bool SceneGame::Update(float dt)
 	else
 	{
 		Mix_VolumeMusic(app->musicValue);
-	}
+	}*/
 
 	return true;
 }

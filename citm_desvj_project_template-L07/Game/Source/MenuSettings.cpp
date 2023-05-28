@@ -79,11 +79,11 @@ bool MenuSettings::PreUpdate()
 bool MenuSettings::Update(float dt)
 {
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		app->audio->PlayFx(app->menuManager->closeMenuSFX);
 		app->menuManager->SetDefaultMenu();
-	}
+	}*/
 
 	
 	ListItem<GuiControl*>* control = guiControlsList.start;
@@ -129,17 +129,6 @@ bool MenuSettings::Update(float dt)
 		}
 		
 		control = control->next;
-	}
-
-	// Lower music volume
-	if (app->menuManager->currentMenu == app->menuManager->menuSettings) {
-
-		if (app->musicValue >= 20)
-			Mix_VolumeMusic(20);
-	}
-	else
-	{
-		Mix_VolumeMusic(app->musicValue);
 	}
 
 	return true;

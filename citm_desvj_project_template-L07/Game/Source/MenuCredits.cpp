@@ -70,22 +70,11 @@ bool MenuCredits::Update(float dt)
 	
 	app->render->DrawTexture(popImg_credits, 0, 0, NULL);
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		app->audio->PlayFx(app->menuManager->closeMenuSFX);
 		app->menuManager->SetDefaultMenu();
-	}
-
-	// Lower music volume
-	if (app->menuManager->currentMenu == app->menuManager->menuCredits) {
-
-		if (app->musicValue >= 20)
-			Mix_VolumeMusic(20);
-	}
-	else
-	{
-		Mix_VolumeMusic(app->musicValue);
-	}
+	}*/
 
 	return true;
 }
