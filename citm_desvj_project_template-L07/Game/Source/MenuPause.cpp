@@ -16,7 +16,7 @@ MenuPause::MenuPause() : Menu()
 {
 	id = MenuID::MENU_PAUSE;
 
-	imgPausePath = app->configNode.child("menuManager").child("imgPause").attribute("imgPausePath").as_string();
+	imgPausePath = app->configNode.child("menuManager").child("menuPause").attribute("texturepath").as_string();
 }
 
 

@@ -11,6 +11,7 @@
 #include "Collisions.h"
 #include "Debug.h"
 #include "SceneManager.h"
+#include "MenuManager.h"
 #include "GuiControl.h"
 #include "GuiManager.h"
 #include "Defs.h"
@@ -37,6 +38,7 @@ bool Debug::Start()
 	debug = false;
 	fontID = 3;
 	variables = true;
+	menus = true;
 	camLimits = false;
 	godMode = false;
 	freeCam = false;
@@ -58,6 +60,9 @@ bool Debug::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
 			variables = !variables;
 
+		if (app->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
+			menus = !menus;
+
 		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 			teleport = !teleport;
 
@@ -78,19 +83,19 @@ bool Debug::Update(float dt)
 		// F3: Start from the beginning of the current level
 		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 			app->sceneManager->sceneGame->player->ResetPlayerPos();
-			app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
+			app->audio->PlayFx(app->menuManager->selectSFX);
 		}
 
 		// F4: Save the current game state
 		if (app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN) {
 			app->SaveGameRequest();
-			app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
+			app->audio->PlayFx(app->menuManager->selectSFX);
 		}
 
 		// F5: Load the previous state (even across levels)
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) {
 			app->LoadGameRequest();
-			app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
+			app->audio->PlayFx(app->menuManager->selectSFX);
 		}
 
 		// F6: Enables Free Camera Mode
@@ -105,8 +110,8 @@ bool Debug::Update(float dt)
 
 		// F8: View GUI bounds rectangles and state in different colors
 		if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
-			viewGUIbounds = !viewGUIbounds;
-			app->audio->PlayFx(app->sceneManager->sceneGame->player->selectSFX);
+			drawGUIbounds = !drawGUIbounds;
+			app->audio->PlayFx(app->menuManager->selectSFX);
 		}
 
 		// F9: View colliders / logic / paths
@@ -136,6 +141,11 @@ bool Debug::PostUpdate()
 		{
 			DrawColliders();
 			DrawEntities();
+		}
+
+		if (drawGUIbounds)
+		{
+			DrawGuiBounds();
 		}
 
 		DrawDebug();
@@ -181,7 +191,7 @@ void Debug::DrawDebug()
 		BlitTextDebug("#cam lim   (f7)   off", 0);
 
 	//Cam limits
-	if (viewGUIbounds)
+	if (drawGUIbounds)
 		BlitTextDebug("#gui debug (f8)   on", 0);
 	else
 		BlitTextDebug("#gui debug (f8)   off", 0);
@@ -205,15 +215,15 @@ void Debug::DrawDebug()
 		BlitTextDebug("#cap fps   (f11)  off", 0);
 
 
-	//Variables
+	// VARIABLES
 	lineNum++;
 	BlitTextDebug("#variables ( v )  on/off", 0);
 
 	if (variables)
 	{
 		//UI TEST
-		SDL_Rect rect = { 0, 0, 488, 312 };
-		app->render->DrawRectangle(rect, 0, 255, 0, 128, true, false, true);
+		/*SDL_Rect rect = { 0, 0, 488, 312 };
+		app->render->DrawRectangle(rect, 0, 255, 0, 128, true, false, true);*/
 
 		Player* player;
 		if (app->sceneManager->sceneGame->player == nullptr)
@@ -253,7 +263,49 @@ void Debug::DrawDebug()
 		BlitTextDebug(text, 1);
 	}
 
-	//Scene Fight
+
+	// MENUS
+	lineNum++;
+	BlitTextDebug("#menus     ( m )  on/off", 0);
+
+	if (menus)
+	{
+		ListItem<Menu*>* menuItem = app->menuManager->menus.start;
+
+		while (menuItem != nullptr)
+		{
+			std::string text = app->menuManager->MenuIDToString(menuItem->data->id) + " - ";
+
+			switch (menuItem->data->menuState)
+			{
+				case MenuState::ON:
+					text += "on";
+					break;
+
+				case MenuState::OFF:
+					text += "off";
+					break;
+
+				case MenuState::SWITCH_ON:
+					text += "switch on";
+					break;
+
+				case MenuState::SWITCH_OFF:
+					text += "switch off";
+					break;
+
+				default:
+					break;
+			}
+
+			BlitTextDebug(text, 1);
+
+			menuItem = menuItem->next;
+		}
+	}
+
+
+	// SCENE FIGHT
 	if (app->sceneManager->currentScene->id == SceneID::SCENE_FIGHT)
 	{		
 		lineNum++;
@@ -417,6 +469,40 @@ void Debug::DrawEntities()
 				color.r, color.g, color.b, 255);
 		}
 	}
+}
+
+void Debug::DrawGuiBounds()
+{
+	ListItem<Menu*>* menuItem = app->menuManager->menus.start;
+
+	while (menuItem != nullptr)
+	{
+		if (menuItem->data->menuState == MenuState::ON)
+		{
+			ListItem<GuiControl*>* control = menuItem->data->guiControlsList.start;
+
+			while (control != nullptr)
+			{
+				SDL_Rect rec = { control->data->bounds.x,  control->data->bounds.y, control->data->bounds.w, control->data->bounds.h };
+
+				switch (control->data->state)
+				{
+					case GuiControlState::DISABLED:	app->render->DrawRectangle(rec, 0, 0, 0, 0, true, false, true); break;
+					case GuiControlState::NORMAL:	app->render->DrawRectangle(rec, 255, 255, 255, 128, true, false, true); break;
+					case GuiControlState::FOCUSED:	app->render->DrawRectangle(rec, 255, 255, 0, 128, true, false, true); break;
+					case GuiControlState::PRESSED:	app->render->DrawRectangle(rec, 255, 0, 0, 128, true, false, true); break;
+					case GuiControlState::SELECTED: app->render->DrawRectangle(rec, 0, 255, 0, 128, true, false, true); break;
+					default: break;
+				}
+				
+				control = control->next;
+			}
+		}
+
+		menuItem = menuItem->next;
+	}
+
+	
 }
 
 void Debug::BlitTextDebug(std::string text, uchar tab)

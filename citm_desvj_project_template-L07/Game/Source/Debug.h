@@ -22,6 +22,7 @@ public:
 	void DrawDebug();
 	void DrawColliders();
 	void DrawEntities();
+	void DrawGuiBounds();
 
 	void BlitTextDebug(std::string text, uchar tab);
 	void BlitTextDebug(const char* text, uchar tab);
@@ -34,12 +35,13 @@ public:
 
 	bool freeCam = false;
 	bool camLimits = false;
-	bool viewGUIbounds = false;
+	bool drawGUIbounds = false;
 	bool drawColliders = false;
 	bool godMode = false;
 	bool capFPS = false;
 
 	bool variables = false;
+	bool menus = false;
 	bool teleport = false;
 
 	// Blit

@@ -45,6 +45,8 @@ public:
 	void SetDefaultMenu();
 	void SelectMenu();
 
+	std::string MenuIDToString(MenuID menuID);
+
 public:
 
 	Menu* currentTab = nullptr;

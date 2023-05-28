@@ -33,10 +33,14 @@
 		<font2Red texturepath="Assets/Textures/UI/Fonts/font2_red.png"/>
 		<font3 texturepath="Assets/Textures/UI/Fonts/font3.png"/>
 
-		<popImage settingtexturepath="Assets/Textures/UI/SceneTitle/Settings/SettingsMenu.png" creditstexturepath="Assets/Textures/UI/SceneTitle/Credits/CreditsMenu.png"/>
-		<imgPause imgPausePath="Assets/Textures/UI/PauseMenu/PauseMenuTemplate.png"/>
-		<questMenuImg questMenuImgPath="Assets/Textures/UI/QuestMenu/QuestMenu.png"/>
-		<partyMenuImg partyMenuImgPath="Assets/Textures/UI/PartyMenu/PartyMenu.png"/>
+		<menuPause texturepath="Assets/Textures/UI/Menus/menuPause.png"/>
+		<menuTabs texturepath="Assets/Textures/UI/Menus/menuTabs_anim.png"/>
+		<menuParty texturepath="Assets/Textures/UI/Menus/menuSpritesheet.png"/>
+		<menuQuests texturepath="Assets/Textures/UI/Menus/menuSpritesheet.png"/>
+		<menuSave texturepath="Assets/Textures/UI/Menus/menuSpritesheet.png"/>
+		<menuSettings texturepath="Assets/Textures/UI/Menus/menuSpritesheet.png"/>
+		<menuCredits texturepath="Assets/Textures/UI/Menus/menuSpritesheet.png"/>
+		
 		<zeroImg zeroImgPath="Assets/Textures/UI/PartyMenu/Characters/ZeroPic.png"/>
 		<sophieImg sophieImgPath="Assets/Textures/UI/PartyMenu/Characters/SophiePic.png"/>
 	</menuManager>

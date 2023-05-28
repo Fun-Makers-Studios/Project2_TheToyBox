@@ -244,7 +244,7 @@ void MenuManager::SetDefaultMenu()
 	{
 		if (menuItem->data->menuState == MenuState::ON)
 		{
-			app->menuManager->SetControlState(menuItem->data, GuiControlState::DISABLED);
+			menuItem->data->menuState = MenuState::SWITCH_OFF;
 		}
 
 		menuItem = menuItem->next;
@@ -278,16 +278,18 @@ void MenuManager::SelectMenu()
 			if (menuPause->menuState == MenuState::ON)
 			{
 				menuPause->menuState = MenuState::SWITCH_OFF;
+				menuTabs->menuState = MenuState::SWITCH_OFF;
 			}
-			else if (currentTab == nullptr)
+			else if (menuTabs->menuState == MenuState::OFF)
 			{
 				menuPause->menuState = MenuState::SWITCH_ON;
+				menuTabs->menuState = MenuState::SWITCH_ON;
 			}
-			else
+			else if (menuTabs->menuState == MenuState::ON)
 			{
-				currentTab->menuState = MenuState::SWITCH_OFF;
-				currentTab = nullptr;
-			}			
+				menuTabs->menuState = MenuState::SWITCH_OFF;
+				//current menu switch OFF
+			}
 		}
 		else if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 		{
@@ -302,5 +304,23 @@ void MenuManager::SelectMenu()
 
 	default:
 		break;
+	}
+}
+
+std::string MenuManager::MenuIDToString(MenuID menuID)
+{
+	switch (menuID)
+	{
+		case MenuID::MENU_TITLE: return "title";
+		case MenuID::MENU_TABS: return "tabs";
+		case MenuID::MENU_PAUSE: return "pause";
+		case MenuID::MENU_PARTY: return "party";
+		case MenuID::MENU_QUEST: return "quest";
+		case MenuID::MENU_SAVE: return "save";
+		case MenuID::MENU_SETTINGS: return "settings";
+		case MenuID::MENU_CREDITS: return "credits";
+		case MenuID::MENU_FIGHT: return "fight";
+		case MenuID::MENU_NULL: return "null";
+		default: break;
 	}
 }
