@@ -2,6 +2,7 @@
 #define __MENU_H__
 
 #include "App.h"
+#include "Easing.h"
 
 
 enum class MenuID
@@ -72,6 +73,8 @@ public:
 	MenuID id;
 	MenuState menuState = MenuState::OFF;
 	List<GuiControl*> guiControlsList;
+
+	Easing* easing = nullptr;
 };
 
 #endif // __MENU_H__

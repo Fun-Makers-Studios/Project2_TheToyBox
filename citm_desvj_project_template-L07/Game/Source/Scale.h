@@ -6,6 +6,7 @@
 
 enum class ScaleType
 {
+	NONE,
 	NORMAL,
 	TITLE,
 	WORLD,
@@ -13,6 +14,7 @@ enum class ScaleType
 	FIGHT,
 	UI_50,
 	UI_100,
+	UI_200,
 };
 
 
@@ -20,7 +22,7 @@ class Scale
 {
 public:
 
-	int ScaleTypeToInt(ScaleType scale)
+	double ScaleTypeToInt(ScaleType scale)
 	{
 		switch (scale)
 		{
@@ -29,8 +31,9 @@ public:
 		case ScaleType::WORLD:	return 2;	// 2
 		case ScaleType::HOUSE:	return 1;
 		case ScaleType::FIGHT:	return 3;	// 3
-		case ScaleType::UI_50:	return 1;
-		case ScaleType::UI_100: return 1;
+		case ScaleType::UI_50:	return 0.5f;
+		case ScaleType::UI_100:	return 1;
+		case ScaleType::UI_200:	return 2;
 		default: return 1;
 		}
 	}
@@ -58,5 +61,6 @@ public:
 	}
 
 private:
+
 	ScaleType currentScale = ScaleType::WORLD;
 };

@@ -2,6 +2,7 @@
 #define __FONTS_H__
 
 #include "Module.h"
+#include "Scale.h"
 #include "SDL\include\SDL_pixels.h"
 
 #define MAX_FONTS 10
@@ -43,7 +44,7 @@ public:
 	void UnLoad(int fontIndex);
 
 	// Create a surface from text
-	void BlitText(int x, int y, int fontIndex, const char* text, bool useCamera = true) const;
+	void BlitText(int x, int y, int fontIndex, const char* text, ScaleType scaletype, bool useCamera = true) const;
 	int BlitText2(int x, int y, int fontIndex, const char* text, int spacing = -1, int lineLenght = -1, bool useCamera = true) const;
 
 	// An array to keep track and store all loaded fonts

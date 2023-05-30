@@ -53,17 +53,18 @@ bool Item::Awake()
 
 bool Item::Start()
 {
-
 	//initilize textures
 	texture = app->tex->Load(itemData.texturePath);
 	
 	rect = {0, 0, 16, 16};
 
-	if (itemData.animable) {
+	if (itemData.animable)
+	{
 		for (int i = 0; i < itemData.frames; i++)
 		{
 			idle.PushBack({ i * 16, 0, 16, 16 });
 		}
+
 		idle.loop = true;
 		idle.speed = 0.15f;
 		currentAnim = &idle;
@@ -87,27 +88,26 @@ bool Item::Update()
 			takeItemPS = nullptr;
 		}
 
-		ListItem<GuiInventorySlot*>* inventoryItem;
+		ListItem<InventorySlot*>* inventoryItem;
 
-		for (inventoryItem = app->menuManager->menuParty->inventorySlotsList.start; inventoryItem != NULL; inventoryItem = inventoryItem->next)
+		for (inventoryItem = app->menuManager->menuParty->inventorySlotList.start; inventoryItem != NULL; inventoryItem = inventoryItem->next)
 		{
-			if (inventoryItem->data->slotItem != nullptr)
+			if (inventoryItem->data->item != nullptr)
 			{
-				if (inventoryItem->data->slotItem->itemData.name == this->itemData.name && inventoryItem->data->slotItem->itemData.isStackeable)
+				if (inventoryItem->data->item->itemData.name == this->itemData.name && inventoryItem->data->item->itemData.isStackeable)
 				{
-					inventoryItem->data->slotItem->itemStackQuantity++;
+					inventoryItem->data->item->itemStackQuantity++;
 					break;
 				}
 			}
 			else
 			{
-				inventoryItem->data->slotItem = this;
+				inventoryItem->data->item = this;
 				break;
 			}
 		}
 		
 		app->entityManager->DestroyEntity(this);
-
 	}
 	else 
 	{
@@ -121,8 +121,7 @@ bool Item::Update()
 		else {
 			ScaleType scale = app->scaleObj->GetCurrentScale();
 			app->render->DrawTexture(texture, body->pos.x - body->r, body->pos.y - body->r, &rect, SDL_FLIP_NONE, scale);
-		}
-		
+		}		
 	}
 
 	return true;

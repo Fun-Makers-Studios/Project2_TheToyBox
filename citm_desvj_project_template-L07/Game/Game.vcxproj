@@ -105,7 +105,6 @@
     <ClCompile Include="Source\FadeToColor.cpp" />
     <ClCompile Include="Source\GoToQuest.cpp" />
     <ClCompile Include="Source\GuiCheckBox.cpp" />
-    <ClCompile Include="Source\GuiInventorySlot.cpp" />
     <ClCompile Include="Source\GuiSlider.cpp" />
     <ClCompile Include="Source\ImposibleQuest.cpp" />
     <ClCompile Include="Source\KidEnemy.cpp" />
@@ -175,7 +174,6 @@
     <ClInclude Include="Source\FadeToColor.h" />
     <ClInclude Include="Source\GoToQuest.h" />
     <ClInclude Include="Source\GuiCheckBox.h" />
-    <ClInclude Include="Source\GuiInventorySlot.h" />
     <ClInclude Include="Source\GuiSlider.h" />
     <ClInclude Include="Source\ImposibleQuest.h" />
     <ClInclude Include="Source\KidEnemy.h" />

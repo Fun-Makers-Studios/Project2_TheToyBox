@@ -25,7 +25,6 @@ enum class GuiControlType
 	INPUTBOX,
 	VALUEBOX,
 	SPINNER,
-	INVENTORY_SLOT
 };
 
 enum class GuiControlState
@@ -40,9 +39,13 @@ enum class GuiControlState
 
 enum class ButtonType
 {
-	UNKNOWN,
+	TABS_CLOSED,
+	TABS_OPEN,
+	TABS_SELECTED,
 	SMALL,
-	 BIG
+	MEDIUM,
+	BIG,
+	UNKNOWN
 };
 
 class GuiControl

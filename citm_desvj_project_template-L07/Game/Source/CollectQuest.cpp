@@ -7,7 +7,8 @@
 #include "MenuParty.h"
 #include "MenuManager.h"
 
-CollectQuest::CollectQuest(pugi::xml_node node) {
+CollectQuest::CollectQuest(pugi::xml_node node)
+{
 	this->id = node.attribute("id").as_int();
 	this->name = node.attribute("name").as_string();
 	this->description = node.attribute("description").as_string();
@@ -19,17 +20,18 @@ CollectQuest::CollectQuest(pugi::xml_node node) {
 
 CollectQuest::~CollectQuest() {}
 
-bool CollectQuest::Update() {
+bool CollectQuest::Update()
+{
 	bool ret = false;
 
 	//Completion event
-	for (ListItem<GuiInventorySlot*>* sitem = app->menuManager->menuParty->inventorySlotsList.start; sitem != nullptr; sitem = sitem->next)
+	for (ListItem<InventorySlot*>* sitem = app->menuManager->menuParty->inventorySlotList.start; sitem != nullptr; sitem = sitem->next)
 	{
-		if (sitem->data->slotItem != nullptr) {
-			if (sitem->data->slotItem->itemData.name == itemName) {
-				return true;
-			}
-		}
+		if (sitem->data->item == nullptr)
+			continue;
+
+		if (sitem->data->item->name == itemName)
+			return true;
 	}
 
 	return ret;

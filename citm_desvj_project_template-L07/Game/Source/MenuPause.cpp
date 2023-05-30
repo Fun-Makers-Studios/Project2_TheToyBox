@@ -39,7 +39,7 @@ bool MenuPause::Start()
 
 	// Load
 	imgPause = app->tex->Load(imgPausePath);
-	pauseRect = { 35, 69, 310, 555 };
+	pauseRect = { 0, 0, 247, 330 };
 
 	//UI
 	resumeButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::RESUME, "resume", 7, { 515, 295, 252, 76 }, this);
@@ -47,31 +47,17 @@ bool MenuPause::Start()
 	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SETTINGS, "settings", 8, { 515, 455, 252, 76 }, this);
 	saveExitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SAVE_EXIT, "save and exit", 12, { 515, 535, 252, 76 }, this);
 
-	// Set easing finished on title buttons
-	ListItem<GuiControl*>* control = guiControlsList.start;
-
-	while (control != nullptr)
-	{
-		if (control->data->id < 5)
-		{
-			control->data->easing->SetFinished(false);
-			control->data->easing->SetTotalTime(1 + 0.2 * control->data->id);
-		}
-
-		control = control->next;
-	}
-
 	return true;
 }
 
 
 bool MenuPause::PreUpdate()
 {
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		app->audio->PlayFx(app->menuManager->closeMenuSFX);
 		app->menuManager->SelectMenu();
-	}
+	}*/
 	return true;
 }
 
@@ -90,11 +76,22 @@ bool MenuPause::PostUpdate()
 {
 	bool ret = true;
 
-	app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
+	/*if (!control->data->easing->GetFinished())
+	{
+		double time = easing->TrackTime(dt);
+		double endPosX = control->data->boundsReset.x;
+		double endPosY = control->data->boundsReset.y;
+		double easedX = control->data->easing->EasingAnimation(endPosX + 200, endPosX, time, EasingType::EASE_OUT_ELASTIC);
 
-	app->render->DrawTexture(imgPause,
+		control->data->bounds.x = easedX;
+	}*/
+
+	app->render->DrawTexture(imgPause, 197, 13, &pauseRect, SDL_FLIP_NONE, ScaleType::UI_200, false);
+
+	/*app->render->DrawTexture(imgPause,
 		app->render->camera.x + app->render->camera.w / 2 - pauseRect.w / 2,
-		app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);
+		app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2,
+		&pauseRect, SDL_FLIP_NONE, ScaleType::UI_200, false);*/
 
 
 	return ret;

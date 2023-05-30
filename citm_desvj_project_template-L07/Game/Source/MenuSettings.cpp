@@ -139,7 +139,7 @@ bool MenuSettings::PostUpdate()
 {
 	bool ret = true;
 
-	app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
+	//app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
 
 	app->render->DrawTexture(popImg_settings, app->render->camera.x, app->render->camera.y - 3, NULL);
 

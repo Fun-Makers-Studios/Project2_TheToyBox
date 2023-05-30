@@ -16,7 +16,7 @@ MenuTabs::MenuTabs() : Menu()
 {
 	id = MenuID::MENU_TABS;
 
-	imgTabsPath = app->configNode.child("menuManager").child("imgPause").attribute("imgPausePath").as_string();
+	imgTabsPath = app->configNode.child("menuManager").child("menuTabs").attribute("texturepath").as_string();
 }
 
 
@@ -41,12 +41,29 @@ bool MenuTabs::Start()
 	imgTabs = app->tex->Load(imgTabsPath);
 	//pauseRect = { 35, 69, 310, 555 };
 
+	// Animation
+	popOut.PushBack({ 0, 0, 48, 224 });
+	popOut.PushBack({ 48, 0, 48, 224 });
+	popOut.PushBack({ 96, 0, 48, 224 });
+	popOut.PushBack({ 144, 0, 48, 224 });
+	popOut.PushBack({ 192, 0, 48, 224 });
+	popOut.PushBack({ 240, 0, 48, 224 });
+	popOut.PushBack({ 288, 0, 48, 224 });
+	popOut.PushBack({ 336, 0, 48, 224 });
+	popOut.PushBack({ 384, 0, 48, 224 });
+	popOut.PushBack({ 432, 0, 48, 224 });
+
+	popOut.loop = false;
+	popOut.speed = 0.22f;
+
+	currentAnim = &popOut;
+
 	//UI
-	partyButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY, "", 0, { 515, 295, 252, 76 }, this);
-	questsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::QUESTS, "", 0, { 515, 375, 252, 76 }, this);
-	savesButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SAVES, "", 0, { 515, 375, 252, 76 }, this);
-	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SETTINGS, "", 0, { 515, 455, 252, 76 }, this);
-	creditsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::CREDITS, "", 0, { 515, 535, 252, 76 }, this);
+	partyButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY, "", 0, { 443, 77, 25, 26 }, this);
+	questsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::QUESTS, "", 0, { 443, 116, 25, 26 }, this);
+	savesButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SAVES, "", 0, { 443, 155, 25, 26 }, this);
+	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SETTINGS, "", 0, { 443, 194, 25, 26 }, this);
+	creditsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::CREDITS, "", 0, { 443, 272, 25, 26 }, this);
 
 	// Set easing finished on title buttons
 	ListItem<GuiControl*>* control = guiControlsList.start;
@@ -69,26 +86,53 @@ bool MenuTabs::Start()
 bool MenuTabs::PreUpdate()
 {
 	// Menu position
-	if (app->menuManager->menuPause->menuState == MenuState::ON)
+
+	ListItem<GuiControl*>* control = guiControlsList.start;
+
+	while (control != nullptr)
 	{
+		GuiButton* button = dynamic_cast<GuiButton*>(control->data);
 
+		if (app->menuManager->menuPause->menuState == MenuState::ON)
+		{			
+			button->bounds.x = 443;
+			button->bounds.w = 25;
+			button->buttonType = ButtonType::TABS_CLOSED;
+		}
+		else
+		{
+			if (button->buttonType == ButtonType::TABS_SELECTED)
+			{
+				button->bounds.x = 558;
+				button->bounds.w = 37;
+			}
+			else
+			{
+				button->bounds.x = 558;
+				button->bounds.w = 30;
+				button->buttonType = ButtonType::TABS_OPEN;
+			}		
+		}
+
+		control = control->next;
 	}
-	else
-	{
 
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		app->audio->PlayFx(app->menuManager->closeMenuSFX);
 		app->menuManager->SelectMenu();
-	}
+	}*/
+
 	return true;
 }
 
 
 bool MenuTabs::Update(float dt)
 {
+	rectMenu = currentAnim->GetCurrentFrame();
+
+	currentAnim->Update();
+		
 
 	return true;
 }
@@ -98,12 +142,7 @@ bool MenuTabs::PostUpdate()
 {
 	bool ret = true;
 
-	app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
-
-	/*app->render->DrawTexture(imgTabs,
-		app->render->camera.x + app->render->camera.w / 2 - pauseRect.w / 2,
-		app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2, &pauseRect);*/
-
+	app->render->DrawTexture(imgTabs, 439, 77, &rectMenu, SDL_FLIP_NONE, ScaleType::UI_200, false);
 
 	return ret;
 }
@@ -123,37 +162,59 @@ bool MenuTabs::CleanUp()
 
 bool MenuTabs::OnGuiMouseClickEvent(GuiControl* control)
 {
+	bool menuPauseOFF = false;
+
 	switch (control->id)
 	{
-	case (uint32)ControlID::PARTY:
-		app->menuManager->menuParty->menuState = MenuState::SWITCH_ON;
-		app->audio->PlayFx(app->menuManager->selectSFX);
-		break;
+		case (uint32)ControlID::PARTY:
+			app->menuManager->menuParty->menuState = MenuState::SWITCH_ON;
+			app->menuManager->menuQuest->menuState = MenuState::SWITCH_OFF;
+			app->menuManager->menuSettings->menuState = MenuState::SWITCH_OFF;
+			app->menuManager->menuCredits->menuState = MenuState::SWITCH_OFF;
+			menuPauseOFF = true;
+			app->audio->PlayFx(app->menuManager->selectSFX);
+			break;
 
-	case (uint32)ControlID::QUESTS:
-		app->menuManager->menuQuest->menuState = MenuState::SWITCH_ON;
-		app->audio->PlayFx(app->menuManager->startSFX);
-		break;
+		case (uint32)ControlID::QUESTS:
+			app->menuManager->menuParty->menuState = MenuState::SWITCH_OFF;
+			app->menuManager->menuQuest->menuState = MenuState::SWITCH_ON;
+			app->menuManager->menuSettings->menuState = MenuState::SWITCH_OFF;
+			app->menuManager->menuCredits->menuState = MenuState::SWITCH_OFF;
+			menuPauseOFF = true;
+			app->audio->PlayFx(app->menuManager->startSFX);
+			break;
 
-	case (uint32)ControlID::SAVES:
-		//app->menuManager->menuSave->menuState = MenuState::SWITCH_ON;
-		app->audio->PlayFx(app->menuManager->startSFX);
-		break;
+		case (uint32)ControlID::SAVES:
+			//app->menuManager->menuSave->menuState = MenuState::SWITCH_ON;
+			menuPauseOFF = true;
+			app->audio->PlayFx(app->menuManager->startSFX);
+			break;
 
-	case (uint32)ControlID::SETTINGS:
-		app->menuManager->menuSettings->menuState = MenuState::SWITCH_ON;
-		app->audio->PlayFx(app->menuManager->openMenuSFX);
-		break;
+		case (uint32)ControlID::SETTINGS:
+			app->menuManager->menuParty->menuState = MenuState::SWITCH_OFF;
+			app->menuManager->menuQuest->menuState = MenuState::SWITCH_OFF;
+			app->menuManager->menuSettings->menuState = MenuState::SWITCH_ON;
+			app->menuManager->menuCredits->menuState = MenuState::SWITCH_OFF;
+			menuPauseOFF = true;
+			app->audio->PlayFx(app->menuManager->openMenuSFX);
+			break;
 
-	case (uint32)ControlID::CREDITS:
-		app->menuManager->menuCredits->menuState = MenuState::SWITCH_ON;
-		app->audio->PlayFx(app->menuManager->selectSFX);
+		case (uint32)ControlID::CREDITS:
+			app->menuManager->menuParty->menuState = MenuState::SWITCH_OFF;
+			app->menuManager->menuQuest->menuState = MenuState::SWITCH_OFF;
+			app->menuManager->menuSettings->menuState = MenuState::SWITCH_OFF;
+			app->menuManager->menuCredits->menuState = MenuState::SWITCH_ON;
+			menuPauseOFF = true;
+			app->audio->PlayFx(app->menuManager->selectSFX);
+			break;
 
-		break;
+		default:
+			break;
+	}
 
-	default:
-		break;
-
+	if (menuPauseOFF && app->menuManager->menuPause->menuState == MenuState::ON)
+	{
+		app->menuManager->menuPause->menuState = MenuState::SWITCH_OFF;
 	}
 
 	return true;

@@ -162,7 +162,7 @@ bool Player::Update()
 			//Sprint
 			if (app->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT)
 			{
-				speed = std::min(5.6f * app->GetDT() / 16 / scale, 18.0f);
+				speed = std::min(6.0f * app->GetDT() / 16 / scale, 18.0f);
 			}
 			else
 			{

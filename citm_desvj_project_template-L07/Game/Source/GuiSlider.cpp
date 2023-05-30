@@ -117,24 +117,24 @@ bool GuiSlider::Draw(Render* render)
 			{
 			case GuiControlState::DISABLED:
 
-				app->render->DrawRectangle(sliderbounds, 255, 255, 255, 255, true, false, true);
-				app->render->DrawRectangle({ bounds.x,bounds.y,bounds.w,bounds.h }, 0, 0, 0, 255, true, false, true);
+				app->render->DrawRectangle(sliderbounds, 255, 255, 255, 255, true, false, ScaleType::UI_100);
+				app->render->DrawRectangle({ bounds.x,bounds.y,bounds.w,bounds.h }, 0, 0, 0, 255, true, false, ScaleType::UI_100);
 
 				break;
 			case GuiControlState::NORMAL:
-				app->render->DrawRectangle(sliderbounds, 135, 106, 89, 255, true, false, true);
-				app->render->DrawRectangle({ bounds.x,bounds.y,bounds.w,bounds.h }, 107, 80, 82, 255, true, false, true);
+				app->render->DrawRectangle(sliderbounds, 135, 106, 89, 255, true, false, ScaleType::UI_100);
+				app->render->DrawRectangle({ bounds.x,bounds.y,bounds.w,bounds.h }, 107, 80, 82, 255, true, false, ScaleType::UI_100);
 
 				break;
 			case GuiControlState::FOCUSED:
 				//section of the rectangle
-				app->render->DrawRectangle(sliderbounds, 135, 106, 89, 255, true, false, true);
-				app->render->DrawRectangle({ bounds.x,bounds.y,bounds.w,bounds.h }, 169, 96, 70, 255, true, false, true);
+				app->render->DrawRectangle(sliderbounds, 135, 106, 89, 255, true, false, ScaleType::UI_100);
+				app->render->DrawRectangle({ bounds.x,bounds.y,bounds.w,bounds.h }, 169, 96, 70, 255, true, false, ScaleType::UI_100);
 
 				break;
 			case GuiControlState::PRESSED:
-				app->render->DrawRectangle(sliderbounds, 177, 138, 116, 255, true, false, true);
-				app->render->DrawRectangle({ bounds.x,bounds.y,bounds.w,bounds.h }, 199, 140, 99, 255, true, false, true);
+				app->render->DrawRectangle(sliderbounds, 177, 138, 116, 255, true, false, ScaleType::UI_100);
+				app->render->DrawRectangle({ bounds.x,bounds.y,bounds.w,bounds.h }, 199, 140, 99, 255, true, false, ScaleType::UI_100);
 
 				break;
 			}

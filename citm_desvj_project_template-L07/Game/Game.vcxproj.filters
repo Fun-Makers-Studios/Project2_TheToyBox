@@ -175,9 +175,6 @@
     <ClCompile Include="Source\AssetsManager.cpp">
       <Filter>Core\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GuiInventorySlot.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="Source\FadeToColor.cpp">
       <Filter>Transitions\Others</Filter>
     </ClCompile>
@@ -440,9 +437,6 @@
     </ClInclude>
     <ClInclude Include="Source\Wipe.h">
       <Filter>Transitions\Others</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GuiInventorySlot.h">
-      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\AssetsManager.h">
       <Filter>Core\Managers</Filter>

@@ -44,12 +44,13 @@ public:
 	void SetControlState(Menu* menu, GuiControlState _state);
 	void SetDefaultMenu();
 	void SelectMenu();
+	void SetSelectedTab(MenuID menuID, ButtonType buttonType);
 
 	std::string MenuIDToString(MenuID menuID);
 
 public:
 
-	Menu* currentTab = nullptr;
+	MenuID selectedTab = MenuID::MENU_NULL;
 
 	List<Menu*> menus;
 
@@ -64,6 +65,9 @@ public:
 	MenuFight* menuFight = nullptr;
 
 	bool exitGame = false;
+
+	//POSITION
+	iPoint openBookPos = { 76, 31 };
 
 	//SFX
 	uint startSFX = 0;
@@ -81,11 +85,13 @@ public:
 	uint font2_id = -1;
 	uint font2Red_id = -1;
 	uint font3_id = -1;
+	uint font4_id = -1;
 
 	const char* font1Path;
 	const char* font2Path;
 	const char* font2_RedPath;
 	const char* font3Path;
+	const char* font4Path;
 };
 
 

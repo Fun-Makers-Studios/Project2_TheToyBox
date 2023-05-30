@@ -20,7 +20,7 @@ MenuParty::MenuParty() : Menu()
 {
 	id = MenuID::MENU_PARTY;
 
-	partyMenuImgPath = app->configNode.child("menuManager").child("partyMenuImg").attribute("partyMenuImgPath").as_string();
+	partyMenuImgPath = app->configNode.child("menuManager").child("menuParty").attribute("texturepath").as_string();
 	zeroImgPath = app->configNode.child("menuManager").child("zeroImg").attribute("zeroImgPath").as_string();
 	sophieImgPath = app->configNode.child("menuManager").child("sophieImg").attribute("sophieImgPath").as_string();
 }
@@ -58,25 +58,13 @@ bool MenuParty::Start()
 	{
 		for (int j = 0; j < MAX_INVENTORY_SLOTS_COLS; j++)
 		{
-			GuiInventorySlot* slot = (GuiInventorySlot*)app->guiManager->CreateGuiControl(GuiControlType::INVENTORY_SLOT, (uint32)ControlID::I_SLOT, "", 1, { 341 + ((41 + margin) * j), 423 + ((38 + marginDown) * i), 40, 38 }, this);
-			slot->slotID = slotNumP;
-			inventorySlotsList.Add(slot);
-			slotNumP++;
+			InventorySlot* slot = new InventorySlot();
+			SDL_Rect rect = { app->menuManager->openBookPos.x + 288 + 26 * j, app->menuManager->openBookPos.y + 48 + 28 * i, 22, 22 };
+			slot->button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::I_SLOT, "", 1, rect, this, ButtonType::SMALL);
+			slot->item = new Item(app->configNode);
+						
+			inventorySlotList.Add(slot);
 		}
-	}
-
-	// Set easing finished on title buttons
-	ListItem<GuiControl*>* control = guiControlsList.start;
-
-	while (control != nullptr)
-	{
-		if (control->data->id < 5)
-		{
-			control->data->easing->SetFinished(false);
-			control->data->easing->SetTotalTime(1 + 0.2 * control->data->id);
-		}
-
-		control = control->next;
 	}
 
 	return true;
@@ -85,11 +73,6 @@ bool MenuParty::Start()
 
 bool MenuParty::PreUpdate()
 {
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	{
-		app->audio->PlayFx(app->menuManager->closeMenuSFX);
-		app->menuManager->SelectMenu();
-	}
 	ListItem<PartyMember*>* item = app->partyManager->party.start;
 	bool active = false;
 	while (item != nullptr)
@@ -116,9 +99,8 @@ bool MenuParty::PostUpdate()
 {
 	bool ret = true;
 
-	app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
-
-	app->render->DrawTexture(partyMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
+	SDL_Rect rect = { 0, 0, 519, 311 };
+	app->render->DrawTexture(partyMenuImg, app->menuManager->openBookPos.x, app->menuManager->openBookPos.y, &rect, SDL_FLIP_NONE, ScaleType::UI_200, false);
 
 	switch (partyMemberSelected)
 	{
@@ -173,6 +155,8 @@ bool MenuParty::OnGuiMouseClickEvent(GuiControl* control)
 	
 	case (uint32)ControlID::I_SLOT:
 	{
+		//control->state = ;
+
 		//control->state = GuiControlState::SELECTED;
 		app->audio->PlayFx(app->menuManager->closeMenuSFX);
 
@@ -180,7 +164,6 @@ bool MenuParty::OnGuiMouseClickEvent(GuiControl* control)
 
 	default:
 		break;
-
 	}
 
 	return true;
@@ -193,41 +176,44 @@ void MenuParty::SwapItems()
 
 void MenuParty::BlitPartyStats()
 {
-	app->fonts->BlitText(465, 230, app->menuManager->font1_id, app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->name.GetString());
+	uint font = app->menuManager->font4_id;
+	PartyMember* memberData = app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data;
+
+	app->fonts->BlitText(465, 230, font, memberData->name.GetString(), ScaleType::UI_200);
 
 	char level[5];
-	sprintf_s(level, 5, "%d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->level);
-	app->fonts->BlitText(465, 260, app->menuManager->font1_id, level);
+	sprintf_s(level, 5, "%d", memberData->level);
+	app->fonts->BlitText(465, 260, font, level, ScaleType::UI_200);
 
 	char currentHP[8];
-	sprintf_s(currentHP, 8, "hp %d/", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->currentHp);
-	app->fonts->BlitText(776, 265, app->menuManager->font1_id, currentHP);
+	sprintf_s(currentHP, 8, "hp %d/", memberData->currentHp);
+	app->fonts->BlitText(776, 265, font, currentHP, ScaleType::UI_200);
 
 	char maxHP[3];
-	sprintf_s(maxHP, 3, "%d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->maxHp);
-	app->fonts->BlitText(824, 265, app->menuManager->font1_id, maxHP);
+	sprintf_s(maxHP, 3, "%d", memberData->maxHp);
+	app->fonts->BlitText(824, 265, font, maxHP, ScaleType::UI_200);
 
 	char currentMana[10];
-	sprintf_s(currentMana, 10, "mana %d/", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->currentMana);
-	app->fonts->BlitText(871, 265, app->menuManager->font1_id, currentMana);
+	sprintf_s(currentMana, 10, "mana %d/", memberData->currentMana);
+	app->fonts->BlitText(871, 265, font, currentMana, ScaleType::UI_200);
 
 	char maxMana[3];
-	sprintf_s(maxMana, 3, "%d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->maxMana);
-	app->fonts->BlitText(936, 265, app->menuManager->font1_id, maxMana);
+	sprintf_s(maxMana, 3, "%d", memberData->maxMana);
+	app->fonts->BlitText(936, 265, font, maxMana, ScaleType::UI_200);
 
 	char attack[12];
-	sprintf_s(attack, 12, "attack %d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->attack);
-	app->fonts->BlitText(776, 290, app->menuManager->font1_id, attack);
+	sprintf_s(attack, 12, "attack %d", memberData->attack);
+	app->fonts->BlitText(776, 290, font, attack, ScaleType::UI_200);
 
 	char defense[15];
-	sprintf_s(defense, 15, "defense %d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->defense);
-	app->fonts->BlitText(871, 290, app->menuManager->font1_id, defense);
+	sprintf_s(defense, 15, "defense %d", memberData->defense);
+	app->fonts->BlitText(871, 290, font, defense, ScaleType::UI_200);
 
 	char speed[10];
-	sprintf_s(speed, 10, "speed %d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->speed);
-	app->fonts->BlitText(776, 315, app->menuManager->font1_id, speed);
+	sprintf_s(speed, 10, "speed %d", memberData->speed);
+	app->fonts->BlitText(776, 315, font, speed, ScaleType::UI_200);
 
 	char critRate[15];
-	sprintf_s(critRate, 15, "crit r %d", app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data->critRate);
-	app->fonts->BlitText(871, 315, app->menuManager->font1_id, critRate);
+	sprintf_s(critRate, 15, "crit r %d", memberData->critRate);
+	app->fonts->BlitText(871, 315, font, critRate, ScaleType::UI_200);
 }

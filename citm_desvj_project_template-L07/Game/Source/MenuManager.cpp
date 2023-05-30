@@ -24,8 +24,8 @@ MenuManager::~MenuManager() {}
 bool MenuManager::Awake(pugi::xml_node& config)
 {
 	menuTitle = new MenuTitle();
-	menuPause = new MenuPause();
 	menuTabs = new MenuTabs();
+	menuPause = new MenuPause();	
 	menuParty = new MenuParty();
 	menuQuest = new MenuQuest();
 	menuSettings = new MenuSettings();
@@ -33,8 +33,8 @@ bool MenuManager::Awake(pugi::xml_node& config)
 	menuFight = new MenuFight();
 
 	AddMenu(menuTitle, config);
-	AddMenu(menuPause, config);
 	AddMenu(menuTabs, config);
+	AddMenu(menuPause, config);
 	AddMenu(menuParty, config);	
 	AddMenu(menuQuest, config);
 	AddMenu(menuSettings, config);
@@ -52,6 +52,7 @@ bool MenuManager::Awake(pugi::xml_node& config)
 	font2Path = app->configNode.child("menuManager").child("font2").attribute("texturepath").as_string();
 	font2_RedPath = app->configNode.child("menuManager").child("font2Red").attribute("texturepath").as_string();
 	font3Path = app->configNode.child("menuManager").child("font3").attribute("texturepath").as_string();
+	font4Path = app->configNode.child("menuManager").child("font4").attribute("texturepath").as_string();
 
 	return true;
 }
@@ -86,6 +87,10 @@ bool MenuManager::Start()
 
 	char lookupTableFont3[] = { "abcdefghijklmnopqrstuvwxyz 0123456789.,;:$#'! /?%&()@ -+=      " };
 	font3_id = app->fonts->Load(font3Path, lookupTableFont3, 7);
+
+	char lookupTableFont4[] = { "abcdefghijklmnopqrstuvwxyz0123456789" };
+	font4_id = app->fonts->Load(font4Path, lookupTableFont4, 1);
+
 	return true;
 }
 
@@ -101,6 +106,7 @@ bool MenuManager::PreUpdate()
 		{
 			case MenuState::SWITCH_ON:
 				SetControlState(menuItem->data, GuiControlState::ENABLED);
+				SetSelectedTab(menuItem->data->id, ButtonType::TABS_SELECTED);
 				menuItem->data->menuState = MenuState::ON;
 
 			case MenuState::ON:
@@ -109,6 +115,7 @@ bool MenuManager::PreUpdate()
 
 			case MenuState::SWITCH_OFF:
 				SetControlState(menuItem->data, GuiControlState::DISABLED);
+				SetSelectedTab(menuItem->data->id, ButtonType::TABS_OPEN);
 				menuItem->data->menuState = MenuState::OFF;
 									
 			case MenuState::OFF:
@@ -146,6 +153,12 @@ bool MenuManager::PostUpdate()
 {
 	if (exitGame)
 		return false;
+
+	// Black BG
+	if (menuTabs->menuState == MenuState::ON)
+	{
+		app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, ScaleType::UI_100);
+	}
 
 	ListItem<Menu*>* menuItem = menus.start;
 
@@ -287,23 +300,56 @@ void MenuManager::SelectMenu()
 			}
 			else if (menuTabs->menuState == MenuState::ON)
 			{
-				menuTabs->menuState = MenuState::SWITCH_OFF;
-				//current menu switch OFF
+				// Disable all controls
+				ListItem<Menu*>* menuItem = menus.start;
+
+				while (menuItem != nullptr)
+				{
+					if (menuItem->data->menuState == MenuState::ON)
+					{
+						menuItem->data->menuState = MenuState::SWITCH_OFF;
+					}
+
+					menuItem = menuItem->next;
+				}
 			}
 		}
 		else if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 		{
 			menuParty->menuState = MenuState::SWITCH_ON;
+
+			if (menuTabs->menuState == MenuState::OFF)
+			{
+				menuTabs->menuState = MenuState::SWITCH_ON;
+			}
 		}
 		else if (app->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
 		{
 			menuQuest->menuState = MenuState::SWITCH_ON;
+
+			if (menuTabs->menuState == MenuState::OFF)
+			{
+				menuTabs->menuState = MenuState::SWITCH_ON;
+			}
 		}
 		
 		break;
 
 	default:
 		break;
+	}
+}
+
+void MenuManager::SetSelectedTab(MenuID menuID, ButtonType buttonType)
+{
+	switch (menuID)
+	{
+		case MenuID::MENU_PARTY:	app->menuManager->menuTabs->partyButton->buttonType = buttonType;		break;	
+		case MenuID::MENU_QUEST:	app->menuManager->menuTabs->questsButton->buttonType = buttonType;		break;
+		case MenuID::MENU_SAVE:		app->menuManager->menuTabs->savesButton->buttonType = buttonType;		break;
+		case MenuID::MENU_SETTINGS: app->menuManager->menuTabs->settingsButton->buttonType = buttonType;	break;
+		case MenuID::MENU_CREDITS:	app->menuManager->menuTabs->creditsButton->buttonType = buttonType;		break;
+		default: break;
 	}
 }
 

@@ -106,15 +106,15 @@ void Render::ResetViewPort()
 }
 
 // Blit to screen
-bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip_, ScaleType scaleType, float speed, double angle, int pivotX, int pivotY) const
+bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip flip_, ScaleType scaleType, bool use_camera, double angle, int pivotX, int pivotY) const
 {
 	bool ret = true;
 	// app->win->GetScale();
 	uint scale = app->scaleObj->ScaleTypeToInt(scaleType);
 
 	SDL_Rect rect;
-	rect.x = (int)(-camera.x * speed) + x * scale;
-	rect.y = (int)(-camera.y * speed) + y * scale;
+	rect.x = (int)(-camera.x * use_camera) + x * scale;
+	rect.y = (int)(-camera.y * use_camera) + y * scale;
 
 	if(section != NULL)
 	{
@@ -200,11 +200,11 @@ bool Render::DrawParticleAlpha(SDL_Texture* texture, int x, int y, Uint8 r, Uint
 	return ret;
 }
 
-bool Render::DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera, bool noScale) const
+bool Render::DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera, ScaleType scaleType) const
 {
 	bool ret = true;
 
-	uint scale = noScale == true ? 1 : app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale());
+	double scale = scaleType == ScaleType::NONE ? app->scaleObj->ScaleTypeToInt(app->scaleObj->GetCurrentScale()) : app->scaleObj->ScaleTypeToInt(scaleType);
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);

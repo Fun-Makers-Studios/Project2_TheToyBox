@@ -4,6 +4,7 @@
 #include "Audio.h"
 #include "Textures.h"
 #include "MenuManager.h"
+#include "SceneManager.h"
 #include "Fonts.h"
 #include "Debug.h"
 
@@ -42,6 +43,13 @@ bool GuiButton::Update(float dt)
 		// Update the state of the GUiButton according to the mouse position
 		app->input->GetMousePosition(mouseX, mouseY);
 
+		// UI Scale for game menus
+		if (app->sceneManager->currentScene->id == SceneID::SCENE_GAME)
+		{
+			mouseX /= 2;
+			mouseY /= 2;
+		}		
+
 		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&
 			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
 		{
@@ -67,68 +75,53 @@ bool GuiButton::Update(float dt)
 	return true;
 }
 
+// Draw the right button depending on state
 bool GuiButton::Draw(Render* render)
 {
-	SDL_Rect rec = { bounds.x + app->render->camera.x,  bounds.y + app->render->camera.y, bounds.w, bounds.h };
-
-	// Draw the right button depending on state
-	switch (state)
-	{
-
-	case GuiControlState::DISABLED: 
-	{
-	} break;
-
-	case GuiControlState::NORMAL:
-	{
-		SDL_Rect rect;
-
-		if (buttonType == ButtonType::BIG)
-			rect = { 0, 0, 252, 76 };
-		else
-			rect = { 0, 233, 64, 76 };
+	SDL_Rect rectTexture = GetButtonRect(state, buttonType);
 		
-		render->DrawTexture(buttonTex, rec.x, rec.y, &rect);
-		app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2) - 4, app->menuManager->font3_id, this->text);
-
-	} break;
-
-	//L15: TODO 4: Draw the button according the GuiControl State
-	case GuiControlState::FOCUSED:
-	{
-		SDL_Rect rect;
-
-		if (buttonType == ButtonType::BIG)
-			rect = { 0,75,252,76 };
-		else
-			rect = { 94, 233, 64, 76 };
-
-		render->DrawTexture(buttonTex, rec.x, rec.y, &rect);
-		app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->menuManager->font3_id, this->text);
-
-	} break;
-	case GuiControlState::PRESSED:
-	{
-		SDL_Rect rect;
-
-		if (buttonType == ButtonType::BIG)
-			rect = { 0,150,252,76 };
-		else
-			rect = { 188, 233, 64, 76 };
-
-		render->DrawTexture(buttonTex, rec.x, rec.y, &rect);
-		app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2), app->menuManager->font3_id, this->text);
-
-	} break;
-
-	case GuiControlState::SELECTED: 
-		render->DrawRectangle(rec, 0, 255, 0, 255);
-		
-		break;
-
-	default:
-		break;
-	}
+	render->DrawTexture(buttonTex, bounds.x, bounds.y, &rectTexture, SDL_FLIP_NONE, ScaleType::UI_200, false);
+	app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2) - 4, app->menuManager->font3_id, this->text, ScaleType::UI_100);
 
 	return false;
+}
+
+SDL_Rect GuiButton::GetButtonRect(GuiControlState guiControlState, ButtonType buttonType)
+{
+	switch (guiControlState)
+	{
+		case GuiControlState::NORMAL:
+		
+			return { 0, 0, 0, 0 };
+
+		case GuiControlState::FOCUSED:
+
+			switch (buttonType)
+			{
+				case ButtonType::TABS_CLOSED:	return { 0, 0, 25, 26 };
+				case ButtonType::TABS_OPEN:		return { 32, 0, 30, 26 };
+				case ButtonType::TABS_SELECTED: return { 64, 0, 37, 26 };
+				case ButtonType::SMALL:			return { 112, 0, 22, 22 };
+				case ButtonType::MEDIUM:		return { 144, 0, 41, 20 };
+				case ButtonType::BIG:			return { 192, 0, 60, 20 };
+				case ButtonType::UNKNOWN:		return { 0, 0, 0, 0 };
+				default: return { 0, 0, 0, 0 };
+			}
+
+		case GuiControlState::PRESSED:
+
+			switch (buttonType)
+			{
+				case ButtonType::TABS_CLOSED:	return { 0, 32, 25, 26 };
+				case ButtonType::TABS_OPEN:		return { 32, 32, 30, 26 };
+				case ButtonType::TABS_SELECTED: return { 64, 32, 37, 26 };
+				case ButtonType::SMALL:			return { 112, 32, 22, 22 };
+				case ButtonType::MEDIUM:		return { 144, 32, 41, 20 };
+				case ButtonType::BIG:			return { 192, 32, 60, 20 };
+				case ButtonType::UNKNOWN:		return { 0, 0, 0, 0 };
+				default: return { 0, 0, 0, 0 };
+			}
+
+		default: return { 0, 0, 0, 0 };
+	}
 }

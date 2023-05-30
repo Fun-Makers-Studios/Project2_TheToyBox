@@ -4,6 +4,8 @@
 #include "Menu.h"
 #include "GuiControl.h"
 #include "GuiButton.h"
+#include "Animation.h"
+
 
 struct SDL_Texture;
 
@@ -29,6 +31,10 @@ public:
 
 public:
 
+	// Animation
+	Animation* currentAnim = nullptr;
+	Animation popOut;
+
 	// UI
 	GuiButton* partyButton = nullptr;
 	GuiButton* questsButton = nullptr;
@@ -49,6 +55,8 @@ private:
 
 	SDL_Texture* imgTabs = nullptr;
 	const char* imgTabsPath = nullptr;
+
+	SDL_Rect rectMenu;
 };
 
 #endif // __MENU_TABS_H__

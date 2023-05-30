@@ -4,13 +4,18 @@
 #include "Menu.h"
 #include "GuiControl.h"
 #include "GuiButton.h"
-#include "GuiInventorySlot.h"
 #include "Item.h"
 
-#define MAX_INVENTORY_SLOTS_ROWS 3
-#define MAX_INVENTORY_SLOTS_COLS 10
+#define MAX_INVENTORY_SLOTS_ROWS 5
+#define MAX_INVENTORY_SLOTS_COLS 6
 
 struct SDL_Texture;
+
+struct InventorySlot
+{
+	GuiButton* button;
+	Item* item = nullptr;
+};
 
 class MenuParty : public Menu
 {
@@ -49,7 +54,7 @@ public:
 		I_SLOT
 	};
 
-	List<GuiInventorySlot*> inventorySlotsList;
+	List<InventorySlot*> inventorySlotList;
 
 private:
 
@@ -65,9 +70,6 @@ private:
 	const char* sophieImgPath = nullptr;
 	SDL_Texture* sophieImg = nullptr;
 
-	//List<Item*> inventoryItems;
-	int margin = 21;
-	int marginDown = 25;
 	uint slotNumP = 0;
 };
 

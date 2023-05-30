@@ -16,6 +16,8 @@ public:
 	bool Update(float dt);
 	bool Draw(Render* render);
 
+	SDL_Rect GetButtonRect(GuiControlState guiControlState, ButtonType buttonType);
+
 	int mouseX, mouseY;
 	unsigned int click;
 

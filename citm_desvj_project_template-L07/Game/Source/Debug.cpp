@@ -442,13 +442,13 @@ void Debug::DrawColliders()
 
 void Debug::DrawEntities()
 {
+	Color color;
+
 	ListItem<Entity*>* item;
 	Entity* pEntity = NULL;
 
 	for (item = app->entityManager->entities.start; item != NULL; item = item->next)
 	{
-		Color color;
-
 		pEntity = item->data;
 
 		switch (pEntity->type)
@@ -473,6 +473,9 @@ void Debug::DrawEntities()
 
 void Debug::DrawGuiBounds()
 {
+	Color color = White;
+	uint alpha = 0;
+
 	ListItem<Menu*>* menuItem = app->menuManager->menus.start;
 
 	while (menuItem != nullptr)
@@ -487,32 +490,33 @@ void Debug::DrawGuiBounds()
 
 				switch (control->data->state)
 				{
-					case GuiControlState::DISABLED:	app->render->DrawRectangle(rec, 0, 0, 0, 0, true, false, true); break;
-					case GuiControlState::NORMAL:	app->render->DrawRectangle(rec, 255, 255, 255, 128, true, false, true); break;
-					case GuiControlState::FOCUSED:	app->render->DrawRectangle(rec, 255, 255, 0, 128, true, false, true); break;
-					case GuiControlState::PRESSED:	app->render->DrawRectangle(rec, 255, 0, 0, 128, true, false, true); break;
-					case GuiControlState::SELECTED: app->render->DrawRectangle(rec, 0, 255, 0, 128, true, false, true); break;
+					case GuiControlState::DISABLED:	alpha = 0; break;
+					case GuiControlState::NORMAL:	color = White; alpha = 85; break;
+					case GuiControlState::FOCUSED:	color = Yellow; alpha = 85; break;
+					case GuiControlState::PRESSED:	color = Red; alpha = 85; break;
+					case GuiControlState::SELECTED: color = Green; alpha = 85; break;
 					default: break;
 				}
 				
+				app->render->DrawRectangle(rec, color.r, color.g, color.b, alpha, true, false, ScaleType::UI_200);
+				app->render->DrawRectangle(rec, color.r, color.g, color.b, alpha * 3, false, false, ScaleType::UI_200);
+
 				control = control->next;
 			}
 		}
 
 		menuItem = menuItem->next;
 	}
-
-	
 }
 
 void Debug::BlitTextDebug(std::string text, uchar tab)
 {
-	app->fonts->BlitText(debugX + tab * 16, debugY + lineSpacing * lineNum, fontID, text.c_str());
+	app->fonts->BlitText(debugX + tab * 16, debugY + lineSpacing * lineNum, fontID, text.c_str(), ScaleType::UI_100);
 	lineNum++;
 }
 
 void Debug::BlitTextDebug(const char* text, uchar tab)
 {
-	app->fonts->BlitText(debugX + tab * 16, debugY + lineSpacing * lineNum, fontID, text);
+	app->fonts->BlitText(debugX + tab * 16, debugY + lineSpacing * lineNum, fontID, text, ScaleType::UI_100);
 	lineNum++;
 }

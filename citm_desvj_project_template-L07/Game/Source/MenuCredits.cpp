@@ -66,7 +66,7 @@ bool MenuCredits::PreUpdate()
 
 bool MenuCredits::Update(float dt)
 {
-	app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
+	//app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
 	
 	app->render->DrawTexture(popImg_credits, 0, 0, NULL);
 

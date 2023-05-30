@@ -5,7 +5,6 @@
 #include "MenuManager.h"
 #include "GuiControl.h"
 #include "GuiButton.h"
-#include "GuiInventorySlot.h"
 #include "GuiSlider.h"
 
 #include "Textures.h"
@@ -32,33 +31,17 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int id, const char
 	//Call the constructor according to the GuiControlType
 	switch (type)
 	{
-	case GuiControlType::BUTTON:
-		guiControl = (GuiControl*) new GuiButton(id, bounds, text, textSize, buttonType);
-		break;
-	case GuiControlType::TOGGLE:
-		break;
-	case GuiControlType::CHECKBOX:
-		break;
-	case GuiControlType::SLIDER:
-		guiControl = new GuiSlider(id, bounds, text, sliderBounds);
-		break;
-	case GuiControlType::SLIDERBAR:
-		break;
-	case GuiControlType::COMBOBOX:
-		break;
-	case GuiControlType::DROPDOWNBOX:
-		break;
-	case GuiControlType::INPUTBOX:
-		break;
-	case GuiControlType::VALUEBOX:
-		break;
-	case GuiControlType::SPINNER:
-		break;
-	case GuiControlType::INVENTORY_SLOT:
-		guiControl = (GuiControl*) new GuiInventorySlot(id, bounds, text, textSize);
-		break;
-	default:
-		break;
+		case GuiControlType::BUTTON: guiControl = (GuiControl*) new GuiButton(id, bounds, text, textSize, buttonType); break;		
+		case GuiControlType::TOGGLE: break;
+		case GuiControlType::CHECKBOX: break;
+		case GuiControlType::SLIDER: guiControl = new GuiSlider(id, bounds, text, sliderBounds); break;
+		case GuiControlType::SLIDERBAR: break;
+		case GuiControlType::COMBOBOX: break;
+		case GuiControlType::DROPDOWNBOX: break;
+		case GuiControlType::INPUTBOX: break;
+		case GuiControlType::VALUEBOX: break;
+		case GuiControlType::SPINNER: break;
+		default: break;
 	}
 
 	//Set the observer
@@ -157,5 +140,4 @@ bool GuiManager::CleanUp()
 	return false;*/
 
 	return true;
-
 }

@@ -80,11 +80,11 @@ bool MenuQuest::Start()
 
 bool MenuQuest::PreUpdate()
 {
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		app->audio->PlayFx(app->menuManager->closeMenuSFX);
 		app->menuManager->SelectMenu();
-	}
+	}*/
 
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{
@@ -152,7 +152,7 @@ bool MenuQuest::PostUpdate()
 {
 	bool ret = true;
 
-	app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
+	//app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
 
 	app->render->DrawTexture(questMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
 
@@ -192,8 +192,8 @@ bool MenuQuest::PostUpdate()
 					}
 				}
 
-				app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 218, 141, 85, 96, true, false, true);
-				app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 55, 55, 80, 196, false, false, true);
+				app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 218, 141, 85, 96, true, false, ScaleType::UI_100);
+				app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 55, 55, 80, 196, false, false, ScaleType::UI_100);
 			}
 
 			displacement.y += (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8) + 16;
@@ -230,8 +230,8 @@ bool MenuQuest::PostUpdate()
 					}
 				}
 
-				app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 218, 141, 85, 96, true, false, true);
-				app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 55, 55, 80, 196, false, false, true);
+				app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 218, 141, 85, 96, true, false, ScaleType::UI_100);
+				app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 55, 55, 80, 196, false, false, ScaleType::UI_100);
 			}
 
 			displacement.y += (lines * (int)app->fonts->fonts[fontID].char_h) + 16;

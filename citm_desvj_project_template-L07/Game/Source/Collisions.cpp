@@ -306,9 +306,9 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
 
         SString str = "Circus ticket";
 
-        for (ListItem<GuiInventorySlot*>* invItem = app->menuManager->menuParty->inventorySlotsList.start; invItem != nullptr; invItem = invItem->next)
+        for (ListItem<InventorySlot*>* invItem = app->menuManager->menuParty->inventorySlotList.start; invItem != nullptr; invItem = invItem->next)
         {
-            if (invItem->data->slotItem != nullptr && invItem->data->slotItem->itemData.name == str)
+            if (invItem->data->item != nullptr && invItem->data->item->itemData.name == str)
             {
                 app->sceneManager->sceneGame->mapName = "circusOne";
                 app->sceneManager->sceneGame->player->newPos = { 160, 416 };
