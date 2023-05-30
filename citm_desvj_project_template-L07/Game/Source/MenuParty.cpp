@@ -51,8 +51,15 @@ bool MenuParty::Start()
 	sophieImg = app->tex->Load(sophieImgPath);
 
 	//UI
-	partyMember1Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_1, "z", 2, { 176, 140, 65, 76 }, this, ButtonType::SMALL);
-	partyMember2Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_2, "s", 2, { 176, 216, 64, 76 }, this, ButtonType::SMALL);
+	SDL_Rect rect = { app->menuManager->openBookPos.x + 43, app->menuManager->openBookPos.y + 227, 33, 34 };
+	partyMember1Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_1, "", 1, rect, this, ButtonType::SQUARE_S);
+	partyMember2Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_2, "", 1, rect, this, ButtonType::SQUARE_S);
+	partyMember3Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_3, "", 1, rect, this, ButtonType::SQUARE_S);
+	partyMember4Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_4, "", 1, rect, this, ButtonType::SQUARE_S);
+
+	for (int i = 0; i < 4; i++)
+		guiControlsList.At(i)->data->bounds.x += i * 43;
+
 
 	for (int i = 0; i < MAX_INVENTORY_SLOTS_ROWS; i++)
 	{
@@ -60,8 +67,8 @@ bool MenuParty::Start()
 		{
 			InventorySlot* slot = new InventorySlot();
 			SDL_Rect rect = { app->menuManager->openBookPos.x + 288 + 26 * j, app->menuManager->openBookPos.y + 48 + 28 * i, 22, 22 };
-			slot->button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::I_SLOT, "", 1, rect, this, ButtonType::SMALL);
-			slot->item = new Item(app->configNode);
+			slot->button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::I_SLOT, "", 1, rect, this, ButtonType::SQUARE_S);
+			slot->item = nullptr;
 						
 			inventorySlotList.Add(slot);
 		}
@@ -98,10 +105,11 @@ bool MenuParty::Update(float dt)
 bool MenuParty::PostUpdate()
 {
 	bool ret = true;
+	
+	SDL_Rect rectTexture = { 0, 0, 519, 311 };
+	app->render->DrawTexture(partyMenuImg, app->menuManager->openBookPos.x, app->menuManager->openBookPos.y, &rectTexture, SDL_FLIP_NONE, ScaleType::UI_200, false);
 
-	SDL_Rect rect = { 0, 0, 519, 311 };
-	app->render->DrawTexture(partyMenuImg, app->menuManager->openBookPos.x, app->menuManager->openBookPos.y, &rect, SDL_FLIP_NONE, ScaleType::UI_200, false);
-
+	// PARTY ==========
 	switch (partyMemberSelected)
 	{
 	case ControlID::PARTY_1:
@@ -120,6 +128,24 @@ bool MenuParty::PostUpdate()
 	}
 
 	BlitPartyStats();
+
+
+	//INVENTORY ==========
+	SDL_Rect rectTexture2 = { 0, 0, 16, 16 };
+	ListItem<InventorySlot*>* slot = inventorySlotList.start;
+
+	while (slot != nullptr)
+	{
+		if (slot->data->item != nullptr)
+		{
+			if (slot->data->item->texture != nullptr)
+			{
+				app->render->DrawTexture(slot->data->item->texture, slot->data->button->bounds.x + 3, slot->data->button->bounds.y + 3, &rectTexture2, SDL_FLIP_NONE, ScaleType::UI_200, false);
+			}
+		}		
+
+		slot = slot->next;
+	}
 
 	return ret;
 }
@@ -176,14 +202,16 @@ void MenuParty::SwapItems()
 
 void MenuParty::BlitPartyStats()
 {
-	uint font = app->menuManager->font4_id;
 	PartyMember* memberData = app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data;
+	int lineNum = 0;
 
-	app->fonts->BlitText(465, 230, font, memberData->name.GetString(), ScaleType::UI_200);
+	BlitTextStats(memberData->name.GetString(), lineNum);
 
-	char level[5];
+	// Header stats
+
+	/*char level[5];
 	sprintf_s(level, 5, "%d", memberData->level);
-	app->fonts->BlitText(465, 260, font, level, ScaleType::UI_200);
+	app->fonts->BlitText(776, 265, font, level, ScaleType::UI_200);
 
 	char currentHP[8];
 	sprintf_s(currentHP, 8, "hp %d/", memberData->currentHp);
@@ -201,19 +229,37 @@ void MenuParty::BlitPartyStats()
 	sprintf_s(maxMana, 3, "%d", memberData->maxMana);
 	app->fonts->BlitText(936, 265, font, maxMana, ScaleType::UI_200);
 
+	*/
+
+
+	// Detailed stats
+	char maxHP[3];
+	sprintf_s(maxHP, 3, "%d", memberData->maxHp);
+	lineNum = BlitTextStats(maxHP, lineNum);
+
+	char maxMana[3];
+	sprintf_s(maxMana, 3, "%d", memberData->maxMana);
+	lineNum = BlitTextStats(maxMana, lineNum);
+
 	char attack[12];
-	sprintf_s(attack, 12, "attack %d", memberData->attack);
-	app->fonts->BlitText(776, 290, font, attack, ScaleType::UI_200);
+	sprintf_s(attack, 12, "%d", memberData->attack);
+	lineNum = BlitTextStats(attack, lineNum);
 
 	char defense[15];
-	sprintf_s(defense, 15, "defense %d", memberData->defense);
-	app->fonts->BlitText(871, 290, font, defense, ScaleType::UI_200);
+	sprintf_s(defense, 15, "%d", memberData->defense);
+	lineNum = BlitTextStats(defense, lineNum);
 
 	char speed[10];
-	sprintf_s(speed, 10, "speed %d", memberData->speed);
-	app->fonts->BlitText(776, 315, font, speed, ScaleType::UI_200);
+	sprintf_s(speed, 10, "%d", memberData->speed);
+	lineNum = BlitTextStats(speed, lineNum);
 
 	char critRate[15];
-	sprintf_s(critRate, 15, "crit r %d", memberData->critRate);
-	app->fonts->BlitText(871, 315, font, critRate, ScaleType::UI_200);
+	sprintf_s(critRate, 15, "%d", memberData->critRate);
+	lineNum = BlitTextStats(critRate, lineNum);
+}
+
+int MenuParty::BlitTextStats(const char* text, int lineNum)
+{
+	app->fonts->BlitText(app->menuManager->openBookPos.x + 96, app->menuManager->openBookPos.y + 122 + 11 * lineNum, app->menuManager->font4_id, text, ScaleType::UI_200);
+	return ++lineNum;
 }

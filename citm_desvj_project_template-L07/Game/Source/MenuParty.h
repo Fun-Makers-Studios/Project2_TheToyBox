@@ -41,16 +41,22 @@ public:
 
 	void BlitPartyStats();
 
+	int BlitTextStats(const char* text, int lineNum);
+
 public:
 
 	// UI
 	GuiButton* partyMember1Button = nullptr;
 	GuiButton* partyMember2Button = nullptr;
+	GuiButton* partyMember3Button = nullptr;
+	GuiButton* partyMember4Button = nullptr;
 
 	enum class ControlID : uint32
 	{
 		PARTY_1,
 		PARTY_2,
+		PARTY_3,
+		PARTY_4,
 		I_SLOT
 	};
 

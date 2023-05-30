@@ -48,8 +48,8 @@ bool MenuQuest::Start()
 	pauseRect = { 35, 69, 310, 555 };
 
 	//UI
-	doneQuestsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::DONE, "done", 4, { 176, 140, 65, 76 }, this, ButtonType::SMALL);
-	activeQuestsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::ACTIVE, "active", 6, { 176, 216, 64, 76 }, this, ButtonType::SMALL);
+	doneQuestsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::DONE, "done", 4, { 176, 140, 65, 76 }, this, ButtonType::SQUARE_S);
+	activeQuestsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::ACTIVE, "active", 6, { 176, 216, 64, 76 }, this, ButtonType::SQUARE_S);
 
 
 	// Set easing finished on title buttons
