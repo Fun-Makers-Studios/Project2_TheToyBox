@@ -84,7 +84,7 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 
                 }
                 else {
-                    LOG("CreateWalkabilityMap: Invalid tileset found");
+                    //LOG("CreateWalkabilityMap: Invalid tileset found");
                     map[i] = 0;
                 }
             }
