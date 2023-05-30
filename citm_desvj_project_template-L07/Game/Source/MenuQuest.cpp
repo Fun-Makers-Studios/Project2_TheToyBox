@@ -20,7 +20,7 @@ MenuQuest::MenuQuest() : Menu()
 {
 	id = MenuID::MENU_QUEST;
 
-	questMenuImgPath = app->configNode.child("menuManager").child("questMenuImg").attribute("questMenuImgPath").as_string();
+	questMenuImgPath = app->configNode.child("menuManager").child("menuQuests").attribute("texturepath").as_string();
 }
 
 
@@ -45,7 +45,7 @@ bool MenuQuest::Start()
 
 	// Load
 	questMenuImg = app->tex->Load(questMenuImgPath);
-	pauseRect = { 35, 69, 310, 555 };
+	rectTexture = { 528, 0, 519, 311 };
 
 	//UI
 	doneQuestsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::DONE, "done", 4, { 176, 140, 65, 76 }, this, ButtonType::SQUARE_S);
@@ -154,7 +154,7 @@ bool MenuQuest::PostUpdate()
 
 	//app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
 
-	app->render->DrawTexture(questMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
+	app->render->DrawTexture(questMenuImg, app->menuManager->openBookPos.x, app->menuManager->openBookPos.y, &rectTexture, SDL_FLIP_NONE, ScaleType::UI_200, false);
 
 	iPoint displacement = { 270, 120 };
 	int lines = 0;
@@ -170,13 +170,15 @@ bool MenuQuest::PostUpdate()
 
 			lines = app->fonts->BlitText2(displacement.x, displacement.y, fontID, (const char*)item->name.GetString(), 8, 215);
 
-			if (item->id == currentQuestSelectedActive) {
+			if (item->id == currentQuestSelectedActive)
+			{
 				iPoint displacement2 = { 540, 130 };
 
 				int lines2 = app->fonts->BlitText2(displacement2.x, displacement2.y, fontID, (const char*)item->description.GetString(), 8, 460);
 				displacement2.y += (lines2 * (int)app->fonts->fonts[fontID].char_h) + ((lines2 - 1) * 8) + 16;
 
-				if (item->type == QuestType::PARTYMEMBERS) {
+				if (item->type == QuestType::PARTYMEMBERS)
+				{
 					PartyMembersQuest* pQuest = dynamic_cast<PartyMembersQuest*>(item);
 					for (ListItem<PMember>* pmember = pQuest->memberNames.start; pmember != nullptr; pmember = pmember->next)
 					{
@@ -208,13 +210,15 @@ bool MenuQuest::PostUpdate()
 
 			lines = app->fonts->BlitText2(displacement.x, displacement.y, fontID, (const char*)item->name.GetString(), 8, 215);
 
-			if (item->id == currentQuestSelectedDone) {
+			if (item->id == currentQuestSelectedDone)
+			{
 				iPoint displacement2 = { 540, 130 };
 
 				int lines2 = app->fonts->BlitText2(displacement2.x, displacement2.y, fontID, (const char*)item->description.GetString(), 8, 460);
 				displacement2.y += (lines2 * (int)app->fonts->fonts[fontID].char_h) + ((lines2 - 1) * 8) + 16;
 
-				if (item->type == QuestType::PARTYMEMBERS) {
+				if (item->type == QuestType::PARTYMEMBERS) 
+				{
 					PartyMembersQuest* pQuest = dynamic_cast<PartyMembersQuest*>(item);
 					for (ListItem<PMember>* pmember = pQuest->memberNames.start; pmember != nullptr; pmember = pmember->next)
 					{

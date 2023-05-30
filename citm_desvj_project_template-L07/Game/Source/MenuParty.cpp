@@ -50,6 +50,8 @@ bool MenuParty::Start()
 	zeroImg = app->tex->Load(zeroImgPath);
 	sophieImg = app->tex->Load(sophieImgPath);
 
+	rectTexture = { 0, 0, 519, 311 };
+
 	//UI
 	SDL_Rect rect = { app->menuManager->openBookPos.x + 43, app->menuManager->openBookPos.y + 227, 33, 34 };
 	partyMember1Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_1, "", 1, rect, this, ButtonType::SQUARE_S);
@@ -106,7 +108,6 @@ bool MenuParty::PostUpdate()
 {
 	bool ret = true;
 	
-	SDL_Rect rectTexture = { 0, 0, 519, 311 };
 	app->render->DrawTexture(partyMenuImg, app->menuManager->openBookPos.x, app->menuManager->openBookPos.y, &rectTexture, SDL_FLIP_NONE, ScaleType::UI_200, false);
 
 	// PARTY ==========

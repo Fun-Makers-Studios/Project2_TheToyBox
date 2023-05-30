@@ -69,6 +69,7 @@ private:
 	//Textures
 	SDL_Texture* partyMenuImg = nullptr;
 	const char* partyMenuImgPath = nullptr;
+	SDL_Rect rectTexture = { 0, 0, 519, 311 };
 
 	const char* zeroImgPath = nullptr;
 	SDL_Texture* zeroImg = nullptr;

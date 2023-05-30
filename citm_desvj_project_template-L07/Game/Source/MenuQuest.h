@@ -43,11 +43,11 @@ private:
 
 	SDL_Texture* questMenuImg = nullptr;
 	const char* questMenuImgPath = nullptr;
+	SDL_Rect rectTexture = { 528, 0, 519, 311 };
 
 	ControlID questListSelected = ControlID::ACTIVE;
 	int currentQuestSelectedActive;
 	int currentQuestSelectedDone;
-	SDL_Rect pauseRect;
 };
 
 #endif // __MENU_QUEST_H__
