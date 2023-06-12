@@ -16,6 +16,7 @@ enum class PieceType
 	BUTTON,
 	MOV_OBJ,
 	DOOR,
+	TRIGGER_PLATFORM,
 	UNKNOWN
 };
 
@@ -38,8 +39,6 @@ public:
 
 	bool CleanUp();
 
-	//void TriggerCheck();
-
 private:
 
 	SDL_Texture* texture = nullptr;
@@ -49,14 +48,14 @@ private:
 	Animation idleAnim;
 	Animation activeAnim;
 
-	dPoint startPos;
-
 	int width;
 	int height;
 
 	SDL_RendererFlip fliped = SDL_FLIP_NONE;
 
 public:
+
+	dPoint startPos;
 
 	Body boundaries;
 
@@ -65,6 +64,9 @@ public:
 	bool activated = false;
 
 	PieceType pieceType;
+
+	bool isAttached = false; //For pieces to move with th player
+
 };
 
 #endif // __NPC_H__

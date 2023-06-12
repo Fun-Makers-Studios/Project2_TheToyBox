@@ -25,6 +25,7 @@ enum class ColliderType
 	CHECKPOINT,
 	BUTTON,
 	MOVABLEOBJ,
+	TRIGGER_PLATFORM,
 	UNKNOWN
 };
 

@@ -22,6 +22,7 @@ public:
 	void ObjectTriggerCheck();
 	void ResetPuzzle();
 	void OpenDoor();
+	bool CompletionEvent();
 
 public:
 
@@ -29,8 +30,11 @@ public:
 
 private:
 
-	PuzzlePiece* piece = nullptr;
+	uint activatedObj = 0;
+	uint maxObj = 0;
 
+	PuzzlePiece* piece = nullptr;
+	bool isAttached = false;
 };
 
 #endif // __COLLECTQUEST_H__

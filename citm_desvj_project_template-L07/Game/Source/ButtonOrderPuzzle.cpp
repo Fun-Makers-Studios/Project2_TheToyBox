@@ -23,13 +23,7 @@ bool ButtonOrderPuzzle ::Update() {
 
 	ButtonTriggerCheck();
 
-	//Completion event
-	//LOG("ACTIVE PUZZLE");
-	if (actualOrder == maxButtons)
-	{
-		OpenDoor();
-		ret = true;
-	}
+	CompletionEvent();
 
 	return ret;
 }
@@ -51,25 +45,34 @@ void ButtonOrderPuzzle::LoadAssets(pugi::xml_node node)
 {
 	pieces.Clear();
 	
-	pugi::xml_node assetNode = node.child("puzzlemanager").child("puzzle");
+	pugi::xml_node assetNode = node.child("puzzlemanager");
 
-	for (pugi::xml_node itemNode = assetNode.child("piece"); itemNode; itemNode = itemNode.next_sibling("piece"))
+	for (pugi::xml_node itemNode = assetNode.child("puzzle"); itemNode; itemNode = itemNode.next_sibling("puzzle"))
 	{
-		piece = (PuzzlePiece*)app->entityManager->CreateEntity(EntityType::PUZZLE_PIECE, itemNode);
-		piece->Start();
-		pieces.Add(piece);
-
-		if (piece->pieceType == PieceType::BUTTON)
+		if (itemNode.attribute("orderID").as_int() == orderID)
 		{
-			maxButtons++;
+			for (pugi::xml_node pieceNode = itemNode.child("piece"); pieceNode; pieceNode = pieceNode.next_sibling("piece"))
+			{
+				piece = (PuzzlePiece*)app->entityManager->CreateEntity(EntityType::PUZZLE_PIECE, pieceNode);
+				piece->Start();
+				pieces.Add(piece);
+
+				if (piece->pieceType == PieceType::BUTTON)
+				{
+					maxButtons++;
+				}
+			}
 		}
 	}
+
+	
+
 }
 
 void ButtonOrderPuzzle::ButtonTriggerCheck()
 {
 	ListItem<PuzzlePiece*>* pieceItem;
-
+	
 	for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN &&
@@ -81,8 +84,6 @@ void ButtonOrderPuzzle::ButtonTriggerCheck()
 				{
 					pieceItem->data->activated = true;
 					actualOrder++;
-					LOG("BUTTONS ORDER %d", actualOrder);
-					LOG("MAX BUTTONS %d", maxButtons);
 				}
 				else
 				{
@@ -101,7 +102,7 @@ void ButtonOrderPuzzle::ResetPuzzle()
 	for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)
 	{
 		pieceItem->data->activated = false;
-		actualOrder = 0;
+		actualOrder = 1;
 	}
 
 }
@@ -117,5 +118,13 @@ void ButtonOrderPuzzle::OpenDoor()
 			app->entityManager->DestroyEntity(pieceItem->data);
 		}
 	}
+}
 
+bool ButtonOrderPuzzle::CompletionEvent()
+{
+	if (actualOrder == maxButtons)
+	{
+		OpenDoor();
+		return true;
+	}
 }

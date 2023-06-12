@@ -40,7 +40,7 @@ bool PuzzleManager::Awake(pugi::xml_node& config)
 
 		puzzles.Add(puzzle);
 	}
-
+	LOG("TOTAL PUZZLES %d", puzzles.Count());
 	return ret;
 }
 
@@ -56,10 +56,9 @@ bool PuzzleManager::Update(float dt)
 {
 	bool ret = true;
 
-	ListItem<Puzzle*>* item;
 	Puzzle* pPuzzle = NULL;
 
-	for (item = activePuzzles.start; item != NULL; item = item->next)
+	for (ListItem<Puzzle*>* item = activePuzzles.start; item != NULL; item = item->next)
 	{
 		pPuzzle = item->data;
 
@@ -84,8 +83,6 @@ bool PuzzleManager::Update(float dt)
 		}
 	}
 
-	/*LOG("PUZZLES: %d", puzzles.Count());
-	LOG("PUZZLES ACTIVE: %d", activePuzzles.Count());*/
 
 	return ret;
 }
@@ -93,14 +90,12 @@ bool PuzzleManager::Update(float dt)
 void PuzzleManager::TriggerPuzzle(int id)
 {
 	ListItem<Puzzle*>* pitem = puzzles.start;
-
 	while (pitem != nullptr)
 	{
 		Puzzle* item = pitem->data;
 		if (item->orderID == id) {
 			item->LoadAssets(app->configNode);
 			activePuzzles.Add(item);
-			break;
 		}
 
 		pitem = pitem->next;

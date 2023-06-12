@@ -13,7 +13,7 @@ MirrorPuzzle::MirrorPuzzle(pugi::xml_node node) {
 	this->name = node.attribute("name").as_string();
 	this->nextPuzzleId = node.attribute("nextPuzzleId").as_int();
 	this->map = node.attribute("map").as_string();
-	this->type = PuzzleType::BUTTON_ORDER;
+	this->type = PuzzleType::MIRROR;
 }
 
 MirrorPuzzle::~MirrorPuzzle() {}
@@ -23,34 +23,60 @@ bool MirrorPuzzle::Update() {
 
 	ObjectTriggerCheck();
 
-	//Completion event
-	LOG("ACTIVE PUZZLE 2");
+	if (isAttached)
+	{
+		ListItem<PuzzlePiece*>* pieceItem;
+
+		for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)
+		{
+			if (pieceItem->data->isAttached)
+			{
+				pieceItem->data->body->pos = app->sceneManager->sceneGame->player->body->pos;
+				pieceItem->data->boundaries.pos = app->sceneManager->sceneGame->player->body->pos;
+			}
+		}
+		
+	}
+
+	CompletionEvent();
 
 	return ret;
 }
 
 void MirrorPuzzle::UnloadAssets()
 {
+	LOG("UNLOAD ASSETS P2 %d", pieces.Count());
 	for (ListItem<PuzzlePiece*>* item = pieces.start; item != NULL; item = item->next)
 	{
 		item->data->needToDestroy = true;
 	}
 
 	pieces.Clear();
-
+	LOG("UNLOAD ASSETS P2 %d", pieces.Count());
 }
 
 void MirrorPuzzle::LoadAssets(pugi::xml_node node)
 {
 	pieces.Clear();
 
-	pugi::xml_node assetNode = node.child("puzzlemanager").child("puzzle");
+	pugi::xml_node assetNode = node.child("puzzlemanager");
 
-	for (pugi::xml_node itemNode = assetNode.child("piece"); itemNode; itemNode = itemNode.next_sibling("piece"))
+	for (pugi::xml_node itemNode = assetNode.child("puzzle"); itemNode; itemNode = itemNode.next_sibling("puzzle"))
 	{
-		piece = (PuzzlePiece*)app->entityManager->CreateEntity(EntityType::PUZZLE_PIECE, itemNode);
-		piece->Start();
-		pieces.Add(piece);
+		if (itemNode.attribute("orderID").as_int() == orderID)
+		{
+			for (pugi::xml_node pieceNode = itemNode.child("piece"); pieceNode; pieceNode = pieceNode.next_sibling("piece"))
+			{
+				piece = (PuzzlePiece*)app->entityManager->CreateEntity(EntityType::PUZZLE_PIECE, pieceNode);
+				piece->Start();
+				pieces.Add(piece);
+				if (piece->pieceType == PieceType::MOV_OBJ)
+				{
+					maxObj++;
+				}
+			}
+			
+		}
 	}
 }
 
@@ -63,11 +89,29 @@ void MirrorPuzzle::ObjectTriggerCheck()
 		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN &&
 			app->collisions->CheckCollision(*app->sceneManager->sceneGame->player->body, pieceItem->data->boundaries))
 		{
-			if (pieceItem->data->pieceType == PieceType::MOV_OBJ)
+			if (pieceItem->data->pieceType == PieceType::MOV_OBJ && !pieceItem->data->activated)
 			{
-				pieceItem->data->body->vel = app->sceneManager->sceneGame->player->body->vel;
+				isAttached = !isAttached;
+				pieceItem->data->isAttached = !pieceItem->data->isAttached;
+				LOG("IS ATTACHED: %d", isAttached);
+			}
+
+			for (ListItem<PuzzlePiece*>* piece2Item = pieces.start; piece2Item != nullptr; piece2Item = piece2Item->next)
+			{
+				if (pieceItem->data->pieceType == PieceType::MOV_OBJ &&
+					piece2Item->data->pieceType == PieceType::TRIGGER_PLATFORM &&
+					app->collisions->CheckCollision(*pieceItem->data->body, *piece2Item->data->body) &&
+					!isAttached &&
+					!pieceItem->data->activated)
+				{
+					pieceItem->data->activated = true;
+					activatedObj++;
+				}
 			}
 		}
+		/*LOG("ACTIVATED OBJECTS %d", activatedObj);
+		LOG("MAX OBJECTS %d", maxObj);*/
+		
 	}
 }
 
@@ -77,9 +121,12 @@ void MirrorPuzzle::ResetPuzzle()
 
 	for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)
 	{
+		pieceItem->data->isAttached = false;
 		pieceItem->data->activated = false;
+		pieceItem->data->body->pos = pieceItem->data->startPos;
+		pieceItem->data->boundaries.pos = pieceItem->data->startPos;
 	}
-
+	isAttached = false;
 }
 
 void MirrorPuzzle::OpenDoor()
@@ -94,4 +141,12 @@ void MirrorPuzzle::OpenDoor()
 		}
 	}
 
+}
+
+bool MirrorPuzzle::CompletionEvent()
+{
+	if (activatedObj == maxObj) {
+		OpenDoor();
+		return true;
+	}
 }

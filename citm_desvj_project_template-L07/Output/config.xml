@@ -1077,15 +1077,11 @@
 			<piece pieceType="2" x="1808" y="590" texturepath="Assets/Textures/DoorPuzzle1.png"/>
 		</puzzle>
 
-
-		<!--Circus Two Puzzle 1-->
-		<puzzle type="0" orderID="3" name="Color Button Order" nextPuzzleId="0" map="circusTwo">
-			<button x="250" y="450" id="1" texturepath="Assets/Textures/PuzzleButtons.png"/>
-			<button x="300" y="450" id="2" texturepath="Assets/Textures/PuzzleButtons.png"/>
-			<button x="350" y="450" id="3" texturepath="Assets/Textures/PuzzleButtons.png"/>
-			<button x="400" y="450" id="4" texturepath="Assets/Textures/PuzzleButtons.png"/>
-			<button x="450" y="450" id="5" texturepath="Assets/Textures/PuzzleButtons.png"/>
-			<door x="1792" y="544" texturepath="Assets/Textures/DoorPuzzle1.png"/>
+		<!--Circus One Puzzle 2-->
+		<puzzle type="1" orderID="2" name="Mirror objects" nextPuzzleId="0" map="circusOne">
+			<piece pieceType="1" x="880" y="1024" id="1" texturepath="Assets/Textures/Box1Puzzle.png"/>
+			<piece pieceType="3" x="880" y="1328" texturepath="Assets/Textures/HulaHoops.png"/>
+			<piece pieceType="2" x="848" y="1200" texturepath="Assets/Textures/DoorPuzzle2.png"/>
 		</puzzle>
 	</puzzlemanager>
 	
