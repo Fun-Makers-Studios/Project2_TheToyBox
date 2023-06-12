@@ -46,13 +46,27 @@ PuzzlePiece::PuzzlePiece(pugi::xml_node parameters) : Entity(EntityType::PUZZLE_
 		// Create body
 		body = new Body();	// HEKATE cleanup
 		body->type = ColliderType::MOVABLEOBJ;
+		body->shape = ColliderShape::CIRCLE;
+		body->pos = { startPos.x, startPos.y };
+		body->r = 10;
+
+		boundaries = *this->body;
+		boundaries.r = PIECE_BOUNDARY * 0.72;
+
+		break;
+
+	case PieceType::TRIGGER_PLATFORM:
+
+		// Create body
+		body = new Body();	// HEKATE cleanup
+		body->type = ColliderType::TRIGGER_PLATFORM;
 		body->shape = ColliderShape::RECTANGLE;
 		body->pos = { startPos.x, startPos.y };
 		body->w = 32;
 		body->h = 32;
 
 		break;
-
+	
 	case PieceType::DOOR:
 
 		// Create body
@@ -61,7 +75,7 @@ PuzzlePiece::PuzzlePiece(pugi::xml_node parameters) : Entity(EntityType::PUZZLE_
 		body->shape = ColliderShape::RECTANGLE;
 		body->pos = { startPos.x, startPos.y };
 		body->w = 32;
-		body->h = 96;
+		body->h = 128;
 
 		break;
 
@@ -99,7 +113,7 @@ bool PuzzlePiece::Start()
 
 	if (pieceType == PieceType::DOOR)
 	{
-		idleAnim.PushBack({ 0, 0, 32, 96 });
+		idleAnim.PushBack({ 0, 0, 32, 128 });
 		idleAnim.loop = true;
 		idleAnim.speed = 0.1f;
 	}
@@ -135,11 +149,9 @@ bool PuzzlePiece::Update()
 {
 	currentAnim = &idleAnim;
 
-	if (activated && pieceType == PieceType::BUTTON)
+	if (activated)
 	{
-		
 		currentAnim = &activeAnim;
-	
 	}
 
 	SDL_Rect rect = currentAnim->GetCurrentFrame();

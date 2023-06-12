@@ -25,6 +25,7 @@ public:
 
 	virtual void LoadAssets(pugi::xml_node node) {}
 	virtual void UnloadAssets() {}
+	virtual bool CompletionEvent() { return false; }
 
 public:
 

@@ -22,14 +22,15 @@ public:
 	void ButtonTriggerCheck();
 	void ResetPuzzle();
 	void OpenDoor();
+	bool CompletionEvent();
 
 private:
 
 	PuzzlePiece* piece = nullptr;
 
-	uint actualOrder = 0;
+	uint actualOrder = 1;
 
-	uint maxButtons = 0;
+	uint maxButtons = 1;
 };
 
 #endif // __COLLECTQUEST_H__

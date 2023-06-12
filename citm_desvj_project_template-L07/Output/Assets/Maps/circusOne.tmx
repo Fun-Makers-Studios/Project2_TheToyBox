@@ -5472,7 +5472,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="136"/>
    <tile/>
    <tile/>
    <tile/>
@@ -5499,8 +5498,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="136"/>
    <tile/>
+   <tile/>
+   <tile gid="135"/>
    <tile/>
    <tile/>
    <tile/>
@@ -11158,19 +11158,6 @@
    <tile/>
    <tile gid="4"/>
    <tile/>
-   <tile gid="4"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="4"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -11185,8 +11172,21 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile gid="4"/>
    <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="4"/>
    <tile gid="4"/>
    <tile/>
    <tile/>

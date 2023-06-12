@@ -430,7 +430,7 @@ void SceneGame::LoadPuzzles()
 
 	app->puzzleManager->activePuzzles.Clear();
 
-	for (ListItem<Puzzle*>* puzzlesItem = app->puzzleManager->puzzles.start; puzzlesItem != nullptr; puzzlesItem = puzzlesItem->next)
+	for (ListItem<Puzzle*>* puzzlesItem = app->puzzleManager->puzzles.start; puzzlesItem != NULL; puzzlesItem = puzzlesItem->next)
 	{
 		if (puzzlesItem->data->map == mapName)
 		{

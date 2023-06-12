@@ -223,7 +223,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
             break;
         
         case ColliderType::MOVABLEOBJ:
-            CirRectCollision(body1, body2);
+            
             break;
 
         case ColliderType::UNKNOWN:
@@ -331,7 +331,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
     case MapZone::CIRCUSONE_TO_CIRCUSTWO:
         LOG("GO TO CIRCUS 2");
         app->sceneManager->sceneGame->mapName = "circusTwo";
-        app->sceneManager->sceneGame->player->newPos = { 288, 1344 };
+        app->sceneManager->sceneGame->player->newPos = { 256, 1344 };
         app->sceneManager->sceneGame->isMapChanging = true;
         scaleMap = ScaleType::WORLD;
         break;
