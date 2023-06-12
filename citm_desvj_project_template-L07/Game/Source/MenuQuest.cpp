@@ -52,20 +52,6 @@ bool MenuQuest::Start()
 	activeQuestsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::ACTIVE, "active", 6, { 176, 216, 64, 76 }, this, ButtonType::SQUARE_S);
 
 
-	// Set easing finished on title buttons
-	ListItem<GuiControl*>* control = guiControlsList.start;
-
-	while (control != nullptr)
-	{
-		if (control->data->id < 5)
-		{
-			control->data->easing->SetFinished(false);
-			control->data->easing->SetTotalTime(1 + 0.2 * control->data->id);
-		}
-
-		control = control->next;
-	}
-
 	if (app->questManager->activeQuests.start != nullptr) {
 		currentQuestSelectedActive = app->questManager->activeQuests.start->data->id;
 	}
@@ -80,11 +66,10 @@ bool MenuQuest::Start()
 
 bool MenuQuest::PreUpdate()
 {
-	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	{
-		app->audio->PlayFx(app->menuManager->closeMenuSFX);
-		app->menuManager->SelectMenu();
-	}*/
+
+
+
+
 
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{
@@ -111,6 +96,7 @@ bool MenuQuest::PreUpdate()
 			}
 		}
 	}
+
 	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
 	{
 		if (questListSelected == ControlID::ACTIVE) {

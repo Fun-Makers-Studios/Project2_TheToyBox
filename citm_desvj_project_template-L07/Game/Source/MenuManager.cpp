@@ -185,6 +185,7 @@ bool MenuManager::CleanUp()
 	app->fonts->UnLoad(font2_id);
 	app->fonts->UnLoad(font2Red_id);
 	app->fonts->UnLoad(font3_id);
+	app->fonts->UnLoad(font4_id);
 
 	return true;
 }
