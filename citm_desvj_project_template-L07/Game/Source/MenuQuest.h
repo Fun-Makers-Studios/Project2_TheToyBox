@@ -48,6 +48,7 @@ private:
 	ControlID questListSelected = ControlID::ACTIVE;
 	int currentQuestSelectedActive;
 	int currentQuestSelectedDone;
+	uint fontID;
 };
 
 #endif // __MENU_QUEST_H__

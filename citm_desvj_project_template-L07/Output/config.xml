@@ -34,13 +34,13 @@
 		<font3 texturepath="Assets/Textures/UI/Fonts/font3.png"/>
 		<font4 texturepath="Assets/Textures/UI/Fonts/font4.png"/>
 
-		<menuPause texturepath="Assets/Textures/UI/Menus/menuPause.png"/>
-		<menuTabs texturepath="Assets/Textures/UI/Menus/menuTabs_anim.png"/>
-		<menuParty texturepath="Assets/Textures/UI/Menus/menuSpritesheet.png"/>
-		<menuQuests texturepath="Assets/Textures/UI/Menus/menuSpritesheet.png"/>
-		<menuSave texturepath="Assets/Textures/UI/Menus/menuSpritesheet.png"/>
-		<menuSettings texturepath="Assets/Textures/UI/Menus/menuSpritesheet.png"/>
-		<menuCredits texturepath="Assets/Textures/UI/Menus/menuSpritesheet.png"/>
+		<menuPause texturepath="Assets/Textures/UI/New/menuPause.png"/>
+		<menuTabs texturepath="Assets/Textures/UI/New/menuTabs_anim.png"/>
+		<menuParty texturepath="Assets/Textures/UI/New/menuSpritesheet.png"/>
+		<menuQuests texturepath="Assets/Textures/UI/New/menuSpritesheet.png"/>
+		<menuSave texturepath="Assets/Textures/UI/New/menuSpritesheet.png"/>
+		<menuSettings texturepath="Assets/Textures/UI/New/menuSpritesheet.png"/>
+		<menuCredits texturepath="Assets/Textures/UI/New/menuSpritesheet.png"/>
 		
 		<zeroImg zeroImgPath="Assets/Textures/UI/PartyMenu/Characters/ZeroPic.png"/>
 		<sophieImg sophieImgPath="Assets/Textures/UI/PartyMenu/Characters/SophiePic.png"/>
@@ -112,7 +112,7 @@
 	</map>
 
 	<gui>
-		<guiButtons buttonsTexPath="Assets/Textures/UI/ButtonsSprites/buttons.png"/>
+		<guiButtons buttonsTexPath="Assets/Textures/UI/New/buttons.png"/>
 		<guiButtons smallButtonTexPath="Assets/Textures/UI/ButtonsSprites/Buttons.png"/>
 		<guiSlots slotTexPath="Assets/Textures/UI/PartyMenu/InventoryHoverButton.png"/>
 	</gui>
