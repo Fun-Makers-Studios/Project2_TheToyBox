@@ -50,7 +50,7 @@ bool MenuQuest::Start()
 	//UI
 	doneQuestsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::DONE, "done", 4, { 176, 140, 65, 76 }, this, ButtonType::SQUARE_S);
 	activeQuestsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::ACTIVE, "active", 6, { 176, 216, 64, 76 }, this, ButtonType::SQUARE_S);
-
+	fontID = app->menuManager->font4_id;
 
 	if (app->questManager->activeQuests.start != nullptr) {
 		currentQuestSelectedActive = app->questManager->activeQuests.start->data->id;
@@ -144,7 +144,6 @@ bool MenuQuest::PostUpdate()
 
 	iPoint displacement = { 270, 120 };
 	int lines = 0;
-	uint fontID = app->sceneManager->sceneGame->dialogueManager->dialogueFontId;
 
 	switch (questListSelected)
 	{

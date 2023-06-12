@@ -169,7 +169,7 @@ int Fonts::BlitText2(int x, int y, int font_id, const char* text, int spacing, i
 			}
 		}
 
-		app->render->DrawTexture(font->texture, textpos.x, textpos.y, &spriteRect, SDL_FLIP_NONE, ScaleType::NORMAL, !useCamera);
+		app->render->DrawTexture(font->texture, textpos.x, textpos.y, &spriteRect, SDL_FLIP_NONE, ScaleType::UI_200, !useCamera);
 
 		// Advance the position where we blit the next character
 		textpos.x += spriteRect.w;
