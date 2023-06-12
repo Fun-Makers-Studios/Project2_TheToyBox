@@ -99,7 +99,6 @@ bool MenuParty::PreUpdate()
 
 bool MenuParty::Update(float dt)
 {
-	
 
 	return true;
 }
@@ -138,13 +137,30 @@ bool MenuParty::PostUpdate()
 
 	while (slot != nullptr)
 	{
-		if (slot->data->item != nullptr)
+		if (slot->data->item == nullptr)
 		{
-			if (slot->data->item->texture != nullptr)
-			{
-				app->render->DrawTexture(slot->data->item->texture, slot->data->button->bounds.x + 3, slot->data->button->bounds.y + 3, &rectTexture2, SDL_FLIP_NONE, ScaleType::UI_200, false);
-			}
-		}		
+			slot = slot->next;
+			continue;
+		}
+
+		if (slot->data->item->texture == nullptr)
+		{
+			slot = slot->next;
+			continue;
+		}
+
+		if (slot->data == selectedSlot)
+		{
+			int mouseX, mouseY;
+			app->input->GetMousePosition(mouseX, mouseY);
+
+			app->render->DrawTexture(slot->data->item->texture, mouseX/2, mouseY/2, &rectTexture2, SDL_FLIP_NONE, ScaleType::UI_200, false);
+		}
+		else
+		{
+			app->render->DrawTexture(slot->data->item->texture, slot->data->button->bounds.x + 3, slot->data->button->bounds.y + 3, &rectTexture2, SDL_FLIP_NONE, ScaleType::UI_200, false);
+		}
+		
 
 		slot = slot->next;
 	}
@@ -183,7 +199,27 @@ bool MenuParty::OnGuiMouseClickEvent(GuiControl* control)
 	
 	case (uint32)ControlID::I_SLOT:
 	{
-		//control->state = ;
+		ListItem<InventorySlot*>* slot = inventorySlotList.start;
+
+		while (slot != nullptr)
+		{
+			if (slot->data->button->state == GuiControlState::FOCUSED)
+			{
+				if (selectedSlot == nullptr)		
+				{
+					//Select
+					selectedSlot = slot->data;
+				}				
+				else if (selectedSlot != nullptr)
+				{
+					//Place or Swap
+					SWAP(selectedSlot->item, slot->data->item);
+					selectedSlot = nullptr;
+				}
+			}
+			
+			slot = slot->next;
+		}
 
 		//control->state = GuiControlState::SELECTED;
 		app->audio->PlayFx(app->menuManager->closeMenuSFX);

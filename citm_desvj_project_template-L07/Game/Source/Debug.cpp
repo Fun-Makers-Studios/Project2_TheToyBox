@@ -494,7 +494,6 @@ void Debug::DrawGuiBounds()
 					case GuiControlState::NORMAL:	color = White; alpha = 85; break;
 					case GuiControlState::FOCUSED:	color = Yellow; alpha = 85; break;
 					case GuiControlState::PRESSED:	color = Red; alpha = 85; break;
-					case GuiControlState::SELECTED: color = Green; alpha = 85; break;
 					default: break;
 				}
 				

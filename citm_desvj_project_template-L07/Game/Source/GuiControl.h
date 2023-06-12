@@ -33,8 +33,7 @@ enum class GuiControlState
 	DISABLED,
 	NORMAL,
 	FOCUSED,
-	PRESSED,
-	SELECTED
+	PRESSED
 };
 
 enum class ButtonType

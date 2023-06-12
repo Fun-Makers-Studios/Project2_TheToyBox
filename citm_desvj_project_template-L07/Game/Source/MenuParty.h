@@ -66,6 +66,8 @@ private:
 
 	ControlID partyMemberSelected = ControlID::PARTY_1;
 
+	InventorySlot* selectedSlot = nullptr;
+
 	//Textures
 	SDL_Texture* partyMenuImg = nullptr;
 	const char* partyMenuImgPath = nullptr;
