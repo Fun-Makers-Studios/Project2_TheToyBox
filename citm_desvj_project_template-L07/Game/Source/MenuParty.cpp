@@ -100,6 +100,7 @@ bool MenuParty::PreUpdate()
 bool MenuParty::Update(float dt)
 {
 	
+
 	return true;
 }
 
