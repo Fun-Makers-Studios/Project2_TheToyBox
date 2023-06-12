@@ -123,7 +123,7 @@
 			<quest id="2"></quest>
 			<quest id="3"></quest>
 		</activequests>
-		<quest type="0" id="1" name="Search for info" description="I suddenly woke up on this misterious place. I don't know where am I. I should find someone ho can help me." nextQuestId="-1" npcId="1" reward="0"></quest>
+		<quest type="0" id="1" name="Search for info" description="I suddenly woke up on this misterious place. I don't know where I am. I should find someone ho can help me." nextQuestId="-1" npcId="1" reward="0"></quest>
 		<quest type="2" id="2" name="Find the others" description="I found myself lost here. I was with my friends but now I'm alone. What happened to them?" nextQuestId="-1" npcId="2" reward="0">
 			<member name="Ashley"/>
 			<member name="Gabriel"/>

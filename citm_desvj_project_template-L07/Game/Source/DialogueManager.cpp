@@ -78,7 +78,7 @@ void DialogueManager::Draw()
 	SDL_Rect rect = {0,0,1182,196};
 	app->render->DrawTexture(dialoguetext, 49 + app->render->camera.x, 505 + app->render->camera.y, &rect);
 
-	int lines = app->fonts->BlitText2(95, 540, dialogueFontId, (const char*)this->currentDialogue->currentNode->text.GetString(), 8, 1090);
+	int lines = app->fonts->BlitText2(95, 540, dialogueFontId, (const char*)this->currentDialogue->currentNode->text.GetString(), ScaleType::NORMAL, 8, 1090);
 
 	iPoint displacement = { 230, ((lines * (int)app->fonts->fonts[dialogueFontId].char_h) + 540) + 16 };
 	ListItem<Option*>* op = this->currentDialogue->currentNode->options.start;
@@ -90,7 +90,7 @@ void DialogueManager::Draw()
 			app->render->DrawTexture(dialoguetext, 175 + app->render->camera.x, displacement.y + app->render->camera.y, &rect);
 		}
 
-		displacement.y += app->fonts->fonts[dialogueFontId].char_h * app->fonts->BlitText2(displacement.x, displacement.y, dialogueFontId, (const char*)op->data->text.GetString(), 8, 890);
+		displacement.y += app->fonts->fonts[dialogueFontId].char_h * app->fonts->BlitText2(displacement.x, displacement.y, dialogueFontId, (const char*)op->data->text.GetString(), ScaleType::NORMAL, 8, 890);
 		op = op->next;
 	}
 }

@@ -45,7 +45,7 @@ public:
 
 	// Create a surface from text
 	void BlitText(int x, int y, int fontIndex, const char* text, ScaleType scaletype, bool useCamera = true) const;
-	int BlitText2(int x, int y, int fontIndex, const char* text, int spacing = -1, int lineLenght = -1, bool useCamera = true) const;
+	int BlitText2(int x, int y, int fontIndex, const char* text, ScaleType scaletype, int spacing = -1, int lineLenght = -1, bool useCamera = true) const;
 
 	// An array to keep track and store all loaded fonts
 	Font fonts[MAX_FONTS];
