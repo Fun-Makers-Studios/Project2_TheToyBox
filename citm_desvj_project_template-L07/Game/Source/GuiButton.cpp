@@ -101,9 +101,10 @@ SDL_Rect GuiButton::GetButtonRect(GuiControlState guiControlState, ButtonType bu
 				case ButtonType::TABS_CLOSED:	return { 0, 0, 25, 26 };
 				case ButtonType::TABS_OPEN:		return { 32, 0, 30, 26 };
 				case ButtonType::TABS_SELECTED: return { 64, 0, 37, 26 };
-				case ButtonType::SQUARE_S:			return { 112, 0, 22, 22 };
-				case ButtonType::RECTANGLE_S:		return { 144, 0, 41, 20 };
-				case ButtonType::RECTANGLE_M:			return { 192, 0, 60, 20 };
+				case ButtonType::SQUARE_S:		return { 112, 0, 22, 22 };
+				case ButtonType::SQUARE_M:		return { 0, 64, 33, 34 };
+				case ButtonType::RECTANGLE_S:	return { 144, 0, 41, 20 };
+				case ButtonType::RECTANGLE_M:	return { 192, 0, 60, 20 };
 				case ButtonType::UNKNOWN:		return { 0, 0, 0, 0 };
 				default: return { 0, 0, 0, 0 };
 			}
@@ -115,9 +116,10 @@ SDL_Rect GuiButton::GetButtonRect(GuiControlState guiControlState, ButtonType bu
 				case ButtonType::TABS_CLOSED:	return { 0, 32, 25, 26 };
 				case ButtonType::TABS_OPEN:		return { 32, 32, 30, 26 };
 				case ButtonType::TABS_SELECTED: return { 64, 32, 37, 26 };
-				case ButtonType::SQUARE_S:			return { 112, 32, 22, 22 };
-				case ButtonType::RECTANGLE_S:		return { 144, 32, 41, 20 };
-				case ButtonType::RECTANGLE_M:			return { 192, 32, 60, 20 };
+				case ButtonType::SQUARE_S:		return { 112, 0, 22, 22 };
+				case ButtonType::SQUARE_M:		return { 48, 64, 33, 34 };
+				case ButtonType::RECTANGLE_S:	return { 144, 32, 41, 20 };
+				case ButtonType::RECTANGLE_M:	return { 192, 32, 60, 20 };
 				case ButtonType::UNKNOWN:		return { 0, 0, 0, 0 };
 				default: return { 0, 0, 0, 0 };
 			}

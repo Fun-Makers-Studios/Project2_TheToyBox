@@ -54,10 +54,10 @@ bool MenuParty::Start()
 
 	//UI
 	SDL_Rect rect = { app->menuManager->openBookPos.x + 43, app->menuManager->openBookPos.y + 227, 33, 34 };
-	partyMember1Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_1, "", 1, rect, this, ButtonType::SQUARE_S);
-	partyMember2Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_2, "", 1, rect, this, ButtonType::SQUARE_S);
-	partyMember3Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_3, "", 1, rect, this, ButtonType::SQUARE_S);
-	partyMember4Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_4, "", 1, rect, this, ButtonType::SQUARE_S);
+	partyMember1Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_1, "", 1, rect, this, ButtonType::SQUARE_M);
+	partyMember2Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_2, "", 1, rect, this, ButtonType::SQUARE_M);
+	partyMember3Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_3, "", 1, rect, this, ButtonType::SQUARE_M);
+	partyMember4Button = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PARTY_4, "", 1, rect, this, ButtonType::SQUARE_M);
 
 	for (int i = 0; i < 4; i++)
 		guiControlsList.At(i)->data->bounds.x += i * 43;
