@@ -82,8 +82,8 @@ bool MenuManager::Start()
 	char lookupTableFont3[] = { "abcdefghijklmnopqrstuvwxyz 0123456789.,;:$#'! /?%&()@ -+=      " };
 	font3_id = app->fonts->Load(font3Path, lookupTableFont3, 7);
 
-	char lookupTableFont4[] = { "abcdefghijklmnopqrstuvwxyz0123456789" };
-	font4_id = app->fonts->Load(font4Path, lookupTableFont4, 1);
+	char lookupTableFont4[] = { "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .,:'-?!abcdefghijklmnopqrstuvwxyz0123456789 .,:'-?!" };
+	font4_id = app->fonts->Load(font4Path, lookupTableFont4, 2);
 
 	while (control != nullptr)
 	{

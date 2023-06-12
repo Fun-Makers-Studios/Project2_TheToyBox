@@ -30,13 +30,23 @@ public:
 public:
 
 	// UI
-	GuiButton* doneQuestsButton = nullptr;
-	GuiButton* activeQuestsButton = nullptr;
+	GuiButton* quest1 = nullptr;
+	GuiButton* quest2 = nullptr;
+	GuiButton* quest3 = nullptr;
+	GuiButton* quest4 = nullptr;
+	GuiButton* quest5 = nullptr;
+	GuiButton* quest6 = nullptr;
+	GuiButton* quest7 = nullptr;
 
 	enum class ControlID : uint32
 	{
-		DONE,
-		ACTIVE
+		QUEST_1,
+		QUEST_2,
+		QUEST_3,
+		QUEST_4,
+		QUEST_5,
+		QUEST_6,
+		QUEST_7
 	};
 
 private:
@@ -45,9 +55,7 @@ private:
 	const char* questMenuImgPath = nullptr;
 	SDL_Rect rectTexture = { 528, 0, 519, 311 };
 
-	ControlID questListSelected = ControlID::ACTIVE;
-	int currentQuestSelectedActive;
-	int currentQuestSelectedDone;
+	int currentQuestSelectedID;
 	uint fontID;
 };
 

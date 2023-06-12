@@ -114,7 +114,7 @@ void Fonts::BlitText(int x, int y, int font_id, const char* text, ScaleType scal
 	}
 }
 
-int Fonts::BlitText2(int x, int y, int font_id, const char* text, int spacing, int lineLenght, bool useCamera) const
+int Fonts::BlitText2(int x, int y, int font_id, const char* text, ScaleType scaletype, int spacing, int lineLenght, bool useCamera) const
 {
 	if (text == nullptr || font_id < 0 || font_id >= MAX_FONTS || fonts[font_id].texture == nullptr)
 	{
@@ -169,7 +169,7 @@ int Fonts::BlitText2(int x, int y, int font_id, const char* text, int spacing, i
 			}
 		}
 
-		app->render->DrawTexture(font->texture, textpos.x, textpos.y, &spriteRect, SDL_FLIP_NONE, ScaleType::UI_200, !useCamera);
+		app->render->DrawTexture(font->texture, textpos.x, textpos.y, &spriteRect, SDL_FLIP_NONE, scaletype, !useCamera);
 
 		// Advance the position where we blit the next character
 		textpos.x += spriteRect.w;
