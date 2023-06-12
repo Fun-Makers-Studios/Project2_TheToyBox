@@ -63,12 +63,6 @@ bool MenuManager::Start()
 
 	ListItem<Menu*>* control = menus.start;
 
-	while (control != nullptr)
-	{
-		control->data->Start();
-		control = control->next;
-	}
-
 	// Load SFX
 	startSFX = app->audio->LoadFx(startSFXPath);
 	selectSFX = app->audio->LoadFx(selectSFXPath);
@@ -90,6 +84,12 @@ bool MenuManager::Start()
 
 	char lookupTableFont4[] = { "abcdefghijklmnopqrstuvwxyz0123456789" };
 	font4_id = app->fonts->Load(font4Path, lookupTableFont4, 1);
+
+	while (control != nullptr)
+	{
+		control->data->Start();
+		control = control->next;
+	}
 
 	return true;
 }
