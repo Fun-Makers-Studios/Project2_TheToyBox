@@ -140,7 +140,7 @@
 			<node id="0" text="Zero - Wha-? Where-? I was just-" speaker="Tumama">
 				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="1" text="Zero - … Huh? What just happened?" speaker="Tumama">
+			<node id="1" text="Zero - ... Huh? What just happened?" speaker="Tumama">
 				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 			<node id="2" text="??? - Oooh, yeah I was asking the same thing" speaker="Tumama">
@@ -160,13 +160,16 @@
 				<option id="0" nextNodeId="3" text="What is this place?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 				<option id="1" nextNodeId="5" text="Where are my friends?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 				<option id="2" nextNodeId="12" text="Who are you?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+        <option id="3" nextNodeId="16" text="Go away" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 
 			<node id="3" text="Weird wizard - oh this, this is- is an adventurer's dream!" speaker="Tumama">
 				<option id="0" nextNodeId="4" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="4" text="Weird wizard - A curious thing really, so strange and fun and whimsical…" speaker="Tumama">
-				<option id="0" nextNodeId="16" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+			<node id="4" text="Weird wizard - A curious thing really, so strange and fun and whimsical..." speaker="Tumama">
+        <option id="0" nextNodeId="5" text="Where are my friends?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+        <option id="1" nextNodeId="12" text="Who are you?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+        <option id="2" nextNodeId="16" text="Go away" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 
 			<node id="5" text="Weird wizard - Hohoho friends? Plural? That's amazing, I'm really proud of you. " speaker="Tumama">
@@ -188,7 +191,9 @@
 				<option id="0" nextNodeId="11" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 			<node id="11" text="Weird wizard - I'm sure they're having a nice time wherever they are anyways heehee" speaker="Tumama">
-				<option id="0" nextNodeId="16" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+        <option id="0" nextNodeId="3" text="What is this place?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+        <option id="1" nextNodeId="12" text="Who are you?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+        <option id="2" nextNodeId="16" text="Go away" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 
 			<node id="12" text="Weird wizard - Who am I? Ohhh that's a good one." speaker="Tumama">
@@ -197,11 +202,13 @@
 			<node id="13" text="Weird wizard - I've been around for quite a while, I know how things work, you don't. It wouldn't be fair to send a blind man to a cave without a flashlight, right?" speaker="Tumama">
 				<option id="0" nextNodeId="14" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="14" text="Zero - I, um… I guess…?" speaker="Tumama">
+			<node id="14" text="Zero - I, um... I guess...?" speaker="Tumama">
 				<option id="0" nextNodeId="15" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 			<node id="15" text="Weird wizard - Yeah, keep guessing." speaker="Tumama">
-				<option id="0" nextNodeId="16" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+        <option id="0" nextNodeId="3" text="What is this place?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+        <option id="1" nextNodeId="5" text="Where are my friends?" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
+        <option id="2" nextNodeId="16" text="Go away" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 
 			<node id="16" text="Zero - I need to go" speaker="Tumama">
@@ -234,7 +241,7 @@
 			<node id="24" text="Zero - How do you-" speaker="Tumama">
 				<option id="0" nextNodeId="25" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="25" text="Zero - … weird old man" speaker="Tumama">
+			<node id="25" text="Zero - ... weird old man" speaker="Tumama">
 				<option id="0" nextNodeId="-1" text="" questCompletionId="1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 		</dialogue>
@@ -447,7 +454,7 @@
 			<node id="24" text="Imp - Pff. Sure, sure" speaker="Tumama">
 				<option id="0" nextNodeId="25" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="25" text="Imp - You're definitely from outside… Out of the Toy Box that is" speaker="Tumama">
+			<node id="25" text="Imp - You're definitely from outside... Out of the Toy Box that is" speaker="Tumama">
 				<option id="0" nextNodeId="26" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 			<node id="26" text="Zero - I- We- no." speaker="Tumama">
@@ -466,7 +473,7 @@
 			<node id="30" text="Imp - Do I really look that bad?" speaker="Tumama">
 				<option id="0" nextNodeId="31" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="31" text="Imp - To be honest, I'm not quite… sure, anymore, it's been a long while and being here… it changes you." speaker="Tumama">
+			<node id="31" text="Imp - To be honest, I'm not quite... sure, anymore, it's been a long while and being here... it changes you." speaker="Tumama">
 				<option id="0" nextNodeId="32" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 			<node id="32" text="Imp - But, yes, I came from the real world too" speaker="Tumama">
@@ -487,7 +494,7 @@
 			<node id="36" text="Imp - I've heard some rumors, about how the Toy Box is much, much bigger than what I know of it." speaker="Tumama">
 				<option id="0" nextNodeId="37" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="37" text="Imp - Other… sections of the world and ways to get there. That wizard talks about them sometimes, portals or something similar I've never seen one, so it could only be down in..." speaker="Tumama">
+			<node id="37" text="Imp - Other... sections of the world and ways to get there. That wizard talks about them sometimes, portals or something similar I've never seen one, so it could only be down in..." speaker="Tumama">
 				<option id="0" nextNodeId="38" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 			<node id="38" text="Imp - Nevermind." speaker="Tumama">
@@ -500,17 +507,17 @@
 			<node id="40" text="Imp - No clue, take any direction and go straight, you won't find an end and when you turn back, the town is right there, never far." speaker="Tumama">
 				<option id="0" nextNodeId="41" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="41" text="Imp - Maybe there's something at…" speaker="Tumama">
+			<node id="41" text="Imp - Maybe there's something at..." speaker="Tumama">
 				<option id="0" nextNodeId="42" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 			<node id="42" text="Imp - No... Forget it." speaker="Tumama">
 				<option id="0" nextNodeId="48" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 
-			<node id="43" text="Zero - You said being here changes you. Is it like, an amount of time or… what did you mean by that?" speaker="Tumama">
+			<node id="43" text="Zero - You said being here changes you. Is it like, an amount of time or... what did you mean by that?" speaker="Tumama">
 				<option id="0" nextNodeId="44" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="44" text="Imp - Ah, yeah, no it's not time, it'd be too… predictable I guess?" speaker="Tumama">
+			<node id="44" text="Imp - Ah, yeah, no it's not time, it'd be too... predictable I guess?" speaker="Tumama">
 				<option id="0" nextNodeId="45" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 			<node id="45" text="Imp - No, sometimes, things happen. You take something, you make a deal, you die" speaker="Tumama">
@@ -538,7 +545,7 @@
 			<node id="52" text="Imp - I have to go now, duty calls. Until next time" speaker="Tumama">
 				<option id="0" nextNodeId="53" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="53" text="Zero - That was… something" speaker="Tumama">
+			<node id="53" text="Zero - That was... something" speaker="Tumama">
 				<option id="0" nextNodeId="54" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 			<node id="54" text="Sophie - What are we waiting for? Let's get those tickets!!!" speaker="Tumama">
@@ -647,7 +654,7 @@
 			<node id="0" text="Imp - You made it. I didn't think you'd be able to get tickets." speaker="Tumama">
 				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
-			<node id="1" text="Zero - Yeah… we managed." speaker="Tumama">
+			<node id="1" text="Zero - Yeah... we managed." speaker="Tumama">
 				<option id="0" nextNodeId="2" text="" questCompletionId="-1" questTriggerId="-1" speaker="Tumama"/>
 			</node>
 			<node id="2" text="Imp - Well, since you're here. Go as high in the benches as you can you'll get the best view" speaker="Tumama">
@@ -668,7 +675,7 @@
 		</dialogue>
 
 		<dialogue id ="15">
-			<node id="0" text="Imp - LADIES AND GENTLEMEN, WELCOME TO…">
+			<node id="0" text="Imp - LADIES AND GENTLEMEN, WELCOME TO...">
 				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 			<node id="1" text="...">
@@ -689,7 +696,7 @@
 		</dialogue>
 
 		<dialogue id ="16">
-			<node id="0" text="Zero - Well… A bit creepy, but kinda fun. What did you think, Sophie?">
+			<node id="0" text="Zero - Well... A bit creepy, but kinda fun. What did you think, Sophie?">
 				<option id="0" nextNodeId="1" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 			<node id="1" text="Sophie - I have developed an irrational fear of puppets now!!!">
@@ -698,7 +705,7 @@
 			<node id="2" text="Weird wizard - Yeah, I don't blame you, I have never made it past half time.">
 				<option id="0" nextNodeId="3" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
-			<node id="3" text="Zero - Oh, it's you… again.">
+			<node id="3" text="Zero - Oh, it's you... again.">
 				<option id="0" nextNodeId="4" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 			<node id="4" text="Weird wizard - Yeah, I missed you too, please hold back the excitement, jeez.">
@@ -743,7 +750,7 @@
 			<node id="16" text="Weird wizard - And even if I did know.">
 				<option id="0" nextNodeId="17" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
-			<node id="17" text="Weird wizard - I'm sure you kids wouldn't want to miss the satisfaction of solving a puzzle by yourselves, hehe…">
+			<node id="17" text="Weird wizard - I'm sure you kids wouldn't want to miss the satisfaction of solving a puzzle by yourselves, hehe...">
 				<option id="0" nextNodeId="18" text="" questCompletionId="-1" questTriggerId="-1"/>
 			</node>
 			<node id="18" text="Zero - But what about the other worlds that Imp mentioned?">
