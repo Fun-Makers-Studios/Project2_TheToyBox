@@ -43,6 +43,8 @@ bool MenuManager::Awake(pugi::xml_node& config)
 
 
 	/*Initialize from xml*/
+	music = app->configNode.child("menuManager").child("music").attribute("audio").as_string();
+
 	startSFXPath = app->configNode.child("menuManager").child("startsfx").attribute("startSFXPath").as_string();
 	selectSFXPath = app->configNode.child("menuManager").child("selectsfx").attribute("selectSFXPath").as_string();
 	openMenuSFXPath = app->configNode.child("menuManager").child("openMenuSFX").attribute("openMenuSFXPath").as_string();
@@ -105,6 +107,7 @@ bool MenuManager::PreUpdate()
 		switch (menuItem->data->menuState)
 		{
 			case MenuState::SWITCH_ON:
+				app->audio->PlayMusic(music, 1.0f);
 				SetControlState(menuItem->data, GuiControlState::ENABLED);
 				SetSelectedTab(menuItem->data->id, ButtonType::TABS_SELECTED);
 				menuItem->data->menuState = MenuState::ON;

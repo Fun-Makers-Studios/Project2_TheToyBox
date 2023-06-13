@@ -69,6 +69,9 @@ public:
 	//POSITION
 	iPoint openBookPos = { 76, 31 };
 
+	//MUSIC
+	const char* music;
+
 	//SFX
 	uint startSFX = 0;
 	uint selectSFX = 0;

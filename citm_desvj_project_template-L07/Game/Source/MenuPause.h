@@ -47,7 +47,7 @@ private:
 
 	SDL_Texture* imgPause = nullptr;
 	const char* imgPausePath = nullptr;
-	const char* music;
+	
 
 	SDL_Rect pauseRect;
 };

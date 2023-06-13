@@ -7,18 +7,23 @@
 #include "Log.h"
 #include "Point.h"
 
-MirrorPuzzle::MirrorPuzzle(pugi::xml_node node) {
-
+MirrorPuzzle::MirrorPuzzle(pugi::xml_node node)
+{
 	this->orderID = node.attribute("orderID").as_int();
 	this->name = node.attribute("name").as_string();
 	this->nextPuzzleId = node.attribute("nextPuzzleId").as_int();
 	this->map = node.attribute("map").as_string();
 	this->type = PuzzleType::MIRROR;
+
+	click = app->audio->LoadFx("Assets/Audio/Fx/Puzzles/fx16.wav");
+	win = app->audio->LoadFx("Assets/Audio/Fx/Puzzles/fx22.wav");
+	lose = app->audio->LoadFx("Assets/Audio/Fx/Puzzles/fx7.wav");
 }
 
 MirrorPuzzle::~MirrorPuzzle() {}
 
-bool MirrorPuzzle::Update() {
+bool MirrorPuzzle::Update()
+{
 	bool ret = false;
 
 	ObjectTriggerCheck();
@@ -40,9 +45,6 @@ bool MirrorPuzzle::Update() {
 
 	CompletionEvent();
 
-	click = app->audio->LoadFx("Assets/Audio/Fx/Puzzles/fx16.wav");
-	win = app->audio->LoadFx("Assets/Audio/Fx/Puzzles/fx22.wav");
-	lose = app->audio->LoadFx("Assets/Audio/Fx/Puzzles/fx7.wav");
 	return ret;
 }
 

@@ -17,7 +17,6 @@ MenuPause::MenuPause() : Menu()
 	id = MenuID::MENU_PAUSE;
 
 	imgPausePath = app->configNode.child("menuManager").child("menuPause").attribute("texturepath").as_string();
-	music = app->configNode.child("menuManager").child("music").attribute("audio").as_string();
 }
 
 
@@ -54,18 +53,13 @@ bool MenuPause::Start()
 
 bool MenuPause::PreUpdate()
 {
-	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	{
-		app->audio->PlayFx(app->menuManager->closeMenuSFX);
-		app->menuManager->SelectMenu();
-	}*/
+
 	return true;
 }
 
 
 bool MenuPause::Update(float dt)
 {
-	app->audio->PlayMusic(music, 1.0f);
 
 	return true;
 }
