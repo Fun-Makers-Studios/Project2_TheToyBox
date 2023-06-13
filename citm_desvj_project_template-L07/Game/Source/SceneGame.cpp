@@ -106,6 +106,8 @@ bool SceneGame::Start()
 	// Load tex
 	saveTex = app->tex->Load(saveTexPath);
 
+	fight = app->audio->LoadFx("Assets/Audio/Fx/SceneGame/fx20.wav");
+	saved = app->audio->LoadFx("Assets/Audio/Fx/SceneGame/fx44.wav");
 
 	ResetScene();
 
@@ -133,6 +135,7 @@ bool SceneGame::Update(float dt)
 	//TEST FIGHT SCENE - HEKATE!!!
 	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
 		LOG("SWITCHING TO SCENEFIGHT");
+		app->audio->PlayFx(fight);
 		FightKid();
 	}
 
@@ -537,6 +540,8 @@ bool SceneGame::LoadState(pugi::xml_node& data)
 
 bool SceneGame::SaveState(pugi::xml_node& data)
 {
+	app->audio->PlayFx(saved);
+	
 	pugi::xml_node sceneGame = data.append_child("scene");
 
 	pugi::xml_node mapname = sceneGame.append_child("mapName");

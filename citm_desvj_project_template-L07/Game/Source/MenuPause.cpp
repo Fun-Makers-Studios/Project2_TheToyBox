@@ -17,6 +17,7 @@ MenuPause::MenuPause() : Menu()
 	id = MenuID::MENU_PAUSE;
 
 	imgPausePath = app->configNode.child("menuManager").child("menuPause").attribute("texturepath").as_string();
+	music = app->configNode.child("menuManager").child("music").attribute("audio").as_string();
 }
 
 
@@ -46,7 +47,7 @@ bool MenuPause::Start()
 	backToTitleButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::BACK_TO_TITLE, "back to title", 13, { 515, 375, 252, 76 }, this);
 	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SETTINGS, "settings", 8, { 515, 455, 252, 76 }, this);
 	saveExitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SAVE_EXIT, "save and exit", 12, { 515, 535, 252, 76 }, this);
-
+	
 	return true;
 }
 
@@ -64,9 +65,7 @@ bool MenuPause::PreUpdate()
 
 bool MenuPause::Update(float dt)
 {
-	// Lower music volume
-	if (app->musicValue >= 20)
-		Mix_VolumeMusic(20);
+	app->audio->PlayMusic(music, 1.0f);
 
 	return true;
 }

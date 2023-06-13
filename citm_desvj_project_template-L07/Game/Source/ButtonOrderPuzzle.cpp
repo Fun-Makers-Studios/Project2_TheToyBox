@@ -66,18 +66,22 @@ void ButtonOrderPuzzle::LoadAssets(pugi::xml_node node)
 	}
 
 	
-
+	click = app->audio->LoadFx("Assets/Audio/Fx/Puzzles/fx16.wav");
+	win = app->audio->LoadFx("Assets/Audio/Fx/Puzzles/fx22.wav");
+	lose = app->audio->LoadFx("Assets/Audio/Fx/Puzzles/fx7.wav");
 }
 
 void ButtonOrderPuzzle::ButtonTriggerCheck()
 {
 	ListItem<PuzzlePiece*>* pieceItem;
 	
+
 	for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN &&
 			app->collisions->CheckCollision(*app->sceneManager->sceneGame->player->body, pieceItem->data->boundaries))
 		{
+			app->audio->PlayFx(click);
 			if (pieceItem->data->pieceType == PieceType::BUTTON)
 			{
 				if (actualOrder == pieceItem->data->order)
@@ -97,6 +101,7 @@ void ButtonOrderPuzzle::ButtonTriggerCheck()
 
 void ButtonOrderPuzzle::ResetPuzzle()
 {
+	app->audio->PlayFx(lose);
 	ListItem<PuzzlePiece*>* pieceItem;
 
 	for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)
@@ -109,6 +114,7 @@ void ButtonOrderPuzzle::ResetPuzzle()
 
 void ButtonOrderPuzzle::OpenDoor()
 {
+	app->audio->PlayFx(win);
 	ListItem<PuzzlePiece*>* pieceItem;
 
 	for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)

@@ -40,6 +40,9 @@ bool MirrorPuzzle::Update() {
 
 	CompletionEvent();
 
+	click = app->audio->LoadFx("Assets/Audio/Fx/Puzzles/fx16.wav");
+	win = app->audio->LoadFx("Assets/Audio/Fx/Puzzles/fx22.wav");
+	lose = app->audio->LoadFx("Assets/Audio/Fx/Puzzles/fx7.wav");
 	return ret;
 }
 
@@ -89,6 +92,7 @@ void MirrorPuzzle::ObjectTriggerCheck()
 		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN &&
 			app->collisions->CheckCollision(*app->sceneManager->sceneGame->player->body, pieceItem->data->boundaries))
 		{
+			app->audio->PlayFx(click);
 			if (pieceItem->data->pieceType == PieceType::MOV_OBJ && !pieceItem->data->activated)
 			{
 				isAttached = !isAttached;
@@ -117,6 +121,7 @@ void MirrorPuzzle::ObjectTriggerCheck()
 
 void MirrorPuzzle::ResetPuzzle()
 {
+	app->audio->PlayFx(lose);
 	ListItem<PuzzlePiece*>* pieceItem;
 
 	for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)
@@ -131,6 +136,7 @@ void MirrorPuzzle::ResetPuzzle()
 
 void MirrorPuzzle::OpenDoor()
 {
+	app->audio->PlayFx(win);
 	ListItem<PuzzlePiece*>* pieceItem;
 
 	for (pieceItem = pieces.start; pieceItem != nullptr; pieceItem = pieceItem->next)

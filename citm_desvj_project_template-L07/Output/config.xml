@@ -27,7 +27,8 @@
 		<selectsfx selectSFXPath="Assets/Audio/FX/select.wav"/>
 		<openMenuSFX openMenuSFXPath="Assets/Audio/Fx/Menus/open_menu.wav"/>
 		<closeMenuSFX closeMenuSFXPath="Assets/Audio/Fx/Menus/close_menu.wav"/>
-
+		<music audio="Assets/Audio/Music/options.ogg"/>
+		
 		<font1 texturepath="Assets/Textures/UI/Fonts/font1.png"/>
 		<font2 texturepath="Assets/Textures/UI/Fonts/font2.png"/>
 		<font2Red texturepath="Assets/Textures/UI/Fonts/font2_red.png"/>
@@ -96,7 +97,7 @@
 
 	<ending>
 		<backgroundimage texturepath="Assets/Textures/EndingScreen.png"/>
-		<music musicPath="Assets/Audio/Music/gameOver.ogg"/>
+		<music musicPath="Assets/Audio/Music/what.ogg"/>
 		<endingsfx startSFXPath="Assets/Audio/Fx/start_game.wav"/>
 	</ending>
 

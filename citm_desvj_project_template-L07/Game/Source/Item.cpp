@@ -33,6 +33,8 @@ Item::Item(pugi::xml_node parameters) : Entity(EntityType::ITEM)
 	body->shape = ColliderShape::CIRCLE;
 	body->pos = { posX, posY };
 	body->r = 8;
+
+	taken = app->audio->LoadFx("Assets/Audio/Fx/Items/fx.wav");
 }
 
 Item::~Item()
@@ -77,6 +79,7 @@ bool Item::Update()
 {
 	if (takeItem)
 	{
+		app->audio->PlayFx(taken);
 		if (takeItemPS == nullptr) 
 		{
 			dPoint pos = { body->pos.x, body->pos.y };

@@ -141,6 +141,8 @@ bool SceneFight::Start()
 	SortBySpeed();
 	turn = 0;
 
+	attack = app->audio->LoadFx("Assets/Audio/Fx/SceneFight/fx24.wav");
+
 	return true;
 }
 
@@ -369,7 +371,7 @@ void SceneFight::ExecuteTurn()
 bool SceneFight::Attack(PartyMember* turnMember_, PartyMember* receiverMember_)
 {
 	// HEKATE: Calculate crit, def
-
+	app->audio->PlayFx(attack);
 	//godmode no damage
 	if (turnMember_->type == MemberType::ENEMY && app->debug->godMode) { return false; }
 
@@ -402,6 +404,7 @@ void SceneFight::Escape()
 	if (randomNumber % 2)
 	{
 		app->sceneManager->SwitchTo(SceneID::SCENE_GAME);
+		//app->audio->PlayFx()
 	}
 	else {
 		turn++;

@@ -72,6 +72,7 @@ private:
 	Easing* easingPos = nullptr;
 
 	int scale = app->scaleObj->ScaleTypeToInt(ScaleType::FIGHT);
+	int attack, escape;
 };
 
 #endif //__SCENEFIGHT_H__
