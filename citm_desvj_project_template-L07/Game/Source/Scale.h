@@ -15,6 +15,7 @@ enum class ScaleType
 	UI_50,
 	UI_100,
 	UI_200,
+	UI_300,
 };
 
 
@@ -31,9 +32,10 @@ public:
 		case ScaleType::WORLD:	return 2;	// 2
 		case ScaleType::HOUSE:	return 1;
 		case ScaleType::FIGHT:	return 3;	// 3
-		case ScaleType::UI_50:	return 0.5f;
+		case ScaleType::UI_50:	return 0.5f;	//don't
 		case ScaleType::UI_100:	return 1;
 		case ScaleType::UI_200:	return 2;
+		case ScaleType::UI_300:	return 3;
 		default: return 1;
 		}
 	}

@@ -21,8 +21,7 @@ MenuParty::MenuParty() : Menu()
 	id = MenuID::MENU_PARTY;
 
 	partyMenuImgPath = app->configNode.child("menuManager").child("menuParty").attribute("texturepath").as_string();
-	zeroImgPath = app->configNode.child("menuManager").child("zeroImg").attribute("zeroImgPath").as_string();
-	sophieImgPath = app->configNode.child("menuManager").child("sophieImg").attribute("sophieImgPath").as_string();
+	avatarImgPath = app->configNode.child("menuManager").child("avatarImg").attribute("texturepath").as_string();
 }
 
 
@@ -47,8 +46,7 @@ bool MenuParty::Start()
 
 	// Load
 	partyMenuImg = app->tex->Load(partyMenuImgPath);
-	zeroImg = app->tex->Load(zeroImgPath);
-	sophieImg = app->tex->Load(sophieImgPath);
+	avatarImg = app->tex->Load(avatarImgPath);
 
 	rectTexture = { 0, 0, 519, 311 };
 
@@ -82,16 +80,13 @@ bool MenuParty::Start()
 
 bool MenuParty::PreUpdate()
 {
-	ListItem<PartyMember*>* item = app->partyManager->party.start;
-	bool active = false;
-	while (item != nullptr)
+	if (!app->partyManager->unlockedSophie)
 	{
-		if (item->data->name.GetString() == "sophie") {
-			active = true;
-		}
-		item = item->next;
+		partyMember2Button->state = GuiControlState::DISABLED;
 	}
-	if (!active) { partyMember2Button->state = GuiControlState::DISABLED; }
+
+	partyMember3Button->state = GuiControlState::DISABLED;
+	partyMember4Button->state = GuiControlState::DISABLED;
 
 	return true;
 }
@@ -115,21 +110,33 @@ bool MenuParty::PostUpdate()
 	{
 	case ControlID::PARTY_1:
 		// Zero
-		app->render->DrawTexture(zeroImg, app->render->camera.x + 312, app->render->camera.y + 220, NULL);
+		app->render->DrawTexture(avatarImg, (app->menuManager->openBookPos.x + 56)/3*2, (app->menuManager->openBookPos.y + 46)/3*2, &rectZero, SDL_FLIP_NONE, ScaleType::UI_300, false);
 		app->sceneManager->sceneGame->partyMemberSelected = 0;
 		break;
 
 	case ControlID::PARTY_2:
 		// Sophie
-		app->render->DrawTexture(sophieImg, app->render->camera.x + 312, app->render->camera.y + 220, NULL);
+		app->render->DrawTexture(avatarImg, (app->menuManager->openBookPos.x + 56)/3*2-1, (app->menuManager->openBookPos.y + 46)/3*2, &rectSophie, SDL_FLIP_NONE, ScaleType::UI_300, false);
 		app->sceneManager->sceneGame->partyMemberSelected = 1;
 		break;
 	default:
 		break;
 	}
 
+
 	BlitPartyStats();
 
+	
+	app->render->DrawTexture(avatarImg, app->menuManager->openBookPos.x + 46, app->menuManager->openBookPos.y + 230, &rectZero, SDL_FLIP_NONE, ScaleType::UI_200, false);
+
+	if (app->partyManager->unlockedSophie)
+	{
+		app->render->DrawTexture(avatarImg, app->menuManager->openBookPos.x + 89, app->menuManager->openBookPos.y + 230, &rectSophie, SDL_FLIP_NONE, ScaleType::UI_200, false);
+	}
+	else
+	{
+		app->render->DrawTexture(avatarImg, app->menuManager->openBookPos.x + 89, app->menuManager->openBookPos.y + 230, &rectSophieLocked, SDL_FLIP_NONE, ScaleType::UI_200, false);
+	}
 
 	//INVENTORY ==========
 	SDL_Rect rectTexture2 = { 0, 0, 16, 16 };
@@ -174,8 +181,7 @@ bool MenuParty::CleanUp()
 	LOG("Freeing TITLE SCENE");
 
 	app->tex->UnLoad(partyMenuImg);
-	app->tex->UnLoad(zeroImg);
-	app->tex->UnLoad(sophieImg);
+	app->tex->UnLoad(avatarImg);
 
 	//STORE IN A LIST THIS BUTTONS AND THEN CHECK HERE IF NULLPTR TO CLEAN THEM UP
 	//guiControlsList.Clear();
@@ -241,12 +247,11 @@ void MenuParty::SwapItems()
 void MenuParty::BlitPartyStats()
 {
 	PartyMember* memberData = app->partyManager->party.At(app->sceneManager->sceneGame->partyMemberSelected)->data;
-	int lineNum = 0;
-
-	BlitTextStats(memberData->name.GetString(), lineNum);
+	
+	//Selected Name
+	app->fonts->BlitText(app->menuManager->openBookPos.x + 63, app->menuManager->openBookPos.y + 31, app->menuManager->font4_id, memberData->name.GetString(), ScaleType::UI_200);
 
 	// Header stats
-
 	/*char level[5];
 	sprintf_s(level, 5, "%d", memberData->level);
 	app->fonts->BlitText(776, 265, font, level, ScaleType::UI_200);
@@ -266,11 +271,11 @@ void MenuParty::BlitPartyStats()
 	char maxMana[3];
 	sprintf_s(maxMana, 3, "%d", memberData->maxMana);
 	app->fonts->BlitText(936, 265, font, maxMana, ScaleType::UI_200);
-
 	*/
-
-
+	
 	// Detailed stats
+	int lineNum = 0;
+
 	char maxHP[3];
 	sprintf_s(maxHP, 3, "%d", memberData->maxHp);
 	lineNum = BlitTextStats(maxHP, lineNum);

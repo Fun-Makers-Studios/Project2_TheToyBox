@@ -64,6 +64,8 @@ bool PartyMembersQuest::Update() {
 		{
 			if (item->data.name == currentSpeaker) {
 				item->data.picked = true;
+				app->partyManager->LoadPartyMember(currentSpeaker);
+				app->partyManager->unlockedSophie = true;
 			}
 		}
 

@@ -127,7 +127,7 @@ bool PartyManager::LoadPartyMember(SString name) {
 
 void PartyManager::AddMemberToParty(PartyMember* member)
 {
-	party.Add(member);	 
+	party.Add(member);
 }
 
 bool PartyManager::LoadState(pugi::xml_node& data)

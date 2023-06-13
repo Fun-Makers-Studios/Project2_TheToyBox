@@ -73,11 +73,12 @@ private:
 	const char* partyMenuImgPath = nullptr;
 	SDL_Rect rectTexture = { 0, 0, 519, 311 };
 
-	const char* zeroImgPath = nullptr;
-	SDL_Texture* zeroImg = nullptr;
+	const char* avatarImgPath = nullptr;
+	SDL_Texture* avatarImg = nullptr;
+	SDL_Rect rectZero = { 0, 0, 27, 28 };
+	SDL_Rect rectSophie = { 32, 0, 27, 28 };
+	SDL_Rect rectSophieLocked = { 64, 0, 27, 28 };
 
-	const char* sophieImgPath = nullptr;
-	SDL_Texture* sophieImg = nullptr;
 
 	uint slotNumP = 0;
 };

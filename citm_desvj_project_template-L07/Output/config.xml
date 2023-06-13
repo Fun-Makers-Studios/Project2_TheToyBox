@@ -41,9 +41,8 @@
 		<menuSave texturepath="Assets/Textures/UI/New/menuSpritesheet.png"/>
 		<menuSettings texturepath="Assets/Textures/UI/New/menuSpritesheet.png"/>
 		<menuCredits texturepath="Assets/Textures/UI/New/menuSpritesheet.png"/>
-		
-		<zeroImg zeroImgPath="Assets/Textures/UI/PartyMenu/Characters/ZeroPic.png"/>
-		<sophieImg sophieImgPath="Assets/Textures/UI/PartyMenu/Characters/SophiePic.png"/>
+
+		<avatarImg texturepath="Assets/Textures/UI/New/avatarPartyMenu.png"/>
 	</menuManager>
 	
 	<logo>

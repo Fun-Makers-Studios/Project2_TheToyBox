@@ -126,4 +126,6 @@ public:
 	const char* enemyToFight = nullptr;
 	uint maxPartyMembers = 3;
 	uchar partyCount = 0;
+
+	bool unlockedSophie = false;
 };
