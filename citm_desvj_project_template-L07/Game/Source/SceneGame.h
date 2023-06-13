@@ -79,6 +79,7 @@ public:
 
 	bool playing = false; //HEKATE not used
 	bool continueGame = false;
+	bool newGame = true;
 
 	SString mapName;
 	bool isMapChanging = false;
@@ -87,7 +88,9 @@ public:
 	uint questListSelected = 0;
 
 	DialogueManager* dialogueManager = nullptr;
-
+	
+	// Audio
+	const char* musicPath = nullptr;
 private:
 
 	iPoint startPosition;
@@ -99,9 +102,8 @@ private:
 
 	// Textures
 
-	
-	// Audio
-	const char* musicPath = nullptr;
+	int fight, saved;
+
 
 	// Debug pathfinding
 	iPoint origin;

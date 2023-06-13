@@ -30,7 +30,7 @@ bool CollectQuest::Update()
 		if (sitem->data->item == nullptr)
 			continue;
 
-		if (sitem->data->item->name == itemName)
+		if (sitem->data->item->itemData.name == itemName)
 			return true;
 	}
 

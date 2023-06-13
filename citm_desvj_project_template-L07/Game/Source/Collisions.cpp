@@ -15,7 +15,7 @@
 #include "EntityManager.h"
 #include "MenuManager.h"
 #include "Debug.h"
-
+#include "Audio.h"
 #include <cmath>
 
 Collisions::Collisions() : Module()
@@ -242,6 +242,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->player->newPos = { 192, 256 };
         app->sceneManager->sceneGame->isMapChanging = true;
         scaleMap = ScaleType::WORLD;
+        app->audio->PlayMusic("Assets/Audio/Music/town.ogg", 1.0F);
         break;
 
     case MapZone::TOWN_TO_HOUSE1:
@@ -250,6 +251,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->player->newPos = { 640, 480 };
         app->sceneManager->sceneGame->isMapChanging = true;
         scaleMap = ScaleType::HOUSE;
+        app->audio->PlayMusic("Assets/Audio/Music/house.ogg", 1.0F);
         break;
 
     case MapZone::HOUSEBASE_TO_HOUSEFLOOR:
@@ -258,6 +260,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->player->newPos = { 840, 140};
         app->sceneManager->sceneGame->isMapChanging = true;
         scaleMap = ScaleType::HOUSE;
+        app->audio->PlayMusic("Assets/Audio/Music/house.ogg", 1.0F);
         break;
 
     case MapZone::HOUSEFLOOR_TO_HOUSEFBASE:
@@ -266,6 +269,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->player->newPos = { 660, 150 };
         app->sceneManager->sceneGame->isMapChanging = true;
         scaleMap = ScaleType::HOUSE;
+        app->audio->PlayMusic("Assets/Audio/Music/house.ogg", 1.0F);
         break;
 
     case MapZone::TOWN_TO_TAVERN:
@@ -274,6 +278,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->player->newPos = { 640, 500 };
         app->sceneManager->sceneGame->isMapChanging = true;
         scaleMap = ScaleType::HOUSE;
+        app->audio->PlayMusic("Assets/Audio/Music/house.ogg", 1.0F);
         break;
 
     case MapZone::TAVERN_TO_TOWN:
@@ -282,6 +287,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->player->newPos = { 800, 352 };
         app->sceneManager->sceneGame->isMapChanging = true;
         scaleMap = ScaleType::WORLD;
+        app->audio->PlayMusic("Assets/Audio/Music/town.ogg", 1.0F);
         break;
 
     case MapZone::TOWN_TO_INN:
@@ -290,6 +296,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->player->newPos = { 960, 544 };
         app->sceneManager->sceneGame->isMapChanging = true;
         scaleMap = ScaleType::HOUSE;
+        app->audio->PlayMusic("Assets/Audio/Music/house.ogg", 1.0F);
         break;
 
     case MapZone::INN_TO_TOWN:
@@ -298,6 +305,8 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->player->newPos = { 1184, 448 };
         app->sceneManager->sceneGame->isMapChanging = true;
         scaleMap = ScaleType::WORLD;
+        app->audio->PlayMusic("Assets/Audio/Music/town.ogg", 1.0F);
+
         break;
     
     case MapZone::TOWN_TO_CIRCUS:
@@ -316,6 +325,7 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
                 scaleMap = ScaleType::WORLD;
             }
         }
+        app->audio->PlayMusic("Assets/Audio/Music/dungeon.ogg", 1.0F);
 
     }break;
 
@@ -326,6 +336,8 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->player->newPos = { 1450, 96 };
         app->sceneManager->sceneGame->isMapChanging = true;
         scaleMap = ScaleType::WORLD;
+        app->audio->PlayMusic("Assets/Audio/Music/town.ogg", 1.0F);
+
         break;
     
     case MapZone::CIRCUSONE_TO_CIRCUSTWO:
@@ -334,6 +346,8 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->player->newPos = { 256, 1344 };
         app->sceneManager->sceneGame->isMapChanging = true;
         scaleMap = ScaleType::WORLD;
+        app->audio->PlayMusic("Assets/Audio/Music/far.ogg", 1.0F);
+
         break;
     
     case MapZone::CIRCUSTWO_TO_CIRCUSONE:
@@ -342,6 +356,8 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
         app->sceneManager->sceneGame->player->newPos = { 192, 1216 };
         app->sceneManager->sceneGame->isMapChanging = true;
         scaleMap = ScaleType::WORLD;
+        app->audio->PlayMusic("Assets/Audio/Music/dungeon.ogg", 1.0F);
+
         break;
 
     }

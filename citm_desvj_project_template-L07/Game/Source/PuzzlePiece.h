@@ -66,7 +66,6 @@ public:
 	PieceType pieceType;
 
 	bool isAttached = false; //For pieces to move with th player
-
 };
 
 #endif // __NPC_H__

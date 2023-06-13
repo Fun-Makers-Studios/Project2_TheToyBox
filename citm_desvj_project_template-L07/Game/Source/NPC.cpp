@@ -11,6 +11,7 @@
 #include "Map.h"
 #include "PathFinding.h"
 #include "EntityManager.h"
+#include "MenuManager.h"
 #include "Debug.h"
 
 NPC::NPC(pugi::xml_node parameters) : Entity(EntityType::NPC)
@@ -108,11 +109,12 @@ void NPC::DialogTriggerCheck()
 {
 	Body boundaries = *this->body;
 	boundaries.r = NPC_BOUNDARY;
-
-	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN &&
-		app->collisions->CheckCollision(*app->sceneManager->sceneGame->player->body, boundaries))
-	{
-		if (this->dialogueid != -1 && app->sceneManager->sceneGame->dialogueManager->GetCurrentDialogue() == nullptr)
-			app->sceneManager->sceneGame->dialogueManager->Load(this->dialogueid);
+	if (app->menuManager->menuTabs->menuState == MenuState::OFF) {
+		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN &&
+			app->collisions->CheckCollision(*app->sceneManager->sceneGame->player->body, boundaries))
+		{
+			if (this->dialogueid != -1 && app->sceneManager->sceneGame->dialogueManager->GetCurrentDialogue() == nullptr)
+				app->sceneManager->sceneGame->dialogueManager->Load(this->dialogueid);
+		}	
 	}
 }

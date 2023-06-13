@@ -31,6 +31,8 @@ private:
 	uint actualOrder = 1;
 
 	uint maxButtons = 1;
+	
+	int click, win, lose;
 };
 
 #endif // __COLLECTQUEST_H__

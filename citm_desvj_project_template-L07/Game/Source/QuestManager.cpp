@@ -134,6 +134,11 @@ void QuestManager::TriggerQuest(int id)
 
 			//Open Quests Menu
 			app->menuManager->menuQuest->menuState = MenuState::SWITCH_ON;
+
+			if (app->menuManager->menuTabs->menuState == MenuState::OFF)
+			{
+				app->menuManager->menuTabs->menuState = MenuState::SWITCH_ON;
+			}
 			break;
 		}
 

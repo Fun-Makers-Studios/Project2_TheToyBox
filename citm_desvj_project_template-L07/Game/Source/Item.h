@@ -64,6 +64,8 @@ private:
 	ParticleSystem* takeItemPS = nullptr;
 
 	uint inventoryPos = 0;
+
+	int taken;
 };
 
 #endif // __ITEM_H__

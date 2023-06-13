@@ -35,6 +35,8 @@ private:
 
 	PuzzlePiece* piece = nullptr;
 	bool isAttached = false;
+
+	int click, win, lose;
 };
 
 #endif // __COLLECTQUEST_H__
