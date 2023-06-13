@@ -57,6 +57,14 @@ private:
 
 	int currentQuestSelectedID;
 	uint fontID;
+
+	iPoint boxPos = { 255, 50 };
+	const char* questsBoxImgPath = nullptr;
+	SDL_Texture* questsBoxTexture = nullptr;
+	SDL_Rect activeQuestBox1;
+	SDL_Rect activeQuestBox2;
+	SDL_Rect doneQuestBox1;
+	SDL_Rect doneQuestBox2;
 };
 
 #endif // __MENU_QUEST_H__
