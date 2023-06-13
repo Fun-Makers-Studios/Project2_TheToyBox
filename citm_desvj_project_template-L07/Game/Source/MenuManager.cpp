@@ -374,3 +374,33 @@ std::string MenuManager::MenuIDToString(MenuID menuID)
 		default: break;
 	}
 }
+
+bool MenuManager::LoadState(pugi::xml_node& data) 
+{
+
+	/*for (size_t i = 0; i < length; i++)
+	{
+
+	}*/
+	return true;
+}
+
+
+bool MenuManager::SaveState(pugi::xml_node& data)
+{
+	/*pugi::xml_node inventoryList = data.append_child("inventoryList");
+	
+	for (ListItem<InventorySlot*>* inventoryItem = menuParty->inventorySlotList.start; inventoryItem != NULL; inventoryItem = inventoryItem->next)
+	{
+		pugi::xml_node itemsNode = inventoryList.append_child("item");
+
+		itemsNode.append_attribute("name") = inventoryItem->data->item->itemData.name.GetString();
+		itemsNode.append_attribute("itemType") = inventoryItem->data->item->itemData.itemType.GetString();
+		itemsNode.append_attribute("animable") = inventoryItem->data->item->itemData.animable;
+		itemsNode.append_attribute("frames") = inventoryItem->data->item->itemData.frames;
+		itemsNode.append_attribute("isStackable") = inventoryItem->data->item->itemData.isStackable;
+		itemsNode.append_attribute("texturepath") = inventoryItem->data->item->itemData.texturePath;
+	}*/
+
+	return true;
+}

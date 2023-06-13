@@ -195,11 +195,13 @@ bool SceneFight::Update(float dt)
 	{
 		app->sceneManager->sceneState = SceneState::SWITCH;
 		app->sceneManager->nextScene = SceneID::SCENE_GAME;
+		app->sceneManager->sceneGame->LoadOnStart = true;
 	}
 	else if (alliesAlive <= 0)
 	{
 		app->sceneManager->sceneState = SceneState::SWITCH;
 		app->sceneManager->nextScene = SceneID::SCENE_GAME;
+		app->sceneManager->sceneGame->LoadOnStart = true;
 	}
 
 	// Delete dead members from turnList

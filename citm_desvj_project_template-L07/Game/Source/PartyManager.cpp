@@ -132,22 +132,41 @@ void PartyManager::AddMemberToParty(PartyMember* member)
 
 bool PartyManager::LoadState(pugi::xml_node& data)
 {
+	ListItem<PartyMember*>* pmemberItem;
+	for (pmemberItem = party.start; pmemberItem != NULL; pmemberItem = pmemberItem->next)
+	{
+		pugi::xml_node partyMember = data.append_child("partymember");
+		pmemberItem->data->name = data.child("partymember").attribute("name").as_string();
+		pmemberItem->data->status = (MemberStatus)data.child("partymember").attribute("status").as_uint();
+		pmemberItem->data->maxHp = data.child("partymember").attribute("maxHp").as_uint();
+		pmemberItem->data->maxMana = data.child("partymember").attribute("maxMana").as_uint();
+		pmemberItem->data->currentHp = data.child("partymember").attribute("currentHp").as_uint();
+		pmemberItem->data->currentMana = data.child("partymember").attribute("currentHp").as_uint();
+		pmemberItem->data->level = data.child("partymember").attribute("level").as_uint();
+		pmemberItem->data->attack = data.child("partymember").attribute("attack").as_uint();
+		pmemberItem->data->defense = data.child("partymember").attribute("defense").as_uint();
+		pmemberItem->data->speed = data.child("partymember").attribute("speed").as_uint();
+		pmemberItem->data->critRate = data.child("partymember").attribute("critRate").as_uint();
+		pmemberItem->data->initPos.x = data.child("partymember").attribute("fightPosX").as_int();
+		pmemberItem->data->initPos.y = data.child("partymember").attribute("fightPosY").as_int();
+	}
 
 	return true;
 }
 
 bool PartyManager::SaveState(pugi::xml_node& data)
 {
-
 	ListItem<PartyMember*>* pmemberItem;
 
 	for (pmemberItem = party.start; pmemberItem != NULL; pmemberItem = pmemberItem->next)
 	{
 		pugi::xml_node partyMember = data.append_child("partymember");
 		partyMember.append_attribute("name") = pmemberItem->data->name.GetString();
+		partyMember.append_attribute("status") = (uint)pmemberItem->data->status;
 		partyMember.append_attribute("maxHP") = pmemberItem->data->maxHp;
 		partyMember.append_attribute("maxMana") = pmemberItem->data->maxMana;
 		partyMember.append_attribute("currentHp") = pmemberItem->data->currentHp;
+		partyMember.append_attribute("currentMana") = pmemberItem->data->currentMana;
 		partyMember.append_attribute("level") = pmemberItem->data->level;
 		partyMember.append_attribute("attack") = pmemberItem->data->attack;
 		partyMember.append_attribute("defense") = pmemberItem->data->defense;
@@ -156,16 +175,6 @@ bool PartyManager::SaveState(pugi::xml_node& data)
 		partyMember.append_attribute("fightPosX") = pmemberItem->data->initPos.x;
 		partyMember.append_attribute("fightPosY") = pmemberItem->data->initPos.y;
 	}
-
-	/*ListItem<Item*>* inventoryItem;
-	pugi::xml_node inventory = data.append_child("inventory");
-	for (inventoryItem = app->partyManager->inventory.start; inventoryItem != NULL; inventoryItem = inventoryItem->next)
-	{
-		pugi::xml_node item = inventory.append_child("item");
-		item.append_attribute("name") = inventoryItem->data->itemData.name.GetString();
-		item.append_attribute("quantity") = inventoryItem->data->itemStackQuantity;
-		item.append_attribute("inventoryPos") = inventoryItem->data->GetInventoryPos();
-	}*/
 
 	return true;
 }

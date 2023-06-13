@@ -52,15 +52,6 @@ bool SceneGame::Start()
 
 	dialogueManager = new DialogueManager(this);
 
-	
-	// Iterate all objects in the scene
-	/*for (pugi::xml_node itemNode = app->configNode.child("scene").child("potionhp"); itemNode; itemNode = itemNode.next_sibling("potionhp"))
-	{
-		item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-		item->parameters = itemNode;
-		livesCollectedList.Add(item);
-	}*/
-
 	// Load Enemies
 	for (pugi::xml_node itemNode = app->configNode.child("scene").child("enemykid"); itemNode; itemNode = itemNode.next_sibling("enemykid"))
 	{
@@ -106,8 +97,6 @@ bool SceneGame::Start()
 	// Load tex
 	saveTex = app->tex->Load(saveTexPath);
 
-	fight = app->audio->LoadFx("Assets/Audio/Fx/SceneGame/fx20.wav");
-	saved = app->audio->LoadFx("Assets/Audio/Fx/SceneGame/fx44.wav");
 
 	if (newGame) {
 		if (app->sceneManager->sceneGame->dialogueManager->GetCurrentDialogue() == nullptr)
@@ -115,6 +104,11 @@ bool SceneGame::Start()
 	}
 
 	ResetScene();
+
+	if (LoadOnStart) {
+		app->LoadGameRequest();
+		LoadOnStart = false;
+	}
 
 	return true;
 }
@@ -128,20 +122,27 @@ bool SceneGame::PreUpdate()
 // Called each loop iteration
 bool SceneGame::Update(float dt)
 {
-	SceneMap();
-
 	if (continueGame)
 	{
+		isCheckpointEnabled = true;
 		app->LoadGameRequest();
 		app->audio->PlayFx(selectSFX);
 		continueGame = false;
 	}
 
+	SceneMap();
+
 	//TEST FIGHT SCENE - HEKATE!!!
 	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
 		LOG("SWITCHING TO SCENEFIGHT");
+		FightKid();
+	}
+
+	if (fightTrigger) {
+		LOG("SWITCHING TO SCENEFIGHT");
 		app->audio->PlayFx(fight);
 		FightKid();
+		fightTrigger = false;
 	}
 
 	// HEKATE
@@ -192,10 +193,11 @@ bool SceneGame::Update(float dt)
 
 	ActiveParticles();
 
+	FastDebugForSave();
 	SaveUI();
 
 	//Saves game if choosing the option when talkin with MAGE
-	if (dialogueManager->GetCurrentDialogue() != nullptr 
+	/*if (dialogueManager->GetCurrentDialogue() != nullptr 
 		&& dialogueManager->GetCurrentDialogue()->id == 6 
 		&& dialogueManager->GetCurrentDialogue()->currentNode->id == 1 
 		&& app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
@@ -205,7 +207,9 @@ bool SceneGame::Update(float dt)
 		showSavingState = true;
 		isNight = !isNight;
 		app->SaveGameRequest();
-	}
+	}*/
+	
+
 
 	// Lower music volume - HEKATE
 	/*if (app->menuManager->currentMenu == app->menuManager->menuPause) {
@@ -372,23 +376,38 @@ void SceneGame::SceneMap()
 {
 	if (isMapChanging)
 	{	
+		app->saveGameRequested = true;
 		if (app->transitionManager->step == TransitionStep::NONE)
         {
             app->transitionManager->LoadTransition();
         }
         else if (app->transitionManager->step == TransitionStep::SWITCH)
         {
-			app->map->ChangeMap(mapName.GetString());
-			player->body->pos = player->newPos;
-			LoadNPC();
-			LoadItems();
-			LoadPuzzles();
-			app->scaleObj->SetCurrentScale(app->collisions->scaleMap);
+			if (isMapChangingFromSave)
+			{
+				app->map->ChangeMap(mapName.GetString());
+				LoadNPC();
+				LoadItems();
+				LoadPuzzles();
+				app->scaleObj->SetCurrentScale(app->collisions->scaleMap);
+			}
+			else
+			{
+				if (mapName.GetString() == "town")
+					isNight = !isNight;
+				app->map->ChangeMap(mapName.GetString());
+				player->body->pos = player->newPos;
+				LoadNPC();
+				LoadItems();
+				LoadPuzzles();
+				app->scaleObj->SetCurrentScale(app->collisions->scaleMap);
+			}
         }
         else if (app->transitionManager->step == TransitionStep::FINISHED)
         {
             app->transitionManager->step = TransitionStep::NONE;
 			isMapChanging = false;
+			isMapChangingFromSave = false;
         }  
 	}
 }
@@ -480,103 +499,76 @@ void SceneGame::FightKid()
 	app->partyManager->enemyToFight = "enemykid";
 	app->sceneManager->sceneState = SceneState::SWITCH;
 	app->sceneManager->nextScene = SceneID::SCENE_FIGHT;
+	app->SaveGameRequest();
 }
 
 bool SceneGame::LoadState(pugi::xml_node& data)
 {
-	// HEKATE
-	// Load previous saved player position
-	//iPoint playerpos = { data.child("playerposition").attribute("x").as_float(), data.child("playerposition").attribute("y").as_float() };
-	//app->scene->player->pbody->body->settransform(playerpos, 0);
+	pugi::xml_node sceneGame = data.child("scene");
+	
+	mapName = sceneGame.child("mapName").attribute("actualMap").as_string();
 
-	ListItem<PartyMember*>* pmemberItem;
-	for (pmemberItem = app->partyManager->party.start; pmemberItem != NULL; pmemberItem = pmemberItem->next)
-	{
-		pugi::xml_node partyMember = data.append_child("partymember");
-		pmemberItem->data->name = data.child("partymember").attribute("name").as_string();
-		pmemberItem->data->maxHp = data.child("partymember").attribute("maxHp").as_uint();
-		pmemberItem->data->maxMana = data.child("partymember").attribute("maxMana").as_uint();
-		pmemberItem->data->currentHp = data.child("partymember").attribute("currentHp").as_uint();
-		pmemberItem->data->level = data.child("partymember").attribute("level").as_uint();
-		pmemberItem->data->attack = data.child("partymember").attribute("attack").as_uint();
-		pmemberItem->data->defense = data.child("partymember").attribute("defense").as_uint();
-		pmemberItem->data->speed = data.child("partymember").attribute("speed").as_uint();
-		pmemberItem->data->critRate = data.child("partymember").attribute("critRate").as_uint();
-		pmemberItem->data->initPos.x = data.child("partymember").attribute("fightPosX").as_int();
-		pmemberItem->data->initPos.y = data.child("partymember").attribute("fightPosY").as_int();
-	}
+	isNight = sceneGame.child("isNight").attribute("night").as_bool();
 
-	//Load previous saved player number of lives
-	saveEnabled = data.child("checkpointEnabled").attribute("checkpointEnabled").as_bool();
+	partyMemberSelected = sceneGame.child("pMmeberSelected").attribute("selected").as_uint();
 
-	//mapName = data.child("mapname").attribute("mapname").as_string();
-
-	//// load previous saved bat position
-	//iPoint kidpos = { data.child("kidposition").attribute("x").as_float(), data.child("kidposition").attribute("y").as_float() };
-	//app->scene->kid->pbody->body->settransform(kidpos, 0);
-
-	//Load NPC States
-	/*for (pugi::xml_node itemNode = app->configNode.child("npcs").child(mapName.GetString()).child("npc"); itemNode; itemNode = itemNode.next_sibling("npc"))
-	{
-		npc = (NPC*)app->entityManager->CreateEntity(EntityType::NPC, itemNode);
-		npcList.Add(npc);
-		npc->Start();
-	}
-
-	ListItem<NPC*>*npcItem;
-	for (npcItem = npcList.start; npcItem != NULL; npcItem = npcItem->next)
-	{
-		pugi::xml_node partyMember = data.append_child("npc");
-		npcItem->data->name = data.child("partymember").attribute("name").as_string();
-		npcItem->data->maxHp = data.child("partymember").attribute("maxHp").as_uint();
-		npcItem->data->maxMana = data.child("partymember").attribute("maxMana").as_uint();
-		npcItem->data->currentHp = data.child("partymember").attribute("currentHp").as_uint();
-		npcItem->data->level = data.child("partymember").attribute("level").as_uint();
-		npcItem->data->attack = data.child("partymember").attribute("attack").as_uint();
-		npcItem->data->defense = data.child("partymember").attribute("defense").as_uint();
-		npcItem->data->speed = data.child("partymember").attribute("speed").as_uint();
-		npcItem->data->critRate = data.child("partymember").attribute("critRate").as_uint();
-		npcItem->data->initPos.x = data.child("partymember").attribute("fightPosX").as_int();
-		npcItem->data->initPos.y = data.child("partymember").attribute("fightPosY").as_int();
-	}*/
+	player->body->pos.x = sceneGame.child("player").attribute("x").as_double();
+	player->body->pos.y = sceneGame.child("player").attribute("y").as_double();
+	
+	isMapChanging = true;
+	isMapChangingFromSave = true;
 
 	return true;
 }
 
 bool SceneGame::SaveState(pugi::xml_node& data)
 {
-	app->audio->PlayFx(saved);
-	
 	pugi::xml_node sceneGame = data.append_child("scene");
 
 	pugi::xml_node mapname = sceneGame.append_child("mapName");
 	mapname.append_attribute("actualMap") = mapName.GetString();
 
+	pugi::xml_node isnight = sceneGame.append_child("isNight");
+	isnight.append_attribute("night") = isNight;
 	
-	// HEKATE
-	// Save current player position
-	//pugi::xml_node playerPos = data.append_child("playerPosition");
-	//playerPos.append_attribute("x") = app->scene->player->pbody->body->GetTransform().p.x;
-	//playerPos.append_attribute("y") = app->scene->player->pbody->body->GetTransform().p.y;
-	//
-	//// Save current player number of coins
-	//pugi::xml_node itemLives = data.append_child("itemLives");
-	//itemLives.append_attribute("itemLives") = itemLives;
-	//
-	//// Save current player number of coins
-	//pugi::xml_node checkpointEnabled = data.append_child("checkpointEnabled");
-	//checkpointEnabled.append_attribute("checkpointEnabled") = checkpointEnabled;
+	pugi::xml_node pMemberSelected = sceneGame.append_child("pMmeberSelected");
+	pMemberSelected.append_attribute("selected") = partyMemberSelected;
+	
+	pugi::xml_node playerNode = sceneGame.append_child("player");
+	playerNode.append_attribute("x") = player->body->pos.x;
+	playerNode.append_attribute("y") = player->body->pos.y;
+	
+	pugi::xml_node itemsListNode = sceneGame.append_child("itemsList");
 
-	//// Save current bat position
-	//pugi::xml_node kidPos = data.append_child("kidPosition");
-	//kidPos.append_attribute("x") = app->scene->kid->pbody->body->GetTransform().p.x;
-	//kidPos.append_attribute("y") = app->scene->kid->pbody->body->GetTransform().p.y;
-	//
-	//pugi::xml_node checkPoint = data.append_child("checkPoint");
-	//checkPoint.append_attribute("checkPoint") = app->scene->saveEnabled;
-	//
-	//pugi::xml_node actualMapName = data.append_child("mapName");
-	//actualMapName.append_attribute("mapName") = mapName.GetString();
+	for (ListItem<Item*>* itemsItem = itemsList.start; itemsItem != NULL; itemsItem = itemsItem->next)
+	{
+		pugi::xml_node itemsNode = itemsListNode.append_child("item");
+		
+		itemsNode.append_attribute("x") = itemsItem->data->body->pos.x;
+		itemsNode.append_attribute("y") = itemsItem->data->body->pos.y;
+		itemsNode.append_attribute("name") = itemsItem->data->itemData.name.GetString();
+		itemsNode.append_attribute("itemType") = itemsItem->data->itemData.itemType.GetString();
+		itemsNode.append_attribute("animable") = itemsItem->data->itemData.animable;
+		itemsNode.append_attribute("frames") = itemsItem->data->itemData.frames;
+		itemsNode.append_attribute("isStackable") = itemsItem->data->itemData.isStackable;
+		itemsNode.append_attribute("texturepath") = itemsItem->data->itemData.texturePath;
+	}
 
 	return true;
+}
+
+void SceneGame::FastDebugForSave()
+{
+
+	if (app->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN) {
+		LOG("SAVED");
+		showSavingState = true;
+		app->SaveGameRequest();
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN) {
+		LOG("NIGHT CHANGE");
+		isNight = !isNight;
+	}
+
 }

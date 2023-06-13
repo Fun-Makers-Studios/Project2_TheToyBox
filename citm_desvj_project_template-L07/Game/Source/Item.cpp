@@ -97,7 +97,7 @@ bool Item::Update()
 		{
 			if (inventoryItem->data->item != nullptr)
 			{
-				if (inventoryItem->data->item->itemData.name == this->itemData.name && inventoryItem->data->item->itemData.isStackeable)
+				if (inventoryItem->data->item->itemData.name == this->itemData.name && inventoryItem->data->item->itemData.isStackable)
 				{
 					inventoryItem->data->item->itemStackQuantity++;
 					break;

@@ -16,7 +16,7 @@ struct ItemData {
 	SString itemType;
 	bool animable = false;
 	uint frames;
-	bool isStackeable = false;
+	bool isStackable = false;
 };
 
 class Item : public Entity
@@ -58,8 +58,6 @@ private:
 	Animation itemAnim;
 
 	SDL_Rect rect;
-
-	int timeMov = 0;
 
 	ParticleSystem* takeItemPS = nullptr;
 
