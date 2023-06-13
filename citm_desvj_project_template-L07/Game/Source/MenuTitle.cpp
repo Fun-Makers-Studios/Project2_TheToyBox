@@ -7,6 +7,7 @@
 #include "GuiManager.h"
 #include "Audio.h"
 #include "Log.h"
+#include "SceneGame.h"
 
 
 MenuTitle::MenuTitle() : Menu()
@@ -126,6 +127,7 @@ bool MenuTitle::OnGuiMouseClickEvent(GuiControl* control)
 		// Only if "save_game.xml" exists
 		app->sceneManager->sceneState = SceneState::SWITCH;
 		app->sceneManager->nextScene = SceneID::SCENE_GAME;
+		app->sceneManager->sceneGame->newGame = false;
 
 		app->sceneManager->sceneGame->continueGame = true;
 		app->audio->PlayFx(app->menuManager->startSFX);
@@ -134,6 +136,7 @@ bool MenuTitle::OnGuiMouseClickEvent(GuiControl* control)
 	case (uint32)ControlID::PLAY:
 		app->sceneManager->sceneState = SceneState::SWITCH;
 		app->sceneManager->nextScene = SceneID::SCENE_GAME;
+		app->sceneManager->sceneGame->newGame = false;
 
 		app->audio->PlayFx(app->menuManager->startSFX);
 		if (remove("save_game.xml") != 0)

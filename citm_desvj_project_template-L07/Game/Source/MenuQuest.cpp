@@ -155,8 +155,6 @@ bool MenuQuest::PostUpdate()
 {
 	bool ret = true;
 
-	//app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
-
 	app->render->DrawTexture(questMenuImg, app->menuManager->openBookPos.x, app->menuManager->openBookPos.y, &rectTexture, SDL_FLIP_NONE, ScaleType::UI_200, false);
 
 	iPoint displacement = { 284 + app->menuManager->openBookPos.x, 59 + app->menuManager->openBookPos.y };
@@ -176,10 +174,13 @@ bool MenuQuest::PostUpdate()
 			app->render->DrawTexture(questsBoxTexture, boxPos.x + app->menuManager->openBookPos.x, (boxPos.y + app->menuManager->openBookPos.y + (32 * currentQuestNum)), &activeQuestBox1, SDL_FLIP_NONE, ScaleType::UI_200, false);
 		}
 
+		app->fonts->BlitText(438 + app->menuManager->openBookPos.x, (58 + app->menuManager->openBookPos.y + (32 * currentQuestNum)), fontID, std::to_string(item->id).c_str(), ScaleType::UI_200);
+
 		lines = app->fonts->BlitText2(displacement.x, displacement.y, fontID, (const char*)item->name.GetString(), ScaleType::UI_200, 8, 120);
 
 		if (item->id == currentQuestSelectedID)
 		{
+			app->fonts->BlitText(135 + app->menuManager->openBookPos.x, 47 + app->menuManager->openBookPos.y, fontID, std::to_string(item->id).c_str(), ScaleType::UI_200);
 			app->fonts->BlitText( 131 + app->menuManager->openBookPos.x, 145 + app->menuManager->openBookPos.y, fontID, std::to_string(item->id).c_str(), ScaleType::UI_200);
 			iPoint displacement2 = { 73 + app->menuManager->openBookPos.x, 160 + app->menuManager->openBookPos.y};
 
@@ -219,6 +220,8 @@ bool MenuQuest::PostUpdate()
 		{
 			app->render->DrawTexture(questsBoxTexture, boxPos.x + app->menuManager->openBookPos.x, (boxPos.y + app->menuManager->openBookPos.y + (32 * currentQuestNum)), &doneQuestBox1, SDL_FLIP_NONE, ScaleType::UI_200, false);
 		}
+
+		app->fonts->BlitText(438 + app->menuManager->openBookPos.x, (58 + app->menuManager->openBookPos.y + (32 * currentQuestNum)), fontID, std::to_string(item->id).c_str(), ScaleType::UI_200);
 
 		lines = app->fonts->BlitText2(displacement.x, displacement.y, fontID, (const char*)item->name.GetString(), ScaleType::UI_200, 8, 120);
 

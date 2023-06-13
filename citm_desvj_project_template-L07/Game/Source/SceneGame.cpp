@@ -109,6 +109,11 @@ bool SceneGame::Start()
 	fight = app->audio->LoadFx("Assets/Audio/Fx/SceneGame/fx20.wav");
 	saved = app->audio->LoadFx("Assets/Audio/Fx/SceneGame/fx44.wav");
 
+	if (newGame) {
+		if (app->sceneManager->sceneGame->dialogueManager->GetCurrentDialogue() == nullptr)
+			app->sceneManager->sceneGame->dialogueManager->Load(0);
+	}
+
 	ResetScene();
 
 	return true;

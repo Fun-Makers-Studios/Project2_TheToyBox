@@ -79,6 +79,7 @@ public:
 
 	bool playing = false; //HEKATE not used
 	bool continueGame = false;
+	bool newGame = true;
 
 	SString mapName;
 	bool isMapChanging = false;

@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "QuestManager.h"
 #include "Fonts.h"
+#include "MenuManager.h"
 
 #include "Log.h"
 
@@ -35,6 +36,7 @@ void DialogueManager::Load(int dialogueId)
 		{
 			Dialogue* dialogue = new Dialogue(node);
 			currentDialogue = dialogue;
+			break;
 		}
 	}
 
@@ -59,7 +61,7 @@ bool DialogueManager::Update()
 			currentDialogue->currentNode->currentOption = op;
 	
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+	else if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && delay < 0 && app->menuManager->menuTabs->menuState == MenuState::OFF) {
 		app->questManager->TriggerQuest(currentDialogue->currentNode->currentOption->questTriggerId);
 		currentDialogue->currentNode = currentDialogue->SetCurrentNode(currentDialogue->currentNode->currentOption->nextNodeId);
 
@@ -69,6 +71,8 @@ bool DialogueManager::Update()
 			return false;
 		}
 	}
+
+	delay--;
 
 	return true;
 }
@@ -98,6 +102,8 @@ void DialogueManager::Draw()
 void DialogueManager::Unload()
 {
 	LOG("Unloading Dialog");
+
+	delay = 1;
 
 	currentDialogue->nodes.Clear();
 	RELEASE(currentDialogue);
