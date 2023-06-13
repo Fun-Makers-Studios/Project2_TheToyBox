@@ -48,6 +48,9 @@ public:
 
 	std::string MenuIDToString(MenuID menuID);
 
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&);
+
 public:
 
 	MenuID selectedTab = MenuID::MENU_NULL;

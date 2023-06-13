@@ -49,6 +49,8 @@ public:
 
 	void FightKid();
 
+	void FastDebugForSave();
+
 public:
 
 	// Entities
@@ -76,8 +78,6 @@ public:
 	bool questMenu = false;
 	bool settingSceneMenu = false;
 
-
-	bool playing = false; //HEKATE not used
 	bool continueGame = false;
 	bool newGame = true;
 
@@ -93,9 +93,7 @@ public:
 	const char* musicPath = nullptr;
 private:
 
-	iPoint startPosition;
-	iPoint mousePos;
-	iPoint cameraPos;
+	bool isCheckpointEnabled = false;
 
 	bool isNight = false;
 	bool exitGame = false;
@@ -103,12 +101,6 @@ private:
 	// Textures
 
 	int fight, saved;
-
-
-	// Debug pathfinding
-	iPoint origin;
-	bool originSelected = false;
-
 
 	// Particle system
 	ParticleSystem* smokePS = nullptr;

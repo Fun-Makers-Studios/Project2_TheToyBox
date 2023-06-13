@@ -238,126 +238,156 @@ void Collisions::SolveCollision(Body* body1, Body* body2)
 
     case MapZone::HOUSE1_TO_TOWN:
         LOG("GO TO TOWN");
-        app->sceneManager->sceneGame->mapName = "town";
-        app->sceneManager->sceneGame->player->newPos = { 192, 256 };
-        app->sceneManager->sceneGame->isMapChanging = true;
-        scaleMap = ScaleType::WORLD;
-        app->audio->PlayMusic("Assets/Audio/Music/town.ogg", 1.0F);
+        if (!app->sceneManager->sceneGame->isMapChanging)
+        {
+            app->sceneManager->sceneGame->mapName = "town";
+            app->sceneManager->sceneGame->player->newPos = { 192, 256 };
+            app->sceneManager->sceneGame->isMapChanging = true;
+            scaleMap = ScaleType::WORLD;
+            app->audio->PlayMusic("Assets/Audio/Music/town.ogg", 1.0F);
+        }        
         break;
 
     case MapZone::TOWN_TO_HOUSE1:
         LOG("GO TO HOUSE BASEMENT");
-        app->sceneManager->sceneGame->mapName = "housebasement";
-        app->sceneManager->sceneGame->player->newPos = { 640, 480 };
-        app->sceneManager->sceneGame->isMapChanging = true;
-        scaleMap = ScaleType::HOUSE;
-        app->audio->PlayMusic("Assets/Audio/Music/house.ogg", 1.0F);
+        if (!app->sceneManager->sceneGame->isMapChanging)
+        {
+            app->sceneManager->sceneGame->mapName = "housebasement";
+            app->sceneManager->sceneGame->player->newPos = { 640, 480 };
+            app->sceneManager->sceneGame->isMapChanging = true;
+            scaleMap = ScaleType::HOUSE;
+            app->audio->PlayMusic("Assets/Audio/Music/house.ogg", 1.0F);
+        }
         break;
 
     case MapZone::HOUSEBASE_TO_HOUSEFLOOR:
         LOG("GO TO HOUSE FLOOR");
-        app->sceneManager->sceneGame->mapName = "housefloor";
-        app->sceneManager->sceneGame->player->newPos = { 840, 140};
-        app->sceneManager->sceneGame->isMapChanging = true;
-        scaleMap = ScaleType::HOUSE;
-        app->audio->PlayMusic("Assets/Audio/Music/house.ogg", 1.0F);
+        if (!app->sceneManager->sceneGame->isMapChanging)
+        {
+            app->sceneManager->sceneGame->mapName = "housefloor";
+            app->sceneManager->sceneGame->player->newPos = { 840, 140 };
+            app->sceneManager->sceneGame->isMapChanging = true;
+            scaleMap = ScaleType::HOUSE;
+            app->audio->PlayMusic("Assets/Audio/Music/house.ogg", 1.0F);
+        }
         break;
 
     case MapZone::HOUSEFLOOR_TO_HOUSEFBASE:
         LOG("GO TO HOUSE BASEMENT");
-        app->sceneManager->sceneGame->mapName = "housebasement";
-        app->sceneManager->sceneGame->player->newPos = { 660, 150 };
-        app->sceneManager->sceneGame->isMapChanging = true;
-        scaleMap = ScaleType::HOUSE;
-        app->audio->PlayMusic("Assets/Audio/Music/house.ogg", 1.0F);
+        if (!app->sceneManager->sceneGame->isMapChanging)
+        {
+            app->sceneManager->sceneGame->mapName = "housebasement";
+            app->sceneManager->sceneGame->player->newPos = { 660, 150 };
+            app->sceneManager->sceneGame->isMapChanging = true;
+            scaleMap = ScaleType::HOUSE;
+            app->audio->PlayMusic("Assets/Audio/Music/house.ogg", 1.0F);
+        }
         break;
 
     case MapZone::TOWN_TO_TAVERN:
         LOG("GO TO TAVERN");
-        app->sceneManager->sceneGame->mapName = "tavern";
-        app->sceneManager->sceneGame->player->newPos = { 640, 500 };
-        app->sceneManager->sceneGame->isMapChanging = true;
-        scaleMap = ScaleType::HOUSE;
-        app->audio->PlayMusic("Assets/Audio/Music/house.ogg", 1.0F);
+        if (!app->sceneManager->sceneGame->isMapChanging)
+        {
+            app->sceneManager->sceneGame->mapName = "tavern";
+            app->sceneManager->sceneGame->player->newPos = { 640, 500 };
+            app->sceneManager->sceneGame->isMapChanging = true;
+            scaleMap = ScaleType::HOUSE;
+            app->audio->PlayMusic("Assets/Audio/Music/house.ogg", 1.0F);
+        }
         break;
 
     case MapZone::TAVERN_TO_TOWN:
         LOG("GO TO TOWN");
-        app->sceneManager->sceneGame->mapName = "town";
-        app->sceneManager->sceneGame->player->newPos = { 800, 352 };
-        app->sceneManager->sceneGame->isMapChanging = true;
-        scaleMap = ScaleType::WORLD;
-        app->audio->PlayMusic("Assets/Audio/Music/town.ogg", 1.0F);
+        if (!app->sceneManager->sceneGame->isMapChanging)
+        {
+            app->sceneManager->sceneGame->mapName = "town";
+            app->sceneManager->sceneGame->player->newPos = { 800, 352 };
+            app->sceneManager->sceneGame->isMapChanging = true;
+            scaleMap = ScaleType::WORLD;
+            app->audio->PlayMusic("Assets/Audio/Music/town.ogg", 1.0F);
+        }
         break;
 
     case MapZone::TOWN_TO_INN:
         LOG("GO TO INN");
-        app->sceneManager->sceneGame->mapName = "inn";
-        app->sceneManager->sceneGame->player->newPos = { 960, 544 };
-        app->sceneManager->sceneGame->isMapChanging = true;
-        scaleMap = ScaleType::HOUSE;
-        app->audio->PlayMusic("Assets/Audio/Music/house.ogg", 1.0F);
+        if (!app->sceneManager->sceneGame->isMapChanging)
+        {
+            app->sceneManager->sceneGame->mapName = "inn";
+            app->sceneManager->sceneGame->player->newPos = { 960, 544 };
+            app->sceneManager->sceneGame->isMapChanging = true;
+            scaleMap = ScaleType::HOUSE;
+            app->audio->PlayMusic("Assets/Audio/Music/house.ogg", 1.0F);
+
+        }
         break;
 
     case MapZone::INN_TO_TOWN:
         LOG("GO TO TOWN");
-        app->sceneManager->sceneGame->mapName = "town";
-        app->sceneManager->sceneGame->player->newPos = { 1184, 448 };
-        app->sceneManager->sceneGame->isMapChanging = true;
-        scaleMap = ScaleType::WORLD;
-        app->audio->PlayMusic("Assets/Audio/Music/town.ogg", 1.0F);
-
+        if (!app->sceneManager->sceneGame->isMapChanging)
+        {
+            app->sceneManager->sceneGame->mapName = "town";
+            app->sceneManager->sceneGame->player->newPos = { 1184, 448 };
+            app->sceneManager->sceneGame->isMapChanging = true;
+            scaleMap = ScaleType::WORLD;
+            app->audio->PlayMusic("Assets/Audio/Music/town.ogg", 1.0F);
+        }
         break;
     
     case MapZone::TOWN_TO_CIRCUS:
     {
         LOG("GO TO CIRCUS");
-
-        SString str = "Circus ticket";
-
-        for (ListItem<InventorySlot*>* invItem = app->menuManager->menuParty->inventorySlotList.start; invItem != nullptr; invItem = invItem->next)
+        if (!app->sceneManager->sceneGame->isMapChanging)
         {
-            if (invItem->data->item != nullptr && invItem->data->item->itemData.name == str)
-            {
-                app->sceneManager->sceneGame->mapName = "circusOne";
-                app->sceneManager->sceneGame->player->newPos = { 160, 416 };
-                app->sceneManager->sceneGame->isMapChanging = true;
-                scaleMap = ScaleType::WORLD;
-            }
-        }
-        app->audio->PlayMusic("Assets/Audio/Music/dungeon.ogg", 1.0F);
+            SString str = "Circus ticket";
 
+            for (ListItem<InventorySlot*>* invItem = app->menuManager->menuParty->inventorySlotList.start; invItem != nullptr; invItem = invItem->next)
+            {
+                if (invItem->data->item != nullptr && invItem->data->item->itemData.name == str)
+                {
+                    app->sceneManager->sceneGame->mapName = "circusOne";
+                    app->sceneManager->sceneGame->player->newPos = { 160, 416 };
+                    app->sceneManager->sceneGame->isMapChanging = true;
+                    scaleMap = ScaleType::WORLD;
+                }
+            }
+            app->audio->PlayMusic("Assets/Audio/Music/dungeon.ogg", 1.0F);
+        }
     }break;
 
     case MapZone::CIRCUS_TO_TOWN:
         LOG("GO TO TOWN");
-
-        app->sceneManager->sceneGame->mapName = "town";
-        app->sceneManager->sceneGame->player->newPos = { 1450, 96 };
-        app->sceneManager->sceneGame->isMapChanging = true;
-        scaleMap = ScaleType::WORLD;
-        app->audio->PlayMusic("Assets/Audio/Music/town.ogg", 1.0F);
-
+        if (!app->sceneManager->sceneGame->isMapChanging)
+        {
+            app->sceneManager->sceneGame->mapName = "town";
+            app->sceneManager->sceneGame->player->newPos = { 1450, 96 };
+            app->sceneManager->sceneGame->isMapChanging = true;
+            scaleMap = ScaleType::WORLD;
+            app->audio->PlayMusic("Assets/Audio/Music/town.ogg", 1.0F);
+        }
         break;
     
     case MapZone::CIRCUSONE_TO_CIRCUSTWO:
         LOG("GO TO CIRCUS 2");
-        app->sceneManager->sceneGame->mapName = "circusTwo";
-        app->sceneManager->sceneGame->player->newPos = { 256, 1344 };
-        app->sceneManager->sceneGame->isMapChanging = true;
-        scaleMap = ScaleType::WORLD;
-        app->audio->PlayMusic("Assets/Audio/Music/far.ogg", 1.0F);
-
+        if (!app->sceneManager->sceneGame->isMapChanging)
+        {
+            app->sceneManager->sceneGame->mapName = "circusTwo";
+            app->sceneManager->sceneGame->player->newPos = { 256, 1344 };
+            app->sceneManager->sceneGame->isMapChanging = true;
+            scaleMap = ScaleType::WORLD;
+            app->audio->PlayMusic("Assets/Audio/Music/far.ogg", 1.0F);
+        }
         break;
     
     case MapZone::CIRCUSTWO_TO_CIRCUSONE:
         LOG("GO TO CIRCUS");
-        app->sceneManager->sceneGame->mapName = "circusOne";
-        app->sceneManager->sceneGame->player->newPos = { 192, 1216 };
-        app->sceneManager->sceneGame->isMapChanging = true;
-        scaleMap = ScaleType::WORLD;
-        app->audio->PlayMusic("Assets/Audio/Music/dungeon.ogg", 1.0F);
-
+        if (!app->sceneManager->sceneGame->isMapChanging)
+        {
+            app->sceneManager->sceneGame->mapName = "circusOne";
+            app->sceneManager->sceneGame->player->newPos = { 192, 1216 };
+            app->sceneManager->sceneGame->isMapChanging = true;
+            scaleMap = ScaleType::WORLD;
+            app->audio->PlayMusic("Assets/Audio/Music/dungeon.ogg", 1.0F);
+        }
         break;
 
     }
