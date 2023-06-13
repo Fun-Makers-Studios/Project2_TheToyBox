@@ -140,7 +140,7 @@ bool MenuSettings::PostUpdate()
 
 	//app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
 
-	app->render->DrawTexture(settingsMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
+	app->render->DrawTexture(settingsMenuImg, app->menuManager->openBookPos.x, app->menuManager->openBookPos.y, &rectMenuSettings, SDL_FLIP_NONE, ScaleType::UI_200, false);
 
 	//if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	//	ret = false;

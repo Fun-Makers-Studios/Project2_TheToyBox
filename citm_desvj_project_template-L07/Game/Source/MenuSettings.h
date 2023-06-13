@@ -50,6 +50,7 @@ private:
 
 	SDL_Texture* settingsMenuImg = nullptr;
 	const char* settingsMenuImgPath;
+	SDL_Rect rectMenuSettings = { 1584, 0, 519, 311 };
 
 	const char* on = "on";
 	const char* off = "off";
