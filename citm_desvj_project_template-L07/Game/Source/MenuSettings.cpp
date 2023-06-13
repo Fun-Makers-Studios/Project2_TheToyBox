@@ -17,7 +17,7 @@ MenuSettings::MenuSettings() : Menu()
 {
 	id = MenuID::MENU_SETTINGS;
 
-	popImgSettingsPath = app->configNode.child("menuManager").child("popImage").attribute("settingtexturepath").as_string();
+	settingsMenuImgPath = app->configNode.child("menuManager").child("menuSettings").attribute("texturepath").as_string();
 }
 
 
@@ -39,7 +39,7 @@ bool MenuSettings::Start()
 	LOG("--STARTS TITLE MENU--");
 
 	// Load
-	popImg_settings = app->tex->Load(popImgSettingsPath);
+	settingsMenuImg = app->tex->Load(settingsMenuImgPath);
 
 	// Create UI
 	fullscreenButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::FULL_SCREEN, "off", 4, { 520, 424, 252, 76 }, this);
@@ -78,7 +78,6 @@ bool MenuSettings::PreUpdate()
 
 bool MenuSettings::Update(float dt)
 {
-
 	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		app->audio->PlayFx(app->menuManager->closeMenuSFX);
@@ -141,7 +140,7 @@ bool MenuSettings::PostUpdate()
 
 	//app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
 
-	app->render->DrawTexture(popImg_settings, app->render->camera.x, app->render->camera.y - 3, NULL);
+	app->render->DrawTexture(settingsMenuImg, app->render->camera.x, app->render->camera.y - 3, NULL);
 
 	//if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	//	ret = false;
@@ -157,7 +156,7 @@ bool MenuSettings::CleanUp()
 {
 	LOG("Freeing TITLE SCENE");
 
-	app->tex->UnLoad(popImg_settings);
+	app->tex->UnLoad(settingsMenuImg);
 
 	//STORE IN A LIST THIS BUTTONS AND THEN CHECK HERE IF NULLPTR TO CLEAN THEM UP
 	//guiControlsList.Clear();

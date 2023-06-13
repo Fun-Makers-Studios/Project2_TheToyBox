@@ -48,8 +48,8 @@ public:
 
 private:
 
-	SDL_Texture* popImg_settings = nullptr;
-	const char* popImgSettingsPath;
+	SDL_Texture* settingsMenuImg = nullptr;
+	const char* settingsMenuImgPath;
 
 	const char* on = "on";
 	const char* off = "off";

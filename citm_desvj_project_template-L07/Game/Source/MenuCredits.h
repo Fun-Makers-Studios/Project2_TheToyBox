@@ -29,9 +29,9 @@ public:
 
 private:
 
-	SDL_Texture* popImg_credits = nullptr;
-	const char* popImgCreditsPath;
-
+	SDL_Texture* creditsMenuImg = nullptr;
+	const char* creditsMenuImgPath;
+	SDL_Rect rectMenu = { 2112, 0, 519, 311 };
 };
 
 #endif // __MENU_CREDITS_H__

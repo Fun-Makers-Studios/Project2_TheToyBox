@@ -16,7 +16,7 @@ MenuCredits::MenuCredits() : Menu()
 {
 	id = MenuID::MENU_CREDITS;
 
-	popImgCreditsPath = app->configNode.child("menuManager").child("popImage").attribute("creditstexturepath").as_string();
+	creditsMenuImgPath = app->configNode.child("menuManager").child("menuCredits").attribute("texturepath").as_string();
 }
 
 
@@ -38,7 +38,7 @@ bool MenuCredits::Start()
 	LOG("--STARTS PAUSE MENU--");
 
 	// Load
-	popImg_credits = app->tex->Load(popImgCreditsPath);
+	creditsMenuImg = app->tex->Load(creditsMenuImgPath);
 
 	// Set easing finished on title buttons
 	ListItem<GuiControl*>* control = guiControlsList.start;
@@ -66,15 +66,6 @@ bool MenuCredits::PreUpdate()
 
 bool MenuCredits::Update(float dt)
 {
-	//app->render->DrawRectangle({ 0, 0, app->render->camera.w, app->render->camera.w }, 0, 0, 0, 128, true, false, true);
-	
-	app->render->DrawTexture(popImg_credits, 0, 0, NULL);
-
-	/*if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	{
-		app->audio->PlayFx(app->menuManager->closeMenuSFX);
-		app->menuManager->SetDefaultMenu();
-	}*/
 
 	return true;
 }
@@ -84,6 +75,9 @@ bool MenuCredits::PostUpdate()
 {
 	bool ret = true;
 
+	app->render->DrawTexture(creditsMenuImg, app->menuManager->openBookPos.x, app->menuManager->openBookPos.y, &rectMenu, SDL_FLIP_NONE, ScaleType::UI_200, false);
+
+
 	return ret;
 }
 
@@ -92,7 +86,7 @@ bool MenuCredits::CleanUp()
 {
 	LOG("Freeing MenuCredits");
 
-	app->tex->UnLoad(popImg_credits);
+	app->tex->UnLoad(creditsMenuImg);
 
 	//STORE IN A LIST THIS BUTTONS AND THEN CHECK HERE IF NULLPTR TO CLEAN THEM UP
 	//guiControlsList.Clear();
