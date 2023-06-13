@@ -132,6 +132,8 @@ bool SceneGame::Update(float dt)
 
 	SceneMap();
 
+	//app->scaleObj->SetCurrentScale(ScaleType::WORLD);
+
 	//TEST FIGHT SCENE - HEKATE!!!
 	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
 		LOG("SWITCHING TO SCENEFIGHT");
@@ -506,6 +508,8 @@ bool SceneGame::LoadState(pugi::xml_node& data)
 {
 	pugi::xml_node sceneGame = data.child("scene");
 	
+	SString currentMap = mapName;
+
 	mapName = sceneGame.child("mapName").attribute("actualMap").as_string();
 
 	isNight = sceneGame.child("isNight").attribute("night").as_bool();
@@ -515,8 +519,12 @@ bool SceneGame::LoadState(pugi::xml_node& data)
 	player->body->pos.x = sceneGame.child("player").attribute("x").as_double();
 	player->body->pos.y = sceneGame.child("player").attribute("y").as_double();
 	
-	isMapChanging = true;
-	isMapChangingFromSave = true;
+	if (mapName != currentMap)
+	{
+		isMapChanging = true;
+		isMapChangingFromSave = true;
+	}
+	
 
 	return true;
 }

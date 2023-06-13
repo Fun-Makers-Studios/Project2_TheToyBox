@@ -132,7 +132,7 @@ void PartyManager::AddMemberToParty(PartyMember* member)
 
 bool PartyManager::LoadState(pugi::xml_node& data)
 {
-	ListItem<PartyMember*>* pmemberItem;
+	/*ListItem<PartyMember*>* pmemberItem;
 	for (pmemberItem = party.start; pmemberItem != NULL; pmemberItem = pmemberItem->next)
 	{
 		pugi::xml_node partyMember = data.append_child("partymember");
@@ -149,7 +149,7 @@ bool PartyManager::LoadState(pugi::xml_node& data)
 		pmemberItem->data->critRate = data.child("partymember").attribute("critRate").as_uint();
 		pmemberItem->data->initPos.x = data.child("partymember").attribute("fightPosX").as_int();
 		pmemberItem->data->initPos.y = data.child("partymember").attribute("fightPosY").as_int();
-	}
+	}*/
 
 	return true;
 }
