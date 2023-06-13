@@ -136,7 +136,7 @@ bool MenuTitle::OnGuiMouseClickEvent(GuiControl* control)
 	case (uint32)ControlID::PLAY:
 		app->sceneManager->sceneState = SceneState::SWITCH;
 		app->sceneManager->nextScene = SceneID::SCENE_GAME;
-		app->sceneManager->sceneGame->newGame = false;
+		app->sceneManager->sceneGame->newGame = true;
 
 		app->audio->PlayFx(app->menuManager->startSFX);
 		if (remove("save_game.xml") != 0)
