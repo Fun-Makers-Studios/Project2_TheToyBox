@@ -59,7 +59,7 @@
 
 	<scene>
 		<music musicPath="Assets/Audio/Music/town.ogg" />
-		<saveTex saveTexPath="Assets/Textures/UI/save.png"/>
+		<saveTex saveTexPath="Assets/Textures/UI/Old/save.png"/>
 		<scenesfx selectSFXPath="Assets/Audio/Fx/select.wav" />
 		<player x="70" y="1088" texturepath="Assets/Textures/SceneGame/characterZero.png" shadowtexture="Assets/Textures/shadow.png"/>
 		

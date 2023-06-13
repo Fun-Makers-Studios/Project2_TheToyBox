@@ -83,6 +83,7 @@ public:
 
 	SString mapName;
 	bool isMapChanging = false;
+	bool isMapChangingFromSave = false;
 
 	uint partyMemberSelected = 0;
 	uint questListSelected = 0;

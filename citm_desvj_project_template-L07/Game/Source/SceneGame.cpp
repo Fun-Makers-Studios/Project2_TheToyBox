@@ -52,15 +52,6 @@ bool SceneGame::Start()
 
 	dialogueManager = new DialogueManager(this);
 
-	
-	// Iterate all objects in the scene
-	/*for (pugi::xml_node itemNode = app->configNode.child("scene").child("potionhp"); itemNode; itemNode = itemNode.next_sibling("potionhp"))
-	{
-		item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-		item->parameters = itemNode;
-		livesCollectedList.Add(item);
-	}*/
-
 	// Load Enemies
 	for (pugi::xml_node itemNode = app->configNode.child("scene").child("enemykid"); itemNode; itemNode = itemNode.next_sibling("enemykid"))
 	{
@@ -126,8 +117,6 @@ bool SceneGame::PreUpdate()
 // Called each loop iteration
 bool SceneGame::Update(float dt)
 {
-	SceneMap();
-
 	if (continueGame)
 	{
 		isCheckpointEnabled = true;
@@ -135,6 +124,8 @@ bool SceneGame::Update(float dt)
 		app->audio->PlayFx(selectSFX);
 		continueGame = false;
 	}
+
+	SceneMap();
 
 	//TEST FIGHT SCENE - HEKATE!!!
 	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
@@ -380,17 +371,31 @@ void SceneGame::SceneMap()
         }
         else if (app->transitionManager->step == TransitionStep::SWITCH)
         {
-			app->map->ChangeMap(mapName.GetString());
-			player->body->pos = player->newPos;
-			LoadNPC();
-			LoadItems();
-			LoadPuzzles();
-			app->scaleObj->SetCurrentScale(app->collisions->scaleMap);
+			if (isMapChangingFromSave)
+			{
+				app->map->ChangeMap(mapName.GetString());
+				LoadNPC();
+				LoadItems();
+				LoadPuzzles();
+				app->scaleObj->SetCurrentScale(app->collisions->scaleMap);
+			}
+			else
+			{
+				if (mapName.GetString() == "town")
+					isNight = !isNight;
+				app->map->ChangeMap(mapName.GetString());
+				player->body->pos = player->newPos;
+				LoadNPC();
+				LoadItems();
+				LoadPuzzles();
+				app->scaleObj->SetCurrentScale(app->collisions->scaleMap);
+			}
         }
         else if (app->transitionManager->step == TransitionStep::FINISHED)
         {
             app->transitionManager->step = TransitionStep::NONE;
 			isMapChanging = false;
+			isMapChangingFromSave = false;
         }  
 	}
 }
@@ -496,8 +501,9 @@ bool SceneGame::LoadState(pugi::xml_node& data)
 
 	player->body->pos.x = sceneGame.child("player").attribute("x").as_double();
 	player->body->pos.y = sceneGame.child("player").attribute("y").as_double();
-
+	
 	isMapChanging = true;
+	isMapChangingFromSave = true;
 
 	return true;
 }
