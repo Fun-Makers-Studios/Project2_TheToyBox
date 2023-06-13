@@ -42,9 +42,9 @@ bool MenuFight::Start()
 	pauseRect = { 35, 69, 310, 555 };
 
 	//UI
-	attackButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::ATTACK, "attack", 7, { 100, 600, 252, 76 }, this);
-	specialButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SPECIAL, "special", 8, { 510, 600, 252, 76 }, this);
-	bagButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::BAG, "bag", 4, { 915, 600, 252, 76 }, this);
+	attackButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::ATTACK, "attack", 7, { 50, 300, 126, 38 }, this);
+	specialButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SPECIAL, "special", 8, { 255, 300, 126, 38 }, this);
+	bagButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::BAG, "bag", 4, { 457, 300, 126, 38 }, this);
 
 	// Set easing finished on title buttons
 	ListItem<GuiControl*>* control = guiControlsList.start;

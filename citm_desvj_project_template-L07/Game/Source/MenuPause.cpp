@@ -94,6 +94,7 @@ bool MenuPause::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case (uint32)ControlID::RESUME:
 		menuState = MenuState::SWITCH_OFF;
+		app->menuManager->menuTabs->menuState = MenuState::SWITCH_OFF;
 		app->audio->PlayFx(app->menuManager->selectSFX);
 		break;
 

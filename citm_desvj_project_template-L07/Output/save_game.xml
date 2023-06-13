@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<save_state>
+	<input />
+	<window />
+	<textures />
+	<Fonts_Module />
+	<audio />
+	<controller />
+	<assetsManager />
+	<sceneManager>
+		<scene>
+			<mapName actualMap="town" />
+			<isNight night="false" />
+			<pMmeberSelected selected="0" />
+			<player x="319.22095157255507" y="495.98102298142953" />
+			<itemsList>
+				<item x="112" y="910" name="Peanut bag" itemType="potionhp" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/peanut_bag.png" />
+				<item x="560" y="170" name="Peanut bag" itemType="potionhp" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/peanut_bag.png" />
+				<item x="321" y="384" name="Cotton candy" itemType="potionmana" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/potion_mana.png" />
+				<item x="865" y="580" name="Cotton candy" itemType="potionmana" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/potion_mana.png" />
+				<item x="640" y="705" name="Key" itemType="key" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/key.png" />
+				<item x="1375" y="225" name="Circus ticket" itemType="key" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/circus_ticket.png" />
+				<item x="175" y="1088" name="Light-up sword" itemType="lightupsword" animable="true" frames="5" isStackable="false" texturepath="Assets/Textures/Items/lightup_sword.png" />
+				<item x="112" y="910" name="Peanut bag" itemType="potionhp" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/peanut_bag.png" />
+				<item x="560" y="170" name="Peanut bag" itemType="potionhp" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/peanut_bag.png" />
+				<item x="321" y="384" name="Cotton candy" itemType="potionmana" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/potion_mana.png" />
+				<item x="865" y="580" name="Cotton candy" itemType="potionmana" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/potion_mana.png" />
+				<item x="640" y="705" name="Key" itemType="key" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/key.png" />
+				<item x="1375" y="225" name="Circus ticket" itemType="key" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/circus_ticket.png" />
+				<item x="175" y="1088" name="Light-up sword" itemType="lightupsword" animable="true" frames="5" isStackable="false" texturepath="Assets/Textures/Items/lightup_sword.png" />
+				<item x="112" y="910" name="Peanut bag" itemType="potionhp" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/peanut_bag.png" />
+				<item x="560" y="170" name="Peanut bag" itemType="potionhp" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/peanut_bag.png" />
+				<item x="321" y="384" name="Cotton candy" itemType="potionmana" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/potion_mana.png" />
+				<item x="865" y="580" name="Cotton candy" itemType="potionmana" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/potion_mana.png" />
+				<item x="640" y="705" name="Key" itemType="key" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/key.png" />
+				<item x="1375" y="225" name="Circus ticket" itemType="key" animable="false" frames="0" isStackable="false" texturepath="Assets/Textures/Items/circus_ticket.png" />
+				<item x="175" y="1088" name="Light-up sword" itemType="lightupsword" animable="true" frames="5" isStackable="false" texturepath="Assets/Textures/Items/lightup_sword.png" />
+			</itemsList>
+		</scene>
+		<currentScene sceneID="2" />
+	</sceneManager>
+	<map />
+	<pathfinding />
+	<collisions />
+	<entitymanager />
+	<partymanager>
+		<partymember name="zero" status="0" maxHP="0" maxMana="20" currentHp="25" currentMana="25" level="1" attack="4" defense="30" speed="40" critRate="10" fightPosX="105" fightPosY="25" />
+		<partymember name="zero" status="0" maxHP="0" maxMana="20" currentHp="25" currentMana="25" level="1" attack="4" defense="30" speed="40" critRate="10" fightPosX="105" fightPosY="25" />
+	</partymanager>
+	<puzzlemanager />
+	<psmanager />
+	<questmanager />
+	<menumanager />
+	<guiManager />
+	<transitionmanager />
+	<debug />
+	<renderer>
+		<camera x="0" y="631" />
+	</renderer>
+</save_state>

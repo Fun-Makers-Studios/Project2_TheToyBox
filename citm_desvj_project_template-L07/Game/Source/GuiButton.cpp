@@ -44,7 +44,7 @@ bool GuiButton::Update(float dt)
 		app->input->GetMousePosition(mouseX, mouseY);
 
 		// UI Scale for game menus
-		if (app->sceneManager->currentScene->id == SceneID::SCENE_GAME || app->sceneManager->currentScene->id == SceneID::SCENE_TITLE)
+		if (app->sceneManager->currentScene->id == SceneID::SCENE_GAME || app->sceneManager->currentScene->id == SceneID::SCENE_TITLE || app->sceneManager->currentScene->id == SceneID::SCENE_FIGHT)
 		{
 			mouseX /= 2;
 			mouseY /= 2;
