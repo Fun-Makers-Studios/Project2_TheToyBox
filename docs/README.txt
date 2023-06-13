@@ -43,3 +43,4 @@ Credits:
 		jQuery (jquery.com)
 		Scrollex (github.com/ajlkn/jquery.scrollex)
 		Responsive Tools (github.com/ajlkn/responsive-tools)
+		The Hunter Odyssey - Full Studios (https://magix7.github.io/TheHunterOdyssey/)
