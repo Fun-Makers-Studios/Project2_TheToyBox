@@ -61,8 +61,11 @@ bool DialogueManager::Update()
 			currentDialogue->currentNode->currentOption = op;
 	
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && delay < 0 && app->menuManager->menuTabs->menuState == MenuState::OFF) {
+	else if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && dialogueDelay < 0 && app->menuManager->menuTabs->menuState == MenuState::OFF) {
 		app->questManager->TriggerQuest(currentDialogue->currentNode->currentOption->questTriggerId);
+		if (currentDialogue->currentNode->currentOption->fightTrigger == true) {
+			app->sceneManager->sceneGame->fightTrigger = true;
+		}
 		currentDialogue->currentNode = currentDialogue->SetCurrentNode(currentDialogue->currentNode->currentOption->nextNodeId);
 
 		if (currentDialogue->currentNode == nullptr)
@@ -72,7 +75,7 @@ bool DialogueManager::Update()
 		}
 	}
 
-	delay--;
+	dialogueDelay--;
 
 	return true;
 }
@@ -103,7 +106,7 @@ void DialogueManager::Unload()
 {
 	LOG("Unloading Dialog");
 
-	delay = 1;
+	dialogueDelay = 1;
 
 	currentDialogue->nodes.Clear();
 	RELEASE(currentDialogue);

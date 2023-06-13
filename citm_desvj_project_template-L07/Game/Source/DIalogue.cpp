@@ -7,6 +7,7 @@ Option::Option(pugi::xml_node option) {
 	this->nextNodeId = option.attribute("nextNodeId").as_int();
 	this->questCompletionId = option.attribute("questCompletionId").as_int();
 	this->questTriggerId = option.attribute("questTriggerId").as_int();
+	this->fightTrigger = option.attribute("triggerFight").as_bool();
 }
 
 Node::Node(pugi::xml_node node) {

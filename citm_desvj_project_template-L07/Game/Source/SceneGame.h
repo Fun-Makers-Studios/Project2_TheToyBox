@@ -80,6 +80,8 @@ public:
 
 	bool continueGame = false;
 	bool newGame = true;
+	bool LoadOnStart = false;
+	bool fightTrigger = false;
 
 	SString mapName;
 	bool isMapChanging = false;

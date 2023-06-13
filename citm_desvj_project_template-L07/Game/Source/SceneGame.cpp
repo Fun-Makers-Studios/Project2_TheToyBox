@@ -114,6 +114,11 @@ bool SceneGame::Start()
 
 	ResetScene();
 
+	if (LoadOnStart) {
+		app->LoadGameRequest();
+		LoadOnStart = false;
+	}
+
 	return true;
 }
 
@@ -140,6 +145,13 @@ bool SceneGame::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN) {
 		LOG("SWITCHING TO SCENEFIGHT");
 		FightKid();
+	}
+
+	if (fightTrigger) {
+		LOG("SWITCHING TO SCENEFIGHT");
+		app->audio->PlayFx(fight);
+		FightKid();
+		fightTrigger = false;
 	}
 
 	// HEKATE
@@ -482,6 +494,7 @@ void SceneGame::FightKid()
 	app->partyManager->enemyToFight = "enemykid";
 	app->sceneManager->sceneState = SceneState::SWITCH;
 	app->sceneManager->nextScene = SceneID::SCENE_FIGHT;
+	app->SaveGameRequest();
 }
 
 bool SceneGame::LoadState(pugi::xml_node& data)

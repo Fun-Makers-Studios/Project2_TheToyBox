@@ -37,6 +37,7 @@
 				<item x="175" y="1088" name="Light-up sword" itemType="lightupsword" animable="true" frames="5" isStackable="false" texturepath="Assets/Textures/Items/lightup_sword.png" />
 			</itemsList>
 		</scene>
+		<playerPosition x="341.87907562327916" y="494.00000005403956" />
 		<currentScene sceneID="2" />
 	</sceneManager>
 	<map />

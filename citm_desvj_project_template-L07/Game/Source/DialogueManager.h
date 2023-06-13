@@ -32,7 +32,7 @@ private:
 
 	Dialogue* currentDialogue = nullptr;
 	SDL_Texture* dialoguetext = nullptr;
-	int delay = 1;
+	int dialogueDelay = 1;
 };
 
 #endif // __DIALOGUEMANAGER_H__
