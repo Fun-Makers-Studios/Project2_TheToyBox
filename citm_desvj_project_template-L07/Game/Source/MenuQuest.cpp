@@ -21,6 +21,12 @@ MenuQuest::MenuQuest() : Menu()
 	id = MenuID::MENU_QUEST;
 
 	questMenuImgPath = app->configNode.child("menuManager").child("menuQuests").attribute("texturepath").as_string();
+	questsBoxImgPath = app->configNode.child("menuManager").child("menuQuests").attribute("questsBoxTexture").as_string();
+		
+	activeQuestBox1 =	{ 0 * 0, 32 * 0, 218, 22 };
+	doneQuestBox1 =		{ 0 * 0, 32 * 1, 218, 22 };
+	activeQuestBox2 =	{ 0 * 0, 32 * 2, 218, 22 };
+	doneQuestBox2 =		{ 0 * 0, 32 * 3, 218, 22 };
 }
 
 
@@ -44,9 +50,10 @@ bool MenuQuest::Start()
 	// Load
 	questMenuImg = app->tex->Load(questMenuImgPath);
 	rectTexture = { 528, 0, 519, 311 };
+	questsBoxTexture = app->tex->Load(questsBoxImgPath);
 
 	//UI
-	SDL_Rect rect = { app->menuManager->openBookPos.x + 410, app->menuManager->openBookPos.y + 48, 41, 20 };
+	SDL_Rect rect = { app->menuManager->openBookPos.x + 409, app->menuManager->openBookPos.y + 50, 41, 20 };
 	quest1 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::QUEST_1, "", 1, rect, this, ButtonType::RECTANGLE_S);
 	quest2 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::QUEST_2, "", 1, rect, this, ButtonType::RECTANGLE_S);
 	quest3 = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::QUEST_3, "", 1, rect, this, ButtonType::RECTANGLE_S);
@@ -70,6 +77,68 @@ bool MenuQuest::Start()
 
 bool MenuQuest::PreUpdate()
 {
+	int quests = 0;
+
+	for (ListItem<Quest*>* qitem1 = app->questManager->activeQuests.start; qitem1 != nullptr; qitem1 = qitem1->next) {
+		quests++;
+	}
+
+	for (ListItem<Quest*>* qitem2 = app->questManager->completedQuests.start; qitem2 != nullptr; qitem2 = qitem2->next) {
+		quests++;
+	}
+
+	switch (quests)
+	{
+	case 1:
+		quest2->state = GuiControlState::DISABLED;
+		quest3->state = GuiControlState::DISABLED;
+		quest4->state = GuiControlState::DISABLED;
+		quest5->state = GuiControlState::DISABLED;
+		quest6->state = GuiControlState::DISABLED;
+		quest7->state = GuiControlState::DISABLED;
+		break;
+
+	case 2:
+		quest3->state = GuiControlState::DISABLED;
+		quest4->state = GuiControlState::DISABLED;
+		quest5->state = GuiControlState::DISABLED;
+		quest6->state = GuiControlState::DISABLED;
+		quest7->state = GuiControlState::DISABLED;
+		break;
+
+	case 3:
+		quest4->state = GuiControlState::DISABLED;
+		quest5->state = GuiControlState::DISABLED;
+		quest6->state = GuiControlState::DISABLED;
+		quest7->state = GuiControlState::DISABLED;
+		break;
+		break;
+
+	case 4:
+		quest5->state = GuiControlState::DISABLED;
+		quest6->state = GuiControlState::DISABLED;
+		quest7->state = GuiControlState::DISABLED;
+		break;
+		break;
+
+	case 5:
+		quest6->state = GuiControlState::DISABLED;
+		quest7->state = GuiControlState::DISABLED;
+		break;
+		break;
+
+	case 6:
+		quest7->state = GuiControlState::DISABLED;
+		break;
+
+	case 7:
+
+		break;
+
+	default:
+		break;
+	}
+
 	return true;
 }
 
@@ -77,6 +146,7 @@ bool MenuQuest::PreUpdate()
 bool MenuQuest::Update(float dt)
 {
 	
+
 	return true;
 }
 
@@ -89,16 +159,24 @@ bool MenuQuest::PostUpdate()
 
 	app->render->DrawTexture(questMenuImg, app->menuManager->openBookPos.x, app->menuManager->openBookPos.y, &rectTexture, SDL_FLIP_NONE, ScaleType::UI_200, false);
 
-	iPoint displacement = { 270, 120 };
+	iPoint displacement = { 284 + app->menuManager->openBookPos.x, 59 + app->menuManager->openBookPos.y };
 	int lines = 0;
 
-
+	int currentQuestNum = 0;
 
 	for (ListItem<Quest*>* qitem1 = app->questManager->activeQuests.start; qitem1 != nullptr; qitem1 = qitem1->next)
 	{
 		Quest* item = qitem1->data;
 
-		lines = app->fonts->BlitText2(displacement.x, displacement.y, fontID, (const char*)item->name.GetString(), ScaleType::UI_200, 8, 215);
+		if (item->id == currentQuestSelectedID) {
+			app->render->DrawTexture(questsBoxTexture, boxPos.x + app->menuManager->openBookPos.x, (boxPos.y + app->menuManager->openBookPos.y + (32 * currentQuestNum)), &activeQuestBox2, SDL_FLIP_NONE, ScaleType::UI_200, false);
+		}
+		else
+		{
+			app->render->DrawTexture(questsBoxTexture, boxPos.x + app->menuManager->openBookPos.x, (boxPos.y + app->menuManager->openBookPos.y + (32 * currentQuestNum)), &activeQuestBox1, SDL_FLIP_NONE, ScaleType::UI_200, false);
+		}
+
+		lines = app->fonts->BlitText2(displacement.x, displacement.y, fontID, (const char*)item->name.GetString(), ScaleType::UI_200, 8, 120);
 
 		if (item->id == currentQuestSelectedID)
 		{
@@ -124,28 +202,35 @@ bool MenuQuest::PostUpdate()
 					displacement2.y += (lines2 * (int)app->fonts->fonts[fontID].char_h) + ((lines2 - 1) * 7) + 7;
 				}
 			}
-
-			app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 218, 141, 85, 96, true, false, ScaleType::UI_100);
-			app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 55, 55, 80, 196, false, false, ScaleType::UI_100);
 		}
 
-		displacement.y += (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8) + 16;
+		displacement.y += 32;
+		currentQuestNum++;
 	}
 
 	for (ListItem<Quest*>* qitem2 = app->questManager->completedQuests.start; qitem2 != nullptr; qitem2 = qitem2->next)
 	{
 		Quest* item = qitem2->data;
 
-		lines = app->fonts->BlitText2(displacement.x, displacement.y, fontID, (const char*)item->name.GetString(), ScaleType::UI_200, 8, 215);
+		if (item->id == currentQuestSelectedID) {
+			app->render->DrawTexture(questsBoxTexture, boxPos.x + app->menuManager->openBookPos.x, (boxPos.y + app->menuManager->openBookPos.y + (32 * currentQuestNum)), &doneQuestBox2, SDL_FLIP_NONE, ScaleType::UI_200, false);
+		}
+		else
+		{
+			app->render->DrawTexture(questsBoxTexture, boxPos.x + app->menuManager->openBookPos.x, (boxPos.y + app->menuManager->openBookPos.y + (32 * currentQuestNum)), &doneQuestBox1, SDL_FLIP_NONE, ScaleType::UI_200, false);
+		}
+
+		lines = app->fonts->BlitText2(displacement.x, displacement.y, fontID, (const char*)item->name.GetString(), ScaleType::UI_200, 8, 120);
 
 		if (item->id == currentQuestSelectedID)
 		{
-			iPoint displacement2 = { 540, 130 };
+			app->fonts->BlitText(131 + app->menuManager->openBookPos.x, 145 + app->menuManager->openBookPos.y, fontID, std::to_string(item->id).c_str(), ScaleType::UI_200);
+			iPoint displacement2 = { 73 + app->menuManager->openBookPos.x, 160 + app->menuManager->openBookPos.y };
 
-			int lines2 = app->fonts->BlitText2(displacement2.x, displacement2.y, fontID, (const char*)item->description.GetString(), ScaleType::UI_200, 8, 460);
-			displacement2.y += (lines2 * (int)app->fonts->fonts[fontID].char_h) + ((lines2 - 1) * 8) + 16;
+			int lines2 = app->fonts->BlitText2(displacement2.x, displacement2.y, fontID, (const char*)item->description.GetString(), ScaleType::UI_200, 7, 100);
+			displacement2.y += (lines2 * (int)app->fonts->fonts[fontID].char_h) + ((lines2 - 1) * 7) + 7;
 
-			if (item->type == QuestType::PARTYMEMBERS) 
+			if (item->type == QuestType::PARTYMEMBERS)
 			{
 				PartyMembersQuest* pQuest = dynamic_cast<PartyMembersQuest*>(item);
 				for (ListItem<PMember>* pmember = pQuest->memberNames.start; pmember != nullptr; pmember = pmember->next)
@@ -158,15 +243,13 @@ bool MenuQuest::PostUpdate()
 						strInfo = std::string(pmember->data.name.GetString()) + " - LOST";
 					}
 					lines2 = app->fonts->BlitText2(displacement2.x, displacement2.y, fontID, (const char*)strInfo.c_str(), ScaleType::UI_200, 8, 460);
-					displacement2.y += (lines2 * (int)app->fonts->fonts[fontID].char_h) + ((lines2 - 1) * 8) + 16;
+					displacement2.y += (lines2 * (int)app->fonts->fonts[fontID].char_h) + ((lines2 - 1) * 7) + 7;
 				}
 			}
-
-			app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 218, 141, 85, 96, true, false, ScaleType::UI_100);
-			app->render->DrawRectangle({ (displacement.x - 2), (displacement.y - 2), (240 - 12), ((displacement.y + (lines * (int)app->fonts->fonts[fontID].char_h) + ((lines - 1) * 8)) - displacement.y) }, 55, 55, 80, 196, false, false, ScaleType::UI_100);
 		}
 
-		displacement.y += (lines * (int)app->fonts->fonts[fontID].char_h) + 16;
+		displacement.y += 32;
+		currentQuestNum++;
 	}
 
 	return ret;
@@ -178,6 +261,7 @@ bool MenuQuest::CleanUp()
 	LOG("Freeing TITLE SCENE");
 
 	app->tex->UnLoad(questMenuImg);
+	app->tex->UnLoad(questsBoxTexture);
 
 	//STORE IN A LIST THIS BUTTONS AND THEN CHECK HERE IF NULLPTR TO CLEAN THEM UP
 	//guiControlsList.Clear();
@@ -187,39 +271,154 @@ bool MenuQuest::CleanUp()
 
 bool MenuQuest::OnGuiMouseClickEvent(GuiControl* control)
 {
+	int quests = 1;
+	int questID = 0;
+
 	switch (control->id)
 	{
 	case (uint32)ControlID::QUEST_1:
+		quests = 1;
+		
+		for (ListItem<Quest*>* qitem1 = app->questManager->activeQuests.start; qitem1 != nullptr; qitem1 = qitem1->next) {
+			quests--;
+			if (quests == 0) {
+				questID = qitem1->data->id;
+			}
+		}
+
+		for (ListItem<Quest*>* qitem2 = app->questManager->completedQuests.start; qitem2 != nullptr; qitem2 = qitem2->next) {
+			quests--;
+			if (quests == 0) {
+				questID = qitem2->data->id;
+			}
+		}
+		currentQuestSelectedID = questID;
 		
 		app->audio->PlayFx(app->menuManager->selectSFX);
 		break;
 
 	case (uint32)ControlID::QUEST_2:
+		quests = 2;
+
+		for (ListItem<Quest*>* qitem1 = app->questManager->activeQuests.start; qitem1 != nullptr; qitem1 = qitem1->next) {
+			quests--;
+			if (quests == 0) {
+				questID = qitem1->data->id;
+			}
+		}
+
+		for (ListItem<Quest*>* qitem2 = app->questManager->completedQuests.start; qitem2 != nullptr; qitem2 = qitem2->next) {
+			quests--;
+			if (quests == 0) {
+				questID = qitem2->data->id;
+			}
+		}
+		currentQuestSelectedID = questID;
 
 		app->audio->PlayFx(app->menuManager->selectSFX);
 		break;
 
 	case (uint32)ControlID::QUEST_3:
+		quests = 3;
+
+		for (ListItem<Quest*>* qitem1 = app->questManager->activeQuests.start; qitem1 != nullptr; qitem1 = qitem1->next) {
+			quests--;
+			if (quests == 0) {
+				questID = qitem1->data->id;
+			}
+		}
+
+		for (ListItem<Quest*>* qitem2 = app->questManager->completedQuests.start; qitem2 != nullptr; qitem2 = qitem2->next) {
+			quests--;
+			if (quests == 0) {
+				questID = qitem2->data->id;
+			}
+		}
+		currentQuestSelectedID = questID;
 
 		app->audio->PlayFx(app->menuManager->selectSFX);
 		break;
 
 	case (uint32)ControlID::QUEST_4:
+		quests = 4;
+
+		for (ListItem<Quest*>* qitem1 = app->questManager->activeQuests.start; qitem1 != nullptr; qitem1 = qitem1->next) {
+			quests--;
+			if (quests == 0) {
+				questID = qitem1->data->id;
+			}
+		}
+
+		for (ListItem<Quest*>* qitem2 = app->questManager->completedQuests.start; qitem2 != nullptr; qitem2 = qitem2->next) {
+			quests--;
+			if (quests == 0) {
+				questID = qitem2->data->id;
+			}
+		}
+		currentQuestSelectedID = questID;
 
 		app->audio->PlayFx(app->menuManager->selectSFX);
 		break;
 
 	case (uint32)ControlID::QUEST_5:
+		quests = 5;
+
+		for (ListItem<Quest*>* qitem1 = app->questManager->activeQuests.start; qitem1 != nullptr; qitem1 = qitem1->next) {
+			quests--;
+			if (quests == 0) {
+				questID = qitem1->data->id;
+			}
+		}
+
+		for (ListItem<Quest*>* qitem2 = app->questManager->completedQuests.start; qitem2 != nullptr; qitem2 = qitem2->next) {
+			quests--;
+			if (quests == 0) {
+				questID = qitem2->data->id;
+			}
+		}
+		currentQuestSelectedID = questID;
 
 		app->audio->PlayFx(app->menuManager->selectSFX);
 		break;
 
 	case (uint32)ControlID::QUEST_6:
+		quests = 6;
+
+		for (ListItem<Quest*>* qitem1 = app->questManager->activeQuests.start; qitem1 != nullptr; qitem1 = qitem1->next) {
+			quests--;
+			if (quests == 0) {
+				questID = qitem1->data->id;
+			}
+		}
+
+		for (ListItem<Quest*>* qitem2 = app->questManager->completedQuests.start; qitem2 != nullptr; qitem2 = qitem2->next) {
+			quests--;
+			if (quests == 0) {
+				questID = qitem2->data->id;
+			}
+		}
+		currentQuestSelectedID = questID;
 
 		app->audio->PlayFx(app->menuManager->selectSFX);
 		break;
 
 	case (uint32)ControlID::QUEST_7:
+		quests = 7;
+
+		for (ListItem<Quest*>* qitem1 = app->questManager->activeQuests.start; qitem1 != nullptr; qitem1 = qitem1->next) {
+			quests--;
+			if (quests == 0) {
+				questID = qitem1->data->id;
+			}
+		}
+
+		for (ListItem<Quest*>* qitem2 = app->questManager->completedQuests.start; qitem2 != nullptr; qitem2 = qitem2->next) {
+			quests--;
+			if (quests == 0) {
+				questID = qitem2->data->id;
+			}
+		}
+		currentQuestSelectedID = questID;
 
 		app->audio->PlayFx(app->menuManager->selectSFX);
 		break;

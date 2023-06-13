@@ -37,7 +37,7 @@
 		<menuPause texturepath="Assets/Textures/UI/New/menuPause.png"/>
 		<menuTabs texturepath="Assets/Textures/UI/New/menuTabs_anim.png"/>
 		<menuParty texturepath="Assets/Textures/UI/New/menuSpritesheet.png"/>
-		<menuQuests texturepath="Assets/Textures/UI/New/menuSpritesheet.png"/>
+		<menuQuests texturepath="Assets/Textures/UI/New/menuSpritesheet.png" questsBoxTexture="Assets/Textures/UI/New/questBox.png"/>
 		<menuSave texturepath="Assets/Textures/UI/New/menuSpritesheet.png"/>
 		<menuSettings texturepath="Assets/Textures/UI/New/menuSpritesheet.png"/>
 		<menuCredits texturepath="Assets/Textures/UI/New/menuSpritesheet.png"/>
