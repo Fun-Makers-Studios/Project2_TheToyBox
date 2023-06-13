@@ -17,6 +17,7 @@ public:
 	int nextNodeId;
 	int questCompletionId;
 	int questTriggerId;
+	bool fightTrigger;
 	SString text;
 	SString speaker;
 };
