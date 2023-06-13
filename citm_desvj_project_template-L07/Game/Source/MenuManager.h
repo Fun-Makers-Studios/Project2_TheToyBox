@@ -64,6 +64,7 @@ public:
 	MenuCredits* menuCredits = nullptr;
 	MenuFight* menuFight = nullptr;
 
+	bool playPauseMusic = true;
 	bool exitGame = false;
 
 	//POSITION

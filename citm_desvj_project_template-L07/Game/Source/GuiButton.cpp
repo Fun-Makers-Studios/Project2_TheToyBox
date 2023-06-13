@@ -44,7 +44,7 @@ bool GuiButton::Update(float dt)
 		app->input->GetMousePosition(mouseX, mouseY);
 
 		// UI Scale for game menus
-		if (app->sceneManager->currentScene->id == SceneID::SCENE_GAME)
+		if (app->sceneManager->currentScene->id == SceneID::SCENE_GAME || app->sceneManager->currentScene->id == SceneID::SCENE_TITLE)
 		{
 			mouseX /= 2;
 			mouseY /= 2;
@@ -81,7 +81,7 @@ bool GuiButton::Draw(Render* render)
 	SDL_Rect rectTexture = GetButtonRect(state, buttonType);
 		
 	render->DrawTexture(buttonTex, bounds.x, bounds.y, &rectTexture, SDL_FLIP_NONE, ScaleType::UI_200, false);
-	app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2) - 4, app->menuManager->font3_id, this->text, ScaleType::UI_100);
+	app->fonts->BlitText(bounds.x + (bounds.w / 2) - (9 * (textSize - 1)) / 2, (bounds.y) + (bounds.h / 2) - 4, app->menuManager->font3_id, this->text, ScaleType::UI_200);
 
 	return false;
 }

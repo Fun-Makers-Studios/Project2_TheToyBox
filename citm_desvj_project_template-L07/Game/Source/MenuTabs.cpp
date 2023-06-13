@@ -129,11 +129,11 @@ bool MenuTabs::PreUpdate()
 
 bool MenuTabs::Update(float dt)
 {
+
 	rectMenu = currentAnim->GetCurrentFrame();
 
 	currentAnim->Update();
 		
-
 	return true;
 }
 

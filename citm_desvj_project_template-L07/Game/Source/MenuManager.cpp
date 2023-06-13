@@ -107,7 +107,6 @@ bool MenuManager::PreUpdate()
 		switch (menuItem->data->menuState)
 		{
 			case MenuState::SWITCH_ON:
-				app->audio->PlayMusic(music, 1.0f);
 				SetControlState(menuItem->data, GuiControlState::ENABLED);
 				SetSelectedTab(menuItem->data->id, ButtonType::TABS_SELECTED);
 				menuItem->data->menuState = MenuState::ON;
@@ -121,7 +120,7 @@ bool MenuManager::PreUpdate()
 				SetSelectedTab(menuItem->data->id, ButtonType::TABS_OPEN);
 				menuItem->data->menuState = MenuState::OFF;
 									
-			case MenuState::OFF:
+			case MenuState::OFF:								
 				break;
 			
 			default:

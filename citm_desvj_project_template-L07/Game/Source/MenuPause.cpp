@@ -42,10 +42,10 @@ bool MenuPause::Start()
 	pauseRect = { 0, 0, 247, 330 };
 
 	//UI
-	resumeButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::RESUME, "resume", 7, { 515, 295, 252, 76 }, this);
-	backToTitleButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::BACK_TO_TITLE, "back to title", 13, { 515, 375, 252, 76 }, this);
-	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SETTINGS, "settings", 8, { 515, 455, 252, 76 }, this);
-	saveExitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SAVE_EXIT, "save and exit", 12, { 515, 535, 252, 76 }, this);
+	resumeButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::RESUME, "resume", 7, { 197 + 105, 13 + 170, 44, 11 }, this);
+	backToTitleButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::BACK_TO_TITLE, "back to title", 13, { 197 + 105, 13 + 191, 44, 11 }, this);
+	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SETTINGS, "settings", 8, { 197 + 105, 13 + 212, 44, 11 }, this);
+	saveExitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SAVE_EXIT, "save and exit", 12, { 197 + 105, 13 + 233, 44, 11 }, this);
 	
 	return true;
 }
@@ -69,22 +69,7 @@ bool MenuPause::PostUpdate()
 {
 	bool ret = true;
 
-	/*if (!control->data->easing->GetFinished())
-	{
-		double time = easing->TrackTime(dt);
-		double endPosX = control->data->boundsReset.x;
-		double endPosY = control->data->boundsReset.y;
-		double easedX = control->data->easing->EasingAnimation(endPosX + 200, endPosX, time, EasingType::EASE_OUT_ELASTIC);
-
-		control->data->bounds.x = easedX;
-	}*/
-
 	app->render->DrawTexture(imgPause, 197, 13, &pauseRect, SDL_FLIP_NONE, ScaleType::UI_200, false);
-
-	/*app->render->DrawTexture(imgPause,
-		app->render->camera.x + app->render->camera.w / 2 - pauseRect.w / 2,
-		app->render->camera.y + app->render->camera.h / 2 - pauseRect.h / 2,
-		&pauseRect, SDL_FLIP_NONE, ScaleType::UI_200, false);*/
 
 
 	return ret;

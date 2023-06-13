@@ -57,6 +57,8 @@ private:
 	const char* imgTabsPath = nullptr;
 
 	SDL_Rect rectMenu;
+
+	int musicCount = 0;
 };
 
 #endif // __MENU_TABS_H__

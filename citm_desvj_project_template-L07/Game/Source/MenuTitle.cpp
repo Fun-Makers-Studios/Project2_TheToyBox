@@ -34,11 +34,11 @@ bool MenuTitle::Start()
 	LOG("--STARTS TITLE MENU--");
 
 	// UI
-	continueButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::CONTINUE, "continue", 9, { 965, 270, 252, 76 }, this);
-	playButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PLAY, "play", 5, { 965, 350, 252, 76 }, this);
-	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SETTINGS, "settings", 9, { 965, 430, 252, 76 }, this);
-	creditsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::CREDITS, "credits", 8, { 965, 510, 252, 76 }, this);
-	exitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::EXIT, "exit", 5, { 965, 590, 252, 76 }, this);
+	continueButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::CONTINUE, "continue", 9, { 482, 135, 126, 38 }, this);
+	playButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::PLAY, "play", 5, { 482, 175, 126, 38 }, this);
+	settingsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::SETTINGS, "settings", 9, { 482, 215, 126, 38 }, this);
+	creditsButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::CREDITS, "credits", 8, { 482, 255, 126, 38 }, this);
+	exitButton = (GuiButton*)app->guiManager->CreateGuiControl(GuiControlType::BUTTON, (uint32)ControlID::EXIT, "exit", 5, { 482, 295, 126, 38 }, this);
 
 	// Set easing finished on title buttons
 	ListItem<GuiControl*>* control = guiControlsList.start;
